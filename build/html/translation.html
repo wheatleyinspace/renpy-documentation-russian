@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Перевод &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6eda34c5" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/translation.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=00c7e44b"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+      <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Отображаемые объекты" href="displayables.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="text.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Логотип" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.6.0 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Основы языка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Метки и управление выполнением</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Диалог и повествование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Отображение изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id2">Основные понятия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#defining-images">Объявление изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#show">Инструкция show</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#scene">Инструкция scene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#hide">Инструкция hide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#with">Инструкция with</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#camera-show-layer">Инструкции camera и show layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#window-show-window-hide">Инструкции window show и window hide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id9">Функции изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id10">См. также</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Озвучка</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Перевод</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Основной и альтернативные языки</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Генерация файлов перевода</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Перевод диалогов</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Единицы перевода</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#translate">Оператор Translate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Более сложные случаи перевода</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#translation-tips">Советы</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#string-translations">Перевод меню и строк</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Перевод подстановок</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extract-merge-translations">Извлечение и слияние строковых переводов</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#image-file-translation">Перевод изображений и файлов</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Перевод путей к ресурсам</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">Перевод стилей</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deferred-translations">Отложенная загрузка переводов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">Язык по умолчанию</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">Экран информации о переводе</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id17">Действия, функции и переменные перевода</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">_()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18"><code class="docutils literal notranslate"><span class="pre">__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19"><code class="docutils literal notranslate"><span class="pre">___()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#p"><code class="docutils literal notranslate"><span class="pre">_p()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id20">Неофициальные переводы</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Продвинутый GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Перевод Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Перевод</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/translation.rst" class="fa fa-github"> Редактировать на GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="translation">
+<span id="id1"></span><h1>Перевод<a class="headerlink" href="#translation" title="Ссылка на этот заголовок"></a></h1>
+<p>В Ren'Py встроен комплексный фреймворк для локализации (перевода) визуальных новелл.
+Существует четыре основных типа элементов, которые можно переводить:</p>
+<dl class="simple">
+<dt>Диалоги</dt><dd><p>Основной диалоговый текст сценария, включая возможности разбиения реплик,
+их объединения, пропуска и изменения порядка строк.</p>
+</dd>
+<dt>Строки интерфейса и меню</dt><dd><p>Весь текст пользовательского интерфейса и выборов меню.</p>
+</dd>
+<dt>Изображения и файлы</dt><dd><p>Возможность подменять изображения и другие ассеты при выборе конкретного языка.</p>
+</dd>
+<dt>Стили</dt><dd><p>Возможность настраивать стили (в особенности шрифты) в зависимости от выбранного языка.</p>
+</dd>
+</dl>
+<p>Поддержка перевода в Ren'Py в первую очередь ориентирована на официальные переводы,
+когда разработчики игры либо передают скрипты переводчику, либо сами генерируют
+шаблоны перевода. Поддержка неофициальных фанатских переводов более ограничена.</p>
+<section id="id2">
+<h2>Основной и альтернативные языки<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p>Ren'Py ожидает, что каждая игра написана на одном основном языке. Он называется
+языком None, независимо от того, какой это язык на самом деле (например, если игра
+написана на английском или русском языке, этот язык и будет являться языком None).</p>
+<p>Альтернативные языки обозначаются именами, являющимися корректными идентификаторами
+Python (начинаются с буквы или подчёркивания, за которыми следуют буквы, цифры и знаки
+подчёркивания).</p>
+<p>Когда выбран язык None, большая часть механизмов перевода Ren'Py отключена, за
+исключением внутренних системных строк движка (например, меню специальных возможностей).
+Этих строк нет в коде вашего проекта, но они включены в дистрибутив игры. Их можно найти
+в файле <code class="file docutils literal notranslate"><span class="pre">game/tl/None/common.rpym</span></code>, предназначенном для: 1) предоставления перевода
+этих системных строк, если язык None не является английским, и 2) возможности настройки
+этих строк авторами под свой проект.</p>
+<p>Язык лаунчера Ren'Py на момент создания проекта определяет, на какой язык будут
+изначально переведены системные строки в этом файле.</p>
+</section>
+<section id="id3">
+<h2>Генерация файлов перевода<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Когда скрипты проекта готовы, файлы перевода можно сгенерировать через лаунчер Ren'Py:
+откройте проект и выберите пункт «Сгенерировать переводы» («Generate Translations»).
+Лаунчер запросит имя языка для генерации, после чего создаст или обновит файлы перевода.</p>
+<p>Файлы перевода располагаются в подкаталогах внутри папки «tl» директории game.
+Например, если вы создадите перевод на язык «russian», файлы будут помещены в
+<code class="file docutils literal notranslate"><span class="pre">game/tl/russian</span></code>.</p>
+<p>Для каждого файла скрипта игры создаётся соответствующий файл перевода. Также создаётся
+файл common.rpy, содержащий переводы стандартных строк Ren'Py.</p>
+</section>
+<section id="id4">
+<h2>Перевод диалогов<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Поскольку Ren'Py — движок для визуальных новелл, основной объём перевода приходится
+на диалоги. Ren'Py предоставляет гибкий фреймворк, позволяющий разделять реплики,
+объединять их, менять порядок и опускать при необходимости.</p>
+<section id="id5">
+<h3>Единицы перевода<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h3>
+<p>Фундаментальной единицей перевода (translation unit) является блок из нуля или
+более переводимых операторов, за которыми опционально следует один оператор say.
+Переводимыми операторами являются операторы voice и nvl. Например, рассмотрим фрагмент:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="n">e</span> <span class="s2">&quot;Thank you for taking a look at the Ren&#39;Py translation framework.&quot;</span>
+
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span>
+
+    <span class="n">e</span> <span class="s2">&quot;We aim to provide a comprehensive framework for translating dialogue, strings, images, and styles.&quot;</span>
+
+    <span class="n">e</span> <span class="s2">&quot;Pretty much everything your game needs!&quot;</span>
+</pre></div>
+</div>
+<p>Этот фрагмент разбивается на несколько единиц перевода. Каждой единице присваивается
+идентификатор, генерируемый на основе предшествующей метки (label) и содержимого блока.
+(Если бы нескольким единицам достался один номер, ко второй и последующим добавляется
+порядковый номер для различия).</p>
+<p>В примере выше первой сгенерированной единице присваивается идентификатор start_636ae3f5,
+и она содержит оператор:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="s2">&quot;Thank you for taking a look at the Ren&#39;Py translation framework.&quot;</span>
+</pre></div>
+</div>
+<p>Второй единице присваивается идентификатор start_bd1ad9e1:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="s2">&quot;We aim to provide a comprehensive framework for translating dialogue, strings, images, and styles.&quot;</span>
+</pre></div>
+</div>
+<p>Третья единица имеет идентификатор start_9e949aac:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="s2">&quot;Pretty much everything your game needs!&quot;</span>
+</pre></div>
+</div>
+<p>Эти единицы создаются автоматически движком Ren'Py при загрузке скрипта игры.</p>
+</section>
+<section id="translate">
+<span id="translation-statement"></span><h3>Оператор Translate<a class="headerlink" href="#translate" title="Ссылка на этот заголовок"></a></h3>
+<p>При генерации переводов Ren'Py создаёт оператор translate для каждой единицы перевода.
+Для приведённого выше сценария Ren'Py сгенерирует:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># game/script.rpy:95</span>
+<span class="k">translate</span> <span class="n">russian</span> <span class="n">start_636ae3f5</span><span class="p">:</span>
+
+    <span class="c1"># e &quot;Thank you for taking a look at the Ren&#39;Py translation framework.&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;&quot;</span>
+
+<span class="c1"># game/script.rpy:99</span>
+<span class="k">translate</span> <span class="n">russian</span> <span class="n">start_bd1ad9e1</span><span class="p">:</span>
+
+    <span class="c1"># e &quot;We aim to provide a comprehensive framework for translating dialogue, strings, images, and styles.&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;&quot;</span>
+
+<span class="c1"># game/script.rpy:101</span>
+<span class="k">translate</span> <span class="n">russian</span> <span class="n">start_9e949aac</span><span class="p">:</span>
+
+    <span class="c1"># e &quot;Pretty much everything your game needs!&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Переводчик заполняет сгенерированные файлы. Готовый перевод может выглядеть так:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># game/script.rpy:95</span>
+<span class="k">translate</span> <span class="n">russian</span> <span class="n">start_636ae3f5</span><span class="p">:</span>
+    <span class="c1"># e &quot;Thank you for taking a look at the Ren&#39;Py translation framework.&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;Спасибо за интерес к системе локализации Ren&#39;Py.&quot;</span>
+
+<span class="c1"># game/script.rpy:99</span>
+<span class="k">translate</span> <span class="n">russian</span> <span class="n">start_bd1ad9e1</span><span class="p">:</span>
+    <span class="c1"># e &quot;We aim to provide a comprehensive framework for translating dialogue, strings, images, and styles.&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;Мы стремимся предоставить полноценный фреймворк для перевода диалогов, строк, изображений и стилей.&quot;</span>
+
+<span class="c1"># game/script.rpy:101</span>
+<span class="k">translate</span> <span class="n">russian</span> <span class="n">start_9e949aac</span><span class="p">:</span>
+    <span class="c1"># e &quot;Pretty much everything your game needs!&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;Практически всё, что нужно вашей игре!&quot;</span>
+</pre></div>
+</div>
+<p>Когда в основном скрипте встречается блок диалога, Ren'Py проверяет наличие
+соответствующего оператора translate. Если он найден, движок выполняет блок translate
+вместо оригинального блока, показывая пользователю перевод.</p>
+</section>
+<section id="id6">
+<h3>Более сложные случаи перевода<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h3>
+<p>Операторы translate не обязаны быть построчным переводом 1-к-1. Например, длинную реплику
+можно разбить на две:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># game/script.rpy:99</span>
+<span class="k">translate</span> <span class="n">russian</span> <span class="n">start_bd1ad9e1</span><span class="p">:</span>
+    <span class="c1"># e &quot;We aim to provide a comprehensive framework for translating dialogue, strings, images, and styles.&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;Мы стремимся предоставить полноценный фреймворк...&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;...для перевода диалогов, строк, изображений и стилей.&quot;</span>
+</pre></div>
+</div>
+<p>Или оператор можно удалить вовсе, заменив его оператором <code class="docutils literal notranslate"><span class="pre">pass</span></code>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># game/script.rpy:101</span>
+<span class="k">translate</span> <span class="n">russian</span> <span class="n">start_9e949aac</span><span class="p">:</span>
+
+    <span class="c1"># e &quot;Pretty much everything your game needs!&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Также можно выполнять код, не являющийся диалогом (условия или код Python). Например, строку:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="s2">&quot;You scored [points] points!&quot;</span>
+</pre></div>
+</div>
+<p>можно перевести так:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># game/script.rpy:103</span>
+<span class="k">translate</span> <span class="n">russian</span> <span class="n">start_36562aba</span><span class="p">:</span>
+
+    <span class="c1"># e &quot;You scored [points] points!&quot;</span>
+    <span class="k">$</span> <span class="n">points_word</span> <span class="o">=</span> <span class="n">get_points_ending</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+    <span class="n">e</span> <span class="s2">&quot;Вы набрали [points] [points_word]!&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="translation-tips">
+<span id="id7"></span><h3>Советы<a class="headerlink" href="#translation-tips" title="Ссылка на этот заголовок"></a></h3>
+<p>Будьте предельно осторожны при изменении уже переведённого текста оригинала, особенно
+когда одна и та же строка повторяется в нескольких местах внутри метки.</p>
+<p>Иногда требуется исправить опечатку в оригинале без необходимости заставлять переводчиков
+заново переводить эту реплику. Для этого можно указать конструкцию <code class="docutils literal notranslate"><span class="pre">id</span></code> в операторе say,
+явно задав идентификатор перевода:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="n">e</span> <span class="s2">&quot;Здесь раньше была опечатка.&quot;</span> <span class="nb">id</span> <span class="n">start_61b861a2</span>
+</pre></div>
+</div>
+<p>Добавление новых меток (labels) также может сбить сопоставление переводов. Чтобы избежать
+этого, метки с конструкцией <code class="docutils literal notranslate"><span class="pre">hide</span></code> игнорируются при генерации файлов перевода:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">ignored_by_translation</span> <span class="k">hide</span><span class="p">:</span>
+    <span class="s2">&quot;...&quot;</span>
+</pre></div>
+</div>
+<p>Хотя блоки перевода могут содержать код Python, этот код не должен иметь побочных эффектов,
+заметных за пределами блока. Дело в том, что смена языка перезапустит блок перевода,
+приведя к многократному повторению этих побочных эффектов.</p>
+</section>
+</section>
+<section id="string-translations">
+<span id="id8"></span><h2>Перевод меню и строк<a class="headerlink" href="#string-translations" title="Ссылка на этот заголовок"></a></h2>
+<p>Помимо диалогов, Ren'Py переводит текст меню выборов и строковые константы. Перевод
+интерфейса выполняется методом однозначной подстановки: везде, где встречается строка,
+она заменяется на её перевод.</p>
+<p>При генерации переводов Ren'Py сканирует файлы скрипта на наличие меню и строк,
+обёрнутых в функцию <code class="docutils literal notranslate"><span class="pre">_()</span></code>. Он помещает их в блоки <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">strings</span></code>. Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Eileen&quot;</span><span class="p">))</span>
+
+<span class="c1"># ...</span>
+
+<span class="k">menu</span><span class="p">:</span>
+
+    <span class="s2">&quot;Go West&quot;</span><span class="p">:</span>
+        <span class="c1"># ...</span>
+
+    <span class="s2">&quot;Head East&quot;</span><span class="p">:</span>
+        <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>Ren'Py сгенерирует:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">translate</span> <span class="n">russian</span> <span class="k">strings</span><span class="p">:</span>
+
+    <span class="k">old</span> <span class="s2">&quot;Eileen&quot;</span>
+    <span class="k">new</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">old</span> <span class="s2">&quot;Go West&quot;</span>
+    <span class="k">new</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">old</span> <span class="s2">&quot;Head East&quot;</span>
+    <span class="k">new</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+<p>После перевода блок выглядит так:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">translate</span> <span class="n">russian</span> <span class="k">strings</span><span class="p">:</span>
+
+    <span class="k">old</span> <span class="s2">&quot;Eileen&quot;</span>
+    <span class="k">new</span> <span class="s2">&quot;Айлин&quot;</span>
+
+    <span class="k">old</span> <span class="s2">&quot;Go West&quot;</span>
+    <span class="k">new</span> <span class="s2">&quot;Идти на запад&quot;</span>
+
+    <span class="k">old</span> <span class="s2">&quot;Head East&quot;</span>
+    <span class="k">new</span> <span class="s2">&quot;Идти на восток&quot;</span>
+</pre></div>
+</div>
+<p>Строковые переводы также применяются к строкам диалогов, которые не были переведены как диалог.</p>
+<p>Если одна и та же строка используется в разных контекстах с разным значением, строки можно
+различить с помощью текстового тега {#...}:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;New&quot;</span>
+<span class="s2">&quot;New{#project}&quot;</span>
+<span class="s2">&quot;New{#game}&quot;</span>
+<span class="s2">&quot;New{#playlist}&quot;</span>
+</pre></div>
+</div>
+<p>Хотя на экране они отображаются одинаково, Ren'Py считает их разными строками для перевода.</p>
+<p>Оператор <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">strings</span></code> можно также использовать для перевода языка None. Это
+применяется, когда игра изначально пишется не на английском языке, для перевода стандартного
+интерфейса Ren'Py:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">translate</span> <span class="kc">None</span> <span class="k">strings</span><span class="p">:</span>
+    <span class="k">old</span> <span class="s2">&quot;Start Game&quot;</span>
+    <span class="k">new</span> <span class="s2">&quot;Начать игру&quot;</span>
+</pre></div>
+</div>
+<section id="id9">
+<h3>Перевод подстановок<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h3>
+<p>Подстановки переменных можно переводить с помощью флага преобразования <code class="docutils literal notranslate"><span class="pre">!t</span></code>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">mood_points</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="k">$</span> <span class="n">mood</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;great&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">$</span> <span class="n">mood</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;awful&quot;</span><span class="p">)</span>
+
+<span class="s2">&quot;I&#39;m feeling [mood!t].&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="extract-merge-translations">
+<span id="id10"></span><h3>Извлечение и слияние строковых переводов<a class="headerlink" href="#extract-merge-translations" title="Ссылка на этот заголовок"></a></h3>
+<p>Строковые переводы можно извлечь из одного проекта и перенести в другой:</p>
+<ul class="simple">
+<li><p>Выберите исходный проект в лаунчере и нажмите «Сгенерировать переводы».</p></li>
+<li><p>Введите имя языка для извлечения и нажмите «Извлечь строковые переводы» («Extract String Translations»).</p></li>
+<li><p>Вернитесь в главное меню лаунчера, выберите целевой проект и снова откройте «Сгенерировать переводы».</p></li>
+<li><p>Введите целевой язык и нажмите «Объединить строковые переводы» («Merge String Translations»).</p></li>
+</ul>
+<p>Опции слияния:</p>
+<dl class="simple">
+<dt>Заменять существующие переводы (Replace existing translations)</dt><dd><p>Перезаписывает уже существующие содержательные переводы. По умолчанию слияние
+не затирает непустые переводы.</p>
+</dd>
+<dt>Инвертировать языки (Reverse languages)</dt><dd><p>Меняет местами исходный и целевой языки (например, для создания обратного
+перевода с русского на английский из готового перевода с английского на русский).</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="image-file-translation">
+<span id="id11"></span><h2>Перевод изображений и файлов<a class="headerlink" href="#image-file-translation" title="Ссылка на этот заголовок"></a></h2>
+<p>При локализации игры может потребоваться заменить файл изображения или другой ассет
+на его переведённую версию (например, вывеску или надпись на изображении).</p>
+<p>Ren'Py делает это автоматически, проверяя каталог перевода. Например, если активен
+язык «russian» и запрашивается файл &quot;library.png&quot;, Ren'Py сначала проверит
+<code class="file docutils literal notranslate"><span class="pre">game/tl/russian/library.png</span></code>, и только затем <code class="file docutils literal notranslate"><span class="pre">game/library.png</span></code>.</p>
+<p>Если файл находился в подпапке внутри game, эта структура каталогов должна сохраняться
+внутри папки языка. Например, файл <code class="file docutils literal notranslate"><span class="pre">game/gui/main_menu.png</span></code> переводится созданием
+<code class="file docutils literal notranslate"><span class="pre">game/tl/russian/gui/main_menu.png</span></code>.</p>
+<section id="id12">
+<h3>Перевод путей к ресурсам<a class="headerlink" href="#id12" title="Ссылка на этот заголовок"></a></h3>
+<p>По умолчанию переведённые ресурсы ищутся в каталоге активного глобального языка.
+Игра может переопределить это поведение для выбранных префиксов путей с помощью
+<a class="reference internal" href="#var-_preferences.resource_path_translations"><code class="xref std std-var docutils literal notranslate"><span class="pre">_preferences.resource_path_translations</span></code></a>. Это словарь, где ключи — префиксы
+исходных путей, а значения — префиксы переведённых путей:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="n">_preferences</span><span class="o">.</span><span class="n">resource_path_translations</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;images/backgrounds&quot;</span><span class="p">:</span> <span class="s2">&quot;tl/english/background&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;audio/voice/eileen&quot;</span><span class="p">:</span> <span class="s2">&quot;tl/chinese/voice/eileen&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;audio/voice/lucy&quot;</span><span class="p">:</span> <span class="s2">&quot;tl/japanese/voice/lucy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gui&quot;</span><span class="p">:</span> <span class="s2">&quot;tl/klingon/gui&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>Если запрашиваемый ресурс по сопоставленному пути отсутствует, поиск продолжается
+по стандартным путям глобального языка.</p>
+<p>Игры могут динамически изменять пути при выборе игрока (например, переключать озвучку
+персонажа независимо от языка текста):</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_eileen_voice_language</span><span class="p">(</span><span class="na">language</span><span class="p">):</span>
+        <span class="n">ChangeResourcePathTranslation</span><span class="p">(</span>
+            <span class="s2">&quot;audio/voice/eileen&quot;</span><span class="p">,</span> <span class="s2">&quot;tl/</span><span class="s">{}</span><span class="s2">/voice/eileen&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="na">language</span><span class="p">)</span>
+        <span class="p">)()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id13">
+<h2>Перевод стилей<a class="headerlink" href="#id13" title="Ссылка на этот заголовок"></a></h2>
+<p>При смене языка часто требуется изменить шрифты и стили текста. Ren'Py управляет
+этим с помощью блоков <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">style</span></code> и <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">python</span></code>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">translate</span> <span class="n">russian</span> <span class="k">style</span> <span class="k">default</span><span class="p">:</span>
+    <span class="na">font</span> <span class="s2">&quot;my_cyrillic_font.ttf&quot;</span>
+</pre></div>
+</div>
+<p>Обычно шрифт диалогов задаётся переменной <a class="reference internal" href="gui.html#var-gui.text_font"><code class="xref std std-var docutils literal notranslate"><span class="pre">gui.text_font</span></code></a>, а системный шрифт
+(для экрана ошибок, меню настроек и доступности) — переменной <a class="reference internal" href="gui.html#var-gui.system_font"><code class="xref std std-var docutils literal notranslate"><span class="pre">gui.system_font</span></code></a>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">translate</span> <span class="n">russian</span> <span class="k">python</span><span class="p">:</span>
+    <span class="n">gui</span><span class="o">.</span><span class="na">text_font</span> <span class="o">=</span> <span class="s2">&quot;my_cyrillic_font.ttf&quot;</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">system_font</span> <span class="o">=</span> <span class="s2">&quot;NotoSans-Regular.ttf&quot;</span>
+</pre></div>
+</div>
+<p>При активации языка Ren'Py сбрасывает стили к состоянию конца этапа init, выполняет
+все блоки <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">python</span></code> и <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">style</span></code> текущего языка, после чего
+перестраивает стили для вступления изменений в силу.</p>
+<p>Блоки перевода стилей можно добавлять в любой файл .rpy.</p>
+</section>
+<section id="deferred-translations">
+<span id="id14"></span><h2>Отложенная загрузка переводов<a class="headerlink" href="#deferred-translations" title="Ссылка на этот заголовок"></a></h2>
+<p>В больших проектах загрузка всех файлов перевода при запуске может занимать много
+времени. Для ускорения запуска Ren'Py поддерживает отложенную загрузку (deferred translations):</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">defer_tl_scripts</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>(добавьте эту строку в <code class="file docutils literal notranslate"><span class="pre">options.rpy</span></code> или в файл, загружающийся до скриптов перевода).</p>
+<p>При True движок не загружает файлы из каталогов <code class="file docutils literal notranslate"><span class="pre">tl/</span><em><span class="pre">language</span></em></code> на этапе инициализации,
+а подгружает их только тогда, когда данный язык активируется игроком.</p>
+<p>Поскольку такие файлы не загружаются при запуске, они не должны содержать операторов
+этапа init (блоков <code class="docutils literal notranslate"><span class="pre">init</span></code>, <code class="docutils literal notranslate"><span class="pre">screen</span></code>, <code class="docutils literal notranslate"><span class="pre">image</span></code>, <code class="docutils literal notranslate"><span class="pre">transform</span></code> и т. д.), а должны
+состоять исключительно из блоков <code class="docutils literal notranslate"><span class="pre">translate</span></code>, <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">python</span></code> и <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">style</span></code>.</p>
+</section>
+<section id="id15">
+<h2>Язык по умолчанию<a class="headerlink" href="#id15" title="Ссылка на этот заголовок"></a></h2>
+<p>Язык по умолчанию определяется по следующим правилам:</p>
+<ul class="simple">
+<li><p>Если задана переменная окружения RENPY_LANGUAGE, используется указанный язык.</p></li>
+<li><p>Если задана переменная <a class="reference internal" href="#var-config.language"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.language</span></code></a>, используется она (переопределяя все последующие).</p></li>
+<li><p>Если игра уже запускалась и язык сохранялся в настройках, используется сохранённый язык.</p></li>
+<li><p>При первом запуске игры, если <a class="reference internal" href="config.html#var-config.enable_language_autodetect"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.enable_language_autodetect</span></code></a> равен True,
+Ren'Py пытается автоопределить язык системы с помощью <a class="reference internal" href="config.html#var-config.locale_to_language_function"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.locale_to_language_function</span></code></a>
+или <a class="reference internal" href="config.html#var-config.locale_to_language_map"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.locale_to_language_map</span></code></a>.</p></li>
+<li><p>При первом запуске игры, если автоопределение не сработало, используется <a class="reference internal" href="config.html#var-config.default_language"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.default_language</span></code></a>.</p></li>
+<li><p>В противном случае используется язык None.</p></li>
+</ul>
+</section>
+<section id="id16">
+<h2>Экран информации о переводе<a class="headerlink" href="#id16" title="Ссылка на этот заголовок"></a></h2>
+<p>Экран с подробной информацией о переводе доступен в меню разработчика (Shift+D) -&gt; «Show Translation Info».
+Его также можно вызвать командой:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="k">screen</span> <span class="n">_translation_info</span>
+</pre></div>
+</div>
+</section>
+<section id="id17">
+<h2>Действия, функции и переменные перевода<a class="headerlink" href="#id17" title="Ссылка на этот заголовок"></a></h2>
+<p>Основной способ переключения языков — действие Language.</p>
+<p>Действие Language используется для добавления переключателя языка в меню настроек:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">frame</span><span class="p">:</span>
+    <span class="na">style_prefix</span> <span class="s2">&quot;pref&quot;</span>
+    <span class="k">has</span> <span class="k">vbox</span>
+
+    <span class="k">label</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Language&quot;</span><span class="p">)</span>
+    <span class="k">textbutton</span> <span class="s2">&quot;English&quot;</span> <span class="na">action</span> <span class="n">Language</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">textbutton</span> <span class="s2">&quot;Русский&quot;</span> <span class="na">action</span> <span class="n">Language</span><span class="p">(</span><span class="s2">&quot;russian&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Функции управления переводом:</p>
+<p>Функции для работы со строковыми переводами:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Ссылка на это определение"></a></dt>
+<dd><p>(Одинарное подчёркивание). Возвращает строку <cite>s</cite> без изменений. Ren'Py сканирует
+скрипты на наличие строк внутри этой функции и добавляет их в список для перевода.
+Строки переводятся непосредственно в момент вывода на экран.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id18">
+<span class="sig-name descname"><span class="pre">__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id18" title="Ссылка на это определение"></a></dt>
+<dd><p>(Двойное подчёркивание). Немедленно возвращает строку <cite>s</cite>, переведённую на текущий язык.
+Строка также добавляется в список переводимых строк.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id19">
+<span class="sig-name descname"><span class="pre">___</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id19" title="Ссылка на это определение"></a></dt>
+<dd><p>(Тройное подчёркивание). Немедленно переводит строку <cite>s</cite> на текущий язык. Если в строке
+присутствует интерполяция текста, она выполняется с использованием локальных переменных
+области видимости, вызвавшей эту функцию.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="p">
+<span class="sig-name descname"><span class="pre">_p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#p" title="Ссылка на это определение"></a></dt>
+<dd><p>Переформатирует строку и помечает её как переводимую. Строка будет переведена
+при отображении текстовым displayable. Функция предназначена для определения
+многострочного текста в строках вида:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">gui</span><span class="o">.</span><span class="n">about</span> <span class="o">=</span> <span class="n">_p</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Эти две строки будут объединены вместе,</span>
+<span class="s2">    образуя одну длинную строку.</span>
+
+<span class="s2">    А эта строка будет отдельной.</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Переформатирование выполняется путём разбивки текста на строки и удаления начальных
+и конечных пробельных символов в каждой строке. Пустые строки в самом конце удаляются.
+Пустая строка в теле текста разделяет абзацы. Тег {p} разбивает строку, но не
+добавляет пустую строку.</p>
+<p>Может использоваться в переводах строк через конструкцию:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">old</span> <span class="s2">&quot;These two lines will be combined together to form a long line.</span><span class="se">\n\n</span><span class="s2">This line will be separate.&quot;</span>
+<span class="k">new</span> <span class="n">_p</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Эти две строки будут объединены вместе,</span>
+<span class="s2">    образуя одну длинную строку.</span>
+
+<span class="s2">    А эта строка будет отдельной.</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Языковые переменные:</p>
+<dl class="std var">
+<dt class="sig sig-object std" id="var-_preferences.language">
+<span class="sig-name descname"><span class="pre">_preferences.language</span></span><a class="headerlink" href="#var-_preferences.language" title="Ссылка на это определение"></a></dt>
+<dd><p>Имя текущего языка, либо None, если используется основной язык скрипта.
+Переменная предназначена только для чтения. Для смены языка вызывайте <code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.change_language()</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="id20">
+<h2>Неофициальные переводы<a class="headerlink" href="#id20" title="Ссылка на этот заголовок"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Перед созданием неофициального перевода рекомендуется спросить разрешение у авторов игры.</p>
+</div>
+<p>Ren'Py предоставляет возможность создавать переводы без прямого участия авторов игры,
+генерируя строковый файл перевода из всех строк игры во время прохождения.</p>
+<p>Для создания файла строкового перевода:</p>
+<ul class="simple">
+<li><p>Установите переменную окружения RENPY_LANGUAGE в имя целевого языка.</p></li>
+<li><p>Установите переменную окружения RENPY_UPDATE_STRINGS в непустое значение (например, 1).</p></li>
+<li><p>Запустите игру и пройдите её, просмотрев весь текст.</p></li>
+</ul>
+<p>Это обновит файл <code class="file docutils literal notranslate"><span class="pre">game/tl/language/strings.rpy</span></code>, добавив в него шаблон со всеми встреченными строками.</p>
+<p>Если в игре нет меню смены языка, можно добавить файл с блоком <code class="docutils literal notranslate"><span class="pre">init</span> <span class="pre">python</span></code>, устанавливающим
+переменную <a class="reference internal" href="#var-config.language"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.language</span></code></a> в нужный язык.</p>
+<dl class="std var">
+<dt class="sig sig-object std" id="var-_preferences.resource_path_translations">
+<span class="sig-name descname"><span class="pre">_preferences.resource_path_translations</span></span> <span class="pre">=</span> <span class="pre">{}</span><a class="headerlink" href="#var-_preferences.resource_path_translations" title="Ссылка на это определение"></a></dt>
+<dd><p>Словарь сопоставления префиксов путей ресурсов. Применяется загрузчиком до стандартного
+поиска по глобальному языку.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-config.language">
+<span class="pre">define</span> <span class="sig-name descname"><span class="pre">config.language</span></span> <span class="pre">=</span> <span class="pre">None</span><a class="headerlink" href="#var-config.language" title="Ссылка на это определение"></a></dt>
+<dd><p>Если не None, принудительно задаёт язык при запуске игры, переопределяя выбор пользователя.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="text.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="displayables.html" class="btn btn-neutral float-right" title="Отображаемые объекты" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

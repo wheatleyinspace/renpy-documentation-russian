@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Озвучка &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6eda34c5" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/voice.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=00c7e44b"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+      <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="text.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="movie.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Логотип" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.6.0 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Основы языка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Метки и управление выполнением</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Диалог и повествование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Отображение изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id2">Основные понятия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#defining-images">Объявление изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#show">Инструкция show</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#scene">Инструкция scene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#hide">Инструкция hide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#with">Инструкция with</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#camera-show-layer">Инструкции camera и show layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#window-show-window-hide">Инструкции window show и window hide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id9">Функции изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id10">См. также</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Озвучка</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Теги озвучки</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#automatic-voice">Автоматическая озвучка</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Многоязычная озвучка</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Функции озвучки</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get_voice_info"><code class="docutils literal notranslate"><span class="pre">_get_voice_info()</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#VoiceInfo.filename"><code class="docutils literal notranslate"><span class="pre">VoiceInfo.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#VoiceInfo.auto_filename"><code class="docutils literal notranslate"><span class="pre">VoiceInfo.auto_filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#VoiceInfo.tag"><code class="docutils literal notranslate"><span class="pre">VoiceInfo.tag</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#VoiceInfo.sustain"><code class="docutils literal notranslate"><span class="pre">VoiceInfo.sustain</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">voice()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voice_can_replay"><code class="docutils literal notranslate"><span class="pre">voice_can_replay()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voice_replay"><code class="docutils literal notranslate"><span class="pre">voice_replay()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voice_sustain"><code class="docutils literal notranslate"><span class="pre">voice_sustain()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#voice-actions">Действия озвучки</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#PlayCharacterVoice"><code class="docutils literal notranslate"><span class="pre">PlayCharacterVoice()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#SetCharacterVolume"><code class="docutils literal notranslate"><span class="pre">SetCharacterVolume()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#SetVoiceMute"><code class="docutils literal notranslate"><span class="pre">SetVoiceMute()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ToggleVoiceMute"><code class="docutils literal notranslate"><span class="pre">ToggleVoiceMute()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#VoiceReplay"><code class="docutils literal notranslate"><span class="pre">VoiceReplay()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Перевод</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Продвинутый GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Перевод Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Озвучка</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/voice.rst" class="fa fa-github"> Редактировать на GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="voice">
+<span id="id1"></span><h1>Озвучка<a class="headerlink" href="#voice" title="Ссылка на этот заголовок"></a></h1>
+<p>Ren'Py поддерживает воспроизведение голосовой озвучки синхронно с диалогом.
+Для этого используется инструкция <code class="docutils literal notranslate"><span class="pre">voice</span></code>, которой передаётся имя
+воспроизводимого аудиофайла:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">voice</span> <span class="s2">&quot;line0001.ogg&quot;</span>
+<span class="s2">&quot;Добро пожаловать в Ren&#39;Py&quot;</span>
+</pre></div>
+</div>
+<p>Как правило, звучание голоса прекращается при переходе к следующему взаимодействию
+(клику игрока). Инструкция <code class="docutils literal notranslate"><span class="pre">voice</span> <span class="pre">sustain</span></code> позволяет продлить воспроизведение
+голоса сквозь смену диалоговых реплик.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">voice</span> <span class="s2">&quot;line0001.ogg&quot;</span>
+<span class="s2">&quot;Добро пожаловать в Ren&#39;Py...&quot;</span>
+
+<span class="k">voice</span> <span class="k">sustain</span>
+<span class="s2">&quot;...ваш движок создания визуальных новелл.&quot;</span>
+</pre></div>
+</div>
+<p>Переменная <a class="reference internal" href="config.html#var-config.voice_filename_format"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.voice_filename_format</span></code></a> позволяет настроить шаблон имён
+файлов озвучки, избавляя от необходимости каждый раз прописывать каталоги и расширения.</p>
+<section id="id2">
+<h2>Теги озвучки<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p>Ren'Py включает систему тегов озвучки, позволяющую выборочно включать или
+заглушать голоса конкретных персонажей. Чтобы воспользоваться этой системой,
+передайте аргумент <code class="docutils literal notranslate"><span class="pre">voice_tag</span></code> при объявлении каждого <a class="reference internal" href="dialogue.html#Character" title="Character"><code class="xref py py-func docutils literal notranslate"><span class="pre">Character()</span></code></a>
+и используйте действия <a class="reference internal" href="#SetVoiceMute" title="SetVoiceMute"><code class="xref py py-func docutils literal notranslate"><span class="pre">SetVoiceMute()</span></code></a> или <a class="reference internal" href="#ToggleVoiceMute" title="ToggleVoiceMute"><code class="xref py py-func docutils literal notranslate"><span class="pre">ToggleVoiceMute()</span></code></a>,
+дающие игроку возможность переключать воспроизведение голоса.</p>
+<p>Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Эйлин&quot;</span><span class="p">,</span> <span class="n">voice_tag</span><span class="o">=</span><span class="s2">&quot;eileen&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">l</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Люси&quot;</span><span class="p">,</span> <span class="n">voice_tag</span><span class="o">=</span><span class="s2">&quot;lucy&quot;</span><span class="p">)</span>
+
+<span class="k">screen</span> <span class="n">voice_toggle</span><span class="p">:</span>
+    <span class="k">vbox</span><span class="p">:</span>
+        <span class="k">textbutton</span> <span class="s2">&quot;Заглушить Эйлин&quot;</span> <span class="na">action</span> <span class="n">ToggleVoiceMute</span><span class="p">(</span><span class="s2">&quot;eileen&quot;</span><span class="p">)</span>
+        <span class="k">textbutton</span> <span class="s2">&quot;Заглушить Люси&quot;</span> <span class="na">action</span> <span class="n">ToggleVoiceMute</span><span class="p">(</span><span class="s2">&quot;lucy&quot;</span><span class="p">)</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+    <span class="k">show</span> <span class="k">screen</span> <span class="n">voice_toggle</span>
+
+    <span class="k">voice</span> <span class="s2">&quot;e01.ogg&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;Голос каждого персонажа можно включать и отключать отдельно.&quot;</span>
+
+    <span class="k">voice</span> <span class="s2">&quot;l01.ogg&quot;</span>
+    <span class="n">l</span> <span class="s2">&quot;Да! Наконец-то я смогу заставить тебя замолчать!&quot;</span>
+
+    <span class="k">voice</span> <span class="s2">&quot;l02.ogg&quot;</span>
+    <span class="n">l</span> <span class="s2">&quot;Погоди... получается, они и меня могут заглушить?! Серьёзно?&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="automatic-voice">
+<span id="id3"></span><h2>Автоматическая озвучка<a class="headerlink" href="#automatic-voice" title="Ссылка на этот заголовок"></a></h2>
+<p>Ren'Py умеет автоматически определять файл озвучки для каждой реплики,
+позволяя озвучивать игру без необходимости вручную прописывать инструкции
+voice перед каждой строкой диалога.</p>
+<p>Для этого аудиофайлы именуются в соответствии с уникальными идентификаторами
+строк сценария. Чтобы узнать эти идентификаторы, экспортируйте диалоги в
+таблицу через лаунчер Ren'Py: выберите «Извлечь диалог» (Extract Dialogue),
+затем «Таблица с разделителями-табуляциями (dialogue.tab)» и нажмите «Продолжить».
+Будет создан файл dialogue.tab, который можно открыть в табличном редакторе.</p>
+<p>Первый столбец таблицы содержит идентификатор реплики, а остальные столбцы
+дают дополнительную информацию о тексте и персонаже.</p>
+<p>Чтобы включить автоматическую озвучку в Ren'Py, присвойте переменной
+<a class="reference internal" href="config.html#var-config.auto_voice"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.auto_voice</span></code></a> строку, содержащую шаблон <code class="docutils literal notranslate"><span class="pre">{id}</span></code>. При выводе диалога
+маркер <code class="docutils literal notranslate"><span class="pre">{id}</span></code> заменяется идентификатором реплики, образуя имя файла. Если файл
+с таким именем существует, движок воспроизводит его.</p>
+<p>Например, если задано:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">auto_voice</span> <span class="o">=</span> <span class="s2">&quot;voice/</span><span class="s">{id}</span><span class="s2">.ogg&quot;</span>
+</pre></div>
+</div>
+<p>И идентификатор реплики равен <code class="docutils literal notranslate"><span class="pre">demo_minigame_03fc91ef</span></code>, то при показе этой строки
+Ren'Py попытается загрузить файл <code class="file docutils literal notranslate"><span class="pre">voice/demo_minigame_03fc91ef.ogg</span></code>. Если
+файл найден, он будет воспроизведён.</p>
+</section>
+<section id="id4">
+<h2>Многоязычная озвучка<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Чтобы задействовать систему перевода Ren'Py при дубляже игры на несколько языков,
+можно использовать <a class="reference internal" href="translation.html#image-file-translation"><span class="std std-ref">перевод файлов изображений и ресурсов</span></a>.
+Для игры, оригинальный язык которой английский, а дубляж выполнен на французском,
+при наличии диалога:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">voice</span> <span class="s2">&quot;omelette.ogg&quot;</span>
+<span class="n">e</span> <span class="s2">&quot;Я люблю яичницу с сыром...&quot;</span>
+</pre></div>
+</div>
+<p>Размещение английского аудиофайла в <code class="file docutils literal notranslate"><span class="pre">game/omelette.ogg</span></code>, а французского перевода
+в <code class="file docutils literal notranslate"><span class="pre">game/tl/french/omelette.ogg</span></code> приведёт к тому, что Ren'Py автоматически выберет
+французскую версию аудио при переключении игры на французский язык.</p>
+<p>Этот же механизм работает и для автоматической озвучки, если относительный путь
+файла перевода внутри <code class="file docutils literal notranslate"><span class="pre">game/tl/</span><em><span class="pre">&lt;язык&gt;</span></em><span class="pre">/</span></code> совпадает с относительным путем
+оригинального файла в каталоге <code class="file docutils literal notranslate"><span class="pre">game/</span></code>.</p>
+</section>
+<section id="id5">
+<h2>Функции озвучки<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="get_voice_info">
+<span class="sig-name descname"><span class="pre">_get_voice_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_voice_info" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает информацию об озвучке, воспроизводимой текущей
+инструкцией say. Эту функцию можно вызывать только во время
+выполнения инструкции say.</p>
+<p>Возвращаемый объект имеет следующие поля:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="VoiceInfo.filename">
+<span class="sig-prename descclassname"><span class="pre">VoiceInfo.</span></span><span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#VoiceInfo.filename" title="Ссылка на это определение"></a></dt>
+<dd><p>Имя файла воспроизводимого голоса или None, если аудиофайл
+не должен воспроизводиться.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="VoiceInfo.auto_filename">
+<span class="sig-prename descclassname"><span class="pre">VoiceInfo.</span></span><span class="sig-name descname"><span class="pre">auto_filename</span></span><a class="headerlink" href="#VoiceInfo.auto_filename" title="Ссылка на это определение"></a></dt>
+<dd><p>Имя файла, которое Ren'Py искал для целей автоозвучивания,
+или None, если файл не был найден.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="VoiceInfo.tag">
+<span class="sig-prename descclassname"><span class="pre">VoiceInfo.</span></span><span class="sig-name descname"><span class="pre">tag</span></span><a class="headerlink" href="#VoiceInfo.tag" title="Ссылка на это определение"></a></dt>
+<dd><p>Параметр voice_tag, переданный говорящему персонажу Character.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="VoiceInfo.sustain">
+<span class="sig-prename descclassname"><span class="pre">VoiceInfo.</span></span><span class="sig-name descname"><span class="pre">sustain</span></span><a class="headerlink" href="#VoiceInfo.sustain" title="Ссылка на это определение"></a></dt>
+<dd><p>False, если файл был запущен в рамках этого взаимодействия. True, если
+он был удержан из предыдущего взаимодействия с помощью voice sustain.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">voice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Ссылка на это определение"></a></dt>
+<dd><p>Воспроизводит <cite>filename</cite> в канале voice. Эквивалент инструкции
+voice в сценарии Ren'Py.</p>
+<dl>
+<dt><cite>filename</cite></dt><dd><p>Имя воспроизводимого файла. Используется совместно с
+<a class="reference internal" href="config.html#var-config.voice_filename_format"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.voice_filename_format</span></code></a> для формирования
+итогового пути к файлу.</p>
+</dd>
+<dt><cite>tag</cite></dt><dd><p>Если не None, строка, задающая тег озвучки. Если None,
+значение по умолчанию берётся из параметра voice_tag
+персонажа Character, вызывающего следующее взаимодействие.</p>
+<p>Тег озвучки используется для указания говорящего персонажа,
+чтобы игрок мог индивидуально заглушать или включать
+голоса конкретных героев.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="voice_can_replay">
+<span class="sig-name descname"><span class="pre">voice_can_replay</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#voice_can_replay" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает True, если текущую реплику озвучки можно воспроизвести повторно.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="voice_replay">
+<span class="sig-name descname"><span class="pre">voice_replay</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#voice_replay" title="Ссылка на это определение"></a></dt>
+<dd><p>Повторно воспроизводит текущую реплику озвучки, если это возможно.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="voice_sustain">
+<span class="sig-name descname"><span class="pre">voice_sustain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ignored</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#voice_sustain" title="Ссылка на это определение"></a></dt>
+<dd><p>Эквивалент инструкции voice sustain в сценарии Ren'Py.</p>
+</dd></dl>
+
+</section>
+<section id="voice-actions">
+<span id="id6"></span><h2>Действия озвучки<a class="headerlink" href="#voice-actions" title="Ссылка на этот заголовок"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="PlayCharacterVoice">
+<span class="sig-name descname"><span class="pre">PlayCharacterVoice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">voice_tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PlayCharacterVoice" title="Ссылка на это определение"></a></dt>
+<dd><p>Воспроизводит аудиофайл <cite>sample</cite> в канале voice так, как если бы его
+произнёс персонаж с тегом <cite>voice_tag</cite>. Это действие устанавливает
+громкость персонажа, но не выполняет другую связанную с репликами
+обработку файла — оно предназначено для использования в меню настроек,
+чтобы помочь игроку настроить громкость голоса персонажа.</p>
+<dl class="simple">
+<dt><cite>voice_tag</cite></dt><dd><p>Тег озвучки говорящего персонажа. Используется для определения
+уровня громкости.</p>
+</dd>
+<dt><cite>sample</cite></dt><dd><p>Полный путь к аудиофайлу примера.</p>
+</dd>
+<dt><cite>selected</cite></dt><dd><p>Если True, кнопки, использующие это действие, будут отмечены как
+выбранные (selected) во время воспроизведения аудиофайла.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="SetCharacterVolume">
+<span class="sig-name descname"><span class="pre">SetCharacterVolume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">voice_tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SetCharacterVolume" title="Ссылка на это определение"></a></dt>
+<dd><p>Позволяет настраивать громкость голоса отдельных персонажей.
+Если <cite>volume</cite> равно None, возвращает значение BarValue, управляющее
+громкостью для <cite>voice_tag</cite>. В противном случае устанавливает
+громкость равной <cite>volume</cite>.</p>
+<p><cite>volume</cite> — число от 0.0 до 1.0, интерпретируемое как доля от общей
+громкости микшера канала <cite>voice</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="SetVoiceMute">
+<span class="sig-name descname"><span class="pre">SetVoiceMute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">voice_tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mute</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SetVoiceMute" title="Ссылка на это определение"></a></dt>
+<dd><p>Если <cite>mute</cite> равно True, заглушает голоса, воспроизводимые с данным
+<cite>voice_tag</cite>. Если <cite>mute</cite> равно False, включает воспроизведение голосов
+с данным <cite>voice_tag</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ToggleVoiceMute">
+<span class="sig-name descname"><span class="pre">ToggleVoiceMute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">voice_tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ToggleVoiceMute" title="Ссылка на это определение"></a></dt>
+<dd><p>Переключает режим заглушения для <cite>voice_tag</cite>. Кнопка считается выбранной
+(selected), если указанный тег заглушён, если только <cite>invert</cite> не равно
+True (в этом случае кнопка выбрана, если голос включён).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="VoiceReplay">
+<span class="sig-name descname"><span class="pre">VoiceReplay</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#VoiceReplay" title="Ссылка на это определение"></a></dt>
+<dd><p>Повторно воспроизводит самую последнюю прозвучавшую реплику озвучки.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="movie.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="text.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>
