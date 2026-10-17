@@ -3,7 +3,7 @@ name: Deploy Sphinx to GitHub Pages
 on:
   push:
     branches:
-      - main # Название вашей главной ветки на GitHub (main или master)
+      - main
 
 permissions:
   contents: write
@@ -15,8 +15,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Этот шаг автоматически создаст нужный файл прямо перед отправкой
+      - name: Create .nojekyll file
+        run: touch build/html/.nojekyll
+
       - name: Deploy Folder to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build/html # Путь к вашей папке относительно корня репозитория
-          branch: gh-pages # Ветка, куда запишутся только HTML-файлы
+          folder: build/html
+          branch: gh-pages
