@@ -1,0 +1,22 @@
+name: Deploy Sphinx to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Название вашей главной ветки на GitHub (main или master)
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy Folder to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/html # Путь к вашей папке относительно корня репозитория
+          branch: gh-pages # Ветка, куда запишутся только HTML-файлы
