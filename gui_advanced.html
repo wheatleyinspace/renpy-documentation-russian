@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Продвинутый GUI &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6eda34c5" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/gui_advanced.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=00c7e44b"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+      <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Screens and Python" href="screen_python.html" />
+    <link rel="prev" title="Persistent Data" href="persistent.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Логотип" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.6.0 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Основы языка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Метки и управление выполнением</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Диалог и повествование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Отображение изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id2">Основные понятия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#defining-images">Объявление изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#show">Инструкция show</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#scene">Инструкция scene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#hide">Инструкция hide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#with">Инструкция with</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#camera-show-layer">Инструкции camera и show layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#window-show-window-hide">Инструкции window show и window hide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id9">Функции изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id10">См. также</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Озвучка</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Перевод</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Продвинутый GUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python">Функции Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gui.button_properties"><code class="docutils literal notranslate"><span class="pre">gui.button_properties()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.init"><code class="docutils literal notranslate"><span class="pre">gui.init()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.rebuild"><code class="docutils literal notranslate"><span class="pre">gui.rebuild()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.text_properties"><code class="docutils literal notranslate"><span class="pre">gui.text_properties()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.variant"><code class="docutils literal notranslate"><span class="pre">gui.variant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui-rebuild">Подробнее о gui.rebuild</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#default-gui-gui-rebuild">Оператор default, пространство имен gui и gui.rebuild</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gui-preferences">Настройки GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gui.SetPreference"><code class="docutils literal notranslate"><span class="pre">gui.SetPreference()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.TogglePreference"><code class="docutils literal notranslate"><span class="pre">gui.TogglePreference()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gui.preference"><code class="docutils literal notranslate"><span class="pre">gui.preference()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Пример</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Перевод Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Продвинутый GUI</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/gui_advanced.rst" class="fa fa-github"> Редактировать на GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gui">
+<span id="gui-advanced"></span><h1>Продвинутый GUI<a class="headerlink" href="#gui" title="Ссылка на этот заголовок"></a></h1>
+<p>В этом разделе собраны различные сведения о продвинутом использовании GUI.</p>
+<section id="python">
+<h2>Функции Python<a class="headerlink" href="#python" title="Ссылка на этот заголовок"></a></h2>
+<p>Для поддержки работы GUI существует несколько функций Python.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.button_properties">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">button_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.button_properties" title="Ссылка на это определение"></a></dt>
+<dd><p>Принимая тип (<cite>kind</cite>) кнопки, возвращает словарь со стандартными свойствами
+стиля для этой кнопки. Устанавливает:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="style_properties.html#style-property-background"><code class="xref std std-propref docutils literal notranslate"><span class="pre">background</span></code></a></dt><dd><p>Как описано ниже.</p>
+</dd>
+<dt><a class="reference internal" href="style_properties.html#style-property-padding"><code class="xref std std-propref docutils literal notranslate"><span class="pre">padding</span></code></a></dt><dd><p>В значение gui.kind_borders.padding (если существует).</p>
+</dd>
+<dt><a class="reference internal" href="style_properties.html#style-property-xsize"><code class="xref std std-propref docutils literal notranslate"><span class="pre">xsize</span></code></a></dt><dd><p>В значение gui.kind_width (если существует).</p>
+</dd>
+<dt><a class="reference internal" href="style_properties.html#style-property-ysize"><code class="xref std std-propref docutils literal notranslate"><span class="pre">ysize</span></code></a></dt><dd><p>В значение gui.kind_height (если существует).</p>
+</dd>
+</dl>
+<p>(Обратите внимание: если <cite>kind</cite> равен строке &quot;nvl_button&quot;, будет искаться
+переменная gui.nvl_button_background.)</p>
+<p>Фон (background) представляет собой фрейм (кадр), который берет фоновое изображение
+из первого существующего файла:</p>
+<ul class="simple">
+<li><p>gui/button/kind_[prefix_].background.png</p></li>
+<li><p>gui/button/[prefix_].background.png</p></li>
+</ul>
+<p>Если переменная gui с именем gui.kind_borders существует, используется
+она. В противном случае используется <a class="reference internal" href="gui.html#var-gui.button_borders"><code class="xref std std-var docutils literal notranslate"><span class="pre">gui.button_borders</span></code></a>. Если переменная
+gui.kind_tile существует, она определяет, будут ли границы мозаичными (tiled),
+иначе мозаичностью управляет <a class="reference internal" href="gui.html#var-gui.button_tile"><code class="xref std std-var docutils literal notranslate"><span class="pre">gui.button_tile</span></code></a>.</p>
+<p>О том, что означает [prefix_], см. в документации <a class="reference internal" href="style_properties.html#style-prefix-search"><span class="std std-ref">поиск префиксов стилей</span></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.init">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fov</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">75</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.init" title="Ссылка на это определение"></a></dt>
+<dd><p>Инициализирует GUI.</p>
+<dl class="simple">
+<dt><cite>width</cite></dt><dd><p>Ширина окна по умолчанию.</p>
+</dd>
+<dt><cite>height</cite></dt><dd><p>Высота окна по умолчанию.</p>
+</dd>
+<dt><cite>fov</cite></dt><dd><p>Угол обзора (field of view) 3D-сцены.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.rebuild">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">rebuild</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.rebuild" title="Ссылка на это определение"></a></dt>
+<dd><p>Пересобирает GUI.</p>
+<p>Примечание: Это очень медленная функция.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.text_properties">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">text_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.text_properties" title="Ссылка на это определение"></a></dt>
+<dd><p>Принимая тип (<cite>kind</cite>) текстовой кнопки (textbutton), возвращает словарь со стандартными
+свойствами стиля для текста внутри этой кнопки. Устанавливает:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="style_properties.html#style-property-font"><code class="xref std std-propref docutils literal notranslate"><span class="pre">font</span></code></a></dt><dd><p>В значение gui.kind_text_font, если существует.</p>
+</dd>
+<dt><a class="reference internal" href="style_properties.html#style-property-size"><code class="xref std std-propref docutils literal notranslate"><span class="pre">size</span></code></a></dt><dd><p>В значение gui.kind_text_size, если существует.</p>
+</dd>
+<dt><a class="reference internal" href="style_properties.html#style-property-xalign"><code class="xref std std-propref docutils literal notranslate"><span class="pre">xalign</span></code></a></dt><dd><p>В значение gui.kind_text_xalign, если существует.</p>
+</dd>
+<dt><a class="reference internal" href="style_properties.html#style-property-textalign"><code class="xref std std-propref docutils literal notranslate"><span class="pre">textalign</span></code></a></dt><dd><p>В значение gui.kind_text_xalign, если существует.</p>
+</dd>
+<dt><a class="reference internal" href="style_properties.html#style-property-layout"><code class="xref std std-propref docutils literal notranslate"><span class="pre">layout</span></code></a></dt><dd><p>В значение &quot;subtitle&quot;, если gui.kind_text_xalign больше нуля
+и меньше единицы.</p>
+</dd>
+</dl>
+<p>Также имеется ряд переменных, устанавливающих свойство стиля текста
+<a class="reference internal" href="style_properties.html#style-property-color"><code class="xref std std-propref docutils literal notranslate"><span class="pre">color</span></code></a>:</p>
+<dl class="simple">
+<dt>color</dt><dd><p>В значение gui.kind_text_color, если существует. Если переменная не
+задана, а <cite>accent</cite> равен True, устанавливает цвет текста в цвет
+акцента по умолчанию.</p>
+</dd>
+<dt>insensitive_color</dt><dd><p>В значение gui.kind_text_insensitive_color, если существует.</p>
+</dd>
+<dt>idle_color</dt><dd><p>В значение gui.kind_text_idle_color, если существует.</p>
+</dd>
+<dt>hover_color</dt><dd><p>В значение gui.kind_text_hover_color, если существует.</p>
+</dd>
+<dt>selected_color</dt><dd><p>В значение gui.kind_text_selected_color, если существует.</p>
+</dd>
+</dl>
+<p>Все остальные <a class="reference internal" href="style_properties.html#text-style-properties"><span class="std std-ref">свойства стиля текста</span></a>
+также доступны. Когда <cite>kind</cite> не равен None,
+<a class="reference internal" href="style_properties.html#position-style-properties"><span class="std std-ref">свойства стиля позиционирования</span></a>
+также доступны. Например,
+gui.kind_text_outlines устанавливает свойство стиля outlines (обводка),
+gui.kind_text_kerning устанавливает kerning (кернинг) и так далее.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.variant">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">variant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.variant" title="Ссылка на это определение"></a></dt>
+<dd><p>Декоратор, вызывающий функцию при первой инициализации GUI
+и повторно при каждой пересборке GUI. Предназначен для
+использования в качестве декоратора функций вида:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="nd">@gui</span><span class="o">.</span><span class="na">variant</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">small</span><span class="p">():</span>
+    <span class="n">gui</span><span class="o">.</span><span class="na">text_size</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>Его также можно вызывать с аргументами <cite>f</cite> (функция) и <cite>variant</cite> (строка),
+указывающим имя варианта.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">gui.button_text_properties(kind=None,</span> <span class="pre">accent=False):</span></span></dt>
+<dd><p>Устаревший псевдоним для <a class="reference internal" href="#gui.text_properties" title="gui.text_properties"><code class="xref py py-func docutils literal notranslate"><span class="pre">gui.text_properties()</span></code></a>.</p>
+</dd></dl>
+
+<section id="gui-rebuild">
+<h3>Подробнее о gui.rebuild<a class="headerlink" href="#gui-rebuild" title="Ссылка на этот заголовок"></a></h3>
+<p>Функция gui.rebuild — это довольно медленная функция, которая обновляет GUI
+в соответствии с текущим состоянием Ren'Py. Она выполняет следующие действия:</p>
+<ul class="simple">
+<li><p>Повторно выполняет все операторы <code class="docutils literal notranslate"><span class="pre">define</span></code>, определяющие переменные в пространстве
+имен gui.</p></li>
+<li><p>Повторно выполняет все блоки <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">python</span></code> для текущего языка.</p></li>
+<li><p>Повторно выполняет все операторы <code class="docutils literal notranslate"><span class="pre">style</span></code>.</p></li>
+<li><p>Пересобирает все стили в системе.</p></li>
+</ul>
+<p>Обратите внимание, что блоки <code class="docutils literal notranslate"><span class="pre">init</span> <span class="pre">python</span></code> не выполняются повторно при вызове <code class="docutils literal notranslate"><span class="pre">gui.rebuild</span></code>. Поэтому</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">gui</span><span class="o">.</span><span class="na">text_size</span> <span class="o">=</span> <span class="n">persistent</span><span class="o">.</span><span class="na">text_size</span>
+</pre></div>
+</div>
+<p>и:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="n">gui</span><span class="o">.</span><span class="na">text_size</span> <span class="o">=</span> <span class="n">persistent</span><span class="o">.</span><span class="na">text_size</span>
+</pre></div>
+</div>
+<p>работают по-разному.</p>
+</section>
+<section id="default-gui-gui-rebuild">
+<span id="gui-default"></span><h3>Оператор default, пространство имен gui и gui.rebuild<a class="headerlink" href="#default-gui-gui-rebuild" title="Ссылка на этот заголовок"></a></h3>
+<p>Оператор <code class="docutils literal notranslate"><span class="pre">default</span></code> имеет измененную семантику при применении к пространству
+имен <code class="docutils literal notranslate"><span class="pre">gui</span></code>. При применении к переменной в пространстве имен <code class="docutils literal notranslate"><span class="pre">gui</span></code> оператор
+default выполняется вперемежку с оператором define, и операторы default
+не выполняются повторно при вызове <a class="reference internal" href="#gui.rebuild" title="gui.rebuild"><code class="xref py py-func docutils literal notranslate"><span class="pre">gui.rebuild()</span></code></a>.</p>
+<p>Это означает, что если у нас есть:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">default</span> <span class="n">gui</span><span class="o">.</span><span class="n">accent_color</span> <span class="o">=</span> <span class="s2">&quot;#c04040&quot;</span>
+<span class="k">define</span> <span class="n">gui</span><span class="o">.</span><span class="na">hover_color</span> <span class="o">=</span> <span class="n">gui</span><span class="o">.</span><span class="n">accent_color</span>
+</pre></div>
+</div>
+<p>При первом запуске игры будет установлен цвет акцента, а затем цвет наведения
+будет установлен равным цвету акцента. (Оба они затем используются для установки
+различных цветов стиля.)</p>
+<p>Однако если в ходе сценария игры выполняется:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">gui</span><span class="o">.</span><span class="n">accent_color</span> <span class="o">=</span> <span class="s2">&quot;#4040c0&quot;</span>
+<span class="k">$</span> <span class="n">gui</span><span class="o">.</span><span class="n">rebuild</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Ren'Py перезапустит только define, поэтому он установит цвет наведения
+в соответствии с цветом акцента, а затем обновит стили. Это позволяет
+создавать элементы GUI, которые меняются по ходу игры.</p>
+<p>При установке переменных gui во время выполнения может потребоваться вызвать gui.rebuild в
+метке <code class="docutils literal notranslate"><span class="pre">after_load</span></code>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">after_load</span><span class="p">:</span>
+    <span class="k">$</span> <span class="n">gui</span><span class="o">.</span><span class="n">rebuild</span><span class="p">()</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>Это относится только к переменным, заданным с помощью <code class="docutils literal notranslate"><span class="pre">default</span></code>. Все переменные в пространстве имен gui должны задаваться
+с помощью <code class="docutils literal notranslate"><span class="pre">default</span></code> или <code class="docutils literal notranslate"><span class="pre">define</span></code>.</p>
+</section>
+</section>
+<section id="gui-preferences">
+<span id="id1"></span><h2>Настройки GUI<a class="headerlink" href="#gui-preferences" title="Ссылка на этот заголовок"></a></h2>
+<p>Ren'Py также поддерживает систему настроек GUI, состоящую из одной функции
+и пары действий.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.SetPreference">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">SetPreference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rebuild</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.SetPreference" title="Ссылка на это определение"></a></dt>
+<dd><p>Это действие (Action) устанавливает для настройки GUI с именем <cite>name</cite> значение <cite>value</cite>.</p>
+<dl class="simple">
+<dt><cite>rebuild</cite></dt><dd><p>Если True (по умолчанию), вызывается <a class="reference internal" href="#gui.rebuild" title="gui.rebuild"><code class="xref py py-func docutils literal notranslate"><span class="pre">gui.rebuild()</span></code></a>, чтобы
+изменения вступили в силу. Обычно этот параметр должен иметь значение True,
+за исключением случаев одновременного вызова нескольких действий gui.SetPreference,
+когда для всех, кроме последнего, следует передавать False.</p>
+</dd>
+</dl>
+<p>Это очень медленное действие, и, вероятно, оно не подходит для использования
+при наведении курсора на кнопку (hovered).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.TogglePreference">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">TogglePreference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rebuild</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.TogglePreference" title="Ссылка на это определение"></a></dt>
+<dd><p>Это действие (Action) переключает настройку GUI с именем <cite>name</cite> между
+значением <cite>a</cite> и значением <cite>b</cite>. Считается выбранным (selected), если значение равно <cite>a</cite>.</p>
+<dl class="simple">
+<dt><cite>rebuild</cite></dt><dd><p>Если True (по умолчанию), вызывается <a class="reference internal" href="#gui.rebuild" title="gui.rebuild"><code class="xref py py-func docutils literal notranslate"><span class="pre">gui.rebuild()</span></code></a>, чтобы
+изменения вступили в силу. Обычно этот параметр должен иметь значение True,
+за исключением случаев одновременного вызова нескольких действий gui.SetPreference,
+когда для всех, кроме последнего, следует передавать False.</p>
+</dd>
+</dl>
+<p>Это очень медленное действие, и, вероятно, оно не подходит для использования
+при наведении курсора на кнопку (hovered).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.preference">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">preference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.preference" title="Ссылка на это определение"></a></dt>
+<dd><p>Эта функция возвращает значение настройки GUI с именем <cite>name</cite>.</p>
+<dl class="simple">
+<dt><cite>default</cite></dt><dd><p>Если указано, это значение становится значением по умолчанию для настройки
+GUI. Значение по умолчанию должно быть указано при первом использовании
+настройки.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="id2">
+<h3>Пример<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h3>
+<p>Система настроек GUI используется путем вызова <a class="reference internal" href="#gui.preference" title="gui.preference"><code class="xref py py-func docutils literal notranslate"><span class="pre">gui.preference()</span></code></a> при определении
+переменных, с указанием имени настройки и значения по умолчанию.
+Например, настройки GUI можно использовать для задания шрифта и
+размера текста.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">gui</span><span class="o">.</span><span class="na">text_font</span> <span class="o">=</span> <span class="n">gui</span><span class="o">.</span><span class="n">preference</span><span class="p">(</span><span class="s2">&quot;font&quot;</span><span class="p">,</span> <span class="s2">&quot;DejaVuSans.ttf&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">gui</span><span class="o">.</span><span class="na">text_size</span> <span class="o">=</span> <span class="n">gui</span><span class="o">.</span><span class="n">preference</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Затем можно использовать действия <a class="reference internal" href="#gui.SetPreference" title="gui.SetPreference"><code class="xref py py-class docutils literal notranslate"><span class="pre">gui.SetPreference</span></code></a> и <a class="reference internal" href="#gui.TogglePreference" title="gui.TogglePreference"><code class="xref py py-class docutils literal notranslate"><span class="pre">gui.TogglePreference</span></code></a>
+для изменения значений настроек. Вот несколько примеров, которые
+можно добавить на экран настроек (preferences).</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">vbox</span><span class="p">:</span>
+    <span class="na">style_prefix</span> <span class="s2">&quot;check&quot;</span>
+    <span class="k">label</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Опции&quot;</span><span class="p">)</span>
+    <span class="k">textbutton</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;OpenDyslexic&quot;</span><span class="p">)</span> <span class="na">action</span> <span class="n">gui</span><span class="o">.</span><span class="n">TogglePreference</span><span class="p">(</span><span class="s2">&quot;font&quot;</span><span class="p">,</span> <span class="s2">&quot;OpenDyslexic-Regular.otf&quot;</span><span class="p">,</span> <span class="s2">&quot;DejaVuSans.ttf&quot;</span><span class="p">)</span>
+
+<span class="k">vbox</span><span class="p">:</span>
+    <span class="na">style_prefix</span> <span class="s2">&quot;radio&quot;</span>
+    <span class="k">label</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Размер текста&quot;</span><span class="p">)</span>
+    <span class="k">textbutton</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Мелкий&quot;</span><span class="p">)</span> <span class="na">action</span> <span class="n">gui</span><span class="o">.</span><span class="n">SetPreference</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="k">textbutton</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Средний&quot;</span><span class="p">)</span> <span class="na">action</span> <span class="n">gui</span><span class="o">.</span><span class="n">SetPreference</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
+    <span class="k">textbutton</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Крупный&quot;</span><span class="p">)</span> <span class="na">action</span> <span class="n">gui</span><span class="o">.</span><span class="n">SetPreference</span><span class="p">(</span><span class="s2">&quot;size&quot;</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="persistent.html" class="btn btn-neutral float-left" title="Persistent Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="screen_python.html" class="btn btn-neutral float-right" title="Screens and Python" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

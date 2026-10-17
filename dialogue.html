@@ -1,0 +1,804 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Диалог и повествование &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6eda34c5" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/dialogue.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=00c7e44b"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+      <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Отображение изображений" href="displaying_images.html" />
+    <link rel="prev" title="Метки и управление выполнением" href="label.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Логотип" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.6.0 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Основы языка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Метки и управление выполнением</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Диалог и повествование</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#say">Инструкция say</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#character">Определение объектов Character</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Character"><code class="docutils literal notranslate"><span class="pre">Character()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Инструкция say с атрибутами изображений</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Примеры персонажей</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Специальные персонажи</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dialogue-window-management">Управление окном диалога</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#say-with-arguments">Инструкция say с аргументами</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#monologue-mode">Режим монолога</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">Хранилище character</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">Альтернативные варианты отображения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">См. также</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Отображение изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id2">Основные понятия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#defining-images">Объявление изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#show">Инструкция show</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#scene">Инструкция scene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#hide">Инструкция hide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#with">Инструкция with</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#camera-show-layer">Инструкции camera и show layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#window-show-window-hide">Инструкции window show и window hide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id9">Функции изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id10">См. также</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Озвучка</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Перевод</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Продвинутый GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Перевод Ren'Py</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Диалог и повествование</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/dialogue.rst" class="fa fa-github"> Редактировать на GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Диалог и повествование<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<p>Текст лежит в основе визуальных новелл и играет важнейшую роль в играх,
+ориентированных на сюжет. Этот текст может состоять из реплик диалога с
+указанием говорящего персонажа и повествования (слов автора), у которого
+нет конкретного говорящего. (Для удобства мы будем объединять диалог и
+повествование под общим понятием диалога, за исключением случаев, когда
+различия между ними принципиальны.) Также важно, чтобы разработчик мог
+настроить внешний вид диалога под стиль своей игры.</p>
+<p>В Ren'Py большая часть текста пишется с помощью инструкций say. Внешний
+вид реплик можно настраивать индивидуально для каждого персонажа с помощью
+объектов Character.</p>
+<section id="say">
+<span id="say-statement"></span><h2>Инструкция say<a class="headerlink" href="#say" title="Ссылка на этот заголовок"></a></h2>
+<p>Инструкция <code class="docutils literal notranslate"><span class="pre">say</span></code> используется для вывода диалога и повествования. Поскольку это
+почти всегда самая часто используемая инструкция в скриптах Ren'Py, её синтаксис
+минимизирует усилия при написании. Вот несколько примеров инструкций say:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span>
+    <span class="s2">&quot;Это слова автора (повествование).&quot;</span>
+
+    <span class="s2">&quot;Эйлин&quot;</span> <span class="s2">&quot;Это диалог с явным указанием имени персонажа строкой.&quot;</span>
+
+    <span class="n">e</span> <span class="s2">&quot;Это диалог с использованием объекта Character.&quot;</span>
+
+    <span class="s2">&quot;Бабах!!&quot;</span> <span class="k">with</span> <span class="n">vpunch</span>
+</pre></div>
+</div>
+<p>Первая форма инструкции say состоит из одиночной строки текста. Эта форма
+используется для повествования (слов автора), при этом содержимое строки
+является самим текстом.</p>
+<p>Вторая форма состоит из двух строк. Первая строка — это имя говорящего
+персонажа, а вторая — произносимая реплика диалога.</p>
+<p>Третья форма состоит из простого выражения, за которым следует строка. Простое
+выражение должно вычисляться либо в строку с именем персонажа, либо в объект
+Character. В последнем случае объект Character определяет правила отображения диалога.</p>
+<p>Последняя форма состоит из строки и конструкции with, содержащей переход.
+В этом случае отображается строка текста и одновременно с этим встряхивается экран.</p>
+<p>Хотя конкретное поведение инструкции say определяется используемым объектом
+Character, обычно инструкция say отображает диалог на экране до тех пор, пока
+игрок не кликнет для его закрытия, после чего скрывает этот диалог с экрана.</p>
+<p>Некоторые символы имеют специальное значение для Ren'Py и не могут использоваться
+в строках диалога напрямую. Символ <code class="docutils literal notranslate"><span class="pre">{</span></code> начинает текстовый тег, а символ <code class="docutils literal notranslate"><span class="pre">[</span></code>
+начинает подстановку переменной. Чтобы использовать их в тексте диалога,
+удвойте их: <code class="docutils literal notranslate"><span class="pre">{{</span></code> или <code class="docutils literal notranslate"><span class="pre">[[</span></code>. Также может потребоваться экранировать кавычки
+обратным слэшем, чтобы они не закрывали строку раньше времени. Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Я прошёл мимо вывески с надписью: </span><span class="se">\&quot;</span><span class="s2">Выложимся на все 100</span><span class="s">%%</span><span class="s2">!</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>Вместо объекта Character можно также использовать прокси-функцию. Подробнее
+об этом см. в <a class="reference internal" href="statement_equivalents.html#say-proxy"><span class="std std-ref">соответствующем разделе</span></a>.</p>
+</section>
+<section id="character">
+<span id="defining-character-objects"></span><h2>Определение объектов Character<a class="headerlink" href="#character" title="Ссылка на этот заголовок"></a></h2>
+<p>Создавая объект Character и используя его в инструкции say, вы можете настраивать
+внешний вид (и в некоторой степени поведение) диалога. Персонажи создаются с
+помощью инструкции <code class="docutils literal notranslate"><span class="pre">define</span></code>, присваивающей объект Character переменной. Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Эйлин&quot;</span><span class="p">,</span> <span class="n">who_color</span><span class="o">=</span><span class="s2">&quot;#c8ffc8&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>После этого персонажа можно использовать в инструкции say:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="s2">&quot;Привет, мир.&quot;</span>
+</pre></div>
+</div>
+<p>Character — это функция Python, принимающая множество именованных аргументов.
+Эти аргументы управляют поведением персонажа.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Character">
+<span class="sig-name descname"><span class="pre">Character</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">...</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">adv</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Character" title="Ссылка на это определение"></a></dt>
+<dd><p>Создаёт и возвращает объект Character, управляющий внешним видом
+и поведением диалога и повествования.</p>
+<dl>
+<dt><cite>name</cite></dt><dd><p>Если строка — имя персонажа для диалога. Если <cite>name</cite> равно None,
+отображение имени опускается, как при повествовании (словах автора).
+Если имя не указано, оно берётся из <cite>kind</cite>, а в противном случае
+по умолчанию равно None.</p>
+</dd>
+<dt><cite>kind</cite></dt><dd><p>Объект Character, на основе которого создаётся данный персонаж. При
+использовании значение по умолчанию для любого аргумента, не переданного
+явно данному Character, берётся из значений, переданных в <code class="docutils literal notranslate"><span class="pre">kind</span></code>.
+Это позволяет определить базовый шаблон персонажа, а затем копировать его
+с необходимыми изменениями.</p>
+<p>Также может быть пространством имён; в этом случае в качестве kind
+используется переменная 'character' из этого пространства имён.</p>
+</dd>
+</dl>
+<p><strong>Связанное изображение (Linked Image).</strong>
+С персонажем можно связать тег изображения. Это позволяет инструкции
+say с участием этого персонажа отображать изображение с этим тегом,
+а также позволяет Ren'Py автоматически выбирать боковое изображение
+для показа во время реплики этого персонажа.</p>
+<dl class="simple">
+<dt><cite>image</cite></dt><dd><p>Строка, задающая тег изображения, связанный с этим персонажем.</p>
+</dd>
+</dl>
+<p><strong>Тег озвучки (Voice Tag).</strong>
+Если персонажу назначен тег озвучки, аудиофайлы голоса, связанные с ним,
+можно заглушать или воспроизводить на экране настроек.</p>
+<dl class="simple">
+<dt><cite>voice_tag</cite></dt><dd><p>Строка, позволяющая заглушать или воспроизводить привязанный к персонажу
+аудиофайл озвучки в канале 'voice'.</p>
+</dd>
+</dl>
+<p><strong>Префиксы и суффиксы.</strong>
+Позволяют добавлять префикс и суффикс к имени персонажа и к отображаемому
+тексту реплики. Это можно использовать, например, для автоматического
+заключения каждой реплики диалога в кавычки.</p>
+<dl class="simple">
+<dt><cite>what_prefix</cite></dt><dd><p>Строка, добавляемая перед произносимой репликой диалога перед её показом.</p>
+</dd>
+<dt><cite>what_suffix</cite></dt><dd><p>Строка, добавляемая в конец произносимой реплики диалога перед её показом.</p>
+</dd>
+<dt><cite>who_prefix</cite></dt><dd><p>Строка, добавляемая перед именем персонажа перед его показом.</p>
+</dd>
+<dt><cite>who_suffix</cite></dt><dd><p>Строка, добавляемая в конец имени персонажа перед его показом.</p>
+</dd>
+</dl>
+<p><strong>Настройка отображения имени.</strong>
+Эти параметры помогают управлять отображением имени.</p>
+<dl class="simple">
+<dt><cite>dynamic</cite></dt><dd><p>Если true, то <cite>name</cite> должно быть либо строкой с выражением Python, либо
+функцией, либо вызываемым объектом. Если это строка, она будет
+вычисляться перед каждой строкой диалога, а результат будет использоваться
+как имя персонажа. В противном случае функция или вызываемый объект будут
+вызываться без аргументов перед каждой строкой диалога, и возвращённое
+значение будет использовано в качестве имени персонажа.</p>
+</dd>
+</dl>
+<p><strong>Управление взаимодействием.</strong>
+Эти параметры определяют, отображается ли диалог, происходит ли взаимодействие
+с пользователем и какой режим активируется при показе.</p>
+<dl class="simple">
+<dt><cite>warp</cite></dt><dd><p>Если true (по умолчанию), диалоги этого персонажа могут воспроизводиться
+во время <a class="reference internal" href="developer_tools.html#warping-to-a-line"><span class="std std-ref">перехода к строке</span></a> для восстановления
+истории, страниц NVL и сохранённых спич-бабблов. Повтор не вызывает
+взаимодействия с пользователем. Установите False, если пользовательское
+поведение персонажа не может безопасно выполняться во время warp.</p>
+</dd>
+<dt><cite>condition</cite></dt><dd><p>Если задано, должно быть строкой с выражением Python. Если выражение
+ложно, диалог не отображается, как если бы инструкция say вообще не выполнялась.</p>
+</dd>
+<dt><cite>interact</cite></dt><dd><p>Если true (по умолчанию), взаимодействие с пользователем происходит при
+каждом показе диалога. Если false, взаимодействие не происходит, и на экран
+можно добавлять дополнительные элементы.</p>
+</dd>
+<dt><cite>advance</cite></dt><dd><p>Если true (по умолчанию), игрок может кликнуть для продвижения по диалогу,
+а также работают другие способы перехода (такие как пропуск и режим авточтения).
+Если false, игрок не сможет продвинуться дальше этой инструкции say, если
+не предоставлен альтернативный способ (например, гиперссылка перехода jump
+или экран).</p>
+</dd>
+<dt><cite>callback</cite></dt><dd><p>Функция, которая вызывается при возникновении событий во время реплики
+персонажа. Подробнее см. раздел <a class="reference internal" href="character_callbacks.html#character-callbacks"><span class="std std-ref">Функции обратного вызова персонажа</span></a>.</p>
+</dd>
+</dl>
+<p><strong>Индикатор продолжения по клику (Click-to-continue / CTC).</strong>
+Индикатор продолжения по клику отображается после завершения вывода всего
+текста, подсказывая пользователю нажать для продолжения.</p>
+<dl>
+<dt><cite>ctc</cite></dt><dd><p>Отображаемый объект, используемый в качестве индикатора продолжения по клику,
+если не задан более специфичный индикатор.</p>
+</dd>
+<dt><cite>ctc_pause</cite></dt><dd><p>Отображаемый объект для индикатора клика, когда вывод текста приостановлен
+текстовыми тегами {p} или {w}.</p>
+</dd>
+<dt><cite>ctc_timedpause</cite></dt><dd><p>Отображаемый объект для индикатора клика, когда вывод текста приостановлен
+текстовыми тегами {p=} или {w=}. Если None, значение берётся из <cite>ctc_pause</cite>.
+Используйте <code class="docutils literal notranslate"><span class="pre">Null()</span></code>, если нужен <cite>ctc_pause</cite>, но не нужен <cite>ctc_timedpause</cite>.</p>
+</dd>
+<dt><cite>ctc_position</cite></dt><dd><p>Управляет расположением индикатора продолжения по клику:</p>
+<dl>
+<dt>&quot;nestled&quot;</dt><dd><p>Индикатор отображается как часть выводимого текста сразу после
+последнего символа.</p>
+</dd>
+<dt>&quot;nestled-close&quot;</dt><dd><p>Аналогично <code class="docutils literal notranslate"><span class="pre">&quot;nestled&quot;</span></code>, но перенос строки между текстом и индикатором
+CTC запрещён.</p>
+</dd>
+<dt>&quot;fixed&quot;</dt><dd><p>Если экран с именем &quot;ctc&quot; существует, отображается он. В противном
+случае отображается объект CTC, а для его позиционирования используются
+свойства стиля положения объекта CTC.</p>
+</dd>
+<dt>&quot;screen-variable&quot;</dt><dd><p>При передаче этого значения переменной с именем &quot;ctc&quot; присваивается
+отображаемый объект CTC, когда индикатор CTC должен быть показан. Это
+можно использовать в языке экранов следующим образом:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">default</span> <span class="n">ctc</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">showif</span> <span class="n">ctc</span><span class="p">:</span>
+    <span class="k">add</span> <span class="n">ctc</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<p><strong>Экраны.</strong>
+Для вывода диалога используется <a class="reference internal" href="screens.html#screens"><span class="std std-ref">экран</span></a>. Эти аргументы
+позволяют выбрать этот экран и передать ему параметры.</p>
+<dl class="simple">
+<dt><cite>screen</cite></dt><dd><p>Имя экрана, используемого для отображения диалога.</p>
+</dd>
+<dt><cite>retain</cite></dt><dd><p>Если значение не True, для каждой строки диалога генерируется неиспользуемый
+тег, и экраны показываются непостоянно (non-transiently). Вызовите
+<a class="reference internal" href="other.html#renpy.clear_retain" title="renpy.clear_retain"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.clear_retain()</span></code></a>, чтобы удалить все сохранённые экраны. Практически
+всегда используется вместе с <a class="reference internal" href="bubble.html"><span class="doc">Speech Bubbles</span></a>.</p>
+</dd>
+</dl>
+<p>Именованные аргументы, начинающиеся с <code class="docutils literal notranslate"><span class="pre">show_</span></code>, отбрасывают этот префикс
+и передаются экрану в качестве аргументов. Например, значение <code class="docutils literal notranslate"><span class="pre">show_myflag</span></code>
+станет значением переменной <code class="docutils literal notranslate"><span class="pre">myflag</span></code> в экране. (Переменная <code class="docutils literal notranslate"><span class="pre">myflag</span></code> не
+используется по умолчанию, но может использоваться в пользовательском экране say.)</p>
+<p>Одна переменная показа по историческим причинам обрабатывается самим Ren'Py:</p>
+<dl class="simple">
+<dt><cite>show_layer</cite></dt><dd><p>Если задано, строка с именем слоя, на котором должен отображаться экран say.</p>
+</dd>
+</dl>
+<p><strong>Стилизация текста и окон.</strong>
+Именованные аргументы, начинающиеся с <code class="docutils literal notranslate"><span class="pre">who_</span></code>, <code class="docutils literal notranslate"><span class="pre">what_</span></code> и <code class="docutils literal notranslate"><span class="pre">window_</span></code>,
+отбрасывают префикс и используются для <a class="reference internal" href="style.html"><span class="doc">стилизации</span></a> имени персонажа,
+произносимого текста и содержащего их окна соответственно.</p>
+<p>Например, если персонажу передан аргумент <code class="docutils literal notranslate"><span class="pre">who_color=&quot;#c8ffc8&quot;</span></code>, цвет имени
+персонажа изменится (в данном случае на зелёный). Аргумент <code class="docutils literal notranslate"><span class="pre">window_background=&quot;frame.png&quot;</span></code>
+задаёт фоновое изображение окна с диалогом этого персонажа.</p>
+<p>Стиль, применяемый к имени персонажа, тексту реплики и окну, также можно задать
+этим способом с помощью аргументов <code class="docutils literal notranslate"><span class="pre">who_style</span></code>, <code class="docutils literal notranslate"><span class="pre">what_style</span></code> и <code class="docutils literal notranslate"><span class="pre">window_style</span></code>
+соответственно.</p>
+<p>Настройка <a class="reference internal" href="config.html#var-config.character_id_prefixes"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.character_id_prefixes</span></code></a> позволяет стилизовать и другие
+отображаемые объекты. Например, при использовании стандартного GUI стили с
+префиксом <code class="docutils literal notranslate"><span class="pre">namebox_</span></code> используются для оформления плашки имени говорящего персонажа.</p>
+</dd></dl>
+
+</section>
+<section id="id2">
+<h2>Инструкция say с атрибутами изображений<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p>Когда персонаж определён со связанным тегом изображения, инструкция say с
+участием этого персонажа может содержать атрибуты изображения, размещённые
+между именем персонажа и строкой реплики.</p>
+<p>В этой форме, если изображение с указанным тегом уже отображается на экране,
+Ren'Py выполнит команду show с тегом персонажа и указанными атрибутами. Если
+изображение ещё не показано, Ren'Py сохранит эти атрибуты для использования
+боковыми изображениями, но не станет показывать само изображение.</p>
+<p>Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Эйлин&quot;</span><span class="p">,</span> <span class="k">image</span><span class="o">=</span><span class="s2">&quot;eileen&quot;</span><span class="p">)</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">concerned</span>
+    <span class="n">e</span> <span class="s2">&quot;Я немного расстроена из-за тебя.&quot;</span>
+
+    <span class="n">e</span> <span class="n">happy</span> <span class="s2">&quot;Но это быстро пройдёт.&quot;</span>
+</pre></div>
+</div>
+<p>эквивалентно следующей записи:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Эйлин&quot;</span><span class="p">,</span> <span class="k">image</span><span class="o">=</span><span class="s2">&quot;eileen&quot;</span><span class="p">)</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">concerned</span>
+    <span class="n">e</span> <span class="s2">&quot;Я немного расстроена из-за тебя.&quot;</span>
+
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span>
+    <span class="n">e</span> <span class="s2">&quot;Но это быстро пройдёт.&quot;</span>
+</pre></div>
+</div>
+<p>В приведённом выше примере атрибуты <code class="docutils literal notranslate"><span class="pre">concerned</span></code> и <code class="docutils literal notranslate"><span class="pre">happy</span></code> заменяют друг друга.
+Однако можно вернуться к Эйлин без атрибута <code class="docutils literal notranslate"><span class="pre">happy</span></code>, не указывая атрибут
+<code class="docutils literal notranslate"><span class="pre">concerned</span></code> явно. Имя атрибута со знаком минус ( - ) перед ним даёт именно такой
+эффект, точно так же, как и в <a class="reference internal" href="displaying_images.html#show-statement"><span class="std std-ref">инструкции show</span></a>.</p>
+<p>Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Эйлин&quot;</span><span class="p">)</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+
+    <span class="k">show</span> <span class="n">eileen</span>
+    <span class="n">e</span> <span class="n">concerned</span> <span class="s2">&quot;Я немного расстроена из-за тебя.&quot;</span>
+
+    <span class="n">e</span> <span class="n">happy</span> <span class="s2">&quot;Это забавно.&quot;</span>
+
+    <span class="n">e</span> <span class="o">-</span><span class="n">happy</span> <span class="s2">&quot;Даже не знаю, что теперь думать.&quot;</span>
+</pre></div>
+</div>
+<p>Если в список атрибутов включён знак &#64;, любой элемент после него оказывает
+только временный эффект и сбрасывается в конце данной строки диалога.</p>
+<p>Например, следующий код эквивалентен предыдущему примеру:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Эйлин&quot;</span><span class="p">,</span> <span class="k">image</span><span class="o">=</span><span class="s2">&quot;eileen&quot;</span><span class="p">)</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+
+    <span class="k">show</span> <span class="n">eileen</span> <span class="n">concerned</span>
+    <span class="n">e</span> <span class="s2">&quot;Я немного расстроена из-за тебя.&quot;</span>
+
+    <span class="n">e</span> <span class="o">@</span> <span class="n">happy</span> <span class="s2">&quot;Это забавно.&quot;</span>
+
+    <span class="n">e</span> <span class="s2">&quot;Даже не знаю, что теперь думать.&quot;</span>
+</pre></div>
+</div>
+<p>В одной строке можно объединять постоянные изменения, идущие до знака &#64;,
+и временные, идущие после него:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="n">happy</span> <span class="o">@</span> <span class="n">vhappy</span> <span class="s2">&quot;Правда?! Это всё меняет.&quot;</span>
+</pre></div>
+</div>
+<p>Знак минус можно также использовать после знака &#64;:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">@</span> <span class="n">right</span> <span class="o">-</span><span class="n">concerned</span> <span class="s2">&quot;Мой гнев временно утих...&quot;</span>
+<span class="n">e</span> <span class="s2">&quot;ОДНАКО!&quot;</span>
+</pre></div>
+</div>
+<p>Чтобы при каждом таком изменении изображений воспроизводился переход, присвойте
+желаемый переход переменной <a class="reference internal" href="config.html#var-config.say_attribute_transition"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.say_attribute_transition</span></code></a>. Для более
+тонкого контроля используйте функцию обратного вызова <a class="reference internal" href="config.html#var-config.say_attribute_transition_callback"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.say_attribute_transition_callback</span></code></a>.</p>
+</section>
+<section id="id3">
+<h2>Примеры персонажей<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Вот несколько примеров объявления персонажей:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># Персонаж, реплики которого автоматически заключаются в круглые скобки.</span>
+<span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Эйлин&quot;</span><span class="p">,</span> <span class="n">what_prefix</span><span class="o">=</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="n">what_suffix</span><span class="o">=</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Персонаж, имя которого берётся из переменной.</span>
+<span class="k">define</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;player_name&quot;</span><span class="p">,</span> <span class="n">dynamic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>Специальные персонажи<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Несколько имён персонажей определены по умолчанию и используются автоматически
+в определённых ситуациях. Намеренное переопределение этих персонажей может изменить
+поведение Ren'Py, но их случайное использование может вызвать проблемы.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">adv</span></code></dt><dd><p>Тип персонажа по умолчанию, используемый функцией Character. Настраивает
+персонажа так, чтобы на экране одновременно отображалась одна строка текста.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">nvl</span></code></dt><dd><p>Тип Character, заставляющий диалог отображаться в <a class="reference internal" href="nvl_mode.html"><span class="doc">NVL-Mode Tutorial</span></a>, когда
+на экране одновременно выводится несколько строк текста.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">narrator</span></code></dt><dd><p>Персонаж, используемый для вывода слов автора (повествования) инструкциями
+say без указания имени персонажа.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">name_only</span></code></dt><dd><p>Персонаж, используемый для диалогов, в которых имя персонажа передано
+строкой. Этот персонаж копируется в нового персонажа с указанным именем,
+и затем этот новый персонаж используется для вывода диалога.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">centered</span></code></dt><dd><p>Персонаж, текст которого отображается по центру экрана вне какого-либо окна.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">vcentered</span></code></dt><dd><p>Персонаж, текст которого отображается по центру экрана вертикально
+ориентированным текстом вне какого-либо окна.</p>
+</dd>
+</dl>
+<dl id="extend">
+<dt><code class="docutils literal notranslate"><span class="pre">extend</span></code></dt><dd><p>Персонаж, заставляющий последнего говорившего персонажа произнести строку
+диалога, состоящую из последней произнесённой строки, тега &quot;{fast}&quot; и текста,
+переданного в extend. Это можно использовать для изменения выражения лица
+или экрана прямо посреди реплики.</p>
+<p>Extend поддерживает режим NVL-mode и обрабатывает его корректно. Extend не
+работает должным образом, если язык перевода меняется между начальной
+инструкцией say и вызовом extend.</p>
+</dd>
+</dl>
+<p>Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># Показываем первую часть реплики, ждём клика, меняем выражение лица и показываем</span>
+<span class="c1"># остальной текст.</span>
+
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">concerned</span>
+<span class="n">e</span> <span class="s2">&quot;Иногда мне бывает грустно.&quot;</span>
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span>
+<span class="n">extend</span> <span class="s2">&quot; Но обычно я быстро справляюсь с этим!&quot;</span>
+
+<span class="c1"># Аналогично, но выражение лица меняется автоматически сразу по завершении вывода</span>
+<span class="c1"># первой строки. Это имеет смысл, только если у пользователя скорость текста</span>
+<span class="c1"># не выкручена на максимум.</span>
+
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">concerned</span>
+<span class="n">e</span> <span class="s2">&quot;Иногда мне бывает грустно.</span><span class="s">{nw}</span><span class="s2">&quot;</span>
+<span class="k">show</span> <span class="n">eileen</span> <span class="n">happy</span>
+<span class="n">extend</span> <span class="s2">&quot; Но обычно я быстро справляюсь с этим!&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="dialogue-window-management">
+<span id="id5"></span><h2>Управление окном диалога<a class="headerlink" href="#dialogue-window-management" title="Ссылка на этот заголовок"></a></h2>
+<p>Ren'Py включает несколько инструкций для управления окном диалога. Поскольку диалоговое
+окно всегда отображается во время диалога, эти инструкции определяют наличие или
+отсутствие окна во время взаимодействий, не являющихся диалогом.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">show</span></code></dt><dd><p>Инструкция window show отображает диалоговое окно.
+В качестве аргумента она принимает необязательный переход, используемый для показа
+окна. Если переход опущен, используется <a class="reference internal" href="config.html#var-config.window_show_transition"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.window_show_transition</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">hide</span></code></dt><dd><p>Инструкция window hide скрывает диалоговое окно. В качестве аргумента она
+принимает необязательный переход, используемый для скрытия окна. Если
+переход опущен, используется <a class="reference internal" href="config.html#var-config.window_hide_transition"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.window_hide_transition</span></code></a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">auto</span> <span class="pre">True</span></code></dt><dd><p>Включает автоматическое управление окном. Окно показывается перед инструкциями,
+перечисленными в <a class="reference internal" href="config.html#var-config.window_auto_show"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.window_auto_show</span></code></a> (по умолчанию — инструкции say).
+Окно скрывается перед инструкциями из списка <a class="reference internal" href="config.html#var-config.window_auto_hide"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.window_auto_hide</span></code></a> (по
+умолчанию — инструкции <code class="docutils literal notranslate"><span class="pre">scene</span></code>, <code class="docutils literal notranslate"><span class="pre">call</span> <span class="pre">screen</span></code> и инструкции <code class="docutils literal notranslate"><span class="pre">menu</span></code> без подписи).</p>
+<p>Учитываются только синтаксические инструкции, но не их эквивалентные функции Python.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">auto</span> <span class="pre">False</span></code></dt><dd><p>Отключает автоматическое управление окном. Окно больше не будет показываться
+или скрываться автоматически.</p>
+</dd>
+</dl>
+<p>Инструкция <code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">auto</span></code> использует <a class="reference internal" href="config.html#var-config.window_show_transition"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.window_show_transition</span></code></a>
+и <a class="reference internal" href="config.html#var-config.window_hide_transition"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.window_hide_transition</span></code></a> для показа и скрытия окна соответственно.
+Режим <code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">auto</span></code> отменяется явными инструкциями <code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">show</span></code> и <code class="docutils literal notranslate"><span class="pre">window</span> <span class="pre">hide</span></code>.</p>
+<p>Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">window</span> <span class="k">show</span> <span class="c1"># показывает окно с переходом по умолчанию, если он задан.</span>
+<span class="k">pause</span>       <span class="c1"># окно отображается во время этой паузы.</span>
+<span class="k">window</span> <span class="k">hide</span> <span class="c1"># скрывает окно.</span>
+<span class="k">pause</span>       <span class="c1"># окно скрыто во время этой паузы.</span>
+
+<span class="k">window</span> <span class="k">show</span> <span class="n">dissolve</span> <span class="c1"># показывает окно с переходом dissolve.</span>
+<span class="k">pause</span>                <span class="c1"># окно отображается во время этой паузы.</span>
+<span class="k">window</span> <span class="k">hide</span> <span class="n">dissolve</span> <span class="c1"># скрывает окно с переходом dissolve.</span>
+<span class="k">pause</span>                <span class="c1"># окно скрыто во время этой паузы.</span>
+
+
+<span class="k">window</span> <span class="k">auto</span> <span class="kc">True</span>
+
+<span class="s2">&quot;Окно автоматически показывается перед этой строкой диалога.&quot;</span>
+<span class="k">pause</span>                <span class="c1"># окно отображается во время этой паузы.</span>
+
+<span class="k">scene</span> <span class="n">bg</span> <span class="n">washington</span>  <span class="c1"># окно скрывается перед сменой сцены.</span>
+<span class="k">with</span> <span class="n">dissolve</span>
+
+<span class="k">window</span> <span class="k">show</span>     <span class="c1"># Показывает окно раньше, чем оно обычно появилось бы.</span>
+
+<span class="k">show</span> <span class="n">eileen</span>
+<span class="k">with</span> <span class="n">dissolve</span>
+
+<span class="s2">&quot;Без команды window show окно появилось бы только на этой строке.&quot;</span>
+</pre></div>
+</div>
+<p>Управление окном диалога подчиняется <a class="reference internal" href="screen_actions.html#Preference" title="Preference"><code class="xref py py-func docutils literal notranslate"><span class="pre">настройке</span></code></a> «показывать пустое окно».
+Если эта настройка отключена игроком, приведённые выше инструкции не действуют.</p>
+</section>
+<section id="say-with-arguments">
+<span id="id6"></span><h2>Инструкция say с аргументами<a class="headerlink" href="#say-with-arguments" title="Ссылка на этот заголовок"></a></h2>
+<p>Инструкции say можно передавать дополнительные аргументы, указав их в круглых
+скобках после строки реплики. Например, можно написать:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="s2">&quot;Привет, мир.&quot;</span> <span class="p">(</span><span class="n">what_color</span><span class="o">=</span><span class="s2">&quot;#8c8&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Аргументы инструкции say сначала обрабатываются функцией <a class="reference internal" href="config.html#var-config.say_arguments_callback"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.say_arguments_callback</span></code></a>,
+если она задана. Оставшиеся аргументы передаются персонажу, который обрабатывает их
+так, как если бы они были переданы при объявлении персонажа. Таким образом, в
+приведённом примере реплика отобразится зелёным цветом.
+Именованный аргумент <cite>_with_none</cite> переопределяет атрибут <cite>with_none</cite> персонажа.</p>
+<p>Параметр <cite>interact</cite> является особым случаем: если при определении Character было
+передано <code class="docutils literal notranslate"><span class="pre">interact=False</span></code>, передача <code class="docutils literal notranslate"><span class="pre">interact=True</span></code> в инструкции say не
+переопределит это значение, то есть взаимодействие с игроком в этом случае всё равно не произойдёт.</p>
+<p>Обратите внимание, что <a class="reference internal" href="config.html#var-config.say_arguments_callback"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.say_arguments_callback</span></code></a> вызывается при каждом
+выполнении инструкции say, а не только когда аргументы переданы явно. Это удобно
+для реализации условного переопределения параметров персонажей. Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">say_arguments_callback</span><span class="p">(</span><span class="n">char</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">colorblind_mode</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;what_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#000&quot;</span>
+        <span class="k">return</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>
+
+<span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">say_arguments_callback</span> <span class="o">=</span> <span class="n">say_arguments_callback</span>
+</pre></div>
+</div>
+</section>
+<section id="monologue-mode">
+<span id="id7"></span><h2>Режим монолога<a class="headerlink" href="#monologue-mode" title="Ссылка на этот заголовок"></a></h2>
+<p>В некоторых визуальных новеллах встречаются длинные монологи повествователя или
+несколько блоков реплик одного и того же персонажа подряд. В таких случаях писать
+имя персонажа и открывать кавычки на каждой строке утомительно.</p>
+<p>Для таких ситуаций Ren'Py поддерживает режим монолога. Если текст диалога помещён
+в тройные кавычки, Ren'Py разбивает диалог на отдельные блоки по пустым строкам.
+Каждый блок затем преобразуется в отдельную инструкцию say. Вот пример с тремя
+блоками слов автора, за которыми следуют три реплики персонажа:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Это первая строка повествования. Она длиннее двух других строк,</span>
+<span class="sd">поэтому переносится на новую строку.</span>
+
+<span class="sd">Это вторая строка повествования.</span>
+
+<span class="sd">Это третья строка повествования.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">e</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Это первая реплика диалога. Она длиннее двух других реплик,</span>
+<span class="s2">поэтому переносится на новую строку.</span>
+
+<span class="s2">Это вторая реплика диалога.</span>
+
+<span class="s2">Это третья реплика диалога.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Хотя дополнительные конструкции (такие как аргументы или атрибуты) разрешены,
+они передаются каждой строке в монологе, что может быть менее удобно.</p>
+<p>Если вы хотите убрать пустые строки между блоками, добавьте директиву
+<code class="docutils literal notranslate"><span class="pre">rpy</span> <span class="pre">monologue</span> <span class="pre">single</span></code> на верхнем уровне файла перед первой строкой монолога.</p>
+<p>Если вы хотите полностью отключить такое поведение и отображать весь текст
+между тройными кавычками как единое сообщение с сохранением переводов строк,
+используйте директиву <code class="docutils literal notranslate"><span class="pre">rpy</span> <span class="pre">monologue</span> <span class="pre">none</span></code>.</p>
+</section>
+<section id="id8">
+<h2>Хранилище character<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<p><em>Основная статья:</em> <a class="reference internal" href="python.html#named-stores"><span class="std std-ref">Другие именованные хранилища</span></a></p>
+<p>Инструкция say ищет имена в именованном хранилище <code class="docutils literal notranslate"><span class="pre">character</span></code> перед тем, как
+обратиться к хранилищу по умолчанию. Если вы хотите создать персонажа с тем же
+именем, что и переменная в хранилище по умолчанию, его можно объявить так:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">character</span><span class="o">.</span><span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Эйлин&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Этого персонажа затем можно использовать параллельно с переменной в стандартном хранилище:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">default</span> <span class="n">e</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">label</span> <span class="n">start</span><span class="p">:</span>
+
+    <span class="c1"># По-прежнему не лучшее имя для переменной, но допустимое.</span>
+    <span class="k">$</span> <span class="n">e</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="n">e</span> <span class="s2">&quot;Текущий запас энергии: [e] единиц.&quot;</span>
+</pre></div>
+</div>
+<p>Это особенно полезно для хранения параметров персонажа в пространстве имён
+без конфликтов с инструкцией say:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">character</span><span class="o">.</span><span class="n">naomi</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Наоми Нагата&quot;</span><span class="p">,</span> <span class="n">who_color</span><span class="o">=</span><span class="s2">&quot;#8c8&quot;</span><span class="p">)</span>
+<span class="k">default</span> <span class="n">naomi</span> <span class="o">=</span> <span class="n">PersonClass</span><span class="p">(</span><span class="n">engineering</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">max_g_force</span><span class="o">=</span><span class="mf">.7</span><span class="p">)</span> <span class="c1"># может быть объектом...</span>
+<span class="k">define</span> <span class="n">character</span><span class="o">.</span><span class="n">fred</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Фред Джонсон&quot;</span><span class="p">,</span> <span class="n">who_color</span><span class="o">=</span><span class="s2">&quot;#72f&quot;</span><span class="p">)</span>
+<span class="k">default</span> <span class="n">fred</span><span class="o">.</span><span class="n">money</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># ...или отдельным именованным хранилищем</span>
+<span class="k">default</span> <span class="n">fred</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="s2">&quot;Полковник&quot;</span>
+
+<span class="k">label</span> <span class="n">traded</span><span class="p">:</span>
+    <span class="n">fred</span> <span class="s2">&quot;Вот, держи.&quot;</span>
+    <span class="k">$</span> <span class="n">fred</span><span class="o">.</span><span class="n">money</span> <span class="o">-=</span> <span class="mi">50</span>
+    <span class="k">$</span> <span class="n">naomi</span><span class="o">.</span><span class="n">money</span> <span class="o">+=</span> <span class="mi">50</span>
+    <span class="n">naomi</span> <span class="s2">&quot;Спасибо! Я знала, что ты оценишь мои инженерные навыки [naomi.engineering]-го класса.&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h2>Альтернативные варианты отображения<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<p><a class="reference internal" href="nvl_mode.html"><span class="doc">NVL-Mode Tutorial</span></a> : режим, в котором диалог выводится на весь экран.</p>
+<p><a class="reference internal" href="bubble.html"><span class="doc">Speech Bubbles</span></a> : режим, отображающий диалог в комиксных спич-бабблах (диалоговых облачках),
+которые можно позиционировать интерактивно.</p>
+</section>
+<section id="id10">
+<h2>См. также<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h2>
+<p><a class="reference internal" href="statement_equivalents.html"><span class="doc">Statement Equivalents</span></a> : использование большинства описанных здесь возможностей
+в контексте Python (с определёнными ограничениями).</p>
+<p><a class="reference internal" href="other.html#renpy.last_say" title="renpy.last_say"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.last_say()</span></code></a> : предоставляет информацию о последней выполненной инструкции say.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="label.html" class="btn btn-neutral float-left" title="Метки и управление выполнением" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="displaying_images.html" class="btn btn-neutral float-right" title="Отображение изображений" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

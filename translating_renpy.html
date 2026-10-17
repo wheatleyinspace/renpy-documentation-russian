@@ -1,0 +1,417 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Перевод Ren&#39;Py &mdash; Ren&#39;Py Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6eda34c5" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+    <link rel="canonical" href="https://www.renpy.org/doc/html/translating_renpy.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=00c7e44b"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+      <script src="_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Changelog (Ren&#39;Py 7.x-)" href="changelog.html" />
+    <link rel="prev" title="Skins" href="skins.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+<a href="https://www.renpy.org/" style="margin-bottom: 0">Ren'Py Visual Novel Engine
+<img src="_static/navbar-logo.png" alt="Логотип" style="width: 93px; height: 100px; border-radius: 0; margin: 0 auto; padding: 0; margin-top: 5px; background-color: unset;" />
+</a>
+
+<a href="index.html" style="margin-bottom: 0px">8.6.0 Documentation</a>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="language_basics.html">Основы языка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="label.html">Метки и управление выполнением</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dialogue.html">Диалог и повествование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html">Отображение изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id2">Основные понятия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#defining-images">Объявление изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#show">Инструкция show</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#scene">Инструкция scene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#hide">Инструкция hide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#with">Инструкция with</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#camera-show-layer">Инструкции camera и show layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#window-show-window-hide">Инструкции window show и window hide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id9">Функции изображений</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displaying_images.html#id10">См. также</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="voice.html">Озвучка</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Перевод</a></li>
+<li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Продвинутый GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Перевод Ren'Py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Файлы перевода</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Специфические для языка переводы</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Смена шрифтов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Изменение стилей лаунчера</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Функции</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#translate_font"><code class="docutils literal notranslate"><span class="pre">translate_font()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#translate_define"><code class="docutils literal notranslate"><span class="pre">translate_define()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ren'Py Visual Novel Engine</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Перевод Ren'Py</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/translating_renpy.rst" class="fa fa-github"> Редактировать на GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ren-py">
+<span id="translating-renpy"></span><h1>Перевод Ren'Py<a class="headerlink" href="#ren-py" title="Ссылка на этот заголовок"></a></h1>
+<p>Вы можете перевести сам движок Ren'Py. Полная локализация включает перевод
+пользовательского интерфейса (GUI), различных системных сообщений Ren'Py,
+шаблонов новых проектов и лаунчера. Это покрывает большинство сценариев игры
+и разработки. На данный момент не все внутренние сообщения об ошибках подлежат переводу.</p>
+<p>Чтобы создать новый перевод Ren'Py:</p>
+<ol class="arabic simple">
+<li><p>Откройте лаунчер Ren'Py.</p></li>
+<li><p>В настройках («Preferences») выберите «Открыть проект лаунчера» («Open launcher project»).</p></li>
+<li><p>Выберите «Сгенерировать переводы» («Generate Translations»).</p></li>
+<li><p>Введите имя языка для перевода строчными буквами ASCII и знаками подчёркивания (например,
+&quot;japanese&quot;, &quot;russian&quot; или &quot;ancient_klingon&quot;).</p></li>
+<li><p>Нажмите «Сгенерировать переводы» («Generate Translations»).</p></li>
+</ol>
+<p>Та же процедура используется для обновления существующего перевода. Чтобы переключиться
+на созданный перевод, вернитесь в настройки лаунчера и выберите новый язык. По умолчанию
+новый перевод будет копией английской версии.</p>
+<section id="id1">
+<h2>Файлы перевода<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>Файлы перевода располагаются в каталоге <code class="file docutils literal notranslate"><span class="pre">launcher/game/tl/</span><em><span class="pre">language</span></em><span class="pre">/</span></code>. За
+исключением <code class="file docutils literal notranslate"><span class="pre">script.rpy</span></code>, все файлы представляют собой строковые переводы,
+выполняемые по правилам <a class="reference internal" href="translation.html#string-translations"><span class="std std-ref">строкового перевода</span></a>.
+Некоторые строки начинаются с &quot;## &quot; — это комментарии, которые переводятся,
+форматируются и автоматически включаются в файлы <code class="file docutils literal notranslate"><span class="pre">options.rpy</span></code> и <code class="file docutils literal notranslate"><span class="pre">gui.rpy</span></code>
+при создании новых проектов.</p>
+<p>Файлы перевода:</p>
+<dl class="simple">
+<dt>common.rpy</dt><dd><p>Содержит строки интерфейса, которые Ren'Py выводит игрокам во время игры.</p>
+</dd>
+<dt>developer.rpy</dt><dd><p>Содержит строки меню разработчика, предназначенные исключительно для авторов игр.</p>
+</dd>
+<dt>error.rpy</dt><dd><p>Содержит строки экрана обработки критических ошибок.</p>
+</dd>
+<dt>gui.rpy</dt><dd><p>Содержит комментарии, помещаемые в создаваемый по умолчанию файл gui.rpy проекта.</p>
+</dd>
+<dt>launcher.rpy</dt><dd><p>Содержит строки интерфейса лаунчера Ren'Py.</p>
+</dd>
+<dt>obsolete.rpy</dt><dd><p>Содержит устаревшие строки, не используемые в современных версиях Ren'Py.</p>
+</dd>
+<dt>options.rpy</dt><dd><p>Содержит строки комментариев для файла options.rpy создаваемого проекта.</p>
+</dd>
+<dt>screens.rpy</dt><dd><p>Содержит строки стандартных экранов и комментарии для screens.rpy.</p>
+</dd>
+<dt>script.rpym</dt><dd><p>Содержимое этого файла дословно копируется в script.rpy при создании нового проекта.</p>
+</dd>
+<dt>style.rpy</dt><dd><p>Файл изначально отсутствует, но создаётся при необходимости. В нём настраиваются
+стили лаунчера и шрифты для создаваемых проектов.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h2>Специфические для языка переводы<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p>Существует один особый перевод. Строка &quot;{#language name and font}&quot; должна быть
+заменена на самоназвание языка, при необходимости обёрнутое в тег шрифта лаунчера
+(если используются не-ASCII символы). Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">translate</span> <span class="n">french</span> <span class="k">strings</span><span class="p">:</span>
+
+    <span class="k">old</span> <span class="s2">&quot;{#language name and font}&quot;</span>
+    <span class="k">new</span> <span class="s2">&quot;{font=fonts/Roboto-Light.ttf}Français{/font}&quot;</span>
+</pre></div>
+</div>
+<p>Это используется для корректного отображения названия языка в меню лаунчера, когда
+активен другой язык интерфейса.</p>
+<p>Строки, начинающиеся с &quot;{#in language font}&quot;, оформляются аналогично:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">translate</span> <span class="n">french</span> <span class="k">strings</span><span class="p">:</span>
+
+    <span class="k">old</span> <span class="s2">&quot;{#in language font}Start using Ren&#39;Py in [lang_name]&quot;</span>
+    <span class="k">new</span> <span class="s2">&quot;{font=fonts/Roboto-Light.ttf}Commencez à utiliser Ren&#39;Py en [lang_name]{/font}&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>Смена шрифтов<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Ren'Py поставляется со стандартным шрифтом DejaVuSans, покрывающим большинство
+западных алфавитов, однако для других языков (кириллицы, иероглифов) часто требуются
+другие шрифты. Шрифт настраивается в файле <code class="file docutils literal notranslate"><span class="pre">launcher/game/tl/language/style.rpy</span></code>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
+    <span class="n">translate_font</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="s2">&quot;myfont.ttf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>где &quot;language&quot; — имя языка (например, &quot;russian&quot;), а &quot;myfont.ttf&quot; — файл шрифта.
+Файл шрифта должен быть помещён в папку <code class="file docutils literal notranslate"><span class="pre">launcher/game/tl/language</span></code>, чтобы
+лаунчер мог его обнаружить.</p>
+</section>
+<section id="id4">
+<h2>Изменение стилей лаунчера<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Стили интерфейса лаунчера настраиваются с помощью переменных в блоке <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">python</span></code>.
+Доступны следующие переменные (они действуют только внутри лаунчера):</p>
+<dl class="std var">
+<dt class="sig sig-object std" id="var-gui.LIGHT_FONT">
+<span class="pre">define</span> <span class="sig-name descname"><span class="pre">gui.LIGHT_FONT</span></span> <span class="pre">=</span> <span class="pre">&quot;Roboto-Light.ttf&quot;</span><a class="headerlink" href="#var-gui.LIGHT_FONT" title="Ссылка на это определение"></a></dt>
+<dd><p>Путь к шрифту для обычного текста в лаунчере.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-gui.REGULAR_FONT">
+<span class="pre">define</span> <span class="sig-name descname"><span class="pre">gui.REGULAR_FONT</span></span> <span class="pre">=</span> <span class="pre">&quot;Roboto-Regular.ttf&quot;</span><a class="headerlink" href="#var-gui.REGULAR_FONT" title="Ссылка на это определение"></a></dt>
+<dd><p>Путь к шрифту для акцентного (полужирного) текста в лаунчере.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-gui.REGULAR_BOLD">
+<span class="pre">define</span> <span class="sig-name descname"><span class="pre">gui.REGULAR_BOLD</span></span> <span class="pre">=</span> <span class="pre">False</span><a class="headerlink" href="#var-gui.REGULAR_BOLD" title="Ссылка на это определение"></a></dt>
+<dd><p>Если True, акцентный текст дополнительно выделяется полужирным.</p>
+</dd></dl>
+
+<dl class="std var">
+<dt class="sig sig-object std" id="var-gui.FONT_SCALE">
+<span class="pre">define</span> <span class="sig-name descname"><span class="pre">gui.FONT_SCALE</span></span> <span class="pre">=</span> <span class="pre">1.0</span><a class="headerlink" href="#var-gui.FONT_SCALE" title="Ссылка на это определение"></a></dt>
+<dd><p>Коэффициент масштабирования размера всего текста в лаунчере.</p>
+</dd></dl>
+
+<p>Блок <code class="docutils literal notranslate"><span class="pre">translate</span> <span class="pre">python</span></code> используется для настройки этих переменных. Например, для
+арабской локализации Ren'Py используется:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">translate</span> <span class="n">arabic</span> <span class="k">python</span><span class="p">:</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">REGULAR_FONT</span> <span class="o">=</span> <span class="s2">&quot;DejaVuSans.ttf&quot;</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">LIGHT_FONT</span> <span class="o">=</span> <span class="s2">&quot;DejaVuSans.ttf&quot;</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">FONT_SCALE</span> <span class="o">=</span> <span class="mf">.9</span>
+    <span class="n">gui</span><span class="o">.</span><span class="n">REGULAR_BOLD</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>Функции<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<p>Следующие функции служат для настройки локализации лаунчера и вызываются из блока
+<code class="docutils literal notranslate"><span class="pre">init</span> <span class="pre">python</span></code>:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="translate_font">
+<span class="sig-name descname"><span class="pre">translate_font</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#translate_font" title="Ссылка на это определение"></a></dt>
+<dd><p>Задаёт шрифт для языка <cite>language</cite>. Этот шрифт используется в лаунчере, а также
+в играх, генерируемых на этом языке. Файл шрифта должен находиться в game/fonts.</p>
+<dl class="simple">
+<dt><cite>font</cite></dt><dd><p>Имя файла шрифта (строка).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="translate_define">
+<span class="sig-name descname"><span class="pre">translate_define</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">define</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#translate_define" title="Ссылка на это определение"></a></dt>
+<dd><p>Задаёт значение переменной define при генерации нового проекта (например, для
+изменения размера шрифта по умолчанию).</p>
+<dl class="simple">
+<dt><cite>language</cite></dt><dd><p>Язык проекта.</p>
+</dd>
+<dt><cite>define</cite></dt><dd><p>Имя объявляемой переменной (строка).</p>
+</dd>
+<dt><cite>value</cite></dt><dd><p>Строковое представление значения (&quot;10&quot;, &quot;False&quot; или &quot;'Font.ttf'&quot;).</p>
+</dd>
+<dt><cite>comment</cite></dt><dd><p>Комментарий перед объявлением define (если переменной ещё нет в gui.rpy).
+Префикс &quot;## &quot; писать не нужно — он добавится автоматически.</p>
+</dd>
+</dl>
+<p>Например, изменение размера текста диалогов для марсианского языка:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">translate_define</span><span class="p">(</span><span class="s2">&quot;martian&quot;</span><span class="p">,</span> <span class="s2">&quot;gui.text_size&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="skins.html" class="btn btn-neutral float-left" title="Skins" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog (Ren&#39;Py 7.x-)" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>
