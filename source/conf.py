@@ -153,7 +153,7 @@ html_logo = "navbar-logo.png"
 # pixels large.
 # html_favicon = None
 
-html_baseurl = "https://www.renpy.org/doc/html/"
+html_baseurl = "https://wheatleyinspace.github.io/renpy-documentation-russian/"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -191,9 +191,9 @@ html_css_files = [
 
 html_context = {
     "display_github": True,
-    "github_user": "renpy",
-    "github_repo": "renpy",
-    "github_version": "master/sphinx/source/",
+    "github_user": "wheatleyinspace",
+    "github_repo": "renpy-documentation-russian",
+    "github_version": ".",
 }
 
 # If true, links to the reST sources are added to the pages.
