@@ -1,0 +1,20 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.is_selected(action)
+    
+    Returns a true value if the provided action or list of actions
+    indicates it is selected, and false otherwise.
+
+.. function:: renpy.is_sensitive(action)
+    
+    Returns a true value if the provided action or list of actions
+    indicates it is sensitive, and false otherwise.
+
+.. function:: renpy.run(action)
+    
+    Run an action or list of actions. A single action is called with no
+    arguments, a list of actions is run in order using this function, and
+    None is ignored.
+    
+    Returns the result of the last action to return a value.
+

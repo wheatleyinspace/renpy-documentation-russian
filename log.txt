@@ -1,0 +1,51 @@
+2026-10-13 12:57:30 UTC
+Windows-10-10.0.19045-SP0
+Ren'Py 8.6.0.26101301+nightly.dirty
+
+Early init took 43 ms
+Loading error handling took 35 ms
+Loading script took 649 ms
+Loading save slot metadata took 4 ms
+Loading persistent took 1 ms
+
+Full traceback:
+  File "game/script.rpy", line 4, in script
+    init 1000000 python:
+  File "renpy/ast.py", line 1229, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/python.py", line 1257, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "game/script.rpy", line 17, in <module>
+    shaderdoc.shaders(incdir=incdir)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "shaderdoc.py", line 39, in shaders
+    with open(os.path.join(incdir, "shadervertexpriorities"), "w") as outf:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^         
+FileNotFoundError: [Errno 2] No such file or directory: 'source\\inc\\shadervertexpriorities'
+
+While running game code:
+  File "game/script.rpy", line 4, in script
+    init 1000000 python:
+  File "game/script.rpy", line 17, in <module>
+    shaderdoc.shaders(incdir=incdir)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'source\\inc\\shadervertexpriorities'
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 475 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1360, 768)
+swap interval: 1 frames
+Requesting OpenGL 3.3.
+Windowed mode.
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce GTX 1050 Ti/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 582.66'
+Shading language version: '4.60 NVIDIA'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 1360, 'current_h': 768, 'refresh_rate': 59.79999923706055, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Emitting shaders as GLSL 330.
+Screen sizes: virtual=(800, 600) physical=(800, 600) drawable=(800, 600)
+Maximum texture size: 4096x4096

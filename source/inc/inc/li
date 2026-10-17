@@ -1,0 +1,162 @@
+.. Automatically generated file - do not modify.
+
+.. class:: Attribute(group, attribute, image=None, default=False, *, prefix=None, variant=None, **kwargs)
+    
+    This is used to represent a layer of an LayeredImage that is
+    controlled by an attribute. A single attribute can control
+    multiple layers, in which case all layers corresponding to
+    that attribute will be displayed.
+    
+    `group`
+        A string giving the group the attribute is part of. This
+        may be None, in which case a group with the same name as
+        the attribute is created.
+    
+    `attribute`
+        A string giving the name of the attribute.
+    
+    `image`
+        If not None, this should be a displayable that is displayed when
+        this attribute is shown.
+    
+    `default`
+        If True, and no other attribute for the group is selected,
+        this attribute is.
+    
+    The following keyword arguments are also known:
+    
+    `at`
+        A transform or list of transforms that are applied to the
+        image.
+    
+    `when`
+        A string containing a ``when`` expression, described in the :ref:`when` section.
+        The displayable is only shown when the expression is satisfied by
+        the pool of attributes currently applied to the layeredimage.
+    
+    `variant`
+        A string giving the variant of the attribute. This is used
+        as part of finding the displayable when `image` is None.
+    
+    Other keyword arguments are interpreted as transform properties. If
+    any are present, a transform is created that wraps the image. (For
+    example, pos=(100, 200) can be used to offset the image by 100 pixels
+    horizontally and 200 vertically.)
+    
+    If the `image` parameter is omitted or None, and the LayeredImage
+    has been given the `image_format` parameter, the image_format is used
+    to generate an image filename.
+
+.. class:: Condition(condition, image=None, *, nested=None, **kwargs)
+    
+    When the condition is true, the layer is displayed. Otherwise, nothing
+    is displayed.
+    
+    This is used to implement a single ``if``, ``elif`` **or** ``else``
+    layeredimage statement (for ``else``, `condition` should be "True").
+    Several Conditions can then be passed to a :class:`ConditionGroup` to
+    emulate a full if/elif/else statement.
+    
+    `condition`
+        This should be a string giving a Python condition that determines
+        if the layer is displayed.
+    
+    `image`
+        If not None, this should be a displayable that is displayed when
+        the condition is true.
+    
+    `nested`
+        If not None, this should be a :class:`ConditionGroup`, giving a
+        nested if/elif/else statement that is displayed, in place of `image`,
+        when the condition is true.
+    
+    `when`
+        A string containing a ``when`` expression, described in the :ref:`when` section.
+        The condition is only evaluated when the expression is satisfied by
+        the pool of attributes currently applied to the layeredimage.
+    
+    `at`
+        A transform or list of transforms that are applied to the image.
+    
+    Other keyword arguments are interpreted as transform properties. If any
+    is present, a transform is created that wraps the image. (For example,
+    pos=(100, 200) can be used to offset the image by 100 pixels
+    horizontally and 200 vertically.)
+
+.. class:: ConditionGroup(conditions)
+    
+    Takes a list of :class:`Condition` to combine them into a single
+    :func:`ConditionSwitch`.
+    
+    Implements the if/elif/else statement.
+
+.. class:: LayeredImage(attributes, at=[], name=None, image_format=None, format_function=<function format_function at 0x00000000086dafc0>, attribute_function=None, offer_screen=None, **kwargs)
+    
+    This is an image-like object that, when shown with the proper set of
+    attributes, shows a displayable created by compositing together the
+    displayables associated with those attribute.
+    
+    `attributes`
+        This must be a list of Attribute, Condition, ConditionGroup or
+        :doc:`displayable <displayables>` objects. Each one
+        reflects a displayable that may or may not be displayed as part
+        of the image. The items in this list are in back-to-front order,
+        with the first item further from the viewer and the last
+        closest.
+        Passing a displayable directly is the equivalent of the `always`
+        layeredimage statement.
+    
+    `at`
+        A transform or list of transforms that are applied to the displayable
+        after it is parameterized.
+    
+    `name`
+        The name of the layeredimage. This is used as part of the names
+        of image components.
+    
+    `image_format`
+        When a given image is a string, and this is supplied, the image name
+        is interpolated into `image_format` to make an image file. For example,
+        "sprites/eileen/{image}.png" will look for the image in a subdirectory
+        of sprites. (This is not used by auto groups, which look for images and
+        not image files.)
+    
+    `format_function`
+        A function that is used instead of `layeredimage.format_function` to format
+        the image information into a displayable.
+    
+    `attribute_function`
+        If not None, a function that's called with a set of attributes supplied to
+        the image, and returns the set of attributes used to select layers. This is
+        called when determining the layers to display, after the attribute themselves
+        have been chosen. It can be used to express complex dependencies between attributes
+        or select attributes at random.
+    
+    `offer_screen`
+        Sets whether or not the available area is taken into account as for how children
+        are placed and how they are sized (when they have variable size). If False, the
+        available area is considered, and if True it is not. If None, defaults to
+        :var:`config.layeredimage_offer_screen`.
+    
+    Additional keyword arguments may contain transform properties. If
+    any are present, a transform is created that wraps the result image.
+    Remaining keyword arguments are passed to a Fixed that is created to hold
+    the layer. Unless explicitly overridden, xfit and yfit are set to true on
+    the Fixed, which means it will shrink to the smallest size that fits all
+    of the layer images it is showing.
+    
+    A LayeredImage is not a displayable, and can't be used in all the
+    places a displayable can be used. This is because it requires an image
+    name (generally including image attributes) to be provided. As such,
+    it should either be displayed through a scene or show statement, or by
+    an image name string used as a displayable.
+
+    .. method:: add(a)
+        
+        `a`
+            An Attribute, Condition, ConditionGroup or :doc:`displayable <displayables>`
+            object.
+        
+        This method adds the provided layer to the list of layers of the layeredimage,
+        as if it had been passed in the `attributes` argument to the constructor.
+    

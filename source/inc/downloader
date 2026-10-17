@@ -1,0 +1,12 @@
+.. Automatically generated file - do not modify.
+
+.. function:: updater.continue_game_download(screen='downloader')
+    
+    Continues downloading the game data. This will loop until the
+    download is complete, or the user exits the game.
+
+.. function:: updater.start_game_download(url, **kwargs)
+    
+    Starts downloading the game data from `url`. This begins the process
+    of determining what needs to be downloaded, and returns an Update object.
+

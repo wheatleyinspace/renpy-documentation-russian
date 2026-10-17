@@ -1,0 +1,16 @@
+.. Automatically generated file - do not modify.
+
+.. function:: GetTooltip(screen=None, last=False)
+    
+    Returns the tooltip of the currently focused displayable, or None
+    if no displayable is focused.
+    
+    `screen`
+        If not None, this should be the name or tag of a screen. If
+        given, this function only returns the tooltip if the focused
+        displayable is part of the screen.
+    
+    `last`
+        If true, returns the last non-None value this function would
+        have returned.
+

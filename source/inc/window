@@ -1,0 +1,28 @@
+.. Automatically generated file - do not modify.
+
+.. function:: _window_hide(trans=False, auto=False)
+    
+    The Python equivalent of the ``window hide`` statement.
+    
+    `trans`
+        If False, the default window hide transition is used. If None,
+        no transition is used. Otherwise, the specified transition is
+        used.
+    
+    `auto`
+        If True, this becomes the equivalent of the ``window auto hide``
+        statement.
+
+.. function:: _window_show(trans=False, auto=False)
+    
+    The Python equivalent of the ``window show`` statement.
+    
+    `trans`
+        If False, the default window show transition is used. If None,
+        no transition is used. Otherwise, the specified transition is
+        used.
+    
+    `auto`
+        If True, this becomes the equivalent of the ``window auto show``
+        statement.
+

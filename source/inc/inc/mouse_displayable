@@ -1,0 +1,21 @@
+.. Automatically generated file - do not modify.
+
+.. class:: MouseDisplayable(cursor, x=0, y=0)
+    
+    A displayable that wraps a mouse cursor displayable, and causes
+    it to move across the screen when the player moves their mouse.
+    
+    `cursor`
+        A displayable that is used to draw the mouse. If this is None,
+        the hardware cursor is used.
+    
+    `x`, `y`
+        The coordinates of the hotspot, relative to the upper left
+        corner of the mouse, in virtual pixels.
+
+    .. method:: add(name, cursor, x=0, y=0)
+        
+        This adds a second cursor, that is used when the `name`
+        mouse is displayed. This returns the MouseDisplayable,
+        so that calls to this method can be chained.
+    

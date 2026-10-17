@@ -1,0 +1,40 @@
+.. Automatically generated file - do not modify.
+
+.. function:: gui.SetPreference(name, value, rebuild=True)
+    
+    This Action sets the gui preference with `name` to `value`.
+    
+    `rebuild`
+        If true, the default, :func:`gui.rebuild` is called to make
+        the changes take effect. This should generally be true, except
+        in the case of multiple gui.SetPreference actions, in which case
+        it should be False in all but the last one.
+    
+    This is a very slow action, and probably not suitable for use
+    when a button is hovered.
+
+.. function:: gui.TogglePreference(name, a, b, rebuild=True)
+    
+    This Action toggles the gui preference with `name` between
+    value `a` and value `b`. It is selected if the value is equal
+    to `a`.
+    
+    `rebuild`
+        If true, the default, :func:`gui.rebuild` is called to make
+        the changes take effect. This should generally be true, except
+        in the case of multiple gui.SetPreference actions, in which case
+        it should be False in all but the last one.
+    
+    This is a very slow action, and probably not suitable for use
+    when a button is hovered.
+
+.. function:: gui.preference(name, default=...)
+    
+    This function returns the value of the gui preference with
+    `name`.
+    
+    `default`
+        If given, this value becomes the default value of the gui
+        preference. The default value must be given the first time
+        the preference is used.
+

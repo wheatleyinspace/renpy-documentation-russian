@@ -1,0 +1,45 @@
+.. Automatically generated file - do not modify.
+
+.. class:: NVLCharacter(who=renpy.object.Sentinel('NotSet'), kind=None, **properties)
+    
+    This is used to implement NVL. You should not call it directly, you should write::
+    
+        define nvl = Character(kind=nvl)
+    
+    There are three parameters that are specific to NVLCharacter:
+    
+    `clear`
+        If true, then the NVL screen is cleared before this line is shown.
+    
+    `page_ctc`
+        The CTC indicator to use when at the end of an NVL page. If None, then the value of :var:`config.nvl_page_ctc` is used.
+    
+    `page_ctc_position`
+        The position of the CTC indicator used at the end of an NVL page. If None, then the value of :var:`config.nvl_page_ctc_position` is used.
+
+.. function:: nvl_clear()
+    
+    The Python equivalent of the ``nvl clear`` statement.
+
+.. function:: nvl_hide(with_)
+    
+    The Python equivalent of the ``nvl hide`` statement.
+    
+    `with_`
+        The transition to use to hide the NVL-mode window.
+
+.. function:: nvl_menu(items)
+    
+    A Python function that displays a menu in NVL style. This is rarely
+    used directly. Instead, it's assigned to the :var:`menu` variable,
+    using something like::
+    
+        define menu = nvl_menu
+
+.. function:: nvl_show(with_)
+    
+    The Python equivalent of the ``nvl show`` statement.
+    
+    `with_`
+        The transition to use to show the NVL-mode window.
+

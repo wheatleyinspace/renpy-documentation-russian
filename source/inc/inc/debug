@@ -1,0 +1,43 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.filename_line_override(filename: str, line: int)
+    
+    Temporarily overrides the filename and line number. This is a context manager,
+    use it like::
+    
+        with renpy.filename_line_override("myfile.rpy", 42):
+            # ...
+
+.. function:: renpy.get_filename_line()
+    
+    Returns a pair giving the filename and line number of the current
+    statement.
+
+.. function:: renpy.is_warping()
+    
+    Returns True while Ren'Py is reconstructing the state preceding a warp
+    target. A custom say callable with a ``warp`` attribute set to True can
+    use this to update dialogue state without interacting with the player.
+
+.. function:: renpy.log(msg)
+    
+    If :var:`config.log` is not set, this does nothing. Otherwise, it opens
+    the logfile (if not already open), formats the message to :var:`config.log_width`
+    columns, and prints it to the logfile.
+
+.. function:: renpy.unwatch(expr)
+    
+    Stops watching the given Python expression.
+
+.. function:: renpy.warp_to_line(warp_spec)
+    
+    This takes as an argument a filename:linenumber pair, and tries to warp to
+    the statement before that line number.
+    
+    This works samely as the `--warp` command.
+
+.. function:: renpy.watch(expr)
+    
+    This watches the given Python expression, by displaying it in the
+    upper-right corner of the screen.
+

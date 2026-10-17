@@ -1,0 +1,43 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.filter_text_tags(s, allow=None, deny=None)
+    
+    Returns a copy of `s` with the text tags filtered. Exactly one of the `allow` and `deny` keyword
+    arguments must be given.
+    
+    `allow`
+        A set of tags that are allowed. If a tag is not in this list, it is removed.
+    
+    `deny`
+        A set of tags that are denied. If a tag is not in this list, it is kept in the string.
+
+.. function:: renpy.substitute(s, scope=None, translate=True)
+    
+    Applies translation and new-style formatting to the string `s`.
+    
+    `scope`
+        If not None, a scope which is used in formatting, in addition to the
+        default store.
+    
+    `translate`
+        Determines if translation occurs.
+    
+    Returns the translated and formatted string.
+
+.. function:: renpy.transform_text(s, function)
+    
+    Transforms `s`, while leaving text tags and interpolation the same.
+    
+    `function`
+        A function that is called with strings corresponding to runs of
+        text, and should return a second string that replaces that run
+        of text.
+    
+    ::
+    
+        init python:
+            def upper(s):
+                return s.upper()
+    
+        $ upper_string = renpy.transform_text("{b}Not Upper{/b}", upper)
+

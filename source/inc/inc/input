@@ -1,0 +1,52 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.input(default='', allow=None, exclude='{}', length=None, pixel_width=None, screen="input", mask=None, copypaste=True, multiline=False, **kwargs)
+    
+    Calling this function pops up a window asking the player to enter some
+    text. It returns the entered text.
+    
+    `prompt`
+        A string giving a prompt to display to the player.
+    
+    `default`
+        A string giving the initial text that will be edited by the player.
+    
+    `allow`
+        If not None, a string giving a list of characters that will
+        be allowed in the text.
+    
+    `exclude`
+        If not None, if a character is present in this string, it is not
+        allowed in the text.
+    
+    `length`
+        If not None, this must be an integer giving the maximum length
+        of the input string.
+    
+    `pixel_width`
+        If not None, the input is limited to being this many pixels wide,
+        in the font used by the input to display text.
+    
+    `screen`
+        The name of the screen that takes input. If not given, the ``input``
+        screen is used.
+    
+    `mask`
+        If not None, a single-character string that replaces the input text that
+        is shown to the player, such as to conceal a password.
+    
+    `copypaste`
+        When true, copying from and pasting to this input is allowed.
+    
+    `multiline`
+        When true, move caret to next line is allowed.
+    
+    If :var:`config.disable_input` is True, this function only returns
+    `default`.
+    
+    Keywords prefixed with ``show_`` have the prefix stripped and
+    are passed to the screen.
+    
+    Due to limitations in supporting libraries, on Android and the web platform
+    this function is limited to alphabetic characters.
+

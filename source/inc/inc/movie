@@ -1,0 +1,126 @@
+.. Automatically generated file - do not modify.
+
+.. class:: Movie(*, size=None, channel="movie", play=None, side_mask=False, start_image=None, image=None, play_callback=None, loop=True, group=None, keep_last_frame=False, oversample=None, mask=None, mask_channel=None, **properties)
+    
+    This is a displayable that shows the current movie.
+    
+    `size`
+        This should be specified as either a tuple giving the width and
+        height of the movie, or None to automatically adjust to the size
+        of the playing movie. (If None, the displayable will be (0, 0)
+        when the movie is not playing.)
+    
+    `channel`
+        The audio channel associated with this movie. When a movie file
+        is played on that channel, it will be displayed in this Movie
+        displayable. If this is left at the default of "movie", and `play`
+        is provided, a channel name is automatically selected, using
+        :var:`config.single_movie_channel` and :var:`config.auto_movie_channel`.
+    
+    `play`
+        If given, this should be the path to a movie file, or a list
+        of paths to movie files. These movie
+        files will be automatically played on `channel` when the Movie is
+        shown, and automatically stopped when the movie is hidden.
+    
+    `side_mask`
+        If true, this tells Ren'Py to use the side-by-side mask mode for
+        the Movie. In this case, the movie is divided in half. The left
+        half is used for color information, while the right half is used
+        for alpha information. The width of the displayable is half the
+        width of the movie file.
+    
+        Use this instead of the deprecated `mask` and `mask_channel` parameters.
+    
+    `start_image`
+        An image that is displayed when playback has started, but the
+        first frame has not yet been decoded.
+    
+    `image`
+        An image that is displayed when `play` has been given, but the
+        file it refers to does not exist. (For example, this can be used
+        to create a slimmed-down mobile version that does not use movie
+        sprites.) Users can also choose to fall back to this image as a
+        preference if video is too taxing for their system. The image will
+        also be used if the video plays, and then the movie ends, unless
+        `group` is given.
+    
+    `play_callback`
+        If not None, a function that's used to start the movies playing.
+        (This may do things like queue a transition between sprites, if
+        desired.) It's called with the following arguments:
+    
+        `old`
+            The old Movie object, or None if the movie is not playing.
+        `new`
+            The new Movie object.
+    
+        A movie object has the `play` parameter available as ``_play`
+        while the ``channel``, ``loop``, ``mask``, and ``mask_channel`` fields
+        correspond to the given parameters. If the `loop` field is a movie file,
+        that movie is available as ``_queue``.
+    
+        Generally, this will want to use :func:`renpy.music.play` to start
+        the movie playing on the given channel.
+        A minimal implementation is::
+    
+            def play_callback(old, new):
+    
+                if new.mask:
+                    renpy.music.play(new.mask, channel=new.mask_channel, loop=new.loop)
+    
+                renpy.music.play(new._play, channel=new.channel, loop=new.loop)
+    
+                if new._queue:
+                    renpy.audio.music.queue(new._queue, channel=new.channel, loop=True)
+    
+    
+    `loop`
+        If False, the movie will not loop. If True, the movie will loop. If
+        a string, this is a second movie file that will be looped after the file given to `play` finishes.
+    
+        When `loop` is False, if `image` is defined, the image will be displayed when the movie ends. Otherwise,
+        the displayable will become transparent.
+    
+    `group`
+        If not None, this should be a string. If given, and if the movie has not
+        yet started playing, and another movie in the same group has played in
+        the previous frame, the last frame from that movie will be used for
+        this movie. This can prevent flashes of transparency when switching
+        between two movies.
+    
+    `keep_last_frame`
+        If true, and the movie has ended, the last frame will be displayed,
+        rather than the movie being hidden. This only works if `loop` is
+        false. (This behavior will also occur if `group` is set.)
+    
+    `oversample`
+        If this is greater than 1, the movie is considered to be oversampled,
+        with more pixels than its logical size would imply. For example, if
+        an movie file is 1280x720 and oversample is 2, then the image will
+        be treated as a 640x360 movie for the purpose of layout.
+    
+        If None, Ren'Py will automatically determine oversampling. If an @ followed
+        by a number is found in the filename, that number will be used as the
+        oversampling factor. Otherwise, Ren'Py will search for files and use those.
+    
+        Specifically, if :file`launch.webm` is used, Ren'Py will search for :file:`launch@2.webm`
+        if the movie is scaled up more than 1x, and :file:`launch@4.webm` and :file:`launch@3.webm`
+        if the movie is scaled up more than 2x.
+    
+        Automatic oversampling of movies only happens when the movie begins playing.
+    
+    `mask`
+        Deprecated. Use `side_mask` instead.
+    
+        This is the path to a movie file, or a list of paths to movie files, used as the alpha channel of
+        this displayable. The mask movie is played on `mask_channel` when the Movie is shown and stopped when
+        it is hidden.
+    
+        Separate mask movies may become unsynchronized with the color movie. They do not support static masks
+        or a movie file passed to `loop`, and may not work with newer Movie features.
+    
+    `mask_channel`
+        Deprecated. The audio channel on which `mask` is played. If not given, it defaults to
+        `channel`\_mask. (For example, if `channel` is "sprite", `mask_channel` defaults to "sprite_mask".)
+

@@ -1,0 +1,18 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.lex_string(text: str, filename: str = '<string>', linenumber: int = 1, advance: bool = True) -> renpy.lexer.Lexer
+    
+    Returns a Lexer object that can be used to lex the given text.
+    
+    `text`
+        The text to lex.
+    
+    `filename`
+        A filename for which errros will be reported.
+    
+    `linenumber`
+        A line number for which errors will be reported.
+    
+    `advance`
+        If true, the .advance() method will be called on the lexer.
+

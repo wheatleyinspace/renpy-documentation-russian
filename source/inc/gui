@@ -1,0 +1,115 @@
+.. Automatically generated file - do not modify.
+
+.. function:: gui.button_properties(kind)
+    
+    Принимая тип (`kind`) кнопки, возвращает словарь со стандартными свойствами
+    стиля для этой кнопки. Устанавливает:
+    
+    :propref:`background`
+        Как описано ниже.
+    
+    :propref:`padding`
+        В значение gui.kind_borders.padding (если существует).
+    
+    :propref:`xsize`
+        В значение gui.kind_width (если существует).
+    
+    :propref:`ysize`
+        В значение gui.kind_height (если существует).
+    
+    (Обратите внимание: если `kind` равен строке "nvl_button", будет искаться
+    переменная gui.nvl_button_background.)
+    
+    Фон (background) представляет собой фрейм (кадр), который берет фоновое изображение
+    из первого существующего файла:
+    
+    * gui/button/kind_[prefix\_].background.png
+    * gui/button/[prefix\_].background.png
+    
+    Если переменная gui с именем gui.kind_borders существует, используется
+    она. В противном случае используется :var:`gui.button_borders`. Если переменная
+    gui.kind_tile существует, она определяет, будут ли границы мозаичными (tiled),
+    иначе мозаичностью управляет :var:`gui.button_tile`.
+    
+    О том, что означает [prefix\_], см. в документации :ref:`поиск префиксов стилей <style-prefix-search>`.
+
+.. function:: gui.init(width, height, fov=75)
+    
+    Инициализирует GUI.
+    
+    `width`
+        Ширина окна по умолчанию.
+    
+    `height`
+        Высота окна по умолчанию.
+    
+    `fov`
+        Угол обзора (field of view) 3D-сцены.
+
+.. function:: gui.rebuild()
+    
+    Пересобирает GUI.
+    
+    Примечание: Это очень медленная функция.
+
+.. function:: gui.text_properties(kind=None, accent=False)
+    
+    Принимая тип (`kind`) текстовой кнопки (textbutton), возвращает словарь со стандартными
+    свойствами стиля для текста внутри этой кнопки. Устанавливает:
+    
+    :propref:`font`
+        В значение gui.kind_text_font, если существует.
+    
+    :propref:`size`
+        В значение gui.kind_text_size, если существует.
+    
+    :propref:`xalign`
+        В значение gui.kind_text_xalign, если существует.
+    
+    :propref:`textalign`
+        В значение gui.kind_text_xalign, если существует.
+    
+    :propref:`layout`
+        В значение "subtitle", если gui.kind_text_xalign больше нуля
+        и меньше единицы.
+    
+    Также имеется ряд переменных, устанавливающих свойство стиля текста
+    :propref:`color`:
+    
+    color
+        В значение gui.kind_text_color, если существует. Если переменная не
+        задана, а `accent` равен True, устанавливает цвет текста в цвет
+        акцента по умолчанию.
+    
+    insensitive_color
+        В значение gui.kind_text_insensitive_color, если существует.
+    
+    idle_color
+        В значение gui.kind_text_idle_color, если существует.
+    
+    hover_color
+        В значение gui.kind_text_hover_color, если существует.
+    
+    selected_color
+        В значение gui.kind_text_selected_color, если существует.
+    
+    Все остальные :ref:`свойства стиля текста <text-style-properties>`
+    также доступны. Когда `kind` не равен None,
+    :ref:`свойства стиля позиционирования <position-style-properties>`
+    также доступны. Например,
+    gui.kind_text_outlines устанавливает свойство стиля outlines (обводка),
+    gui.kind_text_kerning устанавливает kerning (кернинг) и так далее.
+
+.. function:: gui.variant(f, variant=None)
+    
+    Декоратор, вызывающий функцию при первой инициализации GUI
+    и повторно при каждой пересборке GUI. Предназначен для
+    использования в качестве декоратора функций вида::
+    
+        @gui.variant
+        def small():
+            gui.text_size = 30
+            # ...
+    
+    Его также можно вызывать с аргументами `f` (функция) и `variant` (строка),
+    указывающим имя варианта.

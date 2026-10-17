@@ -1,0 +1,8 @@
+.. Automatically generated file - do not modify.
+
+.. function:: GetCharacterVolume(voice_tag)
+    
+    This returns the volume associated with voice tag, a number
+    between 0.0 and 1.0, which is interpreted as a fraction of the
+    mixer volume for the `voice` channel.
+

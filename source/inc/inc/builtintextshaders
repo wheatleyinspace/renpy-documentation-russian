@@ -1,0 +1,134 @@
+.. textshader:: dissolve
+
+    
+    The dissolve text shader handles text by dissolving it in slowly, with the start dissolving in first, and the
+    end dissolving in last.
+    
+    `u__duration` = 10.0
+        The number of characters that will be changing alpha at a time.  If set to
+        0, the wave will move across the text one pixel at a time.
+    
+
+    Using this shader will prevent the default text shader from being used.
+
+.. textshader:: flip
+
+    
+    The flip shader flips slow text by flipping the text horizontally, with the start flipping in first,
+    and the end flipping in last.
+    
+    `u__duration` = 10.0
+        The number of characters that will be changing alpha at a time.  If set to
+        0, the characters will instantly flip.
+    
+
+    Using this shader will prevent the default text shader from being used.
+
+.. textshader:: jitter
+
+    
+    The jitter text shader moves the text to random positions
+    relative to where it would be normally drawn. The position changes
+    once per frame.
+    
+    `u__jitter` = (3.0, 3.0)
+        The amount of jitter to apply to the text, in pixels.
+    
+    `u__duration` = 0.0
+        The duration of the jitter effect, in seconds from when the text is
+        first shown. After this duration, the text returns to its normal
+        position. A value of 0 (the default) or a negative value makes the
+        effect continue indefinitely. This is independent of slow text.
+    
+    `u__individual` = 0.0
+        If 0 (the default), all glyphs move together. If 1, each glyph moves
+        independently.
+    
+
+.. textshader:: linetexture
+
+    
+    Multiplies the text with a texture, one line at a time. The texture is aligned with
+    the left side of the text. The vertical center of the texture is aligned with
+    the baseline of the text - this means that most of the lower half of the texture
+    will not be visible.
+    
+    `u__texture` = ...
+        The texture to multiply the text by.
+    
+    `u__scale` = (1.0, 1.0)
+        A factor to scale the texture by. For example (1.0, 0.5) will make the
+        texture half as tall as it otherwise would be.
+    
+
+.. textshader:: offset
+
+    
+    The offset text shader moves the text by a fixed amount.
+    
+    `u__offset` = (0.0, 0.0)
+        The amount to move the text by, in virtual pixels.
+    
+
+.. textshader:: slowalpha
+
+    
+    The slowalpha shader is intended to be used with another slow text shader, like typewriter or dissolve.
+    It causes the text that has yet to be revealed to be drawn with an alpha value of `u__alpha` = 0.2, rather than
+    being invisible.
+    
+    `u__alpha` = 0.2
+        The alpha value of the text that has not been revealed yet.
+    
+
+.. textshader:: texture
+
+    
+    The texture text shader multiplies the text with the colors from a texture. This is not
+    done to outlines or offset text. The texture is aligned with the top
+    left of the text.
+    
+    `u__texture` = ...
+        The texture to multiply the text by.
+    
+
+.. textshader:: typewriter
+
+    
+    The typewriter text shader handles slow text by making the text appear one character at a time, as if it were being
+    typed out by a typewriter.
+    
+
+    Using this shader will prevent the default text shader from being used.
+
+.. textshader:: wave
+
+    
+    The wave text shader makes the text bounce up and down in a wave.
+    
+    `u__amplitude` = 5.0
+        The number of pixels up and down the text will move.
+    
+    `u__frequency` = 2.0
+        The number of waves per second.
+    
+    `u__wavelength` = 20.0
+        The number of characters between peaks in the wave.
+    
+
+.. textshader:: zoom
+
+    
+    The zoom text shader handles slow text to cause it to zoom in from an initial size of `u__zoom` = 0.0 to full size.
+    
+    `u__zoom` = 0.0
+        The initial amount of zoom to apply to a character when it first starts
+        showing.
+    
+    `u__duration` = 10.0
+        The number of characters that will be changing alpha at a time.  If set to
+        0, the characters will instantly flip.
+    
+
+    Using this shader will prevent the default text shader from being used.
+

@@ -1,0 +1,86 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.call_stack_depth()
+    
+    Returns the depth of the call stack of the current context - the number
+    of calls that have run without being returned from or popped from the
+    call stack.
+
+.. function:: renpy.dynamic(*variables, **kwargs)
+    
+    This can be given one or more variable names as arguments. This makes the
+    variables dynamically scoped to the current call. When the call returns, the
+    variables will be reset to the value they had when this function was called.
+    
+    Variables in :ref:`named stores <named-stores>` are supported.
+    
+    If the variables are given as keyword arguments, the value of the argument
+    is assigned to the variable name.
+    
+    Example calls are::
+    
+        $ renpy.dynamic("x", "y", "z")
+        $ renpy.dynamic("mystore.serial_number")
+        $ renpy.dynamic(players=2, score=0)
+
+.. function:: renpy.get_all_labels()
+    
+    Returns the set of all labels defined in the program, including labels
+    defined for internal use in the libraries.
+
+.. function:: renpy.get_return_stack()
+    
+    Returns a list giving the current return stack. The return stack is a
+    list of statement names.
+    
+    The statement names will be strings (for labels), or opaque tuples (for
+    non-label statements).
+
+.. function:: renpy.has_label(name)
+    
+    Returns true if `name` is a valid label in the program, or false
+    otherwise.
+    
+    `name`
+        Should be a string to check for the existence of a label. It can
+        also be an opaque tuple giving the name of a non-label statement.
+
+.. function:: renpy.mark_label_seen(label)
+    
+    Marks the named label as if it has been already executed on the current user's
+    system.
+
+.. function:: renpy.mark_label_unseen(label)
+    
+    Marks the named label as if it has not been executed on the current user's
+    system yet.
+
+.. function:: renpy.pop_call()
+    
+    Pops the current call from the call stack, without returning to the
+    location. Also reverts the values of :func:`dynamic <renpy.dynamic>`
+    variables, the same way the Ren'Py return statement would.
+    
+    This can be used if a label that is called decides not to return
+    to its caller.
+
+.. function:: renpy.seen_label(label)
+    
+    Returns true if the named label has executed at least once on the current user's
+    system, and false otherwise. This can be used to unlock scene galleries, for
+    example.
+
+.. function:: renpy.set_return_stack(stack)
+    
+    Sets the current return stack. The return stack is a list of statement
+    names.
+    
+    Statement names may be strings (for labels) or opaque tuples (for
+    non-label statements).
+    
+    The most common use of this is to use::
+    
+        renpy.set_return_stack([])
+    
+    to clear the return stack.
+

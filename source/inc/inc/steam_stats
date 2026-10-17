@@ -1,0 +1,57 @@
+.. Automatically generated file - do not modify.
+
+.. function:: achievement.steam.clear_achievement(name)
+    
+    Clears the achievement with `name`. Call :func:`_renpysteam.store_stats` to
+    push this change to the server.
+
+.. function:: achievement.steam.get_achievement(name)
+    
+    Gets the state of the achievements with `name`. This returns True if the
+    achievement has been granted, False if it hasn't, and None if the achievement
+    is unknown or an error occurs.
+
+.. function:: achievement.steam.get_float_stat(name)
+    
+    Returns the value of the stat with `name`, or None if no such stat
+    exits.
+
+.. function:: achievement.steam.get_int_stat(name)
+    
+    Returns the value of the stat with `name`, or None if no such stat
+    exits.
+
+.. function:: achievement.steam.grant_achievement(name)
+    
+    Grants the achievement with `name`. Call :func:`_renpysteam.store_stats` to
+    push this change to the server.
+
+.. function:: achievement.steam.indicate_achievement_progress(name, cur_progress, max_progress)
+    
+    Indicates achievement progress to the user. This does *not* unlock the
+    achievement.
+
+.. function:: achievement.steam.list_achievements()
+    
+    Returns a list of achievement names.
+
+.. function:: achievement.steam.retrieve_stats()
+    
+    Retrieves achievements and statistics from Steam.
+
+.. function:: achievement.steam.set_float_stat(name, value)
+    
+    Sets the value of the stat with `name`, which must have the type of
+    FLOAT. Call :func:`_renpysteam.store_stats` to push this change to the
+    server.
+
+.. function:: achievement.steam.set_int_stat(name, value)
+    
+    Sets the value of the stat with `name`, which must have the type of
+    INT. Call :func:`_renpysteam.store_stats` to push this change to the
+    server.
+
+.. function:: achievement.steam.store_stats()
+    
+    Stores statistics and achievements on the Steam server.
+

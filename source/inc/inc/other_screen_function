@@ -1,0 +1,9 @@
+.. Automatically generated file - do not modify.
+
+.. function:: CurrentScreenName()
+    
+    Returns the name of the current screen, or None if there is no
+    current screen. In the case of a screen including by the use
+    screen, this returns the name of the screen that is doing the
+    including, not the name of the screen being included.
+

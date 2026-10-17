@@ -1,0 +1,46 @@
+.. Automatically generated file - do not modify.
+
+.. function:: PlayCharacterVoice(voice_tag, sample, selected=False)
+    
+    This plays `sample` on the voice channel, as if said by a
+    character with `voice_tag`. This will set the volume, but will
+    not perform and other voice-related handling of the file - it's
+    intended for use in menus to help the user determine the
+    character volume.
+    
+    `voice_tag`
+        The voice tag of the character that is speaking. This is used
+        to determine the volume that will be used.
+    
+    `sample`
+        The full path to a sound file.
+    
+    `selected`
+        If True, buttons using this action will be marked as selected
+        while the sample is playing.
+
+.. function:: SetCharacterVolume(voice_tag, volume=None)
+    
+    This allows the volume of each characters to be adjusted.
+    If `volume` is None, this returns a BarValue that
+    controls the value of `voice_tag`. Otherwise, this set it to `volume`.
+    
+    `volume` is a number between 0.0 and 1.0, and is interpreted as a
+    fraction of the mixer volume for `voice` channel.
+
+.. function:: SetVoiceMute(voice_tag, mute)
+    
+    If `mute` is true, mutes voices that are played with the given
+    `voice_tag`. If `mute` is false, unmutes voices that are played
+    with `voice_tag`.
+
+.. function:: ToggleVoiceMute(voice_tag, invert=False)
+    
+    Toggles the muting of `voice_tag`. This is selected if
+    the given voice tag is muted, unless `invert` is true,
+    in which case it's selected if the voice is unmuted.
+
+.. function:: VoiceReplay()
+    
+    Replays the most recently played voice.
+

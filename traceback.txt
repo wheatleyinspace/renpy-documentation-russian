@@ -1,0 +1,33 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/script.rpy", line 4, in script
+    init 1000000 python:
+  File "game/script.rpy", line 17, in <module>
+    shaderdoc.shaders(incdir=incdir)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'source\\inc\\shadervertexpriorities'
+
+-- Full Traceback ------------------------------------------------------------
+
+Traceback (most recent call last):
+  File "game/script.rpy", line 4, in script
+    init 1000000 python:
+  File "renpy/ast.py", line 1229, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/python.py", line 1257, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "game/script.rpy", line 17, in <module>
+    shaderdoc.shaders(incdir=incdir)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "shaderdoc.py", line 39, in shaders
+    with open(os.path.join(incdir, "shadervertexpriorities"), "w") as outf:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^         
+FileNotFoundError: [Errno 2] No such file or directory: 'source\\inc\\shadervertexpriorities'
+
+Windows-10-10.0.19045-SP0 AMD64
+Ren'Py 8.6.0.26101301+nightly.dirty
+ 
+Tue Oct 13 16:57:31 2026

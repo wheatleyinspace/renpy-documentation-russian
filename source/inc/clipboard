@@ -1,0 +1,67 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.get_clipboard_data(mime_type: str) -> bytes
+    
+    Returns the clipboard data for `mime_type`, or raises an exception
+    if no data is available for that MIME type.
+    
+    `mime_type`
+        The MIME type to retrieve, for example "image/png".
+    
+    Returns bytes.
+
+.. function:: renpy.get_clipboard_mime_types() -> list[str]
+    
+    Returns a list of MIME type strings currently available on the clipboard.
+
+.. function:: renpy.get_clipboard_text() -> str
+    
+    Returns the text currently on the clipboard, or raises an exception
+    if no text is available.
+    
+    Returns a string.
+
+.. function:: renpy.put_clipboard_data(data_dict: dict[str | bytes, str | bytes]) -> None
+    
+    Sets up clipboard data for multiple MIME types.
+    
+    `data_dict`
+        A dictionary mapping MIME type strings or bytes to data strings
+        or bytes. String values are encoded as UTF-8.
+
+.. function:: renpy.put_clipboard_image_file(filename: str, absolute_path: bool = False) -> None
+    
+    Copies an image file to the system clipboard. The image is placed
+    on the clipboard in its original format, and also as a PNG if the
+    original is not already a PNG.
+    
+    Using this function tends to improve compatibility with other applications, as some applications are only
+    able to handle image/png image data.
+    
+    `filename`
+        The name of the image file to copy to the clipboard.
+    
+    `absolute_path`
+        If True, `filename` is treated as an absolute filesystem path.
+        If False (the default), the file is opened using Ren'Py's
+        file loading mechanism.
+
+.. function:: renpy.put_clipboard_text(text: str) -> None
+    
+    Places `text` onto the clipboard.
+    
+    `text`
+        The string to place on the clipboard.
+
+.. function:: renpy.put_clipboard_text_file(filename: str, absolute_path: bool = False) -> None
+    
+    Copies a text file to the system clipboard as a text/plain attachment.
+    
+    `filename`
+        The name of the text file to copy to the clipboard.
+    
+    `absolute_path`
+        If True, `filename` is treated as an absolute filesystem path.
+        If False (the default), the file is opened using Ren'Py's
+        file loading mechanism.
+

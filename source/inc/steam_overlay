@@ -1,0 +1,40 @@
+.. Automatically generated file - do not modify.
+
+.. function:: achievement.steam.activate_overlay(dialog)
+    
+    Activates the Steam overlay.
+    
+    `dialog`
+        The dialog to open the overlay to. One of "Friends", "Community",
+        "Players", "Settings", "OfficialGameGroup", "Stats", "Achievements"
+
+.. function:: achievement.steam.activate_overlay_to_store(appid, flag=None)
+    
+    Opens the steam overlay to the store.
+    
+    `appid`
+        The appid to open.
+    
+    `flag`
+        One of achievement.steam.STORE_NONE, .STORE_ADD_TO_CART, or .STORE_ADD_TO_CART_AND_SHOW.
+
+.. function:: achievement.steam.activate_overlay_to_web_page(url)
+    
+    Activates the Steam overlay, and opens the web page at `url`.
+
+.. function:: achievement.steam.is_overlay_enabled()
+    
+    Returns true if the steam overlay is enabled. (This might take a while to
+    return true once the game starts.)
+
+.. function:: achievement.steam.overlay_needs_present()
+    
+    Returns true if the steam overlay is enabled. (This might take a while to
+    return true once the game starts.)
+
+.. function:: achievement.steam.set_overlay_notification_position(position)
+    
+    Sets the position of the steam overlay. `Position` should be one of
+    achievement.steam.POSITION_TOP_LEFT, .POSITION_TOP_RIGHT, .POSITION_BOTTOM_LEFT,
+    or .POSITION_BOTTOM_RIGHT.
+

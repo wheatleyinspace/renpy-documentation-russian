@@ -1,0 +1,15 @@
+.. Automatically generated file - do not modify.
+
+.. function:: HasSideImage()
+    
+    Returns True if a side image will be displayed for the current interaction, and
+    false otherwise. This becomes available earlier than SideImage does (which is only valid
+    as the start of an interaction), and so can be used in the say screen to make layut conditional
+    on the presence of a side image.
+
+.. function:: SideImage()
+    
+    Returns the side image associated with the currently speaking character,
+    or a Null displayable if no such side image exists. This may be a transform
+    between two side images if one is set.
+

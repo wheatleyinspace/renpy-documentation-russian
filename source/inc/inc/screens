@@ -1,0 +1,216 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.call_screen(_screen_name, *args, _with_none=True, _mode="screen", **kwargs)
+    
+    The programmatic equivalent of the call screen statement.
+    
+    This shows `_screen_name` as a screen, then causes an interaction
+    to occur. The screen is hidden at the end of the interaction, and
+    the result of the interaction is returned.
+    
+    Positional arguments, and keyword arguments that do not begin with
+    _ are passed to the screen.
+    
+    If `_with_none` is false, "with None" is not run at the end of end
+    of the interaction.
+    
+    If `_mode` is passed, it will be the mode of this interaction,
+    otherwise the mode will be "screen".
+
+.. function:: renpy.current_screen()
+    
+    Returns information about the screen currently being
+    updated, rendered, or processed.
+    
+    See :func:`get_screen` for documented fields on the returned object.
+
+.. function:: renpy.get_adjustment(bar_value)
+    
+    Given `bar_value`, a :class:`BarValue`, returns the :func:`ui.adjustment`
+    it uses. The adjustment has the following attributes defined:
+    
+    .. attribute:: value
+    
+        The current value of the bar.
+    
+    .. attribute:: range
+    
+        The current range of the bar.
+
+.. function:: renpy.get_displayable(screen, id, layer=None, base=False)
+    
+    From the `screen` on `layer`, returns the displayable with
+    `id`. Returns None if the screen doesn't exist, or there is no
+    widget with that id on the screen.
+
+.. function:: renpy.get_displayable_properties(id, screen=None, layer=None)
+    
+    Returns the properties for the displayable with `id` in the `screen`
+    on `layer`. If `screen` is None, returns the properties for the
+    current screen. This can be used from Python or property code inside
+    a screen.
+    
+    Note that this returns a dictionary containing the widget properties,
+    and so to get an individual property, the dictionary must be accessed.
+
+.. function:: renpy.get_screen(name, layer=None, tag_only=False)
+    
+    Returns information about the screen with the given `name` on `layer`.
+    `name` is first interpreted as a tag name, and then as a screen name.
+    If the screen is not showing, returns None.
+    
+    This can also take a list of names, in which case the first screen
+    that is showing is returned.
+    
+    `tag_only`
+        If true, only the tag is considered.
+    
+    This function can be used to check whether a screen is showing::
+    
+        if renpy.get_screen("say"):
+            text "The say screen is showing."
+        else:
+            text "The say screen is hidden."
+    
+    The objects returned by this function have the
+    following documented fields:
+    
+    .. attribute:: layer
+    
+        The layer the screen is being displayed on.
+    
+    .. attribute:: name
+    
+        The name of the screen.
+    
+    .. attribute:: zorder
+    
+        The zorder the screen is being displayed at.
+    
+    .. warning::
+    
+        Like other similar functions, the object this returns is meant to be used
+        in the short term after the function is called. Including it in save data
+        or making it participate in rollback is not advised.
+
+.. function:: renpy.get_screen_docstring(name, variant=None)
+    
+    Returns the docstring for the screen with `name` and `variant`.
+    
+    `name`
+        The name of the screen.
+    `variant`
+        The variant of the screen. If None, the default variant is used.
+
+.. function:: renpy.get_screen_variable(name, *, screen=None, layer=None)
+    
+    Returns the value of a variable in the scope of a screen.
+    
+    `name`
+        The name of the variable to return.
+    
+    `screen`
+        The name of the screen to return the variable from. If None,
+        the current screen is used. (The current screen is only defined
+        when updating a screen, and in actions that are run inside the
+        screen.)
+    
+    `layer`
+        The layer to find the screen on, if `screen` is not None.
+
+.. function:: renpy.hide_screen(tag, layer=None, immediately=False)
+    
+    The programmatic equivalent of the hide screen statement.
+    
+    Hides the screen with `tag` on `layer`.
+    
+    If `immediately` is true, the screen is hidden immediately, without the 'on hide' event.
+
+.. function:: renpy.set_focus(screen, id, layer='screens')
+    
+    This attempts to focus the displayable with `id` in the screen `screen`.
+    Focusing will fail if the displayable isn't found, the window isn't
+    focused, or something else is grabbing focus.
+    
+    The focus may change if the mouse moves, even slightly, after this call
+    is processed.
+
+.. function:: renpy.set_screen_variable(name, value, *, screen=None, layer=None)
+    
+    Sets a variable to a value in the scope of a screen. Note that this
+    will not immediately update the variable's value - call
+    :func:`renpy.restart_interaction` to cause the screen to be updated.
+    
+    `name`
+        The name of the variable to set. This should be a variable
+        created with the :ref:`sl-default` statement, as optimization
+        may prevent changes to other variables from being visible.
+    
+    `value`
+        The value to set the variable to.
+    
+    `screen`
+        The name of the screen to return the variable from. If None,
+        the current screen is used. (The current screen is only defined
+        when updating a screen, and in actions that are run inside the
+        screen.)
+    
+    `layer`
+        The layer to find the screen on, if `screen` is not None.
+
+.. function:: renpy.show_screen(_screen_name, *args, _layer=None, _zorder=None, _tag=None, _widget_properties={}, _transient=False, **kwargs)
+    
+    The programmatic equivalent of the show screen statement.
+    
+    Shows the named screen. This takes the following keyword arguments:
+    
+    `_screen_name`
+        The name of the screen to show.
+    `_layer`
+        The layer to show the screen on. This is equivalent to the
+        ``onlayer`` clause of the :ref:`show-screen-statement` statement.
+    `_zorder`
+        The zorder to show the screen on. If not specified, defaults to
+        the zorder associated with the screen. If that's not specified,
+        it is 0 by default.
+    `_tag`
+        The tag to show the screen with. If not specified, defaults to
+        the tag associated with the screen. If that's not specified,
+        defaults to the name of the screen.
+    
+        This is equivalent to the ``as`` clause of the
+        :ref:`show-screen-statement` statement.
+    `_widget_properties`
+        A map from the id of a widget to a property name -> property value
+        dictionary. When a widget with that id is shown by the screen, the
+        specified properties are added to it.
+    `_transient`
+        If true, the screen will be automatically hidden at the end of
+        the current interaction.
+    
+    Non-keyword arguments, and keyword arguments that do not begin with
+    an underscore, are passed to the screen.
+
+.. function:: renpy.start_predict_screen(_screen_name, *args, **kwargs)
+    
+    Causes Ren'Py to start predicting the screen named `_screen_name`
+    with the given arguments. This replaces any previous prediction
+    of `_screen_name`. To stop predicting a screen, call :func:`renpy.stop_predict_screen`.
+    
+    Prediction will occur during normal gameplay. To wait for prediction
+    to complete, use the `predict` argument to :func:`renpy.pause`.
+
+.. function:: renpy.stop_predict_screen(name)
+    
+    Causes Ren'Py to stop predicting the screen named `name`.
+
+.. function:: renpy.variant(name)
+    
+    Returns true if `name` is a screen variant that corresponds to the
+    context in which Ren'Py is currently executing. See :ref:`screen-variants`
+    for more details. This function can be used as the condition in an
+    if statement to switch behavior based on the selected screen variant.
+    
+    `name` can also be a list of variants, in which case this function
+    returns True if any of the variants would.
+

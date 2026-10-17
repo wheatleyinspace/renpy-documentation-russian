@@ -1,0 +1,82 @@
+.. Automatically generated file - do not modify.
+
+.. function:: Continue(regexp='[^_]', confirm=True)
+    
+    Causes the last save to be loaded.
+    The purpose of this is to load the player's last save
+    from the main menu.
+    
+    `regexp`
+        If present, will be used in `renpy.newest_slot`. The default
+        pattern will continue from any save, including quick saves and
+        auto saves. If you want to continue from only saves created by
+        the player, set this to ``r"\d"``.
+    
+    `confirm`
+        If true, causes Ren'Py to ask the user if they want to continue
+        where they left off, if they are not at the main menu.
+
+.. function:: MainMenu(confirm=True, save=True)
+    
+    Causes Ren'Py to return to the main menu.
+    
+    `confirm`
+        If true, causes Ren'Py to ask the user if he wishes to
+        return to the main menu, rather than returning
+        directly.
+    
+    `save`
+        If true, the game is saved in :var:`_quit_slot` before Ren'Py
+        restarts and returns the user to the main menu. The game is not
+        saved if :var:`_quit_slot` is None.
+
+.. function:: Quit(confirm=None)
+    
+    Quits the game.
+    
+    `confirm`
+        If true, prompts the user if he wants to quit, rather
+        than quitting directly. If None, asks if and only if
+        the user is not at the main menu.
+
+.. function:: ShowMenu(screen=_game_menu_screen, *args, _transition=config.intra_transition, **kwargs)
+    
+    Causes us to enter the game menu, if we're not there already. If we
+    are in the game menu, then this shows a screen or jumps to a label.
+    
+    `screen` is usually the name of a screen, which is shown using
+    the screen mechanism. If the screen doesn't exist, then "_screen"
+    is appended to it, and that label is jumped to.
+    the screen mechanism with the ``*args`` and ``**kwargs`` passed to
+    the screen. If the screen doesn't exist, then "_screen" is appended
+    to it, and that label is jumped to, ignoring `args` and `kwargs`.
+    
+    If the optional keyword argument `_transition` is given, the
+    menu will change screens using the provided transition.
+    If not manually specified, the default transition is
+    `config.intra_transition`.
+    
+    * ShowMenu("load")
+    * ShowMenu("save")
+    * ShowMenu("preferences")
+    
+    This can also be used to show user-defined menu screens. For
+    example, if one has a "stats" screen defined, one can
+    show it as part of the game menu using:
+    
+    * ShowMenu("stats")
+    
+    ShowMenu without an argument will enter the game menu at the
+    default screen, taken from :var:`_game_menu_screen`.
+    
+    Extra arguments and keyword arguments are passed on to the screen
+
+.. function:: Start(label='start')
+    
+    Causes Ren'Py to jump out of the menu context to the named
+    label. The main use of this is to start a new game from the
+    main menu. Common uses are:
+    
+    * Start() - Start at the start label.
+    * Start("foo") - Start at the "foo" label.
+

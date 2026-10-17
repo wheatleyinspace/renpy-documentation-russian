@@ -1,0 +1,58 @@
+.. Automatically generated file - do not modify.
+
+.. class:: GLTFModel(filename: 'str', shader: 'str | tuple[str]' = (), tangents: 'bool' = False, zoom: 'float' = 1.0, report: 'bool' = False, **kwargs)
+    
+    A displayable that loads a 3D Model in the GLTF format. This format is supported by many 3D tools. Ren'Py
+    uses the `Open Asset Importer (assimp) library <https://github.com/assimp/assimp>`_ to load GLTF models.
+    
+    For the purposes of Ren'Py's 2D layout system, a GLTFModel has zero width and height. By default, the model
+    is loaded at the size found in the file that contains it. If required, the `zoom` may be used to scale it.
+    
+    When multiple models are in use, the ``gl_depth True`` property should be supplied to the camera, so that
+    depth testing is enabled. Ren'Py does not currently perform any culling of the model, so it's
+    important to use models simple enough to be completely rendered.
+    
+    `filename`
+        The filename of the model to display.
+    
+    `shader`
+        Either a string or tuple of strings, giving the name of the shader to use.
+    
+    `tangents`
+        If True, tangents will be included in the mesh.
+    
+    `zoom`
+        A zoom factor that will be applied to the model. Many models naturally use the range -1 to 1, and so this
+        may need to be quite large to make the model visible.
+    
+    `report`
+        If true, a report of the model will be printed to the log. This includes the uniforms that are used by
+        the model.
+    
+    A displayable that loads a 3D Model in the GLTF format. This format is supported by many 3D tools. Ren'Py
+    uses the `Open Asset Importer (assimp) library <https://github.com/assimp/assimp>`_ to load GLTF models.
+    
+    For the purposes of Ren'Py's 2D layout system, a GLTFModel has zero width and height. By default, the model
+    is loaded at the size found in the file that contains it. If required, the `zoom` may be used to scale it.
+    
+    When multiple models are in use, the ``gl_depth True`` property should be supplied to the camera, so that
+    depth testing is enabled. Ren'Py does not currently perform any culling of the model, so it's
+    important to use models simple enough to be completely rendered.
+    
+    `filename`
+        The filename of the model to display.
+    
+    `shader`
+        Either a string or tuple of strings, giving the name of the shader to use.
+    
+    `tangents`
+        If True, tangents will be included in the mesh.
+    
+    `zoom`
+        A zoom factor that will be applied to the model. Many models naturally use the range -1 to 1, and so this
+        may need to be quite large to make the model visible.
+    
+    `report`
+        If true, a report of the model will be printed to the log. This includes the uniforms that are used by
+        the model.
+

@@ -1,0 +1,68 @@
+.. Automatically generated file - do not modify.
+
+.. class:: JSONDB(filename, default=None)
+    
+    A JSONDB is a two-level database that uses JSON to store its data.
+    It's intended to be used by game developers to store data in a
+    database that can be version-controlled as part of the game script.
+    For example, this can store information associated with each
+    say statement, that can change how a say statement is displayed.
+    
+    JSONDBs are not intended for data that is changed through or because
+    of the player's actions. :doc:`persistent` or normal save files are
+    better choices for that data.
+    
+    The database should only contain data that Python can serialize to
+    JSON. This includes lists, dictionaries (with strings as keys),
+    strings, numbers, True, False, and None. See
+    `the Python documentation <https://docs.python.org/3/library/json.html#encoders-and-decoders>`__
+    about interoperability, how data converts between the two formats,
+    and the various associated pitfalls.
+    
+    The two levels of the database are dictionaries both keyed by strings.
+    The first level is read only - when a key on the first level dictionary
+    is accessed, a second level dictionary is created, optionally with
+    default contents. The second level dictionary is read-write, and
+    when one of the keys in a second level dictionary is changed,
+    that change is saved to the database whe the game exits.
+    
+    Like other persistent data, JSONDBs do not participate in rollback.
+    
+    A JSONDB should be created during init (in an init python block or
+    define statement), and will automatically be saved to the disk provided
+    at least one key in the dictionary is set. For example::
+    
+        define balloonData = JSONDB("balloon.json", default={ "enabled" : False })
+    
+    This creates a JSONDB that is stored in the file, balloon.json, and has
+        the default value of `enabled` set to False. The second level values can be used
+        as normal dictionaries
+    
+    ::
+    
+        screen say(who, what):
+    
+            default bd = balloonData[renpy.get_translation_identifier()]
+    
+            if bd["enabled"]:
+                use balloon_say(who, what)
+            else:
+                use adv_say(who, what)
+    
+            if config.developer:
+                textbutton "Dialogue Balloon Mode":
+                    action ToggleDict(bd, "enabled")
+    
+    The JSONDB constructor takes the following arguments:
+    
+    `filename`
+        The filename the database is stored in. This is relative to the
+        game directory. It's recommended that the filename end in ".json".
+    
+    `default`
+        If this is not None, it should be a dictionary. When a new second
+        level dictionary is created, this object is shallow copied and
+        used to initialized the new dictionary. The new dictionary will
+        only be saved as part of the database if at least one key in
+        it is saved.
+

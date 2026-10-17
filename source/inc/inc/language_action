@@ -1,0 +1,23 @@
+.. Automatically generated file - do not modify.
+
+.. function:: ChangeResourcePathTranslation(path, translation)
+    
+    Changes the translated path used for resources beneath `path`.
+    
+    `path`
+        A resource path prefix, including any directory supplied when the
+        resource is loaded. For example, audio loaded from
+        :func:`renpy.music.play` uses an ``audio/`` prefix.
+    
+    `translation`
+        The translated path prefix to use. If None, the mapping is removed
+        and the normal global-language lookup is restored.
+
+.. function:: Language(language)
+    
+    Changes the language of the game to `language`.
+    
+    `language`
+        A string giving the language to translate to, or None to use
+        the default language of the game script.
+

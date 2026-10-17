@@ -1,0 +1,14 @@
+.. Automatically generated file - do not modify.
+
+.. class:: LayeredImageProxy(name, transform=None)
+    
+    This is an image-like object that proxies attributes passed to it to
+    another layered image.
+    
+    `name`
+        A string giving the name of the layeredimage to proxy to.
+    
+    `transform`
+        If given, a transform or list of transforms that are applied to the
+        image after it has been proxied.
+

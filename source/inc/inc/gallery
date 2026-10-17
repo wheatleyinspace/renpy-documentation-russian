@@ -1,0 +1,220 @@
+.. Automatically generated file - do not modify.
+
+.. class:: Gallery()
+    
+    This class supports the creation of an image gallery by handling the
+    locking of images, providing an action that can show one or more images,
+    and a providing method that creates buttons that use that action.
+    
+    .. attribute:: enter_transition
+    
+        The transition that is used when displaying the first image associated
+        with a gallery button.
+    
+    .. attribute:: intra_transition
+    
+        The transition that is used when displaying images associated with
+        gallery buttons, apart from the first.
+    
+    .. attribute:: exit_transition
+    
+        The transition that is used when returning from the last image associated
+        with a gallery button to the gallery screen.
+    
+    .. attribute:: transition
+    
+        This is used in place of enter_transition, intra_transition, or exit_transition
+        if one or more of them has not been set.
+    
+    .. attribute:: locked_button
+    
+        The default displayable used by make_button for a locked button.
+    
+    .. attribute:: hover_border
+    
+        The default hover border used by make_button.
+    
+    .. attribute:: idle_border
+    
+        The default idle border used by make_button.
+    
+    .. attribute:: unlocked_advance
+    
+        If true, the gallery will only advance through unlocked images.
+    
+    .. attribute:: navigation
+    
+        If true, the gallery will display navigation and slideshow
+        buttons on top of the images.
+    
+        To customize the look of the navigation, you may override the
+        gallery_navigation screen. The default screen is defined in
+        renpy/common/00gallery.rpy
+    
+    .. attribute:: span_buttons
+    
+        If true, the gallery will advance between buttons.
+    
+    .. attribute:: slideshow_delay
+    
+        The time it will take for the gallery to advance between images
+        in slideshow mode.
+    
+    .. attribute:: image_screen = "_gallery"
+    
+        The screen that is used to show individual images in this gallery.
+        This screen is supplied the following keyword arguments:
+    
+        `locked`
+            True if the image is locked.
+        `displayables`
+            A list of transformed displayables that should be shown to the user.
+        `index`
+            A 1-based index of the image being shown.
+        `count`
+            The number of images attached to the current button.
+        `gallery`
+            The image gallery object.
+    
+        Additional arguments may be supplied by prefixing them with
+        `show_` in calls to Gallery.image and Gallery.unlock image.
+    
+        The default screen is defined at the bottom of renpy/common/00gallery.rpy.
+
+    .. method:: Action(name)
+        
+        An action that displays the images associated with the given button
+        name.
+    
+    .. method:: Next(unlocked=False)
+        
+        Advances to the next image in the gallery.
+        
+        `unlocked`
+            If true, only considers unlocked images.
+    
+    .. method:: Previous(unlocked=False)
+        
+        Goes to the previous image in the gallery.
+        
+        `unlocked`
+            If true, only considers unlocked images.
+    
+    .. method:: Return()
+        
+        Stops displaying gallery images.
+    
+    .. method:: ToggleSlideshow()
+        
+        Toggles slideshow mode.
+    
+    .. method:: allprior()
+        
+        A condition that is true if all prior images associated with the
+        current button have been unlocked.
+    
+    .. method:: button(name)
+        
+        Creates a new button, named `name`.
+        
+        `name`
+            The name of the button being created.
+    
+    .. method:: condition(expression)
+        
+        A condition that is satisfied when an expression evaluates to true.
+        
+        `expression`
+            A string giving a Python expression.
+    
+    .. method:: get_fraction(name, format='{seen}/{total}')
+        
+        Returns a text string giving the number of unlocked images and total number of images in the button
+        named `name`. If `name` is None, returns the same information for all buttons.
+        
+        `format`
+            A Python format string that's used to format the numbers. This has three values that
+            can be substituted in:
+        
+            {seen}
+                The number of images that have been seen.
+            {total}
+                The total number of images in the button.
+            {locked}
+                The number of images that are still locked.
+    
+    .. method:: image(*displayables, **properties)
+        
+        Adds a new image to the current button, where an image consists
+        of one or more displayables.
+        
+        Properties beginning with `show_` have that prefix stripped off,
+        and are passed to the gallery.image_screen screen as additional
+        keyword arguments.
+        
+        This takes one keword argument:
+        
+        `movie`
+            This should be set to true if one of the displayables is a
+            movie with sound. This will cause the movie to be hidden
+            during a transition.
+    
+    .. method:: make_button(name, unlocked, locked=None, hover_border=None, idle_border=None, style=None, **properties)
+        
+        This creates a button that displays the images associated with the given
+        button name.
+        
+        `name`
+            The name of the button that will be created.
+        
+        `unlocked`
+            A displayable that is displayed for this button when it is
+            unlocked.
+        
+        `locked`
+            A displayable that is displayed for this button when it is
+            locked. If None, the locked_button field of the gallery
+            object is used instead.
+        
+        `hover_border`
+            A displayable that is used to overlay this button when
+            it is unlocked and has focus. If None, the hover_border
+            field of the gallery object is used.
+        
+        `idle_border`
+            A displayable that is used to overlay this button when
+            it is unlocked but unfocused. If None, the idle_border
+            field of the gallery object is used.
+        
+        `style`
+            The style the button inherits from. When None, defaults
+            to the "empty" style, so as not to inherit borders and
+            so on.
+        
+        Additional keyword arguments become style properties of the
+        created button object.
+    
+    .. method:: transform(*transforms)
+        
+        Applies transforms to the last image registered. This should be
+        called with the same number of transforms as the image has
+        displayables. The transforms are applied to the corresponding
+        displayables.
+        
+        If a transform is None, the default transform is used.
+    
+    .. method:: unlock(*images)
+        
+        A condition that takes one or more image names as argument, and
+        is satisfied when all the named images have been seen by the
+        player. The image names should be given as strings.
+    
+    .. method:: unlock_image(*images, **properties)
+        
+        A convenience method that is equivalent to calling image and unlock
+        with the same parameters. (Keyword arguments beginning with ``show_`` are
+        only passed to image.) This will cause an image to be displayed
+        if it has been seen before.
+        
+        The images should be specified as strings giving image names.
+    

@@ -1,0 +1,11 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.translate_string(s, language=renpy.object.Sentinel('default'))
+    
+    Returns `s` immediately translated into `language`. If `language`
+    is Default, uses the language set in the preferences.
+    Strings enclosed in this function will **not** be added
+    to the list of translatable strings. Note that the string may be
+    double-translated, if it matches a string translation when it
+    is displayed.
+

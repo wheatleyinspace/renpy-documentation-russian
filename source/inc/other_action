@@ -1,0 +1,243 @@
+.. Automatically generated file - do not modify.
+
+.. function:: Confirm(prompt, yes, no=None, confirm_selected=False, screen=None, **kwargs)
+    
+    Prompts the user for confirmation of an action. If the user
+    clicks yes, the yes action is performed. Otherwise, the `no`
+    action is performed.
+    
+    `prompt`
+        The prompt to display to the user.
+    
+    `confirm_selected`
+        If true, the prompt will be displayed even if the `yes` action
+        is already selected. If false (the default), the prompt
+        will not be displayed if the `yes` action is selected.
+    
+    `screen`
+        If provided, this screen will be used instead of the default screen.
+    
+    Additional keyword arguments not beginning with _ are passed to
+    the screen.
+    
+    The sensitivity and selectedness of this action match those
+    of the `yes` action.
+    
+    See :func:`renpy.confirm` for a function version of this action.
+
+.. function:: CopyToClipboard(s)
+    
+    Copies the string `s` to the system clipboard, if possible. This
+    should work on desktop and mobile platforms, but will not work
+    on the web.
+
+.. function:: DisableAllInputValues()
+    
+    Disables all active InputValue. This will re-focus the default
+    InputValue, if there is one. Otherwise, no InputValue will be
+    focused.
+
+.. function:: EditFile(filename=None, line=1)
+    
+    Requests Ren'Py to open the given file in a text editor, if possible.
+    This will work on some platforms but not others.
+    
+    `filename`
+        If given, the filename to open. If None, the current filename
+        and line number are used, with `line` being ignored.
+    
+    `line`
+        The line number to open the file at.
+
+.. function:: ExecJS(code)
+    
+    Executes the given JavaScript source code. This is only supported on
+    the web, and will raise an exception on other platforms. The script
+    is executed asynchronously in the window context, and the return value
+    is not available.
+    
+    `code`
+        The JavaScript code to execute.
+
+.. function:: Function(callable, *args, _update_screens=True, **kwargs)
+    
+    This Action calls ``callable(*args, **kwargs)``.
+    
+    `callable`
+        Callable object. This assumes that if two callables compare
+        equal, calling either one will be equivalent.
+    
+    `args`
+        positional arguments to be passed to `callable`.
+    
+    `kwargs`
+        keyword arguments to be passed to `callable`.
+    
+    `_update_screens`
+        When true, the interaction restarts and the screens are updated
+        after the function returns.
+    
+    If the function returns a non-None value, the interaction stops and
+    returns that value. (When called using the call screen statement, the
+    result is placed in the `_return` variable.)
+    
+    Instead of using a Function action, you can define your own subclass
+    of the :class:`Action` class. This lets you name the action, and
+    determine when it should be selected and sensitive.
+
+.. function:: Help(help=None)
+    
+    Displays help.
+    
+    `help`
+        A string that is used to find help. This is used in the
+        following way:
+    
+        * If a label with this name exists, the label is called in
+          a new context.
+        * Otherwise, this is interpreted as giving the name of a file
+          that should be opened in a web browser.
+    
+        If `help` is None, :var:`config.help` is used as the default
+        value. If it is also None, the :var:`config.help_screen` screen
+        is shown in a new context, if it exists. Otherwise, does nothing.
+
+.. function:: HideInterface()
+    
+    Causes the interface to be hidden until the user clicks.
+    This is typically what happens when hitting the H key in a Ren'Py game.
+
+.. function:: If(expression, true=None, false=None)
+    
+    This returns `true` if `expression` is true, and `false`
+    otherwise. Use this to select an action based on an expression.
+    Note that the default, None, can be used as an action that causes
+    a button to be disabled.
+
+.. function:: InvertSelected(action)
+    
+    This inverts the selection state of the provided action, while
+    proxying over all of the other methods.
+
+.. function:: MouseMove(x, y, duration=0)
+    
+    Move the mouse pointer to `x`, `y`. If the device does not have a mouse
+    pointer, if it is not possible for Ren'Py to move that pointer,
+    or if the :var:`"automatic move" preference <preferences.mouse_move>`
+    is False, this does nothing.
+    
+    This is unlikely to work on the Linux with Wayland, Android, iOS, or Web
+    platforms.
+    
+    `duration`
+        The time it will take to perform the move, in seconds. During
+        this time, the mouse may be unresponsive.
+
+.. function:: Notify(message)
+    
+    Displays `message` using :func:`renpy.notify`.
+
+.. function:: OpenDirectory(directory)
+    
+    Opens `directory` in a file browser. `directory` is relative to
+    :var:`config.basedir`.
+
+.. function:: OpenURL(url)
+    
+    Causes `url` to be opened in a web browser.
+
+.. function:: QueueEvent(event, up=False)
+    
+    Queues the given event using :func:`renpy.queue_event`.
+
+.. function:: RestartStatement()
+    
+    This action causes Ren'Py to rollback to before the current
+    statement, and then re-run the current statement. This may be used
+    when changing a persistent variable that affects how the statement
+    is displayed.
+    
+    If run in a menu context, this waits until the player exits to a
+    top-level context before performing the rollback.
+
+.. function:: RollForward()
+    
+    This action causes a rollforward to occur, if a roll forward is
+    possible. Otherwise, it is insensitive.
+
+.. function:: Rollback(*args, force="menu", **kwargs)
+    
+    This action causes a rollback to occur, when a rollback is possible.
+    Otherwise, nothing happens.
+    
+    The arguments are given to :func:`renpy.rollback`. This includes the
+    `force` argument which here defaults to "menu".
+
+.. function:: RollbackToIdentifier(identifier)
+    
+    This causes a rollback to an identifier to occur. Rollback
+    identifiers are returned as part of HistoryEntry objects.
+
+.. function:: Screenshot()
+    
+    Takes a screenshot.
+
+.. function:: Scroll(id, direction, amount='step', delay=0.0)
+    
+    Causes a Bar, Viewport, or Vpgrid to scroll.
+    
+    `id`
+        The id of a bar, viewport, or vpgrid in the current screen.
+    
+    `direction`
+        For a vbar, one of "increase" or "decrease". For a viewport
+        or vpgrid, one of "horizontal increase", "vertical increase",
+        "horizontal decrease", or "vertical decrease".
+    
+    `amount`
+        The amount to scroll by. This can be a number of pixels, or
+        else "step" or "page".
+    
+    `delay`
+        If non-zero, the scroll will be animated for this many seconds.
+
+.. function:: SelectedIf(action, /)
+    
+    This indicates that one action in a list of actions should be used
+    to determine if a button is selected. This only makes sense
+    when the button has a list of actions. For example::
+    
+        # The button is selected only if mars_flag is True
+        textbutton "Marsopolis":
+            action [ SelectedIf(SetVariable("mars_flag", True)), SetVariable("on_mars", True) ]
+    
+    The action inside SelectedIf is run normally when the button is clicked.
+
+.. function:: SensitiveIf(action, /)
+    
+    This indicates that one action in a list of actions should be used
+    to determine if a button is sensitive. This only makes sense
+    when the button has a list of actions. For example::
+    
+        # The button is sensitive only if mars_flag is True
+        textbutton "Marsopolis":
+            action [ SensitiveIf(SetVariable("mars_flag", True)), SetVariable("on_mars", True) ]
+    
+    The action inside SensitiveIf is run normally when the button is clicked.
+
+.. function:: Skip(fast=False, confirm=False)
+    
+    Causes the game to begin skipping. If the game is in a menu
+    context, then this returns to the game. Otherwise, it just
+    enables skipping.
+    
+    `fast`
+        If true, skips directly to the next menu choice.
+    
+    `confirm`
+        If true, asks for confirmation before beginning skipping.
+
+.. function:: With(transition)
+    
+    Causes `transition` to occur.
+

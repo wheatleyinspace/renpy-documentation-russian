@@ -1,0 +1,10 @@
+{
+    "python.analysis.extraPaths": [
+        "D:/renpynightly",
+        "source"
+    ],
+    "python.autoComplete.extraPaths": [
+        "D:/renpynightly",
+        "source"
+    ]
+}

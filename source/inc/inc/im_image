@@ -1,0 +1,32 @@
+.. Automatically generated file - do not modify.
+
+.. function:: Image(filename, *, optimize_bounds=True, oversample=1, dpi=96, mipmap=None, **properties)
+    
+    Loads an image from a file. `filename` is a
+    string giving the name of the file.
+    
+    `filename`
+        This should be an image filename, including the extension.
+    
+    `optimize_bounds`
+        If true, only the portion of the image that
+        inside the bounding box of non-transparent pixels is loaded into
+        GPU memory. (The only reason to set this to False is when using an
+        image as input to a shader.)
+    
+    `oversample`
+        If this is greater than 1, the image is considered to be oversampled,
+        with more pixels than its logical size would imply. For example, if
+        an image file is 2048x2048 and oversample is 2, then the image will
+        be treated as a 1024x1024 image for the purpose of layout.
+    
+    `dpi`
+        The DPI of an SVG image. This defaults to 96, but that can be
+        increased to render the SVG larger, and decreased to render
+        it smaller.
+    
+    `mipmap`
+        If this is "auto", then mipmaps are generated for the image only if the game is scaled down to less than
+        75% of its default size. If this is True, mipmaps are always generated. If this is False, mipmaps are never
+        generated. If this is None, then the default is taken from config.mipmap.
+

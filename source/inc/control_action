@@ -1,0 +1,94 @@
+.. Automatically generated file - do not modify.
+
+.. function:: Call(label, *args, **kwargs)
+    
+    Ends the current statement, and calls `label`, given as a string.
+    Arguments and keyword arguments are passed to :func:`renpy.call`.
+
+.. function:: CallInNewContext(label, *args, **kwargs)
+    
+    Calls `label`, given as a string, in a new context. This is useful
+    when calling a label from a screen which is itself being
+    called via `call screen`. Note that, while in a new context,
+    the player will be unable to save the game, and
+    the scene and audio state will be reset upon returning
+    to the outer context. See :ref:`Contexts <context>` for more info.
+    Arguments and keyword arguments are passed to
+    :func:`renpy.call_in_new_context`.
+
+.. function:: Hide(screen=None, transition=None, _layer=None, immediately=False)
+    
+    This causes a screen to be hidden if it is shown.
+    
+    `screen`
+        Either a string giving the name of the screen to be hidden, or
+        None to hide the current screen.
+    
+    `transition`
+        If not None, a transition that occurs when hiding the screen.
+    
+    `_layer`
+        This is passed as the layer argument to :func:`renpy.hide_screen`.
+        Ignored if `screen` is None.
+    
+    `immediately`
+        If True, the screen is hidden immediately, without the 'on hide' event.
+
+.. function:: Jump(label)
+    
+    Causes control to transfer to `label`, given as a string.
+
+.. function:: NullAction()
+    
+    Does nothing.
+    
+    This can be used to make a button responsive to hover/unhover events,
+    without actually doing anything.
+
+.. function:: Return(value=None)
+    
+    Causes the current interaction to return the supplied non-None value.
+    This is often used with menus and imagemaps, to
+    select what the return value of the interaction is. If the screen
+    was called using the ``call screen`` statement, the return value
+    is placed in the `_return` variable.
+    
+    When in a menu, this returns from the menu. (The value should be
+    None in this case.)
+
+.. function:: Show(screen, transition=None, *args, **kwargs)
+    
+    This causes another screen to be shown. `screen` is a string
+    giving the name of the screen. The arguments are
+    passed to the screen being shown.
+    
+    If not None, `transition` is used to show the new screen.
+    
+    This action takes the `_layer`, `_zorder` and `_tag` keyword
+    arguments, which have the same meaning as in the
+    :func:`renpy.show_screen` function.
+
+.. function:: ShowTransient(screen, transition=None, *args, **kwargs)
+    
+    Shows a transient screen. A transient screen will be hidden when
+    the current interaction completes. The arguments are
+    passed to the screen being shown.
+    
+    If not None, `transition` is use to show the new screen.
+    
+    This action takes the `_layer`, `_zorder` and `_tag` keyword
+    arguments, which have the same meaning as in the
+    :func:`renpy.show_screen` function.
+
+.. function:: ToggleScreen(screen, transition=None, *args, **kwargs)
+    
+    This toggles the visibility of `screen`. If it is not currently
+    shown, the screen is shown with the provided arguments. Otherwise,
+    the screen is hidden.
+    
+    If not None, `transition` is use to show and hide the screen.
+    
+    This action takes the `_layer`, `_zorder` and `_tag` keyword
+    arguments, which have the same meaning as in the
+    :func:`renpy.show_screen` function.
+

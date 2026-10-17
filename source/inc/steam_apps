@@ -1,0 +1,38 @@
+.. Automatically generated file - do not modify.
+
+.. function:: achievement.steam.dlc_installed(appid)
+    
+    Returns True if `dlc` is installed, or False otherwise.
+
+.. function:: achievement.steam.dlc_progress(appid)
+    
+    Reports the progress towards DLC download completion.
+
+.. function:: achievement.steam.get_app_build_id()
+    
+    Returns the build ID of the installed game.
+
+.. function:: achievement.steam.get_current_beta_name()
+    
+    Returns the name of the current beta, or None if it can't.
+
+.. function:: achievement.steam.get_current_game_language()
+    
+    Return the name of the language the user has selected.
+
+.. function:: achievement.steam.get_steam_ui_language()
+    
+    Return the name of the language the steam UI is using.
+
+.. function:: achievement.steam.install_dlc(appid)
+    
+    Requests the DLC with `appid` be installed.
+
+.. function:: achievement.steam.is_subscribed_app(appid)
+    
+    Returns true if the user owns the app with `appid`, and false otherwise.
+
+.. function:: achievement.steam.uninstall_dlc(appid)
+    
+    Requests that the DLC with `appid` be uninstalled.
+

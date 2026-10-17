@@ -1,0 +1,26 @@
+.. Automatically generated file - do not modify.
+
+.. class:: MultiRevertable()
+    
+    MultiRevertable is a mixin class that allows an object to inherit
+    from more than one kind of revertable object. To use it, from MultiRevertable,
+    then from the revertable classes you want to inherit from.
+    
+    For example::
+    
+        class MyDict(MultiRevertable, dict, object):
+            pass
+    
+    will create an class that will rollback both its dict contents and
+    object fields.
+
+.. class:: defaultdict(default_factory, /, *args, **kwargs)
+    
+    This is a revertable version of collections.defaultdict. It takes a
+    factory function. If a key is accessed that does not exist, the `default_factory`
+    function is called with the key as an argument, and the result is
+    returned.
+    
+    While the default_factory attribute is present on this object, it does not
+    participate in rollback, and so should not be changed.
+

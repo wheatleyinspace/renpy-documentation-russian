@@ -1,0 +1,371 @@
+.. Automatically generated file - do not modify.
+
+.. class:: AudioData(data, filename)
+    
+    This class wraps a bytes object containing audio or video data, so it can be
+    passed to the audio/video playback system. The audio or video data should be contained
+    in some format Ren'Py supports. (For examples RIFF WAV format headers,
+    not unadorned samples.)
+    
+    Despite the name, this can be used to represent video data as well as audio data.
+    
+    `data`
+        A bytes object containing the audio file data.
+    
+    `filename`
+        A synthetic filename associated with this data. It can be used to
+        suggest the format `data` is in, and is reported as part of
+        error messages.
+    
+        If this starts with angle bracket, it can supply properties to
+        the audio, like from and to times.
+    
+    Once created, this can be used wherever an audio filename is allowed. For
+    example::
+    
+        define audio.easteregg = AudioData(b'...', 'sample.wav')
+        play sound easteregg
+
+.. function:: renpy.mark_audio_seen(filename)
+    
+    Marks the given filename as if it has been already played on the current user's
+    system.
+
+.. function:: renpy.mark_audio_unseen(filename)
+    
+    Marks the given filename as if it has not been played on the current user's
+    system yet.
+
+.. function:: renpy.play(filename, channel=None, **kwargs)
+    
+    Plays a sound effect. If `channel` is None, it defaults to
+    :var:`config.play_channel`. This is used to play sounds defined in
+    styles, :propref:`hover_sound` and :propref:`activate_sound`.
+
+.. function:: renpy.seen_audio(filename)
+    
+    Returns True if the given filename has been played at least once on the current
+    user's system.
+
+.. function:: renpy.music.channel_defined(channel)
+    
+    Returns True if the channel exists, or False otherwise.
+
+.. function:: renpy.music.get_all_mixers()
+    
+    This gets all mixers in use.
+
+.. function:: renpy.music.get_duration(channel='music')
+    
+    Returns the duration of the audio or video file on `channel`. Returns
+    0.0 if no file is playing on `channel`, or the duration is unknown.
+    Some formats - notably MP3 - do not include duration information in a
+    format Ren'Py can access.
+
+.. function:: renpy.music.get_loop(channel='music')
+    
+    Return a list of filenames that are being looped on `channel`, or None
+    if no files are being looped. In the case where a loop is queued, but
+    is not yet playing, the loop is returned, not the currently playing
+    music.
+
+.. function:: renpy.music.get_pause(channel='music')
+    
+    Returns the pause flag for `channel`.
+
+.. function:: renpy.music.get_playing(channel='music')
+    
+    If the given channel is playing, returns the playing file name.
+    Otherwise, returns None.
+
+.. function:: renpy.music.get_pos(channel='music')
+    
+    Returns the current position of the audio or video file on `channel`, in
+    seconds. Returns None if no audio is playing on `channel`.
+    
+    As this may return None before a channel starts playing, or if the audio
+    channel involved has been muted, callers of this function should
+    always handle a None value.
+
+.. function:: renpy.music.get_state(channel='music')
+    
+    Returns the lifecycle state of the channel as one of ``idle``,
+    ``playing``, ``paused``, or ``ended``. ``ended`` means natural EOF was
+    reached while the backend may retain the decoder for an explicit seek.
+
+.. function:: renpy.music.is_playing(channel='music')
+    
+    Returns True if the channel is currently playing a sound, False if
+    it is not, or if the sound system isn't working.
+
+.. function:: renpy.music.play(filenames, channel='music', loop=None, fadeout=None, synchro_start=None, fadein=0, tight=None, if_changed=False, relative_volume=1.0)
+    
+    This stops the music currently playing on the numbered channel, dequeues
+    any queued music, and begins playing the specified file or files.
+    
+    `filenames`
+        This may be a single file, or a list of files to be played.
+    
+    `channel`
+        The channel to play the sound on.
+    
+    `loop`
+        If this is True, the tracks will loop while they are the last thing
+        in the queue.
+        If this is False, the tracks will play only once.
+        If None, the default of the channel is used.
+    
+    `fadeout`
+        If not None, this is a time in seconds to fade for. Otherwise the
+        fadeout time is taken from config.fadeout_audio. This is ignored if
+        the channel is paused when the music is played.
+    
+    `synchro_start`
+        When True, all channels that have synchro_start set to true will start
+        playing at exactly the same time. This may lead to a pause before the
+        channels start playing. This is useful when playing two audio files that
+        are meant to be synchronized with each other.
+    
+        If None, this takes its value from the channel.
+    
+    `fadein`
+        This is the number of seconds to fade the music in for, on the
+        first loop only.
+    
+    `tight`
+        If this is True, then fadeouts will span into the next-queued sound. If
+        None, this is true when loop is True, and false otherwise.
+    
+    `if_changed`
+        If this is True, and the music file is currently playing,
+        then it will not be stopped/faded out and faded back in again, but
+        instead will be kept playing. (This will always queue up an additional
+        loop of the music.)
+    
+    `relative_volume`
+        This is the volume relative to the current channel volume.
+        The specified file will be played at that relative volume. If not
+        specified, it will always default to 1.0, which plays the file at the
+        original volume as determined by the mixer, channel and secondary volume.
+    
+    This clears the pause flag for `channel`.
+
+.. function:: renpy.music.pump()
+    
+    This 'pumps' the audio system. Normally, the effects of the ``play``,
+    ``queue``, and ``stop`` statements and the function equivalents take
+    place at the start of the next interaction. In some cases, the effects
+    of multiple statements can cancel each other out - for example, a
+    play followed by a stop causes the track to never be played.
+    
+    If this function is called between the play and stop, the track will
+    begin playing before this function returns, which then allows the track
+    to be faded out. ::
+    
+        play music "mytrack.opus"
+        $ renpy.music.pump()
+        stop music fadeout 4
+
+.. function:: renpy.music.queue(filenames, channel='music', loop=None, clear_queue=True, fadein=0, tight=None, relative_volume=1.0)
+    
+    This queues the given filenames on the specified channel.
+    
+    `filenames`
+        This may be a single file, or a list of files to be played.
+    
+    `channel`
+        The channel to play the sound on.
+    
+    `loop`
+        If this is True, the tracks will loop while they are the last thing
+        in the queue.
+        If this is False, the tracks will play only once.
+        If None, the default of the channel is used.
+    
+    `clear_queue`
+        If True, then the queue is cleared, making these files the files that
+        are played when the currently playing file finishes. If it is False,
+        then these files are placed at the back of the queue. In either case,
+        if no music is playing these files begin playing immediately.
+    
+    `fadein`
+        This is the number of seconds to fade the music in for, on the
+        first loop only.
+    
+    `tight`
+        If this is True, then fadeouts will span into the next-queued sound. If
+        None, this is true when loop is True, and false otherwise.
+    
+    `relative_volume`
+        This is the volume relative to the current channel volume.
+        The specified file will be played at that relative volume. If not
+        specified, it will always default to 1.0, which plays the file at the
+        original volume as determined by the mixer, channel and secondary volume.
+    
+    This clears the pause flag for `channel`.
+
+.. function:: renpy.music.register_channel(name, mixer, loop=None, stop_on_mute=True, tight=False, file_prefix="", file_suffix="", buffer_queue=True, movie=False, framedrop=True)
+    
+    This registers a new audio channel named `name`. Audio can then be
+    played on the channel by supplying the channel name to the play or
+    queue statements.
+    
+    `name`
+        The name of the channel. It should not contain spaces, as this is reserved
+        for Ren'Py's internal use, and should be a
+        `valid identifier <https://docs.python.org/reference/lexical_analysis.html#identifiers>`__
+        for the syntax of the :ref:`play-statement` to be usable.
+    
+    `mixer`
+        The name of the mixer the channel uses. By default, Ren'Py knows about
+        the "music", "sfx", and "voice" mixers. Using other names is possible,
+        and will create the mixer if it doesn't already exist, but making new
+        mixers reachable by the player requires changing the preferences screens.
+    
+    `loop`
+        If True or None, sounds on this channel loop by default. If False, sounds on
+        this channel do not loop by default.
+    
+    `stop_on_mute`
+        If true, music on the channel is stopped when the channel is muted.
+    
+    `tight`
+        If true, sounds will loop even when fadeout is occurring. This should
+        be set to True for a sound effects or seamless music channel, and False
+        if the music fades out on its own.
+    
+    `file_prefix`
+        A prefix that is prepended to the filenames of the sound files being
+        played on this channel.
+    
+    `file_suffix`
+        A suffix that is appended to the filenames of the sound files being
+        played on this channel.
+    
+    `buffer_queue`
+        Should we buffer the first second or so of a queued file? This should
+        be True for audio, and False for movie playback.
+    
+    `movie`
+        If true, this channel will be set up to play back videos.
+    
+    `framedrop`
+        This controls what a video does when lagging. If true, frames will
+        be dropped to keep up with realtime and the soundtrack. If false,
+        Ren'Py will display frames late rather than dropping them.
+    
+    `synchro_start`
+        Does this channel participate in synchro start? Synchro start determines if
+        the channel will start playing at the same time as other channels.
+        Files queued behind a playing track start when that track ends, without
+        waiting for other channels. If None,
+        this defaults to `loop` if `movie` is False, and False otherwise.
+
+.. function:: renpy.music.seek(position, channel='music')
+    
+    Seeks the media currently playing on `channel` to `position` seconds.
+    This preserves the active decoder and queued tracks, unlike restarting
+    playback with an audio ``<from ...>`` specifier. If no media is playing,
+    this function has no effect. Negative positions are treated as zero.
+    
+    `position`
+        The absolute position, in seconds, within the currently playing
+        media.
+    
+    `channel`
+        The channel to seek. Defaults to ``"music"``.
+
+.. function:: renpy.music.set_audio_filter(channel, audio_filter, replace=False, duration=0.016)
+    
+    Sets the audio filter for sounds about to be queued to `audio_filter`.
+    
+    `audio_filter`
+        Must be a an :doc:`audio filter <audio_filters>` or list of
+        audio filters, or None to remove the audio filter.
+    
+    `replace`
+        If True, the audio filter replaces the current audio filter immediately,
+        changing currently playing and queued sounds. If False, the audio
+        filter will be used the next time a sound is played or queued.
+    
+    `duration`
+        The duration to change from the current to the new filter, in seconds.
+        This prevents a popping sound when changing filters.
+
+.. function:: renpy.music.set_mixer(channel, mixer, default=False)
+    
+    This sets the name of the mixer associated with a given
+    channel. By default, there are two mixers, 'sfx' and
+    'music'. 'sfx' is on channels 0 to 3, and 'music'
+    on 3 to 7. The voice module calls this function to set channel 2 to voice.
+    You can create your own mixer, but will need to add a preference if you
+    wish to allow the user to set it.
+    
+    This function should only be called in an init block.
+
+.. function:: renpy.music.set_pan(pan, delay, channel='music')
+    
+    Sets the pan of this channel.
+    
+    `pan`
+        A number between -1 and 1 that control the placement of the audio.
+        If this is -1, then all audio is sent to the left channel.
+        If it's 0, then the two channels are equally balanced. If it's 1,
+        then all audio is sent to the right ear.
+    
+    `delay`
+        The amount of time it takes for the panning to occur.
+    
+    `channel`
+        The channel the panning takes place on, defaulting to the music channel.
+
+.. function:: renpy.music.set_pause(value, channel='music')
+    
+    Sets the pause flag for `channel` to `value`. If True, the channel
+    will pause, otherwise it will play normally.
+
+.. function:: renpy.music.set_queue_empty_callback(callback, channel='music')
+    
+    This sets a callback that is called when the queue is empty. This
+    callback is called when the queue first becomes empty, and at
+    least once per interaction while the queue is empty.
+    
+    The callback is called with no parameters. It can queue sounds by
+    calling renpy.music.queue with the appropriate arguments. Please
+    note that the callback may be called while a sound is playing, as
+    long as a queue slot is empty.
+
+.. function:: renpy.music.set_volume(volume, delay=0, channel='music')
+    
+    Sets the volume of this channel, as a fraction of the volume of the
+    mixer controlling the channel.
+    
+    `volume`
+        This is a number between 0.0 and 1.0, and is interpreted as a fraction
+        of the mixer volume for the channel.
+    
+    `delay`
+        It takes delay seconds to change/fade the volume from the old to
+        the new value. This value is persisted into saves, and participates
+        in rollback.
+    
+    `channel`
+        The channel to be set
+
+.. function:: renpy.music.stop(channel='music', fadeout=None)
+    
+    This stops the music that is currently playing, and dequeues all
+    queued music. If fadeout is None, the music is faded out for the
+    time given in config.fadeout_audio, otherwise it is faded for fadeout
+    seconds.
+    
+    This sets the last queued file to None.
+    
+    `channel`
+        The channel to stop the sound on.
+    
+    `fadeout`
+        If not None, this is a time in seconds to fade for. Otherwise the
+        fadeout time is taken from config.fadeout_audio. This is ignored if
+        the channel is paused.
+

@@ -1,0 +1,20 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.get_autoreload()
+    
+    Gets the autoreload flag.
+
+.. function:: renpy.reload_script()
+    
+    Causes Ren'Py to save the game, reload the script, and then load the
+    save.
+    
+    This should only be called during development. It works on Windows, macOS,
+    and Linux, but may not work on other platforms.
+
+.. function:: renpy.set_autoreload(autoreload)
+    
+    Sets the autoreload flag, which determines if the game will be
+    automatically reloaded after file changes. Autoreload will not be
+    fully enabled until the game is reloaded with :func:`renpy.reload_script`.
+

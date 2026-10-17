@@ -1,0 +1,96 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.call_in_new_context(label, *args, **kwargs)
+    
+    This creates a new context, and then starts executing Ren'Py script
+    from the given label in that context. Rollback is disabled in the
+    new context, and saving/loading will occur in the top level
+    context.
+    
+    Use this to begin a second interaction with the user while
+    inside an interaction.
+    
+    This takes an optional  keyword argument:
+    
+    `_clear_layers`
+        If True (the default), the layers are cleared before the new
+        interaction starts. If False, the layers are not cleared. If a
+        list, only the layers in the list are cleared.
+
+.. function:: renpy.context()
+    
+    Returns an object that is unique to the current context. The object
+    is copied when entering a new context, but changes to the copy do
+    not change the original.
+    
+    The object is saved and participates in rollback.
+
+.. function:: renpy.context_dynamic(*variables)
+    
+    This can be given one or more variable names as arguments. This makes the
+    variables dynamically scoped to the current context. When returning to the
+    prior context, the variables will be reset to the value they had when this
+    function was called.
+    
+    Variables in :ref:`named stores <named-stores>` are supported.
+    
+    Example calls are::
+    
+        $ renpy.context_dynamic("x", "y", "z")
+        $ renpy.context_dynamic("mystore.serial_number")
+
+.. function:: renpy.context_nesting_level()
+    
+    Returns the nesting level of the current context. This is 0 for the
+    outermost context (the context that is saved, loaded, and rolled-back),
+    and is non-zero in other contexts, such as menu and replay contexts.
+
+.. function:: renpy.invoke_in_new_context(callable, *args, **kwargs)
+    
+    This function creates a new context, and invokes the given Python
+    callable (function) in that context. When the function returns
+    or raises an exception, control returns to the original context.
+    It's generally used to call a Python function that needs to display
+    information to the player (like a confirmation prompt) from inside
+    an event handler.
+    
+    Additional arguments and keyword arguments are passed to the
+    callable.
+    
+    A context created with this function cannot execute Ren'Py script.
+    Functions that would change the flow of Ren'Py script, like
+    :func:`renpy.jump`, are handled by the outer context. If you want
+    to call Ren'Py script rather than a Python function, use
+    :func:`renpy.call_in_new_context` instead.
+    
+    This takes an optional  keyword argument:
+    
+    `_clear_layers`
+        If True (the default), the layers are cleared before the new
+        interaction starts. If False, the layers are not cleared. If a
+        list, only the layers in the list are cleared.
+
+.. function:: renpy.jump_out_of_context(label)
+    
+    Causes control to leave the current context, and then to be
+    transferred in the parent context to the given label.
+
+.. function:: renpy.reset_all_contexts()
+    
+    This pops all contexts off the context stack, resetting the dynamic variables
+    as it does so. When this is done, a new context is created, the current statement
+    ends, and the game continues from the next statement. This will put Ren'Py
+    into the state it was at startup, with the exception of data and the start
+    point.
+    
+    This can be used to reset everything about the game - shown image, playing music,
+    etc, as if the game started from the beginning.
+    
+    Because of how completely this resets Ren'Py, this function immediately ends the
+    current statement.
+    
+    This is mainly intended for use in an after_load label, where it can bring the
+    game back to the state it was in when it started. It's then up to the game to
+    re-establish the scene, music, etc, and it can then jump to the label it wants
+    to continue at.
+

@@ -1,0 +1,62 @@
+.. Automatically generated file - do not modify.
+
+.. class:: renpy.Choice(value, /, *args, **kwargs)
+    
+    This encapsulates a menu choice with arguments. The first positional argument is the value
+    that will be returned, and the other arguments are the arguments that will be passed to the choice
+    screen.
+    
+    This is intended for use in the items list of :func:`renpy.display_menu` to supply arguments to
+    that screen.
+    
+    `value`
+        The value that will be given to the choice screen.
+    
+    Positional arguments and keyword arguments are stored in this object and used by renpy.display_menu.
+
+.. function:: renpy.display_menu(items, *, interact=True, screen="choice", type="menu", _layer=None, args=None, kwargs=None)
+    
+    This displays a menu to the user. `items` should be a list of 2-item tuples.
+    In each tuple, the first item is a textual label, and the second item is
+    the value to be returned if that item is selected. If the value is None,
+    the first item is used as a menu caption.
+    
+    This function takes many optional arguments, of which only a few are documented.
+    Except for `items`, all arguments should be given as keyword arguments.
+    
+    `interact`
+        If false, the menu is displayed, but no interaction is performed.
+    
+    `screen`
+        The name of the screen used to display the menu.
+    
+    `type`
+        May be "menu" or "nvl". If "nvl", the menu is displayed in NVL mode.
+        Otherwise, it is displayed in ADV mode.
+    
+    `_layer`
+        The layer to display the menu on. If not given, defaults to :var:`config.choice_layer`
+        for normal choice menus, and :var:`config.nvl_choice_layer` for NVL choice menus.
+        If the configuration variable is None, uses the screen's layer, defaulting to "screens".
+    
+    `_args`
+        If not None, this should be a tuple containing the positional :ref:`menu arguments <menu-arguments>`
+        supplied to this menu.
+    
+    `_kwargs`
+        If not None, this should be a dict containing the keyword :ref:`menu arguments <menu-arguments>`
+        supplied to this menu.
+    
+    Note that most Ren'Py games do not use menu captions, but use narration
+    instead. To display a menu using narration, write::
+    
+        $ narrator("Which direction would you like to go?", interact=False)
+        $ result = renpy.display_menu([ ("East", "east"), ("West", "west") ])
+    
+    If you need to supply per-item arguments, use :class:`renpy.Choice` objects as the values. For example::
+    
+        renpy.display_menu([
+            ("East", renpy.Choice("east", icon="right_arrow")),
+            ("West", renpy.Choice("west", icon="left_arrow"))
+            ])
+

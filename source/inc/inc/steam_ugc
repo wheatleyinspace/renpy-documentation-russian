@@ -1,0 +1,18 @@
+.. Automatically generated file - do not modify.
+
+.. function:: achievement.steam.get_subscribed_item_path(item_id)
+    
+    Returns the path where an item of user-generated content was installed. Returns
+    None if the item was not installed.
+    
+    `item_id`
+        The item id.
+
+.. function:: achievement.steam.get_subscribed_items(include_disabled=False)
+    
+    Returns a list of the item ids the user has subscribed to in the steam
+    workshop.
+    
+    `include_disabled`
+        If true, include items that are disabled.
+

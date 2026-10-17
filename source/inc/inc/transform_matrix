@@ -1,0 +1,28 @@
+.. Automatically generated file - do not modify.
+
+.. class:: OffsetMatrix(x, y, z)
+    
+    A TransformMatrix that returns a matrix that offsets the vertex by a fixed amount.
+
+.. class:: RotateMatrix(x, y, z)
+    
+    A TransformMatrix that returns a matrix that rotates the displayable around the
+    origin.
+    
+    `x`, `y`, `z`
+        The amount to rotate around the origin, in degrees.
+    
+    
+    The rotations are applied in order:
+    
+    * A clockwise rotation by `x` degrees in the Y/Z plane.
+    * A clockwise rotation by `y` degrees in the Z/X plane.
+    * A clockwise rotation by `z` degrees in the X/Y plane.
+
+.. class:: ScaleMatrix(x, y, z)
+    
+    A TransformMatrix that returns a matrix that scales the displayable.
+    
+    `x`, `y`, `z`
+        The factor to scale each axis by.
+

@@ -1,0 +1,42 @@
+.. Automatically generated file - do not modify.
+
+.. function:: CaptureFocus(name='default')
+    
+    If a displayable is focused when this action is run, the rectangle
+    containing that displayable is stored with the name `name`. This
+    rectangle can then be retrieved with the :func:`GetFocusRect` action,
+    or the `focus` property of the :ref:`sl-nearrect` displayable.
+    
+    If no displayable is focused, the previous capture with that name
+    is removed.
+    
+    `name`
+        The name of the focus rectangle to store. This should be a string.
+        The name "tooltip" is special, as it is automatically captured
+        when the tooltip is changed.
+
+.. function:: ClearFocus(name='default')
+    
+    Clears a stored focus rectangle captured with :func:`CaptureFocus`.
+    If `name` is None, all focus rectangles are cleared.
+
+.. function:: GetFocusRect(name='default')
+    
+    If a focus rectangle with the given name has been stored (either with
+    :func:`CaptureFocus`, or automatically by a tooltip, returns the
+    a (x, y, h, w) rectangle. Otherwise, returns None.
+    
+    `name`
+        The name of the focus rectangle to retrieve. The name "tooltip"
+        is special, as it is automatically captured when the tooltip is
+        changed.
+
+.. function:: ToggleFocus(name='default')
+    
+    If the focus rectangle exists, clears it, otherwise captures it.
+    
+    `name`
+        The name of the focus rectangle to store. This should be a string.
+        The name "tooltip" is special, as it is automatically captured
+        when the tooltip is changed.
+

@@ -1,0 +1,26 @@
+.. Automatically generated file - do not modify.
+
+.. function:: achievement.steam.cancel_ticket()
+    
+    Cancels the ticket returned by :func:`achievement.steam.get_session_ticket`.
+
+.. function:: achievement.steam.get_account_id()
+    
+    Returns the user's account ID.
+
+.. function:: achievement.steam.get_csteam_id()
+    
+    Returns the user's full CSteamID as a 64-bit number.
+
+.. function:: achievement.steam.get_game_badge_level(series, foil)
+    
+    Gets the level of the users Steam badge for your game.
+
+.. function:: achievement.steam.get_persona_name()
+    
+    Returns the user's publicly-visible name.
+
+.. function:: achievement.steam.get_session_ticket(identity=None)
+    
+    Gets a ticket that can be sent to the server to authenticate this user.
+

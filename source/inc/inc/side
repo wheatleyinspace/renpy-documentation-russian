@@ -1,0 +1,47 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.get_side_image(prefix_tag, image_tag=None, not_showing=None, layer=None)
+    
+    This attempts to find an image to show as the side image.
+    
+    It begins by determining a set of image attributes. If `image_tag` is
+    given, it gets the image attributes from the tag. Otherwise, it gets
+    them from the image property suplied to the currently showing character.
+    If no attributes are available, this returns None.
+    
+    It then looks up an image with the tag `prefix_tag`, and attributes
+    consisting of:
+    
+    * An image tag (either from `image_tag` or the image property supplied
+      to the currently showing character).
+    * The attributes.
+    
+    If such an image exists, it's returned.
+    
+    `not_showing`
+        If not showing is True, this only returns a side image if an image
+        with the tag that the attributes are taken from is not currently
+        being shown. If False, it will always return an image, if possible.
+        If None, takes the value from :var:`config.side_image_only_not_showing`.
+    
+    `layer`
+        If given, the layer to look for the image tag and attributes on. If
+        None, uses the default layer for the tag.
+
+.. function:: renpy.set_tag_attributes(name, layer=None)
+    
+    This sets the attributes associated with an image tag when that image
+    tag is not showing. The main use of this would be to directly set the
+    attributes used by a side image.
+    
+    For example::
+    
+        $ renpy.set_tag_attributes("lucy mad")
+        $ renpy.say(l, "I'm rather cross.")
+    
+    and::
+    
+        l mad "I'm rather cross."
+    
+    are equivalent.
+

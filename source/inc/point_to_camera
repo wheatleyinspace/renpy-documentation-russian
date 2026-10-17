@@ -1,0 +1,10 @@
+.. Automatically generated file - do not modify.
+
+.. class:: Camera(layer='master')
+    
+    Instances of this class can be used with point_to to point
+    at the location of the camera for a particular layer.
+    
+    `layer`
+        The name of the layer.
+

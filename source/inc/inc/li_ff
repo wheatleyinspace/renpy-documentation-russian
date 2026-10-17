@@ -1,0 +1,46 @@
+.. Automatically generated file - do not modify.
+
+.. function:: layeredimage.format_function(what, name, group, variant, attribute, image, image_format, **kwargs)
+    
+    This is called to format the information about an attribute
+    or condition into a displayable. This can be replaced by a
+    creator, but the new function should ignore unknown kwargs.
+    
+    `what`
+        A string giving a description of the thing being formatted,
+        which is used to create better error messages.
+    
+    `name`
+        The name of the layeredimage.
+    
+    `group`
+        The group of an attribute, None if not supplied or if it's
+        part of a condition.
+    
+    `variant`
+        The variant argument to the group, or None if it is not
+        supplied.
+    
+    `attribute`
+        The attribute itself.
+    
+    `image`
+        Either a displayable or string.
+    
+    `image_format`
+        The image_format argument of the LayeredImage.
+    
+    If `image` is None, then `name`, `group` (if not None), `variant` (if not None),
+    and `attribute` are combined with underscores to create `image`, which
+    will then be a string.
+    
+    If `images` is a string, and `image_format` is not None, `image` is formatted
+    into the string to get the final displayable.
+    
+    So if `name` is "eileen", `group` is "expression", and
+    `attribute` is "happy", `image` would be set to "eileen_expression_happy".
+    If `image_format` is "images/{image}.png",
+    the final image Ren'Py finds is "images/eileen_expression_happy.png".
+    But note that it would have found the same image without the format
+    argument.
+

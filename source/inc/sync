@@ -1,0 +1,12 @@
+.. Automatically generated file - do not modify.
+
+.. function:: DownloadSync()
+    
+    This action begins the process of downloading a Sync from the
+    Ren'Py Sync server.
+
+.. function:: UploadSync()
+    
+    This action begins the process of uploading the most recent
+    saves to the Ren'Py Sync server.
+

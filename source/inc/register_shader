@@ -1,0 +1,70 @@
+.. Automatically generated file - do not modify.
+
+.. function:: renpy.register_shader(name, **kwargs)
+    
+    This registers a shader part. This takes `name`, and then
+    keyword arguments.
+    
+    `name`
+        A string giving the name of the shader part. Names starting with an
+        underscore or "renpy." are reserved for Ren'Py.
+    
+    `glsl`
+        The GLSL dialect this shader part is written in: 300 for GLSL ES 3.00
+        or 100 for GLSL ES 1.00.
+    
+        This defaults to None, meaning the part follows
+        :var:`config.glsl_version`: 300 for new games and 100 for games that
+        declare compatibility with Ren'Py 8.5 or earlier.
+    
+        Ren'Py translates between the two dialects as needed, so a ``glsl=300``
+        part still runs on a device that only provides GLSL ES 1.00 unless it
+        uses a feature not present in the older version.
+    
+        A part that doesn't declare a dialect, and would be treated as GLSL ES
+        3.00, is checked for constructs that only exist in GLSL ES 1.00 - such
+        as ``gl_FragColor``, ``texture2D``, ``attribute``, and ``varying``.
+        Finding one is an error, since it means the part was written for the
+        older dialect but did not declare as much.
+    
+        Layout qualifiers are reserved for declaring additional fragment outputs
+        once multiple render targets are supported: location 0 is Ren'Py's
+        ``fragment_color``, and outputs declared by a shader part will start at 1.
+        A plain ``out`` will continue to mean a value passed from the vertex shader
+        to the fragment shader.
+    
+    `variables`
+        The variables used by the shader part. These should be listed one per
+        line, a storage class followed by a type, name, and semicolon.
+    
+        With ``glsl=300``, the storage class is ``uniform``, ``in`` for a
+        value that comes from the mesh, or ``out`` for a value the vertex
+        shader passes to the fragment shader::
+    
+            variables='''
+            uniform sampler2D tex0;
+            in vec2 a_tex_coord;
+            out vec2 v_tex_coord;
+            '''
+    
+        With ``glsl=100``, it is ``uniform``, ``attribute``, or ``varying``::
+    
+            variables='''
+            uniform sampler2D tex0;
+            attribute vec2 a_tex_coord;
+            varying vec2 v_tex_coord;
+            '''
+    
+    `vertex_functions`
+        If given, a string containing functions that will be included in the
+        vertex shader.
+    
+    `fragment_functions`
+        If given, a string containing functions that will be included in the
+        fragment shader.
+    
+    Other keyword arguments should start with ``vertex_`` or ``fragment_``,
+    and end with an integer priority. So "fragment_200" or "vertex_300". These
+    give text that's placed in the appropriate shader at the given priority,
+    with lower priority numbers inserted before higher priority numbers.
+
