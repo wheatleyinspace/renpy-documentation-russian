@@ -1,117 +1,119 @@
 :orphan:
 
-Namespaces
-==========
+Пространства имён
+=================
 
-Ren'Py uses namespaces to organize variables and methods. This file contains descriptions of some of the
-namespaces Ren'Py uses, primarily to help editors provide autocompletion and documentation.
+Ren'Py использует пространства имён для упорядочивания переменных и методов. Этот файл содержит
+описания некоторых пространств имён, используемых в Ren'Py, главным образом для того, чтобы помочь
+редакторам кода обеспечивать автодополнение и подсказки документации.
 
 .. var:: achievement
 
-    A namespace that contains functions that grant and manage :doc:`achievements <achievement>`. This also contains much of
-    the Steamworks integration.
+    Пространство имён, содержащее функции для выдачи достижений и управления ими (:doc:`достижения <achievement>`).
+    Оно также содержит большую часть интеграции со Steamworks.
 
 .. var:: bubble:
 
-    A namespace that contains variables that control the display of :doc:`dialogue bubbles <bubble>`.
+    Пространство имён, содержащее переменные, управляющие отображением :doc:`диалоговых облачков (речевых пузырей) <bubble>`.
 
 .. var:: build:
 
-    A namespace that contains variables that control the :doc:`build process <build>`.
+    Пространство имён, содержащее переменные, управляющие :doc:`процессом сборки дистрибутивов <build>`.
 
 .. var:: config:
 
-    A namespace that contains variables that control the :doc:`configuration <config>` of Ren'Py. These variables should
-    be set at init time (in ``init python`` blocks or with the ``define``) and should not be changed once the game
-    has started.
+    Пространство имён, содержащее переменные, управляющие :doc:`конфигурацией <config>` Ren'Py. Эти переменные
+    следует задавать на этапе инициализации (в блоках ``init python`` или с помощью инструкции ``define``);
+    их не следует изменять после начала игры.
 
 .. var:: define:
 
-    The define namespace contains functions that define new variables, such as families of transitions.
+    Пространство имён define содержит функции, определяющие новые переменные, такие как семейства переходов.
 
 .. var:: director:
 
-    The director namespace contains functions that control the :doc:`interactive director <director>`, which
-    lets you insert images and music into the game interactively.
+    Пространство имён director содержит функции, управляющие :doc:`интерактивным режиссёром <director>`,
+    который позволяет интерактивно добавлять изображения и музыку в игру.
 
 .. var:: gui
 
-    The gui namespace contains functions that control the :doc:`default GUI system <gui>`. These variables only matter
-    if you are using the default GUI system, and may not be used if you've replaced it. Define statements that
-    affect the gui namespace are re-run when the translaton changes.
+    Пространство имён gui содержит функции, управляющие :doc:`стандартной системой графического интерфейса (GUI) <gui>`.
+    Эти переменные имеют значение только при использовании стандартного графического интерфейса и могут не
+    использоваться, если вы заменили его собственным. Инструкции define, влияющие на пространство имён gui,
+    выполняются повторно при смене языка перевода.
 
 .. var:: iap
 
-    The iap namespace contains functions that control the :doc:`in-app purchase system <iap>`.
+    Пространство имён iap содержит функции, управляющие :doc:`системой внутриигровых покупок (IAP) <iap>`.
 
 .. var:: im
 
-    **Note: Most functions in the im namespace are deprecated.**
+    **Примечание: Большинство функций в пространстве имён im устарели.**
 
-    The im namespace contains image manipulators, which load or manipulate images on the CPU. Most functions here
-    can be accomplished on the GPU using :class:`Transform`.
+    Пространство имён im содержит манипуляторы изображений, загружающие или преобразующие изображения на CPU.
+    Большинство этих операций эффективнее выполнять на GPU с помощью :class:`Transform`.
 
 .. var:: layeredimage
 
-    :doc:`Layered images <layeredimage>` are a way to combine multiple images into a single image, using attributes
-    and conditions to control which images are shown. The layeredimage namespace contains classes that allow you
-    to create and manipulate layered images from Python, the equivalent of the ``layeredimage`` statement.
+    :doc:`Многослойные изображения <layeredimage>` — это способ объединения нескольких изображений в единый объект
+    с использованием атрибутов и условий для управления отображением слоёв. Пространство имён layeredimage содержит
+    классы, позволяющие создавать и изменять многослойные изображения из Python, что эквивалентно инструкции ``layeredimage``.
 
 .. var:: persistent
 
-    The persistent namespace contains :doc:`persistent` data. Fields on this object start as None, and retain
-    their values between runs of the game, even when not loading a save slot.
+    Пространство имён persistent содержит :doc:`постоянные данные (persistent) <persistent>`. Поля этого объекта
+    изначально равны None и сохраняют свои значения между запусками игры даже без загрузки слота сохранения.
 
-    The values of fields on the persistent object should be of Python-supplied types, like booleans, numbers,
-    strings, lists, tuples, dicts, and sets. Classes you define should not be assigned to the persistent object.
+    Значения полей объекта persistent должны быть стандартными типами Python, такими как логические значения,
+    числа, строки, списки, кортежи, словари и множества. Пользовательские классы не должны присваиваться объекту persistent.
 
 .. var:: preferences
 
-    The :doc:`preferences` namespace contains variables that contain preferences. While these can be read and set,
-    the most common use is with the ``default`` statement, using syntax like::
+    Пространство имён :doc:`preferences` содержит переменные пользовательских настроек. Хотя их можно читать и
+    изменять напрямую, чаще всего их инициализируют с помощью инструкции ``default`` с синтаксисом вида::
 
         default preferences.fullscreen = True
 
 .. var:: preferences.volume
 
-    The :doc:`preferences` namespace contains variables that set the default volumes for each mixer. These should
-    be set using the ``default`` statement, like::
+    Пространство имён :doc:`preferences` содержит переменные, задающие громкость по умолчанию для каждого микшера.
+    Их следует задавать с помощью инструкции ``default``, например::
 
         default preferences.volume.music = 0.5
 
 .. var:: renpy
 
-    The renpy namespace contains function and classes that are part of the Ren'Py engine itself. These can be the
-    equivalent of Ren'Py language statements, or can introduce functionality that does not merit a dedicated statement.
+    Пространство имён renpy содержит функции и классы, являющиеся частью самого движка Ren'Py. Они могут быть
+    эквивалентами инструкций языка Ren'Py или предоставлять функциональность, для которой нет отдельной инструкции.
 
 .. var:: renpy.audio.filter
 
-    The renpy.audio.filter namespace contains classes and functions that create :doc:`audio filters <audio_filters>`.
+    Пространство имён renpy.audio.filter содержит классы и функции, создающие :doc:`аудиофильтры <audio_filters>`.
 
 .. var:: renpy.music
 
-    The renpy.audio.music namespace contains functions that control the :doc:`audio system <audio>`. These functions
-    work with the music channel by default.
+    Пространство имён renpy.audio.music содержит функции, управляющие :doc:`аудиосистемой <audio>`. По умолчанию
+    эти функции работают с музыкальным каналом (music).
 
 .. var:: renpy.sound
 
-    The renpy.audio.sound namespace contains functions that control the :doc:`audio system <audio>`. These functions
-    work with the sound channel by default. Most functions are documented under their renpy.music equivalents.
+    Пространство имён renpy.audio.sound содержит функции, управляющие :doc:`аудиосистемой <audio>`. По умолчанию
+    эти функции работают со звуковым каналом (sound). Большинство функций описаны в документации их эквивалентов в renpy.music.
 
 .. var:: style
 
-    The style namespace contains styles and functions that manipulate styles. Styles are used to control the appearance
-    of text, images, and other elements in Ren'Py. Using the ``style`` statement is preferred to using the style
-    namespace directly.
+    Пространство имён style содержит стили и функции для манипуляции стилями. Стили используются для управления
+    внешним видом текста, изображений и других элементов в Ren'Py. Использование инструкции ``style`` предпочтительнее
+    прямого обращения к пространству имён style.
 
 .. var:: ui
 
-    **Note: Most functions in the ui namespace are deprecated.**
+    **Примечание: Большинство функций в пространстве имён ui устарели.**
 
-    The ui namespace contains older functions and classes used to display user interface elements. With the exception
-    of ui.adjustment, ui.interact, ui.callsinnewcontext, and ui.invokesinnewcontext, these functions are
-    obsolete.
+    Пространство имён ui содержит устаревшие функции и классы, использовавшиеся для отображения элементов интерфейса.
+    За исключением ui.adjustment, ui.interact, ui.callsinnewcontext и ui.invokesinnewcontext, эти функции
+    считаются устаревшими.
 
 .. var:: updater
 
-    The updater namespace contains functions, classes, and variables that control the :doc:`HTTP/HTTPS <updater>`.
+    Пространство имён updater содержит функции, классы и переменные, управляющие :doc:`системой обновления по HTTP/HTTPS <updater>`.

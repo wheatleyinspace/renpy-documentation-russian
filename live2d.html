@@ -14,7 +14,7 @@
       <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
 
   
-    <link rel="canonical" href="https://www.renpy.org/doc/html/live2d.html" />
+    <link rel="canonical" href="https://wheatleyinspace.github.io/renpy-documentation-russian/live2d.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=00c7e44b"></script>
@@ -26,8 +26,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="Styles" href="style.html" />
-    <link rel="prev" title="3D Stage" href="3dstage.html" /> 
+    <link rel="next" title="Стили" href="style.html" />
+    <link rel="prev" title="3D-сцена" href="3dstage.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,7 +52,7 @@
               <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">Руководство по настройке GUI</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
 <ul>
@@ -73,18 +73,25 @@
 <li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Аудио</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Аудиофильтры</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Видео</a></li>
 <li class="toctree-l1"><a class="reference internal" href="voice.html">Озвучка</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="text.html">Текст</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translation.html">Перевод</a></li>
 <li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Трансформации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Свойства трансформаций</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Переходы (Transitions)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Многослойные картинки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D-сцена</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Live2D Cubism</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installing-live2d">Installing Live2D</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#defining-animations">Defining Animations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Установка Live2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Определение анимаций</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Live2D"><code class="docutils literal notranslate"><span class="pre">Live2D()</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#blend_parameter"><code class="docutils literal notranslate"><span class="pre">blend_parameter()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#blend_opacity"><code class="docutils literal notranslate"><span class="pre">blend_opacity()</span></code></a></li>
@@ -92,12 +99,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#using-animations">Using Animations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#scaling">Scaling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#motion-fading">Motion Fading</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#aliasing">Aliasing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#loop-and-image-prediction">Loop and Image Prediction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Использование анимаций</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Масштабирование</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#motion-fading">Перетекание движений (Motion Fading)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aliasing">Псевдонимы (Aliasing)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">Зацикливание и предсказание изображений</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">Функции</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#renpy.has_live2d"><code class="docutils literal notranslate"><span class="pre">renpy.has_live2d()</span></code></a></li>
 </ul>
 </li>
@@ -106,103 +113,103 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Стили</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Свойства стилей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Экраны и язык экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Действия, значения и функции экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Специальные имена экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Оптимизация языка экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Конфигурационные переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Переменные настроек</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Переменные хранилища</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Пользовательские курсоры мыши</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Текстовые шейдеры</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Лаунчер</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Инструменты разработчика</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Интерактивный режиссёр (Interactive Director)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Автоматизированное тестирование</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
-<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">Руководство по режиму NVL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Текстовые облачка (Speech Bubbles)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Ввод текста</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Боковые изображения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Галерея изображений, музыкальная комната и повтор сцен (Replay)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Спрайты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Настройка привязок клавиш</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Достижения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">История диалогов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Диалог нескольких персонажей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Заставка (Splashscreen) и предзаставка (Presplash)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Жизненный цикл запущенной игры Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
-<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Эквиваленты инструкций на Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Сохранение, загрузка и откат</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Постоянные данные</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Продвинутый GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
-<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
-<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Экраны и Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Пользовательские отображаемые объекты (CDD)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Пользовательские инструкции (CDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Пользовательские текстовые теги</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Коллбэки персонажей (Character Callbacks)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">Доступ к файлам</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Класс Color</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Матрицы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Модельный рендеринг</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Прочие функции и переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">Файлы _ren.py — Ren'Py внутри Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
-<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">Сетевые запросы HTTPS/HTTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Снимки экрана</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Буфер обмена</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">Возраст пользователя</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Сборка дистрибутивов</a></li>
 <li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Веб / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS / Chromebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">Внутриигровые покупки (In-App Purchasing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">Обновление по HTTPS/HTTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Загрузчик больших игр на мобильных платформах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Жесты</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Безопасность</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Устранение неполадок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Переменные окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Голосовое сопровождение интерфейса (Self-Voicing)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Шаблоны проектов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Интерфейс командной строки (CLI)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Интеграция с текстовым редактором</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Скины</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Перевод Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">История изменений (Changelog Ren'Py 7+)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">История изменений (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Несовместимые изменения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Лицензия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Авторы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Спонсоры разработки Ren'Py</a></li>
 </ul>
 
         </div>
@@ -221,7 +228,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Live2D Cubism</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/live2d.rst" class="fa fa-github"> Редактировать на GitHub</a>
+              <a href="https://github.com/wheatleyinspace/renpy-documentation-russian/blob/.live2d.rst" class="fa fa-github"> Редактировать на GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -231,149 +238,119 @@
              
   <section id="live2d-cubism">
 <span id="live2d"></span><h1>Live2D Cubism<a class="headerlink" href="#live2d-cubism" title="Ссылка на этот заголовок"></a></h1>
-<p><a class="reference external" href="https://www.live2d.com/en/">Live2D Cubism</a> is a system that allows you
-to animate 2D images, such as the character sprites in a visual novel. These
-images are drawn in a series of layers - for example, a layer for pupils and
-irises, a layer for the whites of the eyes, a layer for the eyebrows, and so
-on.</p>
-<p>The Live2D software lets you associate meshes with each of these layers,
-and then specify how the meshes are deformed (the shape of each mesh is
-changed) as the parameters are adjusted. The Live2D software lets you
-create motion files that determine how these parameters are adjusted over
-time, and expression files that determine expressions.</p>
-<p>Ren'Py's Live2D integration involves taking the files that Live2D produces,
-and using them to define animations that can be displayed in Ren'Py. Ren'Py
-processes the motions and expressions to determine the values of
-the parameters. This is passed to the Cubism SDK for Native, which gives
-Ren'Py back a list of meshes to show. Ren'Py then renders these meshes, and the result is a Live2D character on the screen.</p>
-<p>Ren'Py supports Live2D animations in the Cubism 3, 4 and 5 formats.
-It supports the playback of expressions and motions.</p>
+<p><a class="reference external" href="https://www.live2d.com/en/">Live2D Cubism</a> — это система, позволяющая анимировать двухмерные
+изображения, например спрайты персонажей в визуальной новелле. Такие изображения отрисовываются
+в виде набора слоёв: например, слой для зрачков и радужки, слой для белков глаз, слой для бровей
+и так далее.</p>
+<p>Программное обеспечение Live2D позволяет привязать полигональные сетки (меши) к каждому из этих слоёв,
+а затем задать деформацию мешей (изменение их формы) при регулировке параметров. В программе Live2D
+можно создавать файлы движений (motion), определяющие изменение параметров во времени, и файлы выражений
+(expression), определяющие эмоции и мимику.</p>
+<p>Интеграция Live2D в Ren'Py заключается в загрузке созданных файлов Live2D и использовании их
+для определения анимаций в Ren'Py. Ren'Py обрабатывает движения и выражения, рассчитывая текущие
+значения параметров, и передаёт их в Cubism SDK for Native. SDK возвращает список мешей для отображения,
+Ren'Py выполняет их рендеринг, и на экране появляется живой персонаж Live2D.</p>
+<p>Ren'Py поддерживает анимации Live2D в форматах Cubism 3, 4 и 5.
+Поддерживается воспроизведение выражений и движений.</p>
 <div class="admonition warning">
 <p class="admonition-title">Предупреждение</p>
-<p>Installing Live2D on iOS requires copying the static libraries into your
-iOS project by hand.</p>
+<p>Установка Live2D на платформе iOS требует ручного копирования статических библиотек
+в проект iOS.</p>
 </div>
-<section id="installing-live2d">
-<h2>Installing Live2D<a class="headerlink" href="#installing-live2d" title="Ссылка на этот заголовок"></a></h2>
-<p>Before you can use Live2D, you'll need to download and install the Cubism
-SDK for Native, found on the
-<a class="reference external" href="https://www.live2d.com/en/download/cubism-sdk/download-native/">Live2D website</a>.
-Please note that you may need to purchase a license to use Live2D if your
-business makes more than a certain amount of money a year.</p>
-<p>Once you've downloaded Live2D, you can install it from the Ren'Py launcher. To
-install, go to &quot;preferences&quot;, then click &quot;Install libraries&quot;. Place the
-<code class="file docutils literal notranslate"><span class="pre">CubismSdkForNative-5-r.1.zip</span></code> file in the Ren'Py SDK directory, which can
-be accessed using the button in the bottom right of the install libraries
-screen. Then click &quot;Install Live2D Cubism SDK for Native&quot;. After a short
-amount of time, Live2D will be installed.</p>
+<section id="id2">
+<h2>Установка Live2D<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p>Перед началом работы с Live2D необходимо скачать и установить Cubism SDK for Native
+с <a class="reference external" href="https://www.live2d.com/en/download/cubism-sdk/download-native/">официального сайта Live2D</a>.
+Обратите внимание: если доход вашей компании превышает установленный порог, для использования Live2D
+может потребоваться приобретение коммерческой лицензии.</p>
+<p>После загрузки архива Live2D его можно установить прямо из лаунчера Ren'Py: перейдите в «Настройки»,
+затем нажмите «Установить библиотеки». Поместите файл <code class="file docutils literal notranslate"><span class="pre">CubismSdkForNative-5-r.1.zip</span></code> в каталог
+Ren'Py SDK (его можно открыть кнопкой в правом нижнем углу экрана установки библиотек). Затем нажмите
+«Установить Live2D Cubism SDK for Native». Через некоторое время Live2D будет установлен.</p>
 </section>
-<section id="defining-animations">
-<h2>Defining Animations<a class="headerlink" href="#defining-animations" title="Ссылка на этот заголовок"></a></h2>
-<p>Live2D animations are defined using the Live2D displayable and the image statement:</p>
+<section id="id4">
+<h2>Определение анимаций<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Анимации Live2D определяются с помощью отображаемого объекта Live2D и оператора image:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="Live2D">
 <span class="sig-name descname"><span class="pre">Live2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aliases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fade</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seamless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute_function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attribute_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_fade</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_beziers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deduplication_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">properties</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Live2D" title="Ссылка на это определение"></a></dt>
-<dd><p>This displayable displays a Live2D animation.</p>
+<dd><p>Этот отображаемый объект выводит анимацию Live2D.</p>
 <dl>
-<dt><cite>filename</cite></dt><dd><p>This may either be a model3.json file defining a Live2D animation, or a
-directory containing that animation. In the latter case, the last
-component of the directory is taken, and has .model3.json appended
-to find the file.</p>
-<p>For example, &quot;Resources/Hiyori&quot; and &quot;Resources/Hiyori/Hiyori.model3.json&quot;
-are equivalent.</p>
+<dt><cite>filename</cite></dt><dd><p>Файл model3.json, определяющий анимацию Live2D, либо каталог, содержащий эту анимацию.
+В последнем случае берётся имя каталога с добавлением суффикса .model3.json.</p>
+<p>Например, пути &quot;Resources/Hiyori&quot; и &quot;Resources/Hiyori/Hiyori.model3.json&quot; эквивалентны.</p>
 </dd>
-<dt><cite>zoom</cite></dt><dd><p>If not None, a zoom factor that is applied. This takes precedence
-over <cite>top</cite> and <cite>base</cite>.</p>
+<dt><cite>zoom</cite></dt><dd><p>Если не None, коэффициент масштабирования. Имеет приоритет над <cite>top</cite> и <cite>base</cite>.</p>
 </dd>
-<dt><cite>top</cite></dt><dd><p>The top of the image, for sizing purposes. This is a fraction of the
-image, with 0.0 being the top and 1.0 the bottom.</p>
+<dt><cite>top</cite></dt><dd><p>Верхняя граница изображения для расчёта размера (доля от высоты, где 0.0 — верх, 1.0 — низ).</p>
 </dd>
-<dt><cite>base</cite></dt><dd><p>The bottom of the image, for sizing purposes. This is a fraction of
-the image, with 0.0 being the top and 1.0 being the bottom. This
-also becomes the default value of yanchor.</p>
+<dt><cite>base</cite></dt><dd><p>Нижняя граница изображения для расчёта размера (доля от высоты, где 0.0 — верх, 1.0 — низ).
+Также становится значением yanchor по умолчанию.</p>
 </dd>
-<dt><cite>height</cite></dt><dd><p>The height that the image is scaled to. This is a fraction of the
-virtual height of the screen.</p>
+<dt><cite>height</cite></dt><dd><p>Высота, к которой масштабируется изображение, выраженная как доля виртуальной высоты экрана.</p>
 </dd>
-<dt><cite>loop</cite></dt><dd><p>True if the final motion should be looped, False otherwise.</p>
+<dt><cite>loop</cite></dt><dd><p>True, если финальное движение должно зацикливаться, иначе False.</p>
 </dd>
-<dt><cite>aliases</cite></dt><dd><p>A dictionary mapping aliases to the motions or expressions they alias.</p>
+<dt><cite>aliases</cite></dt><dd><p>Словарь, сопоставляющий пользовательские псевдонимы с именами движений или выражений.</p>
 </dd>
-<dt><cite>fade</cite></dt><dd><p>True if motion fading should be enabled, False if motion fading
-should not be enabled, and None to use the value of <a class="reference internal" href="#var-_live2d_fade"><code class="xref std std-var docutils literal notranslate"><span class="pre">_live2d_fade</span></code></a>.</p>
+<dt><cite>fade</cite></dt><dd><p>True, если угасание/перетекание движений (motion fading) включено; False, если выключено;
+и None для использования значения переменной <a class="reference internal" href="#var-_live2d_fade"><code class="xref std std-var docutils literal notranslate"><span class="pre">_live2d_fade</span></code></a>.</p>
 </dd>
-<dt><cite>nonexclusive</cite></dt><dd><p>If not None, this should be a list of names of nonexclusive expressions.
-Expressions default to being exclusive, with only one being shown at
-a time. If listed here, any number of nonexclusive expressions can be
-shown, in addition to one exclusive expression.</p>
+<dt><cite>nonexclusive</cite></dt><dd><p>Если не None, список имён неисключающих выражений лица. По умолчанию выражения являются
+взаимоисключающими (одновременно отображается только одно). Неисключающие выражения могут
+показываться в любом количестве в дополнение к одному эксклюзивному выражению.</p>
 </dd>
-<dt><cite>seamless</cite></dt><dd><p>This determines if seamless looping should be used. Seamless looping
-avoids fading between loops of a single motion. This may be True to
-enable seamless looping all the time, False to disable it all the
-time, or a set of motions to be looped.</p>
+<dt><cite>seamless</cite></dt><dd><p>Определяет, используется ли бесшовное зацикливание (устраняющее переход между повторами одного
+и того же движения). Может быть True (всегда включено), False (выключено) или набором движений,
+к которым применяется бесшовное зацикливание.</p>
 </dd>
-<dt><cite>default_fade</cite></dt><dd><p>The default amount of time that is spending fading into our out of
-a motion or expression. This defaults to 1.0, per Live2D, which
-might mean that fades happen unexpectedly. Set this to 0.0 to ensure
-that fading is only done when it is explicitly requested.</p>
+<dt><cite>default_fade</cite></dt><dd><p>Время перехода по умолчанию при перетекании в движение или выражение и обратно. По умолчанию
+равно 1.0 секунде (согласно спецификации Live2D). Установите 0.0, если плавный переход должен
+происходить только по явному запросу.</p>
 </dd>
-<dt><cite>attribute_function</cite></dt><dd><p>If not None, this is a function that takes a tuple of attributes,
-and returns a second tuple of attributes. This can be used to replace
-attributes for the purpose of display only - the attributes it returns
-are not used when showing an image.  It should ensure
-that at most one attribute corresponding to an expression is given.</p>
+<dt><cite>attribute_function</cite></dt><dd><p>Функция, принимающая кортеж атрибутов и возвращающая второй кортеж атрибутов. Используется
+для замены атрибутов исключительно в целях отображения. Должна гарантировать, что передано
+не более одного эксклюзивного выражения.</p>
 </dd>
-<dt><cite>attribute_filter</cite></dt><dd><p>If not None, this is a function that takes a tuple of attributes,
-and returns a second tuple of attributes. This is usually used to
-filter out nonexclusive attributes that conflict with each other. The attributes
-are ordered such that more recently requested attributes come first,
-meaning that in the case of a conflict, the first attribute should
-win.</p>
+<dt><cite>attribute_filter</cite></dt><dd><p>Функция, принимающая кортеж атрибутов и возвращающая отфильтрованный кортеж. Обычно используется
+для разрешения конфликтов между неисключающими атрибутами. Атрибуты упорядочены так, что более
+свежие идут первыми (при конфликте побеждает первый).</p>
 </dd>
-<dt><cite>update_function</cite></dt><dd><p>If not None, this is a function that is called when the animation
-is rendered after updating parameters by the current motion and expressions.
-The function is called with two arguments:</p>
+<dt><cite>update_function</cite></dt><dd><p>Функция, вызываемая при рендеринге анимации после обновления параметров текущими движениями
+и выражениями. Функция принимает два аргумента:</p>
 <ul class="simple">
-<li><p>The Live2D object.</p></li>
-<li><p>The shown timebase, in seconds.</p></li>
+<li><p>Объект Live2D.</p></li>
+<li><p>Время отображения (timebase) в секундах.</p></li>
 </ul>
-<p>This function is used to dynamically change parameters using the <cite>blend_parameter</cite>
-method of the passed Live2D object.
-The function should return a delay, in seconds, after which it will
-be called again, or None to be called again at the start of the next
-interaction. The function is also called whenever the displayable is
-re-rendered.</p>
+<p>Используется для динамического изменения параметров через метод <cite>blend_parameter</cite>.
+Должна возвращать задержку в секундах до следующего вызова или None для повторного вызова
+в начале следующего взаимодействия.</p>
 </dd>
-<dt><cite>old_beziers</cite></dt><dd><p>If True, this uses the old Bezier curve behavior, which uses easing. If False, the Cardano interpretation
-of beziers is used. If none, the value of <a class="reference internal" href="#var-config.live2d_old_beziers"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.live2d_old_beziers</span></code></a> is used.</p>
+<dt><cite>old_beziers</cite></dt><dd><p>Если True, используется старое поведение кривых Безье со сглаживанием easing. Если False,
+используется интерпретация Кардано. Если None, берётся значение <a class="reference internal" href="#var-config.live2d_old_beziers"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.live2d_old_beziers</span></code></a>.</p>
 </dd>
-<dt><cite>deduplication_key</cite></dt><dd><p>If not None, this is a key used to deduplicate Live2D displayables that reference the same <cite>filename</cite> but have different <cite>aliases</cite>, <cite>nonexclusive</cite>, <cite>seamless</cite>, <cite>default_fade</cite>, <cite>attribute_function</cite>, <cite>attribute_filter</cite> and/or <cite>update_function</cite>.</p>
+<dt><cite>deduplication_key</cite></dt><dd><p>Ключ дедупликации отображаемых объектов Live2D с одинаковым <cite>filename</cite>, но разными настройками.</p>
 </dd>
 </dl>
-<p>The difference between <cite>attribute_function</cite> and <cite>attribute_filter</cite> is
-that the former is generally used to compute replacement - the presence
-of two attributes means one should be replaced by a third. The latter
-is used to resolve conflicts between attributes, like having a group of
-attributes where only one is valid.</p>
-<p>Only <cite>filename</cite> should be given positionally, and all other arguments should
-be given as keyword arguments.</p>
-<p>The values of <cite>alias</cite>, <cite>fade</cite>, <cite>nonexclusive</cite>, <cite>seamless</cite>, <cite>default_fade</cite>, <cite>attribute_function</cite>,
-<cite>attribute_filter</cite> and <cite>update_function</cite> are shared between all Live2D objects that share <cite>filename</cite>,
-such that these only need to be supplied once as part of the first Live2D object to
-use <cite>filename</cite>.</p>
+<p>Различие между <cite>attribute_function</cite> и <cite>attribute_filter</cite>: первая заменяет комбинацию атрибутов
+(например, наличие двух атрибутов заменяется третьим), а второй разрешает конфликты
+(выбирает один допустимый атрибут из взаимоисключающей группы).</p>
+<p>Только аргумент <cite>filename</cite> передаётся позиционно, все остальные аргументы — именованные.</p>
+<p>Значения параметров <cite>alias</cite>, <cite>fade</cite>, <cite>nonexclusive</cite>, <cite>seamless</cite>, <cite>default_fade</cite>,
+<cite>attribute_function</cite>, <cite>attribute_filter</cite> и <cite>update_function</cite> разделяются между всеми объектами
+Live2D с одинаковым <cite>filename</cite>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="blend_parameter">
 <span class="sig-name descname"><span class="pre">blend_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#blend_parameter" title="Ссылка на это определение"></a></dt>
-<dd><p>This method blends the current value of the parameter with <cite>value</cite>
-This has no effect outside of <cite>update_function</cite>.</p>
+<dd><p>Смешивает текущее значение параметра с новым значением <cite>value</cite>. Работает только внутри <cite>update_function</cite>.</p>
 <dl class="simple">
-<dt><cite>name</cite></dt><dd><p>A string giving the name of the parameter to change.</p>
+<dt><cite>name</cite></dt><dd><p>Строка с именем изменяемого параметра.</p>
 </dd>
-<dt><cite>blend</cite></dt><dd><p>One of &quot;Add&quot;, &quot;Multiply&quot; or &quot;Overwrite&quot;. The blend kind that will be used.</p>
+<dt><cite>blend</cite></dt><dd><p>Тип смешивания: &quot;Add&quot;, &quot;Multiply&quot; или &quot;Overwrite&quot;.</p>
 </dd>
-<dt><cite>value</cite></dt><dd><p>A float giving the value that will be blended in.</p>
+<dt><cite>value</cite></dt><dd><p>Число с плавающей запятой — примешиваемое значение.</p>
 </dd>
-<dt><cite>weight</cite></dt><dd><p>A float between 0.0 and 1.0, the weight by which the new value will change the current value.</p>
+<dt><cite>weight</cite></dt><dd><p>Вес от 0.0 до 1.0, с которым новое значение влияет на текущее.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -381,16 +358,15 @@ This has no effect outside of <cite>update_function</cite>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="blend_opacity">
 <span class="sig-name descname"><span class="pre">blend_opacity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#blend_opacity" title="Ссылка на это определение"></a></dt>
-<dd><p>This method blends the current value of the part opacity with <cite>value</cite>
-This has no effect outside of <cite>update_function</cite>.</p>
+<dd><p>Смешивает текущее значение непрозрачности части модели с <cite>value</cite>. Работает только внутри <cite>update_function</cite>.</p>
 <dl class="simple">
-<dt><cite>name</cite></dt><dd><p>Name of parameter to change defined for this model.</p>
+<dt><cite>name</cite></dt><dd><p>Имя изменяемой части модели.</p>
 </dd>
-<dt><cite>blend</cite></dt><dd><p>One of &quot;Add&quot;, &quot;Multiply&quot; or &quot;Overwrite&quot;. The blend kind that will be used.</p>
+<dt><cite>blend</cite></dt><dd><p>Тип смешивания: &quot;Add&quot;, &quot;Multiply&quot; или &quot;Overwrite&quot;.</p>
 </dd>
-<dt><cite>value</cite></dt><dd><p>A float giving the opacity value that will be blended in.</p>
+<dt><cite>value</cite></dt><dd><p>Значение непрозрачности с плавающей запятой.</p>
 </dd>
-<dt><cite>weight</cite></dt><dd><p>A float between 0.0 and 1.0, the weight by which the new value will change the current value.</p>
+<dt><cite>weight</cite></dt><dd><p>Вес от 0.0 до 1.0.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -400,33 +376,28 @@ This has no effect outside of <cite>update_function</cite>.</p>
 <dl class="std var">
 <dt class="sig sig-object std" id="var-config.live2d_old_beziers">
 <span class="pre">define</span> <span class="sig-name descname"><span class="pre">config.live2d_old_beziers</span></span> <span class="pre">=</span> <span class="pre">False</span><a class="headerlink" href="#var-config.live2d_old_beziers" title="Ссылка на это определение"></a></dt>
-<dd><p>If True, live2d will by default use the old Bezier curve behavior, which usees easing. If False, the Cardano interpretation
-of beziers is used.</p>
+<dd><p>Если True, Live2D по умолчанию использует старое поведение кривых Безье (easing).
+Если False, используется интерпретация Безье по формуле Кардано.</p>
 </dd></dl>
 
-<p>There is a config variable that can help in debugging what motions and
-expressions were loaded from .model3.json files:</p>
+<p>Переменная конфигурации для отладки загружаемых движений и выражений:</p>
 <dl class="std var">
 <dt class="sig sig-object std" id="var-config.log_live2d_loading">
 <span class="pre">define</span> <span class="sig-name descname"><span class="pre">config.log_live2d_loading</span></span> <span class="pre">=</span> <span class="pre">False</span><a class="headerlink" href="#var-config.log_live2d_loading" title="Ссылка на это определение"></a></dt>
-<dd><p>If True, loaded path and used motions and expressions will be written to
-log.txt on start.</p>
+<dd><p>Если True, загруженные пути, движения и выражения записываются в файл log.txt при запуске.</p>
 </dd></dl>
 
-<p>Live2D displayables should be assigned to an image statement:</p>
+<p>Отображаемые объекты Live2D присваиваются операторам image:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">hiyori</span> <span class="o">=</span> <span class="n">Live2D</span><span class="p">(</span><span class="s2">&quot;Resources/Hiyori&quot;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mf">.6</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>It's also possible to define attributes, and this is very useful when
-defining different zooms and scaling factors.</p>
+<p>Также можно определять атрибуты, что особенно удобно для задания различных масштабов и планов:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">hiyori</span> <span class="n">close</span> <span class="o">=</span> <span class="n">Live2D</span><span class="p">(</span><span class="s2">&quot;Resources/Hiyori&quot;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mf">.6</span><span class="p">)</span>
 <span class="k">image</span> <span class="n">hiyori</span> <span class="n">far</span> <span class="o">=</span> <span class="n">Live2D</span><span class="p">(</span><span class="s2">&quot;Resources/Hiyori&quot;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mf">.9</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Keep in mind that the user's hardware may be unable to init Live2D, and in that
-case a single call to Live2D() will keep the entire project from loading.
-If your game should be able to work even without Live2D, you could use a wrapper
-or workaround, for example:</p>
+<p>Имейте в виду: если оборудование пользователя не поддерживает Live2D, одиночный вызов Live2D()
+может помешать запуску всей игры. Чтобы проект работал даже без поддержки Live2D, используйте обёртку:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">init</span> <span class="k">python</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">MyLive2D</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="n">Placeholder</span><span class="p">(</span><span class="k">text</span><span class="o">=</span><span class="s2">&quot;no live2d&quot;</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">renpy</span><span class="o">.</span><span class="n">has_live2d</span><span class="p">():</span>
@@ -439,112 +410,92 @@ or workaround, for example:</p>
 </pre></div>
 </div>
 </section>
-<section id="using-animations">
-<h2>Using Animations<a class="headerlink" href="#using-animations" title="Ссылка на этот заголовок"></a></h2>
-<p>The usual way to display a Live2D image is to display it using the
-show statement. In addition to any attributes added as part of the
-image statement, the names of expressions and motions can be used.</p>
-<p>Some examples are:</p>
+<section id="id5">
+<h2>Использование анимаций<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<p>Стандартный способ отображения Live2D — оператор show. В дополнение к атрибутам оператора image
+можно указывать имена выражений и движений:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">natori</span> <span class="n">exp_00</span> <span class="n">mtn_01</span>
 <span class="k">show</span> <span class="n">hiyori</span> <span class="n">m10</span>
 <span class="k">show</span> <span class="n">hiyori</span> <span class="n">m10</span> <span class="n">m01</span>
 </pre></div>
 </div>
-<p>These use the default names found in the Cubism SDK sample names. The names
-of the motions and expressions are taken from the Live2D files, then forced to lower
-case, and if they begin with the name of the model3.json file (without directories
-or extensions), followed by an underscore, then that prefix is removed. (For example,
-&quot;Hiyori_Motion01&quot; becomes just motion01.)</p>
-<p>At most one exclusive expression can be used, and any number of nonexclusive expressions and
-motions can be given. When more than one motion is given, the motions are played in order,
-and the final motion is looped if loop is True.
-This makes it possible for a motion to be played, followed by an idle animation.
-Each motion can only appear once, unless multiple aliases for that motion are created.</p>
-<p>There are two special attributes <code class="docutils literal notranslate"><span class="pre">null</span></code> and <code class="docutils literal notranslate"><span class="pre">still</span></code>. The null attribute
-means that no exclusive expression file should be applied, giving the character's
-default expression. The <code class="docutils literal notranslate"><span class="pre">still</span></code> motion stops all motion.</p>
-<p>Nonexclusive expressions persist until removed with attribute negation:</p>
+<p>Здесь используются стандартные имена из примеров Cubism SDK. Имена берутся из файлов Live2D,
+переводятся в нижний регистр, а префикс, совпадающий с именем файла model3.json с последующим
+подчёркиванием, удаляется (например, &quot;Hiyori_Motion01&quot; превращается в &quot;motion01&quot;).</p>
+<p>Одновременно может использоваться не более одного эксклюзивного выражения и любое количество
+неисключающих выражений и движений. Если указано несколько движений, они воспроизводятся последовательно,
+а последнее движение зацикливается при loop=True. Это позволяет сначала проиграть разовое действие,
+а затем перейти к фоновой анимации ожидания (idle).</p>
+<p>Существуют два специальных служебных атрибута: <code class="docutils literal notranslate"><span class="pre">null</span></code> и <code class="docutils literal notranslate"><span class="pre">still</span></code>. Атрибут <code class="docutils literal notranslate"><span class="pre">null</span></code> сбрасывает
+эксклюзивное выражение лица, возвращая стандартное выражение персонажа. Атрибут <code class="docutils literal notranslate"><span class="pre">still</span></code>
+останавливает все движения.</p>
+<p>Неисключающие выражения сохраняются до тех пор, пока не будут сняты отрицанием атрибута:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">hiyori</span> <span class="o">-</span><span class="n">wave</span>
 </pre></div>
 </div>
 </section>
-<section id="scaling">
-<h2>Scaling<a class="headerlink" href="#scaling" title="Ссылка на этот заголовок"></a></h2>
-<p>Many Live2D models are defined at high resolutions, at least in the internal
-coordinate system that the models use. To compensate for this, Ren'Py includes
-two ways to scale down the Live2D model.</p>
-<p>The first is the <cite>zoom</cite> argument. This can directly set the zoom factor of the
-model. If zoom is used, then the other scaling parameters are ignored.</p>
-<p>Otherwise, the <cite>top</cite>, <cite>base</cite>, and <cite>height</cite> arguments are used. The first two
-specify two lines, relative to the top and bottom of the image. (As elsewhere
-in Ren'Py, 0.0 is the top and 1.0 is the bottom.) When these arguments are used,
-two things happen:</p>
+<section id="id6">
+<h2>Масштабирование<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<p>Многие модели Live2D создаются в высоком внутреннем разрешении. Для настройки размера Ren'Py
+предоставляет два способа.</p>
+<p>Первый способ — аргумент <cite>zoom</cite>. Он напрямую задаёт коэффициент масштабирования модели.
+При использовании zoom остальные параметры масштабирования игнорируются.</p>
+<p>Второй способ — аргументы <cite>top</cite>, <cite>base</cite> и <cite>height</cite>. Параметры top и base задают верхнюю
+и нижнюю границы модели (0.0 — верх, 1.0 — низ изображения):</p>
 <ul class="simple">
-<li><p>The image is scaled so that the area between <cite>top</cite> and <cite>base</cite> takes up <cite>height</cite>,
-where <cite>height</cite> is a fraction of the screen.</p></li>
-<li><p>The anchor is adjusted so that <cite>base</cite> will be placed at the bottom of the
-screen.</p></li>
+<li><p>Изображение масштабируется так, чтобы область между <cite>top</cite> и <cite>base</cite> занимала высоту <cite>height</cite>
+(доля от высоты экрана).</p></li>
+<li><p>Точка привязки выравнивается так, чтобы линия <cite>base</cite> совпала с нижним краем экрана.</p></li>
 </ul>
-<p>When figuring out how to scale a Live2D animation, what I do first is adjust the <cite>base</cite> parameter until the right part of the animation is lined
-up with the bottom of the screen. Then:</p>
+<p>Практический алгоритм настройки: сначала отрегулируйте параметр <cite>base</cite>, чтобы нужная часть тела
+персонажа стояла на нижней границе экрана. Затем:</p>
 <ul class="simple">
-<li><p>If the image is too big, reduce <cite>height</cite> until it's the right size.</p></li>
-<li><p>If the image is too small, increase <cite>top</cite> to reduce the amount of blank
-space above the animation.</p></li>
+<li><p>Если персонаж слишком велик, уменьшайте <cite>height</cite>.</p></li>
+<li><p>Если персонаж слишком мал, увеличивайте <cite>top</cite>, чтобы уменьшить пустое пространство сверху.</p></li>
 </ul>
 </section>
 <section id="motion-fading">
-<h2>Motion Fading<a class="headerlink" href="#motion-fading" title="Ссылка на этот заголовок"></a></h2>
-<p>Ren'Py's support for Live2D includes motion fading. Normally, when Ren'Py
-changes from one animation to another, the transition is abrupt - one
-animation is stopped, and the other starts. If a transition occurs,
-both animations are played at the same time.</p>
-<p>Live2D supports a different model, in which the old animation can be
-smoothly faded into the new one, but interpolating the parameters. Think
-of this like a character moving their arms into position, rather than
-dissolving from one position to another.</p>
-<p>Motion fading is controlled with the <cite>fade</cite> argument. If it's true,
-motion fading is used, and if it's false, then abrupt changes occur. If None,
-motion fading is controlled by the <code class="docutils literal notranslate"><span class="pre">_live2d_fade</span></code> variable:</p>
+<h2>Перетекание движений (Motion Fading)<a class="headerlink" href="#motion-fading" title="Ссылка на этот заголовок"></a></h2>
+<p>В отличие от стандартной резкой смены кадров, Live2D поддерживает плавную интерполяцию параметров
+между старым и новым движениями (motion fading). Персонаж плавно переводит руки и тело в новую позу,
+а не растворяется через Dissolve.</p>
+<p>Перетекание контролируется аргументом <cite>fade</cite>. Если True — перетекание включено, если False — движения
+меняются мгновенно. Если None, используется переменная <code class="docutils literal notranslate"><span class="pre">_live2d_fade</span></code>:</p>
 <dl class="std var">
 <dt class="sig sig-object std" id="var-_live2d_fade">
 <span class="sig-name descname"><span class="pre">_live2d_fade</span></span> <span class="pre">=</span> <span class="pre">True</span><a class="headerlink" href="#var-_live2d_fade" title="Ссылка на это определение"></a></dt>
-<dd><p>If true, Live2D animations use motion fading. If False, animations
-are transitioned abruptly.</p>
+<dd><p>Если True, анимации Live2D используют плавное перетекание движений. Если False, движения
+сменяются скачком.</p>
 </dd></dl>
 
 </section>
 <section id="aliasing">
-<h2>Aliasing<a class="headerlink" href="#aliasing" title="Ссылка на этот заголовок"></a></h2>
-<p>The <cite>alias</cite> parameter lets you specify your own names for the motions
-that would otherwise be automatically defined. For example, one could do:</p>
+<h2>Псевдонимы (Aliasing)<a class="headerlink" href="#aliasing" title="Ссылка на этот заголовок"></a></h2>
+<p>Параметр <cite>alias</cite> позволяет задавать собственные удобные имена для автоматически определённых движений:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">image</span> <span class="n">hiyori</span> <span class="o">=</span> <span class="n">Live2D</span><span class="p">(</span><span class="s2">&quot;Resources/Hiyori&quot;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mf">.6</span><span class="p">,</span> <span class="n">aliases</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;idle&quot;</span> <span class="p">:</span> <span class="s2">&quot;m01&quot;</span><span class="p">})</span>
 </pre></div>
 </div>
-<p>To be able to use:</p>
+<p>Это позволяет писать:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">hiyori</span> <span class="na">idle</span>
 </pre></div>
 </div>
-<p>Instead of:</p>
+<p>Вместо:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">show</span> <span class="n">hiyori</span> <span class="n">m01</span>
 </pre></div>
 </div>
 </section>
-<section id="loop-and-image-prediction">
-<h2>Loop and Image Prediction<a class="headerlink" href="#loop-and-image-prediction" title="Ссылка на этот заголовок"></a></h2>
-<p>Ren'Py's Live2D support can loop the final animation if the <cite>loop</cite> parameter
-is set to True. If the animation is being looped, it is important to add
-greater than .2 second pauses that Ren'Py can exploit to perform expensive
-image prediction. (This may not be necessary if image prediction and loading
-can happen at other times.)</p>
+<section id="id7">
+<h2>Зацикливание и предсказание изображений<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<p>Ren'Py может зацикливать финальное движение при установке аргумента <cite>loop=True</cite>. При циклической
+анимации важно предусмотреть паузы длительностью более 0.2 секунды, которые движок сможет использовать
+для ресурсоёмкого предсказания изображений.</p>
 </section>
-<section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Ссылка на этот заголовок"></a></h2>
+<section id="id8">
+<h2>Функции<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.has_live2d">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">has_live2d</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.has_live2d" title="Ссылка на это определение"></a></dt>
-<dd><p>Returns True if Live2d is supported on the current platform, and
-False otherwise.</p>
+<dd><p>Возвращает True, если Live2D поддерживается на текущей платформе, и False в противном случае.</p>
 </dd></dl>
 
 </section>
@@ -554,8 +505,8 @@ False otherwise.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
-        <a href="3dstage.html" class="btn btn-neutral float-left" title="3D Stage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
-        <a href="style.html" class="btn btn-neutral float-right" title="Styles" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="3dstage.html" class="btn btn-neutral float-left" title="3D-сцена" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="style.html" class="btn btn-neutral float-right" title="Стили" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

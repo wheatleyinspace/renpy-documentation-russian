@@ -1,8 +1,10 @@
-=======================
-Changelog (Ren'Py 7.x-)
-=======================
+.. _changelog:
 
-*There is also a list of* :doc:`incompatible changes <incompatible>`
+=======================================
+История изменений (Changelog Ren'Py 7+)
+=======================================
+
+*См. также список* :doc:`несовместимых изменений <incompatible>`.
 
 
 .. _renpy-8.6.0:
@@ -937,7 +939,7 @@ It's possible to :ref:`customize the Ren'Py launcher <launcher-customization>` t
 that are available to click on.
 
 Text
------
+----
 
 Ren'Py now supports OpenType font layout features, which can control things like ligaturization and other
 settings. These features are controlled by the :propref:`font_features` style property, and the :tt:`features` text tag.
@@ -2868,7 +2870,7 @@ Variables in a constant store can be updated during the init phase, but should
 not change after the init phase finishes.
 
 Lenticular Bracket Ruby Text
------------------------------
+----------------------------
 
 :ref:`Ruby text <ruby-text>`, small text above the main characters used
 for readings and translations, can now be written be written by enclosing it in
@@ -5809,7 +5811,7 @@ and use them to generate the icon and launch image in the sizes required
 for iOS.
 
 Other Improvements
--------------------
+------------------
 
 The :func:`renpy.in_rollback` function returns True when in the rollback that
 occurs immediately after a load. This makes it possible to use::
@@ -5910,7 +5912,7 @@ and replaced with the previous emotion (happy in this case), before it.
 
 
 Text
------
+----
 
 There have been a number of text changes that affect text when a window
 is scaled to a non-default size:
@@ -6003,7 +6005,7 @@ Ren'Py will now allow files in the public game directory (/mnt/sdcard/Android/`p
 to override those included with the game proper.
 
 Fixes
-------
+-----
 
 A bug preventing Ren'Py from displaying zero or negative-width
 characters (such as certain diacritics) has been fixed.

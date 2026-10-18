@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Creator-Defined Statements &mdash; Ren&#39;Py Documentation</title>
+  <title>Пользовательские инструкции (CDS) &mdash; Ren&#39;Py Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6eda34c5" />
@@ -14,7 +14,7 @@
       <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
 
   
-    <link rel="canonical" href="https://www.renpy.org/doc/html/cds.html" />
+    <link rel="canonical" href="https://wheatleyinspace.github.io/renpy-documentation-russian/cds.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=00c7e44b"></script>
@@ -26,8 +26,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="Custom Text Tags" href="custom_text_tags.html" />
-    <link rel="prev" title="Creator-Defined Displayables" href="cdd.html" /> 
+    <link rel="next" title="Пользовательские текстовые теги" href="custom_text_tags.html" />
+    <link rel="prev" title="Пользовательские отображаемые объекты (CDD)" href="cdd.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,7 +52,7 @@
               <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">Руководство по настройке GUI</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
 <ul>
@@ -73,72 +73,79 @@
 <li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Аудио</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Аудиофильтры</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Видео</a></li>
 <li class="toctree-l1"><a class="reference internal" href="voice.html">Озвучка</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Текст</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translation.html">Перевод</a></li>
 <li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Трансформации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Свойства трансформаций</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Переходы (Transitions)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Многослойные картинки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D-сцена</a></li>
 <li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Стили</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Свойства стилей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Экраны и язык экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Действия, значения и функции экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Специальные имена экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Оптимизация языка экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Конфигурационные переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Переменные настроек</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Переменные хранилища</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Пользовательские курсоры мыши</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Текстовые шейдеры</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Лаунчер</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Инструменты разработчика</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Интерактивный режиссёр (Interactive Director)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Автоматизированное тестирование</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
-<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">Руководство по режиму NVL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Текстовые облачка (Speech Bubbles)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Ввод текста</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Боковые изображения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Галерея изображений, музыкальная комната и повтор сцен (Replay)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Спрайты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Настройка привязок клавиш</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Достижения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">История диалогов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Диалог нескольких персонажей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Заставка (Splashscreen) и предзаставка (Presplash)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Жизненный цикл запущенной игры Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
-<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Эквиваленты инструкций на Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Сохранение, загрузка и откат</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Постоянные данные</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Продвинутый GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Creator-Defined Statements</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Экраны и Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Пользовательские отображаемые объекты (CDD)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Пользовательские инструкции (CDS)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Использование</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api">Справочник API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#renpy.register_statement"><code class="docutils literal notranslate"><span class="pre">renpy.register_statement()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lexer-object">Lexer object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lexer">Объект Lexer</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Lexer"><code class="docutils literal notranslate"><span class="pre">Lexer</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#renpy.lex_string"><code class="docutils literal notranslate"><span class="pre">renpy.lex_string()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#lint-utility-functions">Lint Utility Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Вспомогательные функции линтинга</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#renpy.check_text_tags"><code class="docutils literal notranslate"><span class="pre">renpy.check_text_tags()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#renpy.error"><code class="docutils literal notranslate"><span class="pre">renpy.error()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#renpy.try_compile"><code class="docutils literal notranslate"><span class="pre">renpy.try_compile()</span></code></a></li>
@@ -149,59 +156,59 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
-<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
-<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Пользовательские текстовые теги</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Коллбэки персонажей (Character Callbacks)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">Доступ к файлам</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Класс Color</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Матрицы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Модельный рендеринг</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Прочие функции и переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">Файлы _ren.py — Ren'Py внутри Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
-<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">Сетевые запросы HTTPS/HTTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Снимки экрана</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Буфер обмена</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">Возраст пользователя</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Сборка дистрибутивов</a></li>
 <li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Веб / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS / Chromebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">Внутриигровые покупки (In-App Purchasing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">Обновление по HTTPS/HTTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Загрузчик больших игр на мобильных платформах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Жесты</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Безопасность</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Устранение неполадок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Переменные окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Голосовое сопровождение интерфейса (Self-Voicing)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Шаблоны проектов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Интерфейс командной строки (CLI)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Интеграция с текстовым редактором</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Скины</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Перевод Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">История изменений (Changelog Ren'Py 7+)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">История изменений (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Несовместимые изменения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Лицензия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Авторы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Спонсоры разработки Ren'Py</a></li>
 </ul>
 
         </div>
@@ -218,9 +225,9 @@
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Creator-Defined Statements</li>
+      <li class="breadcrumb-item active">Пользовательские инструкции (CDS)</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/cds.rst" class="fa fa-github"> Редактировать на GitHub</a>
+              <a href="https://github.com/wheatleyinspace/renpy-documentation-russian/blob/.cds.rst" class="fa fa-github"> Редактировать на GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -228,13 +235,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="creator-defined-statements">
-<h1>Creator-Defined Statements<a class="headerlink" href="#creator-defined-statements" title="Ссылка на этот заголовок"></a></h1>
-<p>Creator-Defined Statements (CDS) allow you to add your own statements to
-Ren'Py's scripting language. This makes it possible to add functionality that
-is not supported by the current syntax.</p>
-<p>CDS can be more flexible than the direct Python code equivalent.</p>
-<p>For example, picking a line of dialogue at random:</p>
+  <section id="cds">
+<h1>Пользовательские инструкции (CDS)<a class="headerlink" href="#cds" title="Ссылка на этот заголовок"></a></h1>
+<p>Пользовательские инструкции (Creator-Defined Statements, CDS) позволяют добавлять
+собственные инструкции в скриптовый язык Ren'Py. Это даёт возможность расширять
+синтаксис возможностями, которые не поддерживаются стандартными средствами.</p>
+<p>CDS могут быть более гибкими и выразительными, чем прямой эквивалент на чистом Python.</p>
+<p>Например, выбор случайной реплики диалога:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">introduction</span><span class="p">:</span>
     <span class="k">python</span><span class="p">:</span>
         <span class="n">greetings</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Hello.&#39;</span><span class="p">,</span> <span class="s1">&#39;Welcome.&#39;</span><span class="p">,</span> <span class="s1">&#39;Can I help you?&#39;</span><span class="p">]</span>
@@ -243,16 +250,16 @@ is not supported by the current syntax.</p>
     <span class="s2">&quot;[greeting]&quot;</span>
 </pre></div>
 </div>
-<p>Ren'Py's parser does not know ahead of time what happens in the python block or how it should be executed.
-It does not do anything with this code until execution and triggers an error if an exception occurs.</p>
-<p>Using a CDS allows you to:</p>
+<p>Парсер Ren'Py заранее не знает, что именно происходит в блоке python или как его следует выполнять.
+Он ничего не делает с этим кодом до момента непосредственного выполнения и вызовет ошибку, если возникнет исключение.</p>
+<p>Использование CDS позволяет вам:</p>
 <ul class="simple">
-<li><p>Check the correctness of the parsed syntax (For example, check that the items in the list sent to renpy.random.choice have valid text)</p></li>
-<li><p>Ignore incorrect data at execution (For non-critical functions, it is often better to skip the execution than to throw an exception)</p></li>
-<li><p>Predict Displayables (If the function uses them)</p></li>
-<li><p>Give you addition information during <a class="reference internal" href="developer_tools.html#lint"><span class="std std-ref">Lint</span></a> (If at runtime an error was ignored you can have a report here).</p></li>
+<li><p>Проверять корректность синтаксиса при разборе (например, убедиться, что элементы списка, передаваемого в renpy.random.choice, содержат валидный текст).</p></li>
+<li><p>Игнорировать некорректные данные при выполнении (для некритичных функций зачастую лучше пропустить выполнение, чем вызывать исключение).</p></li>
+<li><p>Предсказывать отображаемые объекты (если функция использует их).</p></li>
+<li><p>Предоставлять дополнительную информацию во время линтинга (<a class="reference internal" href="developer_tools.html#lint"><span class="std std-ref">Инструмент Lint</span></a>) (если во время выполнения ошибка была проигнорирована, здесь можно вывести отчёт о ней).</p></li>
 </ul>
-<p>For example, the above behaviour, but written as a CDS:</p>
+<p>Например, то же поведение, но оформленное в виде CDS:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">python</span> <span class="n">early</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">parse_random</span><span class="p">(</span><span class="n">lexer</span><span class="p">):</span>
         <span class="n">subblock_lexer</span> <span class="o">=</span> <span class="n">lexer</span><span class="o">.</span><span class="n">subblock_lexer</span><span class="p">()</span>
@@ -286,7 +293,7 @@ It does not do anything with this code until execution and triggers an error if 
     <span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">random</span></code> is now available as a statement:</p>
+<p>Теперь <code class="docutils literal notranslate"><span class="pre">random</span></code> доступен как инструкция языка:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">introduction</span><span class="p">:</span>
     <span class="n">random</span><span class="p">:</span>
         <span class="s2">&quot;Hello.&quot;</span>
@@ -294,31 +301,28 @@ It does not do anything with this code until execution and triggers an error if 
         <span class="s2">&quot;Can I help you?&quot;</span>
 </pre></div>
 </div>
-<p>Using a CDS does not guarantee that the execution will be successful,
-but the better you code your statement, the better Ren'Py can &quot;understand&quot; what
-you expect from it.</p>
-<section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Ссылка на этот заголовок"></a></h2>
-<p>Creator-Defined Statements (CDS) must conform to the following rules:</p>
+<p>Использование CDS само по себе не гарантирует успешности выполнения, но чем качественнее
+написан разбор вашей инструкции, тем лучше Ren'Py сможет «понять», чего именно вы от неё ожидаете.</p>
+<section id="id1">
+<h2>Использование<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>Пользовательские инструкции (CDS) должны подчиняться следующим правилам:</p>
 <ul class="simple">
-<li><p>They must be defined in a <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">early</span></code> block.</p></li>
-<li><p>They cannot be used in the same file in which they are defined.</p></li>
-<li><p>The file containing the CDS must be loaded earlier than any file that uses it.
-(Since Ren'Py loads files in the Unicode sort order of their path, it generally makes sense to
-prefix the name of any file containing a CDS with 01 or some other small number. See <a class="reference internal" href="lifecycle.html#early-phase"><span class="std std-ref">Script Parsing Phase</span></a> for
-more information about the order in which Ren'Py loads files, with special details about the  game/libs/ and
-game/mods/ directories.)</p></li>
+<li><p>Они должны быть определены в блоке <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">early</span></code>.</p></li>
+<li><p>Их нельзя использовать в том же файле, где они определены.</p></li>
+<li><p>Файл, содержащий CDS, должен загружаться раньше любого файла, использующего эту инструкцию.
+(Поскольку Ren'Py загружает файлы в порядке сортировки путей по Unicode, обычно имеет смысл
+начинать имя файла с CDS с префикса 01 или другого меньшего номера. Подробнее о порядке
+загрузки файлов Ren'Py с нюансами каталогов game/libs/ и game/mods/ см. в разделе <a class="reference internal" href="lifecycle.html#early-phase"><span class="std std-ref">Фаза синтаксического анализа скрипта</span></a>.)</p></li>
 </ul>
-<p>Creator-Defined Statements are registered using the <a class="reference internal" href="#renpy.register_statement" title="renpy.register_statement"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.register_statement()</span></code></a>
-function. This functions takes other functions that perform operations on the content of the CDS.</p>
-<p>For example, a new statement named <code class="docutils literal notranslate"><span class="pre">line</span></code> that allows lines of text to be specified
-without quotes.</p>
+<p>Пользовательские инструкции регистрируются с помощью функции <a class="reference internal" href="#renpy.register_statement" title="renpy.register_statement"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.register_statement()</span></code></a>.
+Эта функция принимает другие функции, выполняющие различные операции над содержимым CDS.</p>
+<p>Например, новая инструкция <code class="docutils literal notranslate"><span class="pre">line</span></code>, позволяющая указывать реплики текста без кавычек:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">line</span> <span class="n">e</span> <span class="s2">&quot;These quotes will show up,&quot;</span> <span class="n">Eileen</span> <span class="n">said</span><span class="p">,</span> <span class="s2">&quot;and don&#39;t need to be backslashed.&quot;</span>
 </pre></div>
 </div>
-<p>The parse function will be sent the lexed content for parsing.
-The execute function should run an operation on the parsed content.
-The lint function should report any errors in the parsed content.</p>
+<p>Функции parse передаётся содержимое лексера для синтаксического анализа.
+Функция execute должна выполнять действие над разобранным содержимым.
+Функция lint должна сообщать о любых ошибках в разобранном содержимом.</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">python</span> <span class="n">early</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">parse_smartline</span><span class="p">(</span><span class="n">lexer</span><span class="p">):</span>
         <span class="n">who</span> <span class="o">=</span> <span class="n">lexer</span><span class="o">.</span><span class="n">simple_expression</span><span class="p">()</span>
@@ -349,182 +353,159 @@ The lint function should report any errors in the parsed content.</p>
 </pre></div>
 </div>
 </section>
-<section id="api-reference">
-<h2>API Reference<a class="headerlink" href="#api-reference" title="Ссылка на этот заголовок"></a></h2>
+<section id="api">
+<h2>Справочник API<a class="headerlink" href="#api" title="Ссылка на этот заголовок"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.register_statement">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">register_statement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">execute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translatable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">execute_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_priority</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translation_strings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_begin_rollback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_execute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">execute_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reachable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.register_statement" title="Ссылка на это определение"></a></dt>
-<dd><p>This registers a user-defined statement.</p>
+<dd><p>Регистрирует пользовательскую инструкцию (Creator-Defined Statement).</p>
 <dl>
-<dt><cite>name</cite></dt><dd><p>This is either a space-separated list of names that begin the statement, or the
-empty string to define a new default statement (the default statement will
-replace the say statement).</p>
+<dt><cite>name</cite></dt><dd><p>Либо разделённый пробелами список имён, с которых начинается инструкция, либо пустая
+строка для определения новой инструкции по умолчанию (инструкция по умолчанию
+заменит инструкцию say).</p>
 </dd>
-<dt><cite>block</cite></dt><dd><p>This may be one of:</p>
+<dt><cite>block</cite></dt><dd><p>Может принимать одно из следующих значений:</p>
 <ul class="simple">
-<li><p>False, to indicate that the satement does not expect a block.</p></li>
-<li><p>True, to indicate that the statement expects a block and will
-parse that block.</p></li>
-<li><p>&quot;possible&quot;, to indicate that the statement may or may not take
-a block.</p></li>
-<li><p>&quot;script&quot; to indicate that the block should be interpreted as a
-block of Ren'Py script language statements. See <cite>next</cite> for how
-to implement control flow using this.</p></li>
-<li><p>&quot;script-possible&quot; is treated like &quot;script&quot; if a block is present,
-and False otherwise.</p></li>
-<li><p>&quot;atl&quot; to indicate that the block should be interpreted as an ATL
-transsform. This is passed as an additional argument to <cite>execute</cite>.</p></li>
-<li><p>&quot;atl-possible&quot; is treated like &quot;atl&quot; if a block is present, and
-and False otherwise.</p></li>
+<li><p>False, указывая, что инструкция не ожидает блок.</p></li>
+<li><p>True, указывая, что инструкция ожидает блок и будет выполнять его синтаксический анализ.</p></li>
+<li><p>&quot;possible&quot;, указывая, что инструкция может как принимать, так и не принимать блок.</p></li>
+<li><p>&quot;script&quot;, указывая, что блок должен интерпретироваться как блок инструкций языка
+скриптов Ren'Py. См. параметр <cite>next</cite> касательно реализации передачи управления с помощью этого.</p></li>
+<li><p>&quot;script-possible&quot;, обрабатывается как &quot;script&quot;, если блок присутствует, и False в противном случае.</p></li>
+<li><p>&quot;atl&quot;, указывая, что блок должен интерпретироваться как трансформация ATL.
+Передаётся в качестве дополнительного аргумента в <cite>execute</cite>.</p></li>
+<li><p>&quot;atl-possible&quot;, обрабатывается как &quot;atl&quot;, если блок присутствует, и False в противном случае.</p></li>
 </ul>
 </dd>
-<dt><cite>parse</cite></dt><dd><p>This is a function that takes a Lexer object. This function should parse the
-statement, and return an object. This object is passed as an argument to all the
-other functions.</p>
+<dt><cite>parse</cite></dt><dd><p>Функция, принимающая объект Lexer. Эта функция должна выполнить синтаксический анализ
+инструкции и вернуть объект. Этот объект затем передаётся в качестве аргумента во все
+остальные функции.</p>
 </dd>
-<dt><cite>lint</cite></dt><dd><p>This is called to check the statement. It is passed a single argument, the
-object returned from parse. It should call renpy.error to report errors.</p>
+<dt><cite>lint</cite></dt><dd><p>Вызывается для проверки инструкции линтером. Принимает один аргумент — объект,
+возвращённый из parse. Должна вызывать renpy.error для сообщений об ошибках.</p>
 </dd>
-<dt><cite>execute</cite></dt><dd><p>This is a function that is called when the statement executes. It is passed a
-single argument, the object returned from parse. If there is an ATL block,
-the keyword argument <cite>atl</cite> is passed with an ATL transform.</p>
+<dt><cite>execute</cite></dt><dd><p>Функция, вызываемая при выполнении инструкции. Принимает один аргумент — объект,
+возвращённый из parse. Если присутствует блок ATL, передаётся именованный аргумент
+<cite>atl</cite> с трансформацией ATL.</p>
 </dd>
-<dt><cite>execute_init</cite></dt><dd><p>This is a function that is called at init time, at priority 0. It is passed a
-single argument, the object returned from parse.</p>
+<dt><cite>execute_init</cite></dt><dd><p>Функция, вызываемая во время инициализации (init time) с приоритетом 0. Принимает один
+аргумент — объект, возвращённый из parse.</p>
 </dd>
-<dt><cite>predict</cite></dt><dd><p>This is a function that is called to predict the images used by the statement.
-It is passed a single argument, the object returned from parse. It should return
-a list of displayables used by the statement.</p>
+<dt><cite>predict</cite></dt><dd><p>Функция, вызываемая для предсказания изображений, используемых инструкцией. Принимает
+один аргумент — объект, возвращённый из parse. Должна возвращать список отображаемых
+объектов, используемых инструкцией.</p>
 </dd>
-<dt><cite>next</cite></dt><dd><p>This is a function that is called to determine the next statement.</p>
-<p>If <cite>block</cite> is not &quot;script&quot;, this is passed a single argument, the object
-returned from the parse function. If <cite>block</cite> is &quot;script&quot;, an additional
-argument is passed, an object that names the first statement in the block.</p>
-<p>The function should return either a string giving a label to jump to,
-the second argument to transfer control into the block, or None to
-continue to the statement after this one. It can also return the result
-of <a class="reference internal" href="#Lexer.renpy_statement" title="Lexer.renpy_statement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lexer.renpy_statement()</span></code></a> or <a class="reference internal" href="#Lexer.renpy_block" title="Lexer.renpy_block"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lexer.renpy_block()</span></code></a> when
-called in the <cite>parse</cite> function.</p>
+<dt><cite>next</cite></dt><dd><p>Функция, вызываемая для определения следующей инструкции.</p>
+<p>Если <cite>block</cite> не равен &quot;script&quot;, принимает один аргумент — объект, возвращённый функцией parse.
+Если <cite>block</cite> равен &quot;script&quot;, передаётся дополнительный аргумент — объект, именующий первую
+инструкцию в блоке.</p>
+<p>Функция должна возвращать либо строку с меткой для перехода, либо второй аргумент для передачи
+управления внутрь блока, либо None для продолжения выполнения инструкции, следующей за данной.
+Она также может возвращать результат вызова <a class="reference internal" href="#Lexer.renpy_statement" title="Lexer.renpy_statement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lexer.renpy_statement()</span></code></a> или <a class="reference internal" href="#Lexer.renpy_block" title="Lexer.renpy_block"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Lexer.renpy_block()</span></code></a>
+внутри функции <cite>parse</cite>.</p>
 </dd>
-<dt><cite>label</cite></dt><dd><p>This is a function that is called to determine the label of this
-statement. If it returns a string, that string is used as the statement
-label, which can be called and jumped to like any other label.</p>
+<dt><cite>label</cite></dt><dd><p>Функция, вызываемая для определения метки этой инструкции. Если возвращает строку,
+эта строка используется в качестве метки инструкции, к которой можно совершать переход (jump)
+или вызов (call), как к любой другой метке.</p>
 </dd>
-<dt><cite>warp</cite></dt><dd><p>This is a function that is called to determine if this statement
-should execute during warping. If the function exists and returns
-true, it's run during warp, otherwise the statement is not run
-during warp.</p>
+<dt><cite>warp</cite></dt><dd><p>Функция, вызываемая для определения того, должна ли эта инструкция выполняться во время
+перемещения (warp). Если функция существует и возвращает True, она выполняется во время
+warp; в противном случае инструкция не выполняется во время warp.</p>
 </dd>
-<dt><cite>scry</cite></dt><dd><p>Used internally by Ren'Py.</p>
+<dt><cite>scry</cite></dt><dd><p>Используется внутренними механизмами Ren'Py.</p>
 </dd>
-<dt><cite>init</cite></dt><dd><p>True if this statement should be run at init-time. (If the statement
-is not already inside an init block, it's automatically placed inside
-an init block.)</p>
-<p>You probably don't want this if you have an <cite>execute_init</cite> function,
-as wrapping the statement in an init block will cause the <cite>execute_init</cite>
-and <cite>execute</cite> functions to be called at the same time.</p>
+<dt><cite>init</cite></dt><dd><p>True, если эта инструкция должна выполняться во время инициализации. (Если инструкция
+ещё не находится внутри блока init, она автоматически помещается в блок init.)</p>
+<p>Скорее всего, вам это не нужно, если у вас задана функция <cite>execute_init</cite>, поскольку оборачивание
+инструкции в блок init приведёт к тому, что <cite>execute_init</cite> и <cite>execute</cite> будут вызваны одновременно.</p>
 </dd>
-<dt><cite>translatable</cite></dt><dd><p>If set to true, the statement will be included in a translation
-block, generally the block containing the succeding say statement.
-This may only be set to true for one-line statements. It's used
-for statements like <code class="docutils literal notranslate"><span class="pre">nvl</span> <span class="pre">clear</span></code> and <code class="docutils literal notranslate"><span class="pre">voice</span></code>, which may need
-to be changed with dialogue.</p>
+<dt><cite>translatable</cite></dt><dd><p>Если установлено в True, инструкция будет включена в блок перевода, как правило,
+в блок, содержащий последующую инструкцию say. Может быть установлено в True только
+для однострочных инструкций. Используется для инструкций вроде <code class="docutils literal notranslate"><span class="pre">nvl</span> <span class="pre">clear</span></code> и <code class="docutils literal notranslate"><span class="pre">voice</span></code>,
+которые могут требовать изменения синхронно с диалогом.</p>
 </dd>
-<dt><cite>init_priority</cite></dt><dd><p>An integer that determines the priority of initialization of the
-init block created by <cite>init</cite> and <cite>execute_init</cite> function. This can
-also be a function that is called with the parsed block, and should
-return an integer.</p>
+<dt><cite>init_priority</cite></dt><dd><p>Целое число, определяющее приоритет инициализации блока init, создаваемого параметрами
+<cite>init</cite> и <cite>execute_init</cite>. Также может быть функцией, принимающей разобранный блок и возвращающей
+целое число.</p>
 </dd>
-<dt><cite>translation_strings</cite></dt><dd><p>A function that is called with the parsed block. It's expected to
-return a list of strings or tuples of (string line number, string),
-which are then reported as being available to be translated.</p>
+<dt><cite>translation_strings</cite></dt><dd><p>Функция, вызываемая с разобранным блоком. Ожидается возврат списка строк или кортежей
+вида (номер строки, строка), которые затем регистрируются как доступные для перевода.</p>
 </dd>
-<dt><cite>force_begin_rollback</cite></dt><dd><p>This should be set to true on statements that are likely to cause the
-end of a fast skip, similar to <code class="docutils literal notranslate"><span class="pre">menu</span></code> or <code class="docutils literal notranslate"><span class="pre">call</span> <span class="pre">screen</span></code>.</p>
+<dt><cite>force_begin_rollback</cite></dt><dd><p>Следует устанавливать в True для инструкций, которые с большой вероятностью вызывают
+окончание быстрого пропуска, аналогично <code class="docutils literal notranslate"><span class="pre">menu</span></code> или <code class="docutils literal notranslate"><span class="pre">call</span> <span class="pre">screen</span></code>.</p>
 </dd>
-<dt><cite>post_execute</cite></dt><dd><p>A function that is executed as part the next statement after this
-one. (Adding a post_execute function changes the contents of the RPYC
-file, meaning a Force Compile is necessary.)</p>
+<dt><cite>post_execute</cite></dt><dd><p>Функция, которая выполняется как часть следующей инструкции после данной. (Добавление функции
+post_execute изменяет содержимое файла RPYC, что требует принудительной перекомпиляции [Force Compile].)</p>
 </dd>
-<dt><cite>post_label</cite></dt><dd><p>This is a function that is called to determine the label of this
-the post execute statement. If it returns a string, that string is used
-as the statement label, which can be called and jumped to like any other
-label. This can be used to create a unique return point.</p>
+<dt><cite>post_label</cite></dt><dd><p>Функция, вызываемая для определения метки инструкции post_execute. Если возвращает строку,
+эта строка используется в качестве метки инструкции, к которой можно совершать вызов и переход,
+как к любой другой метке. Это можно использовать для создания уникальной точки возврата.</p>
 </dd>
-<dt><cite>predict_all</cite></dt><dd><p>If True, then this predicts all sub-parses of this statement and
-the statement after this statement.</p>
+<dt><cite>predict_all</cite></dt><dd><p>Если True, предсказывает все подвыражения (sub-parses) данной инструкции и инструкцию,
+следующую за данной.</p>
 </dd>
-<dt><cite>predict_next</cite></dt><dd><p>This is called with a single argument, the label of the statement
-that would run after this statement.</p>
-<p>This should be called to predict the statements that can run after
-this one. It's expected to return a list of labels or SubParse
-objects. This is not called if <cite>predict_all</cite> is true.</p>
+<dt><cite>predict_next</cite></dt><dd><p>Вызывается с единственным аргументом — меткой инструкции, которая будет выполняться после данной.</p>
+<p>Должна вызываться для предсказания инструкций, которые могут выполняться после текущей. Ожидается
+возврат списка меток или объектов SubParse. Не вызывается, если <cite>predict_all</cite> равно True.</p>
 </dd>
-<dt><cite>execute_default</cite></dt><dd><p>This is a function that is called at the same time the default
-statements are run - after the init phase, but before the game starts; when the
-a save is loaded; after rollback; before lint; and potentially at
-other times.</p>
-<p>This is called with a single argument, the object returned from parse.</p>
+<dt><cite>execute_default</cite></dt><dd><p>Функция, вызываемая одновременно с выполнением инструкций default — после фазы init, но до
+начала игры; при загрузке сохранения; после отката; перед проверкой линтером; и потенциально
+в других случаях.</p>
+<p>Вызывается с единственным аргументом — объектом, возвращённым из parse.</p>
 </dd>
-<dt><cite>reachable</cite></dt><dd><p>This is a function that is called to allow this statement to
-customize how it participates in lint's reachability analysis.</p>
-<p>By default, a statement's custom block, sub-parse blocks created
-with Lexer.renpy_block(), and the statement after the statement
-are reachable if the statement itself is reachable. The statement
-is also reachable if it has a label function.</p>
-<p>This can be customized by providing a reachable function. This is
-a function that takes five arguments (in the following, a &quot;label&quot;
-may be a string or an opaque object):</p>
+<dt><cite>reachable</cite></dt><dd><p>Функция, вызываемая для того, чтобы позволить данной инструкции настроить её участие в анализе
+достижимости линтером (reachability analysis).</p>
+<p>По умолчанию пользовательский блок инструкции, блоки подвыражений, созданные с помощью
+Lexer.renpy_block(), и инструкция, следующая за данной, считаются достижимыми, если достижима
+сама данная инструкция. Инструкция также достижима, если у неё есть функция label.</p>
+<p>Это поведение можно настроить, указав функцию reachable. Эта функция принимает пять аргументов
+(далее «метка» может быть строкой или специальным объектом):</p>
 <ul class="simple">
-<li><p>The object returned by the parse function.</p></li>
-<li><p>A boolean that is true if the statement is reachable.</p></li>
-<li><p>The label of the statement.</p></li>
-<li><p>The label of the next statement, or None if there is no next statement.</p></li>
-<li><p>If <cite>block</cite> is set to &quot;script&quot;, the label of the first statement in the block,
-or None if there is no block.</p></li>
+<li><p>Объект, возвращённый функцией parse.</p></li>
+<li><p>Логическое значение (bool), равное True, если инструкция достижима.</p></li>
+<li><p>Метка инструкции.</p></li>
+<li><p>Метка следующей инструкции или None, если следующей инструкции нет.</p></li>
+<li><p>Если <cite>block</cite> установлен в &quot;script&quot;, метка первой инструкции в блоке или None, если блока нет.</p></li>
 </ul>
-<p>It's expected to return a set that may contain:</p>
+<p>Ожидается возврат множества (set), которое может содержать:</p>
 <ul class="simple">
-<li><p>A label or subparse object of a statement that is reachable.</p></li>
-<li><p>True, to indicate that this statement should not be reported by lint,
-but is not intrinsically reachable. (It will become reachable if it
-is reported reachable by another statement.)</p></li>
-<li><p>None, which is ignored.</p></li>
+<li><p>Метку или объект subparse инструкции, которая достижима.</p></li>
+<li><p>True, указывая, что эта инструкция не должна сообщаться линтером как недостижимая, но не является
+внутренне достижимой. (Она станет достижимой, если другая инструкция сообщит о её достижимости.)</p></li>
+<li><p>None, который игнорируется.</p></li>
 </ul>
-<p>This function may be called multiple times with both value of is_reachable,
-to allow the statement to customize its behavior based on whether it's
-reachable or not. (For example, the next statement may only be reachable
-if this statement is.)</p>
+<p>Эта функция может вызываться несколько раз с обоими значениями is_reachable, позволяя инструкции
+настраивать своё поведение в зависимости от того, достижима она или нет. (Например, следующая
+инструкция может быть достижима только в том случае, если достижима данная.)</p>
 </dd>
 </dl>
 <div class="admonition warning">
 <p class="admonition-title">Предупреждение</p>
-<p>Using the empty string as the name to redefine the say statement is
-usually a bad idea. That is because when replacing a Ren'Py native
-statement, its behavior depends on the <a class="reference internal" href="statement_equivalents.html"><span class="doc">Statement Equivalents</span></a>. In
-the case of the say statement, these equivalents do not support the <cite>id</cite>
-and translation systems. As a result, a game redefining the default
-statement will not be able to use these features (short of
-reimplementing them entirely).</p>
+<p>Использование пустой строки в качестве имени для переопределения инструкции say обычно
+является плохой идеей. Дело в том, что при замене встроенной инструкции Ren'Py её поведение
+зависит от эквивалентов инструкций (<a class="reference internal" href="statement_equivalents.html"><span class="doc">Эквиваленты инструкций на Python</span></a>). В случае инструкции say
+эти эквиваленты не поддерживают <cite>id</cite> и системы перевода. В результате игра, переопределяющая
+инструкцию по умолчанию, не сможет использовать эти возможности (без их полной повторной
+самостоятельной реализации).</p>
 </div>
 </dd></dl>
 
-<section id="lexer-object">
-<h3>Lexer object<a class="headerlink" href="#lexer-object" title="Ссылка на этот заголовок"></a></h3>
-<p>A custom statement's parse function takes an instance of a Lexer object.</p>
+<section id="lexer">
+<h3>Объект Lexer<a class="headerlink" href="#lexer" title="Ссылка на этот заголовок"></a></h3>
+<p>Функция parse пользовательской инструкции принимает экземпляр объекта Lexer.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="Lexer">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">Lexer</span></span><a class="headerlink" href="#Lexer" title="Ссылка на это определение"></a></dt>
 <dd><dl class="py property">
 <dt class="sig sig-object py" id="Lexer.init">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">init</span></span><a class="headerlink" href="#Lexer.init" title="Ссылка на это определение"></a></dt>
-<dd><p>This is true if the lexer is inside an init statement, else false.</p>
+<dd><p>True, если лексер находится внутри инструкции init, иначе False.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="Lexer.init_priority">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">init_priority</span></span><a class="headerlink" href="#Lexer.init_priority" title="Ссылка на это определение"></a></dt>
-<dd><p>If init is true, this is the priority of the init block.</p>
+<dd><p>Если init равен True, содержит приоритет блока init.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -532,23 +513,21 @@ reimplementing them entirely).</p>
 <span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.error" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Параметры<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>msg</strong> (<em>str</em>) -- Message to add to the list of detected parsing errors.</p>
+<dd class="field-odd"><p><strong>msg</strong> (<em>str</em>) -- Сообщение для добавления в список обнаруженных ошибок синтаксического анализа.</p>
 </dd>
 </dl>
-<p>Add <cite>msg</cite> (with the current position) to the list of detected
-parsing errors. This interrupts the parsing of the current statement,
-but does not prevent further parsing.</p>
+<p>Добавляет <cite>msg</cite> (с указанием текущей позиции) в список обнаруженных ошибок синтаксического
+анализа. Это прерывает разбор текущей инструкции, но не препятствует дальнейшему разбору файла.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.require">
 <span class="sig-name descname"><span class="pre">require</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thing</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.require" title="Ссылка на это определение"></a></dt>
-<dd><p>Try to parse <cite>thing</cite> and report an error if it cannot be done.</p>
-<p>If <cite>thing</cite> is a string, try to parse it using <a class="reference internal" href="#Lexer.match" title="Lexer.match"><code class="xref py py-func docutils literal notranslate"><span class="pre">match()</span></code></a>.</p>
-<p>Otherwise, thing must be another method on this lexer object which is
-called without arguments.</p>
-<p>If <cite>name</cite> is not specified, the name of the method will be used in the
-message (or <cite>thing</cite> if it's a string), otherwise <cite>name</cite> will be used.</p>
+<dd><p>Пытается разобрать <cite>thing</cite> и сообщает об ошибке, если это сделать не удаётся.</p>
+<p>Если <cite>thing</cite> — строка, пытается разобрать её с помощью <a class="reference internal" href="#Lexer.match" title="Lexer.match"><code class="xref py py-func docutils literal notranslate"><span class="pre">match()</span></code></a>.</p>
+<p>В противном случае <cite>thing</cite> должен быть другим методом этого объекта lexer, вызываемым без аргументов.</p>
+<p>Если <cite>name</cite> не указано, в сообщении используется имя метода (или <cite>thing</cite>, если это строка);
+в противном случае используется <cite>name</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -556,7 +535,7 @@ message (or <cite>thing</cite> if it's a string), otherwise <cite>name</cite> wi
 <span class="sig-name descname"><span class="pre">eol</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.eol" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Результат<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if the lexer is at the end of the line, else False.</p>
+<dd class="field-odd"><p>True, если лексер находится в конце строки, иначе False.</p>
 </dd>
 <dt class="field-even">Тип результата<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
@@ -567,23 +546,22 @@ message (or <cite>thing</cite> if it's a string), otherwise <cite>name</cite> wi
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.expect_eol">
 <span class="sig-name descname"><span class="pre">expect_eol</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.expect_eol" title="Ссылка на это определение"></a></dt>
-<dd><p>If not at the end of the line, raise an error.</p>
+<dd><p>Вызывает ошибку, если лексер находится не в конце строки.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.expect_noblock">
 <span class="sig-name descname"><span class="pre">expect_noblock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.expect_noblock" title="Ссылка на это определение"></a></dt>
-<dd><p>Called to indicate this statement does not expect a block.
-If a block is found, raise an error. <cite>stmt</cite> should be a string,
-it will be added to the message with an error.</p>
+<dd><p>Вызывается для указания того, что эта инструкция не ожидает блок.
+Если блок обнаружен, вызывает ошибку. <cite>stmt</cite> должен быть строкой,
+которая будет добавлена к сообщению об ошибке.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.expect_block">
 <span class="sig-name descname"><span class="pre">expect_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stmt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.expect_block" title="Ссылка на это определение"></a></dt>
-<dd><p>Called to indicate that the statement requires that a non-empty
-block is present. <cite>stmt</cite> should be a string, it will be added
-to the message with an error.</p>
+<dd><p>Вызывается для указания того, что инструкция требует наличия непустого
+блока. <cite>stmt</cite> должен быть строкой, которая будет добавлена к сообщению об ошибке.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -591,7 +569,7 @@ to the message with an error.</p>
 <span class="sig-name descname"><span class="pre">has_block</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.has_block" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Результат<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if the current line has a non-empty block, else False.</p>
+<dd class="field-odd"><p>True, если текущая строка содержит непустой блок, иначе False.</p>
 </dd>
 <dt class="field-even">Тип результата<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
@@ -602,24 +580,23 @@ to the message with an error.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.match">
 <span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">re</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.match" title="Ссылка на это определение"></a></dt>
-<dd><p>Match an arbitrary regexp string.</p>
-<p>All of the statements in the lexer that match things are implemented
-in terms of this function. They first skip whitespace, then attempt
-to match against the line. If the match succeeds, the matched text
-is returned. Otherwise, None is returned, and the state of the lexer
-is unchanged.</p>
+<dd><p>Сопоставляет строку с произвольным регулярным выражением.</p>
+<p>Все методы сопоставления в лексере реализованы через эту функцию. Сначала они пропускают
+пробельные символы, затем пытаются сопоставить регулярное выражение со строкой.
+Если сопоставление успешно, возвращается совпавший текст. В противном случае возвращается
+None, а состояние лексера остаётся неизменным.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.keyword">
 <span class="sig-name descname"><span class="pre">keyword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.keyword" title="Ссылка на это определение"></a></dt>
-<dd><p>Match <cite>s</cite> as a keyword.</p>
+<dd><p>Сопоставляет <cite>s</cite> как ключевое слово.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.name">
 <span class="sig-name descname"><span class="pre">name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.name" title="Ссылка на это определение"></a></dt>
-<dd><p>Match a name. This does not match built-in keywords.</p>
+<dd><p>Сопоставляет имя идентификатора. Не сопоставляет встроенные ключевые слова.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -627,26 +604,26 @@ is unchanged.</p>
 <span class="sig-name descname"><span class="pre">word</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.word" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Результат<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The text of the matched word.</p>
+<dd class="field-odd"><p>Текст совпавшего слова.</p>
 </dd>
 <dt class="field-even">Тип результата<span class="colon">:</span></dt>
 <dd class="field-even"><p>str</p>
 </dd>
 </dl>
-<p>Match any word, including keywords.</p>
+<p>Сопоставляет любое слово, включая ключевые слова.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.image_name_component">
 <span class="sig-name descname"><span class="pre">image_name_component</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.image_name_component" title="Ссылка на это определение"></a></dt>
-<dd><p>Match an image name component. Unlike a word, an image name
-component can begin with a number.</p>
+<dd><p>Сопоставляет компонент имени изображения. В отличие от обычного слова,
+компонент имени изображения может начинаться с цифры.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.string">
 <span class="sig-name descname"><span class="pre">string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.string" title="Ссылка на это определение"></a></dt>
-<dd><p>Match a Ren'Py string.</p>
+<dd><p>Сопоставляет строку Ren'Py в кавычках.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -654,13 +631,13 @@ component can begin with a number.</p>
 <span class="sig-name descname"><span class="pre">integer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.integer" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Результат<span class="colon">:</span></dt>
-<dd class="field-odd"><p>String containing the found integer.</p>
+<dd class="field-odd"><p>Строка, содержащая найденное целое число.</p>
 </dd>
 <dt class="field-even">Тип результата<span class="colon">:</span></dt>
 <dd class="field-even"><p>str</p>
 </dd>
 </dl>
-<p>Match an integer.</p>
+<p>Сопоставляет целое число.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -668,73 +645,67 @@ component can begin with a number.</p>
 <span class="sig-name descname"><span class="pre">float</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.float" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Результат<span class="colon">:</span></dt>
-<dd class="field-odd"><p>String containing the found floating point number.</p>
+<dd class="field-odd"><p>Строка, содержащая найденное число с плавающей запятой.</p>
 </dd>
 <dt class="field-even">Тип результата<span class="colon">:</span></dt>
 <dd class="field-even"><p>str</p>
 </dd>
 </dl>
-<p>Match a floating point number.</p>
+<p>Сопоставляет число с плавающей запятой.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.label_name">
 <span class="sig-name descname"><span class="pre">label_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">declare</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.label_name" title="Ссылка на это определение"></a></dt>
-<dd><p>Match a label name, either absolute or relative. If <cite>declare</cite>
-is true, then the global label name is set. (Note that this does not
-actually declare the label - the statement is required to do that
-by returning it from the <cite>label</cite> function.)</p>
+<dd><p>Сопоставляет имя метки, как абсолютное, так и относительное. Если <cite>declare</cite>
+равно True, устанавливается глобальное имя метки. (Обратите внимание, что это
+не объявляет метку фактически — инструкция должна сделать это, вернув её из функции <cite>label</cite>.)</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.simple_expression">
 <span class="sig-name descname"><span class="pre">simple_expression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.simple_expression" title="Ссылка на это определение"></a></dt>
-<dd><p>Match a simple Python expression, returns it as a string.
-This is often used when you expect a variable name.
-It is not recommended to change the result. The correct action is
-to evaluate the result in the future.</p>
+<dd><p>Сопоставляет простое выражение Python и возвращает его в виде строки.
+Часто используется, когда ожидается имя переменной. Не рекомендуется изменять результат.
+Правильное действие — вычислить результат в дальнейшем.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.delimited_python">
 <span class="sig-name descname"><span class="pre">delimited_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.delimited_python" title="Ссылка на это определение"></a></dt>
-<dd><p>Match a Python expression that ends in a <cite>delim</cite>, for example ':'.
-This is often used when you expect a condition until the delimiter.
-It is not recommended to change the result. The correct action is
-to evaluate the result in the future. This raises an error if
-end of line is reached before the delimiter.</p>
+<dd><p>Сопоставляет выражение Python, заканчивающееся разделителем <cite>delim</cite>, например ':'.
+Часто используется, когда ожидается условие перед двоеточием. Не рекомендуется изменять результат.
+Правильное действие — вычислить результат в дальнейшем. Вызывает ошибку, если конец строки
+достигнут до разделителя.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.arguments">
 <span class="sig-name descname"><span class="pre">arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.arguments" title="Ссылка на это определение"></a></dt>
-<dd><p>This must be called before the parentheses with the arguments list,
-if they are not specified returns None, otherwise
-returns an object representing the arguments to a function
-call. This object has an <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> method on it that
-takes an optional <cite>scope</cite> dictionary, and returns a tuple
-in which the first component is a tuple of positional arguments,
-and the second component is a dictionary of keyword arguments.</p>
+<dd><p>Должен вызываться перед круглыми скобками со списком аргументов. Если скобки не указаны,
+возвращает None; в противном случае возвращает объект, представляющий аргументы вызова функции.
+У этого объекта есть метод <code class="docutils literal notranslate"><span class="pre">evaluate</span></code>, принимающий необязательный словарь <cite>scope</cite>
+и возвращающий кортеж, первым элементом которого является кортеж позиционных аргументов,
+а вторым — словарь именованных аргументов.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.rest">
 <span class="sig-name descname"><span class="pre">rest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.rest" title="Ссылка на это определение"></a></dt>
-<dd><p>Skip whitespace, then return the rest of the line.</p>
+<dd><p>Пропускает пробелы и возвращает оставшуюся часть строки.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.checkpoint">
 <span class="sig-name descname"><span class="pre">checkpoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.checkpoint" title="Ссылка на это определение"></a></dt>
-<dd><p>Return an opaque object representing the current state of the lexer.</p>
+<dd><p>Возвращает непрозрачный объект, представляющий текущее состояние лексера.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.revert">
 <span class="sig-name descname"><span class="pre">revert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.revert" title="Ссылка на это определение"></a></dt>
-<dd><p>When <cite>o</cite> is the object returned from checkpoint(), reverts the state
-of the lexer to what it was when checkpoint() was called. (This is
-used for backtracking.)</p>
+<dd><p>Если <cite>o</cite> — объект, возвращённый из checkpoint(), возвращает состояние лексера
+к тому, каким оно было при вызове checkpoint(). (Используется для поиска с возвратом / backtracking.)</p>
 </dd></dl>
 
 <dl class="py method">
@@ -742,7 +713,7 @@ used for backtracking.)</p>
 <span class="sig-name descname"><span class="pre">subblock_lexer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.subblock_lexer" title="Ссылка на это определение"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Результат<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A Lexer for the block associated with the current line.</p>
+<dd class="field-odd"><p>Объект Lexer для блока, связанного с текущей строкой.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -750,37 +721,31 @@ used for backtracking.)</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.advance">
 <span class="sig-name descname"><span class="pre">advance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.advance" title="Ссылка на это определение"></a></dt>
-<dd><p>In a subblock lexer, advance to the next line. This must be called
-before the first line, so the first line can be parsed. Return True
-if we've successfully advanced to a line in the block, or False
-if we have advanced beyond all lines in the block.</p>
+<dd><p>В лексере подблока переходит к следующей строке. Этот метод необходимо вызвать перед
+первой строкой, чтобы её можно было разобрать. Возвращает True, если успешно выполнен переход
+к строке в блоке, или False, если пройдены все строки блока.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.renpy_statement">
 <span class="sig-name descname"><span class="pre">renpy_statement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.renpy_statement" title="Ссылка на это определение"></a></dt>
-<dd><p>When called, this parses the current line as a Ren'Py script statement,
-generating an error if this is not possible. This method returns
-an opaque object that can be returned from the <cite>next</cite> function passed to
-<a class="reference internal" href="#renpy.register_statement" title="renpy.register_statement"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.register_statement()</span></code></a>, or passed
-to <a class="reference internal" href="statement_equivalents.html#renpy.jump" title="renpy.jump"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.jump()</span></code></a> or <a class="reference internal" href="statement_equivalents.html#renpy.call" title="renpy.call"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.call()</span></code></a>. This object should
-not be stored except as part of the parse result of the statement.</p>
-<p>When the statement returned from this completes, control is
-transferred to the statement after the creator-defined statement.
-(Which might be the statement created using post_execute).</p>
+<dd><p>При вызове разбирает текущую строку как инструкцию скрипта Ren'Py, генерируя ошибку,
+если это невозможно. Возвращает непрозрачный объект, который может быть возвращён функцией <cite>next</cite>,
+переданной в <a class="reference internal" href="#renpy.register_statement" title="renpy.register_statement"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.register_statement()</span></code></a>, либо передан в <a class="reference internal" href="statement_equivalents.html#renpy.jump" title="renpy.jump"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.jump()</span></code></a> или <a class="reference internal" href="statement_equivalents.html#renpy.call" title="renpy.call"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.call()</span></code></a>.
+Этот объект не следует сохранять, кроме как в качестве части результата разбора инструкции.</p>
+<p>Когда инструкция, возвращённая этим методом, завершается, управление передаётся инструкции,
+следующей за пользовательской инструкцией (которая может быть инструкцией, созданной с помощью post_execute).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.renpy_block">
 <span class="sig-name descname"><span class="pre">renpy_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">empty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.renpy_block" title="Ссылка на это определение"></a></dt>
-<dd><p>Parse all of the remaining lines in the current block
-as Ren'Py script, and return a SubParse corresponding to the
-first statement in the block. The block is chained together such
-that all statements in the block are run, and then control is
-transferred to the statement after this creator-defined statement.</p>
-<p>Note that this parses the current block. In the more likely
-case that you'd like to parse the subblock of the current
-statement, the correct way to do that is:</p>
+<dd><p>Разбирает все оставшиеся строки текущего блока как скрипт Ren'Py и возвращает SubParse,
+соответствующий первой инструкции в блоке. Блок связывается в цепочку таким образом,
+что выполняются все инструкции в блоке, а затем управление передаётся инструкции,
+следующей за данной пользовательской инструкцией.</p>
+<p>Обратите внимание, что этот метод разбирает текущий блок. В более типичном случае,
+когда требуется разобрать подблок текущей инструкции, правильным способом является:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">mystatement_parse</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
 
     <span class="n">l</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
@@ -793,9 +758,9 @@ statement, the correct way to do that is:</p>
 </pre></div>
 </div>
 <dl>
-<dt><cite>empty</cite></dt><dd><p>If True, allows an empty block to be parsed. (An empty block
-is equivalent to a block with a single <code class="docutils literal notranslate"><span class="pre">pass</span></code> statement.)</p>
-<p>If False, an empty block triggers an error.</p>
+<dt><cite>empty</cite></dt><dd><p>Если True, разрешает разбор пустого блока. (Пустой блок эквивалентен блоку с единственной
+инструкцией <code class="docutils literal notranslate"><span class="pre">pass</span></code>.)</p>
+<p>Если False, пустой блок вызывает ошибку.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -803,11 +768,10 @@ is equivalent to a block with a single <code class="docutils literal notranslate
 <dl class="py method">
 <dt class="sig sig-object py" id="Lexer.catch_error">
 <span class="sig-name descname"><span class="pre">catch_error</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Lexer.catch_error" title="Ссылка на это определение"></a></dt>
-<dd><p>This is a context decorator, used in conjunction with the with
-statement, that catches and reports lexer errors inside its
-context block, then continues after the block.</p>
-<p>Here's an example of how it can be used to report multiple errors
-in a single subblock.</p>
+<dd><p>Контекстный декоратор, используемый в сочетании с инструкцией with, который перехватывает
+и выводит ошибки лексера внутри своего контекстного блока, после чего продолжает выполнение
+после блока.</p>
+<p>Вот пример того, как его можно использовать для вывода нескольких ошибок в одном подблоке:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">mystatement_parse</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
 
     <span class="n">l</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
@@ -830,56 +794,54 @@ in a single subblock.</p>
 
 </dd></dl>
 
-<p>A function allows you to lex arbitrary strings:</p>
+<p>Следующая функция позволяет выполнять лексический анализ произвольных строк:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.lex_string">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">lex_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'&lt;string&gt;'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linenumber</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">renpy.lexer.Lexer</span></span></span><a class="headerlink" href="#renpy.lex_string" title="Ссылка на это определение"></a></dt>
-<dd><p>Returns a Lexer object that can be used to lex the given text.</p>
+<dd><p>Возвращает объект Lexer, который можно использовать для лексического анализа заданного текста.</p>
 <dl class="simple">
-<dt><cite>text</cite></dt><dd><p>The text to lex.</p>
+<dt><cite>text</cite></dt><dd><p>Текст для лексического анализа.</p>
 </dd>
-<dt><cite>filename</cite></dt><dd><p>A filename for which errros will be reported.</p>
+<dt><cite>filename</cite></dt><dd><p>Имя файла, для которого будут выводиться сообщения об ошибках.</p>
 </dd>
-<dt><cite>linenumber</cite></dt><dd><p>A line number for which errors will be reported.</p>
+<dt><cite>linenumber</cite></dt><dd><p>Номер строки, для которой будут выводиться сообщения об ошибках.</p>
 </dd>
-<dt><cite>advance</cite></dt><dd><p>If true, the .advance() method will be called on the lexer.</p>
+<dt><cite>advance</cite></dt><dd><p>Если True, для лексера будет вызван метод .advance().</p>
 </dd>
 </dl>
 </dd></dl>
 
 </section>
-<section id="lint-utility-functions">
-<h3>Lint Utility Functions<a class="headerlink" href="#lint-utility-functions" title="Ссылка на этот заголовок"></a></h3>
-<p>These functions are useful when writing lint functions.</p>
+<section id="id2">
+<h3>Вспомогательные функции линтинга<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h3>
+<p>Эти функции полезны при написании функций lint.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.check_text_tags">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">check_text_tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_unclosed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.check_text_tags" title="Ссылка на это определение"></a></dt>
-<dd><p>Checks the text tags in s for correctness. Returns an error string if there is
-an error, or None if there is no error.</p>
+<dd><p>Проверяет текстовые теги в <cite>s</cite> на корректность. Возвращает строку ошибки при её наличии
+или None, если ошибок не обнаружено.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.error">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.error" title="Ссылка на это определение"></a></dt>
-<dd><p>Reports <cite>msg</cite>, a string, as an error for the user. This is logged as a
-parse or lint error when approprate, and otherwise it is raised as an
-exception.</p>
+<dd><p>Сообщает пользователю об ошибке <cite>msg</cite> (строка). При необходимости регистрируется
+как ошибка синтаксического анализа (parse) или линтинга (lint), в противном случае
+возбуждается как исключение.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.try_compile">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">try_compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">where</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.try_compile" title="Ссылка на это определение"></a></dt>
-<dd><p>Tries to compile an expression, and writes an error to lint.txt if
-it fails.</p>
+<dd><p>Пытается скомпилировать выражение и записывает ошибку в lint.txt в случае неудачи.</p>
 <dl class="simple">
-<dt><cite>where</cite></dt><dd><p>A string giving the location the expression is found. Used to
-generate an error message of the form &quot;Could not evaluate <cite>expr</cite>
-in <cite>where</cite>.&quot;</p>
+<dt><cite>where</cite></dt><dd><p>Строка, указывающая местонахождение выражения. Используется для формирования
+сообщения об ошибке вида «Could not evaluate <cite>expr</cite> in <cite>where</cite>.»</p>
 </dd>
-<dt><cite>expr</cite></dt><dd><p>The expression to try compiling.</p>
+<dt><cite>expr</cite></dt><dd><p>Выражение для компиляции.</p>
 </dd>
-<dt><cite>additional</cite></dt><dd><p>If given, an additional line of information that is added to the
-error message.</p>
+<dt><cite>additional</cite></dt><dd><p>Если указано, дополнительная строка с информацией, которая добавляется
+к сообщению об ошибке.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -887,17 +849,15 @@ error message.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.try_eval">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">try_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">where</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.try_eval" title="Ссылка на это определение"></a></dt>
-<dd><p>Tries to evaluate an expression, and writes an error to lint.txt if
-it fails.</p>
+<dd><p>Пытается вычислить выражение и записывает ошибку в lint.txt в случае неудачи.</p>
 <dl class="simple">
-<dt><cite>where</cite></dt><dd><p>A string giving the location the expression is found. Used to
-generate an error message of the form &quot;Could not evaluate <cite>expr</cite>
-in <cite>where</cite>.&quot;</p>
+<dt><cite>where</cite></dt><dd><p>Строка, указывающая местонахождение выражения. Используется для формирования
+сообщения об ошибке вида «Could not evaluate <cite>expr</cite> in <cite>where</cite>.»</p>
 </dd>
-<dt><cite>expr</cite></dt><dd><p>The expression to try evaluating.</p>
+<dt><cite>expr</cite></dt><dd><p>Выражение для вычисления.</p>
 </dd>
-<dt><cite>additional</cite></dt><dd><p>If given, an additional line of information that is added to the
-error message.</p>
+<dt><cite>additional</cite></dt><dd><p>Если указано, дополнительная строка с информацией, которая добавляется
+к сообщению об ошибке.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -910,8 +870,8 @@ error message.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
-        <a href="cdd.html" class="btn btn-neutral float-left" title="Creator-Defined Displayables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
-        <a href="custom_text_tags.html" class="btn btn-neutral float-right" title="Custom Text Tags" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cdd.html" class="btn btn-neutral float-left" title="Пользовательские отображаемые объекты (CDD)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="custom_text_tags.html" class="btn btn-neutral float-right" title="Пользовательские текстовые теги" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,305 +1,280 @@
-=======================
-Configuration Variables
-=======================
+===========================
+Конфигурационные переменные
+===========================
 
-Configuration variables control the behavior of Ren'Py's implementation,
-allowing Ren'Py itself to be customized in a myriad of ways. These range from
-the common (such as changing the screen size) to the obscure (adding new
-kinds of archive files).
+Конфигурационные переменные управляют поведением внутренней реализации Ren'Py,
+позволяя настраивать движок множеством способов: от самых распространенных
+(например, изменение размера экрана) до специфических (добавление новых
+типов архивных файлов).
 
-Ren'Py's implementation makes the assumption that, once the GUI system has
-initialized, configuration variables will not change. Changing configuration
-variables outside of ``init`` blocks can lead to undefined behavior.
-Configuration variables are not part of the save data.
+Реализация Ren'Py исходит из предположения, что после инициализации системы GUI
+конфигурационные переменные больше не изменяются. Изменение конфигурационных
+переменных вне блоков ``init`` может привести к неопределенному поведению.
+Конфигурационные переменные не сохраняются в данных сохранений.
 
-Most configuration variables are easily set using a ``define`` statement::
+Большинство конфигурационных переменных легко задать с помощью оператора ``define``::
 
     define config.rollback_enabled = False
 
-Dict and list variables can be populated using ``define`` or in an
-``init python`` block::
+Переменные-словари и списки можно заполнять с помощью ``define`` или в блоке
+``init python``::
 
     define config.preload_fonts += ["OrthodoxHerbertarian.ttf"]
     define config.adjust_attributes["eileen"] = eileen_adjust_function
 
     init python hide:
         def inter_cbk():
-            # this is a terrible callback
-            renpy.notify("Interacting !")
+            # неудачный пример колбэка
+            renpy.notify("Взаимодействие!")
 
         config.interact_callbacks.append(inter_cbk)
 
 
-Project Info
-------------
+Информация о проекте
+--------------------
 
 .. var:: config.name = ""
 
-    This should be a string giving the name of the game. This is included
-    as part of tracebacks and other log files, helping to identify the
-    version of the game being used.
+    Строка, задающая имя игры. Она включается в отчеты об ошибках (traceback)
+    и другие файлы логов, помогая определить версию используемой игры.
 
 .. var:: config.version = ""
 
-    This should be a string giving the version of the game. This is included
-    as part of tracebacks and other log files, helping to identify the
-    version of the game being used.
+    Строка, задающая версию игры. Она включается в отчеты об ошибках (traceback)
+    и другие файлы логов, помогая определить версию используемой игры.
 
 .. var:: config.window_icon = None
 
-    If not None, this is expected to be the filename of an image
-    giving an icon that is used for the game's main window. This does
-    not set the icon used by windows executables and mac apps, as
-    those are controlled by :ref:`special-files`.
+    Если не ``None``, задает имя файла изображения значка для главного окна игры.
+    Это не влияет на значки исполняемых файлов Windows и приложений Mac,
+    так как они управляются разделом :ref:`special-files`.
 
 .. var:: config.window_title = None
 
-    The static portion of the title of the window containing the
-    Ren'Py game. :var:`_window_subtitle` is appended to this to get
-    the full title of the window.
+    Статическая часть заголовка окна с игрой Ren'Py. Переменная :var:`_window_subtitle`
+    добавляется к ней для получения полного заголовка окна.
 
-    If None, the default, this defaults to the value of :var:`config.name`.
-
+    Если ``None`` (по умолчанию), используется значение :var:`config.name`.
 
 
-
-Auto-Forward Mode
-------------------
+Режим авточтения
+----------------
 
 .. var:: config.afm_bonus = 25
 
-    The number of bonus characters added to every string when
-    auto-forward mode is in effect.
+    Количество бонусных символов, добавляемых к каждой строке текста при работе
+    режима авточтения (Auto-Forward Mode).
 
 .. var:: config.afm_callback = None
 
-    If not None, a Python function that is called to determine if it
-    is safe to auto-forward. If None, an internal function is used to
-    disable auto-forwarding when a voice is playing, unless :var:`preferences.wait_voice`
-    is set to False.
+    Если не ``None``, функция Python, вызываемая для проверки безопасности
+    автопрокрутки вперед. Если ``None``, используется внутренняя функция для
+    отключения авточтения во время воспроизведения голоса (если только
+    переменная :var:`preferences.wait_voice` не установлена в False).
 
 .. var:: config.afm_characters = 250
 
-    The number of characters in a string it takes to cause the amount
-    of time specified in the auto forward mode preference to be
-    delayed before auto-forward mode takes effect.
+    Количество символов в строке, необходимое для того, чтобы задержка,
+    указанная в настройках авточтения, действовала в полном объеме.
 
 .. var:: config.afm_voice_delay = .5
 
-    The number of seconds after a voice file finishes playing
-    before AFM can advance text.
+    Количество секунд после завершения воспроизведения голосового файла,
+    по истечении которых авточтение может перейти к следующему тексту.
 
 
-Callbacks
----------
+Функции обратного вызова (колбэки)
+----------------------------------
 
-These take functions that are called when certain events occur. These are not the only
-callbacks - ones corresponding to more specific features are listed in the section on
-that feature.
+Принимают функции, вызываемые при возникновении определенных событий. Это не
+единственные колбэки — функции для конкретных систем описаны в соответствующих
+разделах документации.
 
-Callbacks can be registered with the :func:`renpy.callback` function, a Python decorator that
-automatically registers a function with the appropriate callback list based on the functon name,
-which automatically gets pluralized.  For example::
+Колбэки можно регистрировать с помощью функции :func:`renpy.callback` — декоратора
+Python, который автоматически добавляет функцию в соответствующий список колбэков
+на основе имени функции (автоматически преобразуемого во множественное число). Например::
 
     @renpy.callback
     def start_callback():
         import time
         global actual_start_time
-        acual_start_time = time.time()
+        actual_start_time = time.time()
 
 
 .. var:: config.after_default_callbacks = [ ... ]
 
-    A list of functions that are called (with no arguments) whenever
-    default statements are processed. The default statements are
-    run after the init phase, but before the game starts; when a save
-    is loaded; after rollback; before lint; and potentially at
-    other times.
+    Список функций, вызываемых (без аргументов) при обработке операторов ``default``.
+    Операторы ``default`` выполняются после этапа инициализации, но до запуска игры;
+    при загрузке сохранения; после отката; перед запуском lint; а также при других
+    обстоятельствах.
 
-    Similar to the default statement, these callbacks are a good place
-    to add data to the game that does not exist, but needs to.
+    Как и сам оператор ``default``, эти колбэки являются отличным местом для добавления
+    в игру данных, которые еще не существуют, но необходимы.
 
-    This callbacks is also run between the init phase and the start of the game, and so can be used to initialize
-    callbacks that need to be run when th
+    Этот колбэк также выполняется между фазой инициализации и стартом игры, поэтому может
+    использоваться для инициализации структур, необходимых при начале игры.
 
 .. var:: config.after_init_callbacks = [ ... ]
 
-    A list of functions that are called (with no arguments) at the very end of the init phase, before the game starts
-    normal execution for the first time. These are run after :var:`config.after_default_callbacks`, and so this is t
-    he place to set up callbacks that need access to default data. (The difference is that this is only run once,
-    while :var:`config.after_default_callbacks` is run after rollback and loading a save.)
+    Список функций, вызываемых (без аргументов) в самом конце фазы инициализации,
+    до того как игра начнет свое нормальное выполнение в первый раз. Они запускаются
+    после :var:`config.after_default_callbacks`, поэтому здесь можно настраивать колбэки,
+    требующие доступа к данным операторов default (разница в том, что этот список
+    вызывается только один раз, тогда как :var:`config.after_default_callbacks` вызывается
+    также после отката и загрузки сохранения).
 
-    The suggested use for this is setting up other callbacks that require access to default data. Other operations
-    may not work - this runs after most config variables shouldn't be changed, so changing them here may not have
-    the desired effect, but before actual game execution begins.
+    Рекомендуемое использование — настройка других колбэков, которым нужен доступ к данным
+    по умолчанию. Другие действия могут не сработать — это выполняется после того момента,
+    когда большинство переменных конфигурации уже не должно изменяться, но до реального
+    запуска игры.
 
 .. var:: config.context_callbacks = [ ]
 
-    These are callbacks that are called with no arguments when Ren'Py enters
-    a new context, such as at the start of the game, when entering the game
-    or main menus, or when beginning a replay.
+    Колбэки, вызываемые без аргументов при переходе Ren'Py в новый контекст (например,
+    при старте игры, входе в главное меню или меню игры, либо при запуске повтора сцены).
 
 .. var:: config.interact_callbacks = [ ... ]
 
-    A list of functions that are called (without any arguments) when
-    an interaction is started or restarted.
+    Список функций, вызываемых (без аргументов) при запуске или перезапуске взаимодействия.
 
 .. var:: config.label_callbacks = [ ]
 
-    This is a list of callbacks that are called whenever a label is
-    reached. The callbacks are called with two arguments. The first is the name
-    of the label. The second is True if the label was reached through
-    jumping, calling, or creating a new context, and False otherwise.
+    Список колбэков, вызываемых при переходе к метке (label). Вызываются с двумя
+    аргументами: имя метки и логическое значение (True, если метка была достигнута через
+    jump, call или создание нового контекста, и False в противном случае).
 
 .. var:: config.periodic_callbacks = [ ... ]
 
-    This is a list of functions that are called, with no arguments, at around 20Hz.
+    Список функций, вызываемых без аргументов с частотой примерно 20 Гц.
 
 .. var:: config.python_callbacks = [ ... ]
 
-    A list of functions that are called, without arguments, whenever a
-    Python block is run outside of the init phase.
+    Список функций, вызываемых без аргументов при выполнении блока Python вне фазы
+    инициализации.
 
-    One possible use of this would be to have a function limit a variable
-    to within a range each time it is adjusted.
+    Возможный вариант использования — ограничение значения переменной определенным
+    диапазоном при каждом ее изменении.
 
-    The functions may be called while Ren'Py is starting up, before the start
-    of the game proper, and potentially before the variables the
-    function depends on are initialized. The functions are required to deal
-    with this, perhaps by using ``hasattr(store, 'varname')`` to check if
-    a variable is defined.
+    Функции могут вызываться во время запуска Ren'Py до непосредственного старта игры
+    и потенциально до того, как переменные, от которых зависит функция, будут инициализированы.
+    Функции должны учитывать это, например, с помощью проверки ``hasattr(store, 'varname')``.
 
 .. var:: config.python_exit_callbacks = [ ]
 
-    A list of functions that are called when Ren'Py is about to exit to
-    the operating system. This is intended to be used to deinitialize
-    Python modules.
+    Список функций, вызываемых перед завершением работы Ren'Py и выходом в операционную
+    систему. Предназначен для деинициализации модулей Python.
 
-    Much of Ren'Py is deinitialized before these functions are called,
-    so it's not safe to use Ren'Py functions in these callbacks.
+    Большая часть систем Ren'Py деинициализируется до вызова этих функций, поэтому
+    использовать функции Ren'Py внутри этих колбэков небезопасно.
 
 .. var:: config.scene_callbacks = [ ... ]
 
-    A list of functions that are called when the scene statement runs,
-    or :func:`renpy.scene` is called. The functions are called with a
-    single argument, the layer that the scene statement is called on.
-    These functions are called after the layer is cleared, but before the
-    optional image is added, if present.
+    Список функций, вызываемых при выполнении оператора ``scene`` или функции
+    :func:`renpy.scene`. Функции вызываются с единственным аргументом — именем слоя,
+    на котором выполняется оператор scene. Функции вызываются после очистки слоя, но до
+    добавления нового изображения, если оно указано.
 
-    Ren'Py may call renpy.scene for its own purposes, so it's recommended
-    to check the layer name before acting on these callbacks.
+    Ren'Py может вызывать renpy.scene для собственных нужд, поэтому рекомендуется проверять
+    имя слоя перед выполнением действий.
 
 .. var:: config.start_callbacks = [ ... ]
 
-    A list of callbacks functions that are called with no arguments
-    after the init phase, but before the game (including the
-    splashscreen) starts. This is intended to be used by frameworks
-    to initialize variables that will be saved.
+    Список функций обратного вызова, вызываемых без аргументов после фазы инициализации,
+    но до старта игры (включая splashscreen). Предназначен для использования библиотеками
+    и фреймворками для инициализации сохраняемых переменных.
 
-    The default value of this variable includes callbacks that Ren'Py
-    uses internally to implement features such as nvl-mode. New
-    callbacks can be appended to this list, but the existing callbacks
-    should not be removed.
+    Значение по умолчанию включает колбэки, которые Ren'Py использует внутри движка для
+    реализации таких возможностей, как nvl-режим. Новые колбэки можно добавлять в этот
+    список, но существующие удалять не следует.
 
 .. var:: config.start_interact_callbacks = [ ... ]
 
-    A list of functions that are called (without any arguments) when
-    an interaction is started. These callbacks are not called when an
-    interaction is restarted.
+    Список функций, вызываемых (без аргументов) при старте взаимодействия. Эти колбэки
+    не вызываются при перезапуске взаимодействия.
 
 .. var:: config.statement_callbacks = [ ... ]
 
-    A list of functions that are called when a statement is executed.
-    These functions are generally called with the name of the statement
-    in question. However, there are some special statement names.
+    Список функций, вызываемых при выполнении оператора. Обычно вызываются с именем
+    выполняемого оператора. Существуют специальные имена операторов:
 
     "say"
-        Normal say statements.
+        Обычные операторы say.
 
     "say-nvl"
-        Say statements in NVL mode.
+        Операторы say в режиме NVL.
 
     "say-bubble"
-        Say statements in bubble mode.
+        Операторы say в режиме речевых пузырей (bubble).
 
     "say-centered"
-        Say statements using the :var:`centered` character.
+        Операторы say с персонажем :var:`centered`.
 
     "menu"
-        Normal menu statements.
+        Обычные операторы меню.
 
     "menu-nvl"
-        Menu statements in NVL mode.
+        Операторы меню в режиме NVL.
 
     "menu-with-caption"
-        Menu statements with a caption.
+        Операторы меню с подписью.
 
     "menu-nvl-with-caption"
-        Menu statements with a caption in NVL mode.
+        Операторы меню с подписью в режиме NVL.
 
-    There is a default callback in this list that is used to implement
-    ``window auto``.
+    В этом списке есть стандартный колбэк, используемый для реализации работы ``window auto``.
 
 .. var:: config.with_callback = None
 
-    If not None, this should be a function that is called when a :ref:`with statement <with-statement>`
-    occurs. This function can be responsible for
-    putting up transient things on the screen during the transition. The
-    function is called with two arguments: the transition that is occurring,
-    and the transition it is paired with. The latter is None except in the case
-    of the implicit None transition produced by an inline with statement, in
-    which case it is the inline transition that produced the with None. It is
-    expected to return a transition, which may or may not be the transition
-    supplied as its argument.
+    Если не ``None``, функция, вызываемая при выполнении :ref:`оператора with <with-statement>`.
+    Эта функция может отвечать за отображение временных элементов на экране во время
+    перехода. Функция вызывается с двумя аргументами: выполняемый переход и переход,
+    с которым он спарен. Второй аргумент равен ``None``, за исключением неявного перехода
+    None, порожденного строчным оператором with (в этом случае это встроенный переход).
+    Функция должна возвращать объект перехода, который может совпадать или не совпадать
+    с переданным аргументом.
 
 
-
-
-Characters and Dialogue
------------------------
+Персонажи и диалоги
+-------------------
 
 .. var:: config.all_character_callbacks = [ ... ]
 
-    A list of callbacks that are called by all characters. This list
-    is prepended to the list of character-specific callbacks. Ren'Py
-    includes its own callbacks at the start of this list.
+    Список колбэков, вызываемых для всех персонажей. Этот список добавляется перед
+    списком колбэков конкретного персонажа. В начало списка Ren'Py помещает собственные
+    колбэки.
 
 .. var:: config.character_callback = None
 
-    The default value of the `callback` parameter of :class:`Character`.
+    Значение по умолчанию для параметра `callback` класса :class:`Character`.
 
 .. var:: config.character_id_prefixes = [ ... ]
 
-    This specifies a list of style property prefixes that can be given
-    to a :func:`Character`. When a style prefixed with one of the given
-    prefix is given, it is applied to the displayable with that prefix
-    as its ID.
+    Задает список префиксов свойств стиля, которые можно передавать объекту
+    :func:`Character`. При указании стиля с одним из этих префиксов он применяется
+    к отображаемому объекту с этим префиксом в качестве ID.
 
-    For example, the default GUI adds "namebox" to this. When a Character
-    is given the `namebox_background` property, it sets :propref:`background`
-    on the displayable in the say screen with the id "namebox".
+    Например, стандартный GUI добавляет сюда префикс "namebox". Когда персонажу
+    передается свойство `namebox_background`, оно задает :propref:`background` на
+    отображаемом объекте экрана say с id "namebox".
 
 .. var:: config.say_allow_dismiss = None
 
-    If not None, this should be a function. The function is called
-    with no arguments when the user attempts to dismiss a :ref:`say
-    statement <say-statement>`. If this function returns True, the
-    dismissal is allowed, otherwise it is ignored.
+    Если не ``None``, функция, вызываемая без аргументов при попытке игрока пропустить
+    :ref:`оператор say <say-statement>`. Если функция возвращает True, пропуск
+    разрешается, иначе клик игнорируется.
 
 .. var:: config.say_arguments_callback = None
 
-    If not None, this should be a function that takes the speaking character,
-    followed by positional and keyword arguments. It's called whenever a
-    say statement occurs, even when the statement doesn't explicitly pass
-    arguments. The arguments passed to the callback always include an `interact`
-    argument, and include the others provided in the say statement (if any).
+    Если не ``None``, функция, принимающая говорящего персонажа, позиционные и
+    именованные аргументы. Вызывается при каждом выполнении оператора say, даже если
+    оператор явно не передает аргументов. Аргументы всегда включают параметр `interact`,
+    а также любые другие, указанные в операторе say.
 
-    This should return a pair, containing a tuple of positional arguments
-    (almost always empty), and a dictionary of keyword arguments (almost
-    always with at least `interact` in it). Those will replace the arguments
-    passed to the callback.
+    Функция должна возвращать пару: кортеж позиционных аргументов (почти всегда пустой)
+    и словарь именованных аргументов (почти всегда содержащий хотя бы `interact`).
+    Они заменят аргументы, переданные в оператор.
 
-    For example::
+    Например::
 
         def say_arguments_callback(who, interact=True, color="#fff"):
             return (), { "interact" : interact, "what_color" : color }
@@ -308,61 +283,57 @@ Characters and Dialogue
 
 .. var:: config.say_sustain_callbacks = [ ... ]
 
-    A list of functions that are called, without arguments, before the
-    second and later interactions caused by a line of dialogue with
-    pauses in it. Used to sustain voice through pauses.
+    Список функций, вызываемых без аргументов перед вторым и последующими взаимодействиями,
+    вызванными строкой диалога с паузами внутри. Используется для непрерывного звучания
+    голоса во время пауз.
 
 
-Choice Menus
-------------
+Меню выбора
+-----------
 
 .. var:: config.auto_choice_delay = None
 
-    If not None, this variable gives a number of seconds that Ren'Py
-    will pause at an in-game menu before picking a random choice from
-    that menu. We'd expect this variable to always be set to None in
-    released games, but setting it to a number will allow for
-    automated demonstrations of games without much human interaction.
+    Если не ``None``, задает задержку в секундах, на которую Ren'Py делает паузу в
+    игровом меню выбора перед тем, как автоматически выбрать случайный вариант.
+    В релизных играх эта переменная обычно равна None, но указание числа позволяет
+    запускать автоматические демонстрации игр без участия человека.
 
 .. var:: config.menu_arguments_callback = None
 
-    If not None, this should be a function that takes positional and/or
-    keyword arguments. It's called whenever a menu statement runs,
-    with the arguments to that menu statement.
+    Если не ``None``, функция, принимающая позиционные и/или именованные аргументы.
+    Вызывается при каждом выполнении оператора menu с аргументами этого оператора.
 
-    This should return a pair, containing a tuple of positional arguments
-    (almost always empty), and a dictionary of keyword arguments.
+    Должна возвращать пару: кортеж позиционных аргументов (почти всегда пустой) и
+    словарь именованных аргументов.
 
 .. var:: config.menu_include_disabled = False
 
-    When this variable is set, choices disables with the if statement are
-    included as disabled buttons.
+    Если True, варианты выбора, отключенные условием оператора ``if``, отображаются
+    как неактивные кнопки.
 
 .. var:: config.menu_window_subtitle = ""
 
-    The :var:`_window_subtitle` variable is set to this value when entering
-    the main or game menus.
+    Переменной :var:`_window_subtitle` присваивается это значение при входе в главное
+    или игровое меню.
 
 .. var:: config.narrator_menu = True
 
-    If True, narration inside a menu is displayed using the narrator
-    character. Otherwise, narration is displayed as captions
-    within the menu itself.
+    Если True, текст повествования внутри меню отображается с помощью персонажа
+    narrator. В противном случае текст отображается в виде заголовков (подписей) внутри
+    самого меню.
 
 
-Display
--------
+Отображение
+-----------
 
 .. var:: config.adjust_view_size = None
 
-    If not None, this should be a function taking two arguments, the width
-    and height of the physical window. It is expected to return a tuple
-    giving the width and height of the OpenGL viewport, the portion of the
-    screen that Ren'Py will draw pictures to.
+    Если не ``None``, функция, принимающая два аргумента: ширину и высоту физического
+    окна. Она должна возвращать кортеж с шириной и высотой области просмотра OpenGL —
+    части экрана, на которую Ren'Py выводит изображение.
 
-    This can be used to configure Ren'Py to only allow certain sizes of
-    screen. For example, the following allows only integer multiples
-    of the original screen size::
+    Может использоваться для ограничения размеров окна. Например, следующий код разрешает
+    только целочисленные масштабы исходного разрешения экрана::
 
         init python:
 
@@ -375,947 +346,838 @@ Display
 
 .. var:: config.automatic_oversampling = 4
 
-    The highest level of :ref:`automatic oversampling <automatic-oversampling>` that
-    Ren'Py will use. If None, automatic oversampling is disabled.
+    Максимальный уровень :ref:`автоматической избыточной дискретизации <automatic-oversampling>`,
+    используемый Ren'Py. Если ``None``, автоматическая избыточная выборка отключена.
 
 .. var:: config.display_start_callbacks = [ ]
 
-    This contains a list of functions that are called after Ren'Py
-    displays a window, but before the first frame is rendered. The
-    main use of this is to allow libraries to gain access to resources
-    that need an initialized gui, like OpenGL functions.
+    Список функций, вызываемых после создания окна Ren'Py, но до отрисовки первого кадра.
+    Основное применение — предоставление библиотекам доступа к ресурсам, требующим
+    инициализированного GUI (например, к функциям OpenGL).
 
 .. var:: config.gl_clear_color = "#000"
 
-    The color that the window is cleared to before images are drawn.
-    This is mainly seen as the color of the letterbox or pillarbox
-    edges drawn when aspect ratio of the window (or monitor in
-    fullscreen mode) does not match the aspect ratio of the game.
+    Цвет, которым очищается окно перед рисованием изображений. В основном проявляется
+    в виде черных полос (letterbox/pillarbox) по краям экрана, когда соотношение сторон
+    окна (или монитора в полноэкранном режиме) не совпадает с соотношением сторон игры.
 
 .. var:: config.gl_lod_bias = -0.6
 
-    The default value of the :ref:`u_lod_bias <u-lod-bias>` uniform,
-    which controls the mipmap level Ren'Py uses.
+    Значение по умолчанию для uniform-переменной :ref:`u_lod_bias <u-lod-bias>`,
+    управляющей уровнем mipmap, используемым Ren'Py.
 
 .. var:: config.gl_resize = True
 
-    Determines if the user is allowed to resize an OpenGL-drawn window.
+    Определяет, разрешено ли пользователю изменять размер окна OpenGL.
 
 .. var:: config.gl_test_image = "black"
 
-    The name of the image that is used when running the OpenGL
-    performance test. This image will be shown for 5 frames or .25
-    seconds, on startup. It will then be automatically hidden.
+    Имя изображения, используемого при выполнении теста производительности OpenGL.
+    Это изображение показывается на 5 кадров или 0.25 секунды при запуске, после чего
+    автоматически скрывается.
 
 .. var:: config.mesh_oversample = 1.0
 
-    Determines how much mesh textures can be oversampled by. This, in turn, controls the maximum
-    amount a mesh can be scaled up by before it introduces additional blurriness, at the risk of
-    creating excessive large textures when a mesh is scaled up greatly.
+    Определяет коэффициент избыточной выборки текстур сетки (mesh). Это управляет тем,
+    насколько сильно сетку можно увеличивать до появления дополнительного размытия,
+    ценой создания больших текстур при сильном увеличении.
 
 .. var:: config.minimum_presplash_time = 0.0
 
-    The minimum amount of time, in seconds, a presplash, Android presplash,
-    or iOS LaunchImage is displayed for. If Ren'Py initializes before this
-    amount of time has been reached, it will sleep to ensure the image is
-    shown for at least this amount of time. The image may be shown longer
-    if Ren'Py takes longer to start up.
+    Минимальное время (в секундах) показа пресплэша, пресплэша Android или iOS LaunchImage.
+    Если Ren'Py инициализируется быстрее, движок приостановит работу, чтобы изображение
+    показывалось не менее указанного времени. Если запуск длится дольше, изображение
+    будет показываться дольше.
 
 .. var:: config.mipmap = True
 
-    This controls if Ren'Py generates mipmaps for images. If True, mipmaps are always generated. If "auto", mipmaps
-    are generated only if the window is smaller than 75% of the virtual screen size. If False, mipmaps are never
-    generated.
+    Управляет генерацией mipmap-текстур для изображений. Если True, mipmap генерируются
+    всегда. Если "auto", они генерируются только когда окно уменьшено более чем до 75%
+    от виртуального размера экрана. Если False, mipmap не генерируются.
 
 .. var:: config.nearest_neighbor = False
 
-    Uses nearest-neighbor filtering by default, to support pixel art or
-    melting players' eyes.
+    Использовать по умолчанию фильтрацию по ближайшему соседу (nearest-neighbor) для
+    поддержки пиксель-арта.
 
 .. var:: config.physical_height = None
 
-    If set, this is the default height of the window containing the Ren'Py
-    game, in pixels. If not set, the height of the window defaults to
-    :var:`config.screen_height`.
+    Если задано, задает высоту окна с игрой по умолчанию в пикселях. Если не задано,
+    высота окна по умолчанию равна :var:`config.screen_height`.
 
 .. var:: config.physical_width = None
 
-    If set, this is the default height of the window containing the Ren'Py
-    game, in pixels. If not set, the width of the window defaults to
-    :var:`config.screen_width`.
+    Если задано, задает ширину окна с игрой по умолчанию в пикселях. Если не задано,
+    ширина окна по умолчанию равна :var:`config.screen_width`.
 
 .. var:: config.screen_height = 600
 
-    The virtual height of the game, in pixels. If :var:`config.physical_height`
-    is not set, this is also the default size of the window containing the
-    game. Usually set by :func:`gui.init` to a much larger size.
+    Виртуальная высота игры в пикселях. Если переменная :var:`config.physical_height`
+    не установлена, это также размер окна по умолчанию. Обычно настраивается функцией
+    :func:`gui.init` на значительно большее значение.
 
 .. var:: config.screen_width = 800
 
-    The virtual width of the game, in pixels. If :var:`config.physical_width`
-    is not set, this is also the default size of the window containing the
-    game. Usually set by :func:`gui.init` to a much larger size.
+    Виртуальная ширина игры в пикселях. Если переменная :var:`config.physical_width`
+    не установлена, это также размер окна по умолчанию. Обычно настраивается функцией
+    :func:`gui.init` на значительно большее значение.
 
 .. var:: config.shader_part_filter = None
 
-    If not None, this is a function that is called with a tuple of
-    shader part names. It should return a new tuple of shader parts
-    that will be used.
+    Если не ``None``, функция, вызываемая с кортежем имен частей шейдера. Должна
+    возвращать новый кортеж частей шейдера, которые будут использоваться.
 
 
-File I/O
---------
+Файловый ввод-вывод
+-------------------
 
 .. var:: config.file_open_callback = None
 
-    If not None, this is a function that is called with the file name
-    when a file needs to be opened. It should return a file-like
-    object, or None to load the file using the usual Ren'Py
-    mechanisms. Your file-like object must implement at least the
-    read, seek, tell, and close methods.
+    Если не ``None``, функция, вызываемая с именем файла при попытке его открытия.
+    Должна возвращать файлоподобный объект либо ``None`` для загрузки стандартными
+    механизмами Ren'Py. Файлоподобный объект должен реализовывать как минимум методы
+    ``read``, ``seek``, ``tell`` и ``close``.
 
-    One may want to also define a :var:`config.loadable_callback` that
-    matches this.
+    Обычно имеет смысл также определить соответствующую функцию :var:`config.loadable_callback`.
 
 .. var:: config.open_file_encoding = False
 
-    If not False, this is the encoding that :func:`renpy.open_file` uses
-    when its `encoding` parameter is none. This is mostly used when porting
-    Python 2 games that used :func:`renpy.file` extensively to Python 3,
-    to have those files open as text by default.
+    Если не False, кодировка, используемая функцией :func:`renpy.open_file`, когда
+    ее параметр `encoding` равен None. В основном используется при портировании игр
+    с Python 2 на Python 3, активно использовавших :func:`renpy.file`, чтобы файлы
+    по умолчанию открывались как текстовые.
 
-    This gets its default value from the RENPY_OPEN_FILE_ENCODING
-    environment variable.
+    Значение по умолчанию берется из переменной окружения RENPY_OPEN_FILE_ENCODING.
 
 .. var:: config.special_directory_map = { 'images' : [ 'images' ], 'audio' : [ 'audio' ], 'fonts' : [ 'fonts' ], ... }
 
-    This maps the special directory names ('images', 'audio', 'fonts') to a list of directories that will
-    be searched for that kind of file. These are only used when loading a filename - for automatic definition
-    of images and audiom see :var:`config.image_directories` and :var:`config.audio_directories`. New special
-    directory names may be added in future versions of Ren'Py.
+    Связывает специальные имена папок ('images', 'audio', 'fonts') со списком каталогов,
+    в которых будет производиться поиск соответствующих файлов. Используется только при
+    загрузке файлов по имени; для автоматического определения изображений и аудио см.
+    :var:`config.image_directories` и :var:`config.audio_directories`. В будущих версиях
+    Ren'Py могут быть добавлены новые специальные папки.
 
 .. var:: config.renamed_files = { ... }
 
-    A map from file names to new file names. When Ren'Py looks for a file by
-    one of the keys in this dictionary, it will instead look for the
-    corresponding value. This is useful for handling files that have been
-    renamed - for example, when font filenames change between versions of a
-    bundled font. The keys must be lower-case and use forward slashes as
-    path separators.
+    Словарь соответствия старых имен файлов новым. Когда Ren'Py ищет файл по одному
+    из ключей этого словаря, он вместо этого будет искать по соответствующему значению.
+    Это полезно для файлов, имена которых изменились (например, при обновлении версий
+    шрифтов). Ключи должны быть в нижнем регистре и использовать прямые слеши ``/`` в
+    качестве разделителей путей.
 
-    Ren'Py uses this to handle some renamed files internally, so creators should add to this dictionary rather than
-    replacing it entirely.
+    Ren'Py использует этот словарь внутри движка, поэтому разработчикам следует
+    дополнять его, а не перезаписывать целиком.
 
-History
--------
+
+История диалогов
+----------------
 
 .. var:: config.history_callbacks = [ ... ]
 
-    This contains a list of callbacks that are called before Ren'Py adds
-    a new object to _history_list. The callbacks are called with the
-    new HistoryEntry object as the first argument, and can add new fields
-    to that object.
+    Список колбэков, вызываемых перед добавлением нового объекта в ``_history_list``.
+    Колбэки вызываются с новым объектом HistoryEntry в качестве первого аргумента и
+    могут добавлять новые поля к этому объекту.
 
-    Ren'Py uses history callbacks internally, so creators should append
-    their own callbacks to this list, rather than replacing it entirely.
+    Ren'Py использует колбэки истории внутри движка, поэтому разработчикам следует
+    добавлять собственные функции в конец списка, а не заменять его целиком.
 
 .. var:: config.history_current_dialogue = True
 
-    If True, the current dialogue will appear in the history screen.
+    Если True, текущая реплика диалога будет присутствовать на экране истории.
 
 .. var:: config.history_length = None
 
-    The number of entries of dialogue history Ren'Py keeps. This is
-    set to 250 by the default gui.
+    Количество записей истории диалогов, сохраняемых Ren'Py. По умолчанию GUI
+    устанавливает значение 250.
 
 
-Images
-------
+Изображения
+-----------
 
 .. var:: config.image_directories = [ "images" ]
 
-    A list of one or more directories that Ren'Py searches for images, as described in the :ref:`images-directory` section.
-    The directories are searched in order, and the first directory that contains the image is used.
+    Список каталогов, в которых Ren'Py ищет изображения, как описано в разделе
+    :ref:`images-directory`. Каталоги проверяются по порядку, используется первый
+    каталог, содержащий изображение.
 
-    This should be set at init priority -1 or lower to ensure that it is set before the images are defined. This
-    can be done with::
+    Переменную следует задавать с приоритетом инициализации -1 или ниже, например::
 
         define -1 config.image_directories = [ "images", "dlc/images" ]
 
-    or an ``init -1 python`` block.
+    или в блоке ``init -1 python``.
 
 .. var:: config.image_extensions =  [ ".jpg", ".jpeg", ".png", ".webp", ".avif", ".svg" ]
 
-    A list of file extensions that Ren'Py will use when searching for images, as described in the :ref:`images-directory` section.
+    Список расширений файлов, используемых Ren'Py при поиске изображений, как описано
+    в разделе :ref:`images-directory`.
 
 
-Input, Focus, and Events
-------------------------
+Ввод, фокус и события
+---------------------
 
 .. var:: config.allow_screensaver = True
 
-    If True, the screensaver may activate while the game is running. If
-    False, the screensaver is disabled.
+    Если True, экранная заставка (скринсейвер) может активироваться во время работы игры.
+    Если False, экранная заставка заблокирована.
 
 .. var:: config.controller_blocklist = [ ... ]
 
-    A list of strings, where each string is matched against the GUID
-    of a game controller. These strings are matched as a prefix to the
-    controller GUID (which can be found in :file:`log.txt`), and if matched,
-    prevent the controller from being initialized.
+    Список строк, сопоставляемых с идентификатором GUID игрового контроллера.
+    Строки сопоставляются как префикс GUID контроллера (который можно найти в файле
+    :file:`log.txt`), и при совпадении запрещают инициализацию контроллера.
 
 .. var:: config.focus_crossrange_penalty = 1024
 
-    This is the amount of penalty to apply to moves perpendicular to
-    the selected direction of motion, when moving focus with the
-    keyboard.
+    Штраф, применяемый к перемещениям перпендикулярно выбранному направлению движения
+    при смене фокуса с помощью клавиатуры.
 
 .. var:: config.input_caret_blink = 1.0
 
-    If not False, sets the blinking period of the default caret, in seconds.
+    Если не False, задает период мигания текстового курсора ввода по умолчанию в секундах.
 
 .. var:: config.keymap = { ... }
 
-    This variable contains a keymap giving the keys and mouse buttons
-    assigned to each possible operation. Please see the section on
-    :doc:`Keymaps <keymap>` for more information.
+    Словарь привязки клавиш и кнопок мыши к каждой возможной операции.
+    Подробнее см. :doc:`Привязка клавиш <keymap>`.
 
 .. var:: config.longpress_duration = 0.5
 
-    The amount of time the player must press the screen for a longpress
-    to be recognized on a touch device.
+    Время удержания нажатия на сенсорном экране в секундах для распознавания долгого нажатия.
 
 .. var:: config.longpress_radius = 15
 
-    The number of pixels the touch must remain within for a press to be
-    recognized as a longpress.
+    Радиус в пикселях, в пределах которого должно оставаться касание, чтобы считаться
+    долгим нажатием.
 
 .. var:: config.longpress_vibrate = .1
 
-    The amount of time the device will vibrate for after a longpress.
+    Продолжительность вибрации устройства после долгого нажатия в секундах.
 
 .. var:: config.pad_bindings = { ... }
 
-    An equivalent of :var:`config.keymap` for gamepads.
-    Please see :doc:`keymap`'s section about pad bindings for more information.
+    Эквивалент :var:`config.keymap` для геймпадов.
+    Подробнее см. раздел о привязках геймпада в :doc:`keymap`.
 
 .. var:: config.pass_controller_events = False
 
-    If True, pygame-like CONTROLLER events are passed to Displayables event
-    handlers. If not, those are consumed by Ren'Py.
+    Если True, события pygame-типа CONTROLLER передаются обработчикам событий Displayable.
+    Если False, они перехватываются самим Ren'Py.
 
 .. var:: config.pass_joystick_events = False
 
-    If True, pygame-like JOYSTICK events are passed to Displayables event
-    handlers. If not, those are consumed by Ren'Py.
+    Если True, события pygame-типа JOYSTICK передаются обработчикам событий Displayable.
+    Если False, они перехватываются самим Ren'Py.
 
 .. var:: config.web_input = True
 
-    If True, the web platform will use the browser's input system to
-    handle :func:`renpy.input`.  If False, Ren'Py's own input system will
-    be used. The browser's input system supports more languages, virtual
-    keyboards, and other conveniences, but is not as customizable.
+    Если True, веб-платформа будет использовать систему ввода браузера для обработки
+    :func:`renpy.input`. Если False, будет использоваться собственная система ввода Ren'Py.
+    Система ввода браузера поддерживает больше языков, виртуальные клавиатуры и другие
+    удобства, но менее настраиваема визуально.
 
-    This may be changed at init time, and also in translate python blocks.
+    Может изменяться во время инициализации, а также в блоках translate python.
 
-    To only use the browser's input system on touchscreen devices, use::
+    Чтобы использовать систему ввода браузера только на устройствах с сенсорным экраном::
 
         define config.web_input = renpy.variant("touch")
 
 
-
-Layered Images
---------------
+Слоистые изображения
+--------------------
 
 .. var:: config.layeredimage_offer_screen = True
 
-    This variable sets the default value for the ``offer_screen`` property
-    of layeredimages. See :ref:`the related section <layeredimage-statement>`
-    for more information.
+    Задает значение по умолчанию для свойства ``offer_screen`` слоистых изображений
+    (layeredimage). Подробнее см. :ref:`соответствующий раздел <layeredimage-statement>`.
 
 
-Layers
-------
+Слои
+----
 
 .. var:: config.bottom_layers = [ "bottom", ... ]
 
-    This is a list of names of layers that are displayed beneath all
-    other layers, and do not participate in a transition that is
-    applied to all layers. If a layer name is listed here, it should
-    not be listed in :var:`config.layers` or :var:`config.top_layers`.
+    Список имен слоев, отображаемых под всеми остальными слоями и не участвующих
+    в переходах, применяемых ко всем слоям. Если имя слоя указано здесь, его не
+    следует указывать в :var:`config.layers` или :var:`config.top_layers`.
 
 .. var:: config.choice_layer = None
 
-    The layer the choice screen (used by the menu statement) is shown on.
-    If None, the screen's :scpref:`layer` property is used,
-    defaulting to "screens". This defaults to "screens" for games that declare
-    compatibility with Ren'Py 8.5 or earlier.
+    Слой, на котором отображается экран выбора (используемый оператором menu).
+    Если None, используется свойство экрана :scpref:`layer`, по умолчанию "screens".
+    Для игр, заявляющих совместимость с Ren'Py 8.5 или ранее, по умолчанию "screens".
 
 .. var:: config.clear_layers = [ ... ]
 
-    A list of names of layers to clear when entering the main and game
-    menus.
+    Список имен слоев, очищаемых при входе в главное и игровое меню.
 
 .. var:: config.context_clear_layers = [ 'screens', 'top', 'bottom', ... ]
 
-    A list of layers that are cleared when entering a new context.
+    Список слоев, очищаемых при переходе в новый контекст.
 
 .. var:: config.default_tag_layer = "master"
 
-    The layer an image is shown on if its tag is not found in :var:`config.tag_layer`.
+    Слой, на котором отображается изображение, если его тег не найден в :var:`config.tag_layer`.
 
 .. var:: config.detached_layers = [ ]
 
-    These are layers which do not get automatically added to scenes.
-    They are always treated as :var:`sticky <config.sticky_layers>` and
-    intended for use with the :class:`Layer` displayable for embedding.
+    Слои, которые не добавляются в сцены автоматически. Они всегда рассматриваются как
+    :var:`липкие <config.sticky_layers>` и предназначены для использования с
+    отображаемым объектом :class:`Layer` для встраивания.
 
 .. var:: config.interface_layer = "screens"
 
-    The layer that built-in screens are shown on.
+    Слой, на котором отображаются встроенные экраны.
 
 .. var:: config.layer_clipping = { ... }
 
-    Controls layer clipping. This is a map from layer names to (x, y,
-    height, width) tuples, where x and y are the coordinates of the
-    upper-left corner of the layer, with height and width giving the
-    layer size.
+    Управляет обрезкой слоев. Словарь соответствия имен слоев кортежам (x, y, height, width),
+    где x и y — координаты верхнего левого угла слоя, а height и width — размеры слоя.
 
-    If a layer is not mentioned in config.layer_clipping, then it will
-    take up the full size of its container. Typically this will be the
-    screen, unless being shown inside a :class:`Layer` displayable.
+    Если слой не указан в config.layer_clipping, он занимает весь размер контейнера
+    (обычно экрана, если только он не отображается внутри объекта :class:`Layer`).
 
 .. var:: config.layer_transforms = { }
 
-    A dictionary mapping layer names to lists of transforms. These transforms
-    are applied last, after ``show layer``  and ``camera`` transforms have
-    already been applied.
+    Словарь соответствия имен слоев спискам трансформаций. Эти трансформации применяются
+    в последнюю очередь, после того как трансформации ``show layer`` и ``camera`` уже
+    были применены.
 
-    If the layer name is None, then the transforms are applied to the
-    combination of all layers in :var:`config.layers`, after any
-    transition has been applied.
+    Если имя слоя равно None, трансформации применяются ко всем слоям из :var:`config.layers`
+    вместе после завершения любого перехода.
 
 .. var:: config.layers = [ 'master', 'transient', 'screens', 'overlay', ... ]
 
-    This variable gives a list of all of the layers that Ren'Py knows
-    about, in the order that they will be displayed to the
-    screen. (The lowest layer is the first entry in the list.) Ren'Py
-    uses the layers "master", "transient", "screens", and "overlay"
-    internally (and possibly others in future versions), so they should
-    always be in this list.
+    Список всех слоев, известных Ren'Py, в порядке их отображения на экране (самый
+    нижний слой идет первым). Внутри движка Ren'Py использует слои "master", "transient",
+    "screens" и "overlay", поэтому они всегда должны присутствовать в этом списке.
 
-    The :func:`renpy.add_layer` can add layers to this variable without
-    needing to know the original contents.
+    Функция :func:`renpy.add_layer` позволяет добавлять слои в эту переменную без
+    необходимости знать исходное содержимое списка.
 
 .. var:: config.nvl_choice_layer = None
 
-    The layer the NVL choice screen is shown on. If None, the screen's
-    :scpref:`layer` property is used, defaulting to "screens".
-    This defaults to "screens" for games that declare compatibility with
-    Ren'Py 8.5 or earlier.
+    Слой, на котором отображается экран выбора NVL. Если None, используется свойство
+    :scpref:`layer` экрана, по умолчанию "screens". Для игр, заявляющих совместимость с
+    Ren'Py 8.5 или ранее, по умолчанию "screens".
 
 .. var:: config.overlay_layers = [ 'overlay', ... ]
 
-    This is a list of all of the overlay layers. Overlay layers are
-    cleared before the overlay functions are called. "overlay" should
-    always be in this list.
+    Список всех слоев оверлея. Слои оверлея очищаются перед вызовом функций оверлея.
+    Слой "overlay" всегда должен быть в этом списке.
 
 .. var:: config.say_layer = None
 
-    The layer the say screen is shown on. If None, the screen's
-    :scpref:`layer` property is used, defaulting to "screens".
-    The resulting layer should be in :var:`config.context_clear_layers`.
-    This defaults to "screens" for games that declare compatibility with
-    Ren'Py 8.5 or earlier.
+    Слой, на котором отображается экран say. Если None, используется свойство
+    :scpref:`layer` экрана, по умолчанию "screens". Результирующий слой должен быть
+    указан в :var:`config.context_clear_layers`. Для игр, заявляющих совместимость с
+    Ren'Py 8.5 или ранее, по умолчанию "screens".
 
 .. var:: config.sticky_layers = [ "master", ... ]
 
-    A list of layer names that will, when a tag is shown on them, take
-    precedence over that tag's entry in :var:`config.tag_layer` for the
-    duration of it being shown.
+    Список имен слоев, которые при отображении тега на них получают приоритет перед
+    записью этого тега в :var:`config.tag_layer` на все время его показа.
 
 .. var:: config.tag_layer = { }
 
-    A dictionary mapping image tag strings to layer name strings. When
-    an image is shown without a specific layer name, the image's tag is
-    looked up in this dictionary to get the layer to show it on. If the
-    tag is not found here, :var:`config.default_tag_layer` is used.
+    Словарь соответствия строк тегов изображений строкам имен слоев. Когда изображение
+    показывается без явного указания слоя, его тег ищется в этом словаре. Если тег не
+    найден, используется :var:`config.default_tag_layer`.
 
 .. var:: config.top_layers = [ "top", ... ]
 
-    This is a list of names of layers that are displayed above all
-    other layers, and do not participate in a transition that is
-    applied to all layers. If a layer name is listed here, it should
-    not be listed in :var:`config.layers` or :var:`config.bottom_layers`.
+    Список имен слоев, отображаемых поверх всех остальных слоев и не участвующих
+    в переходе, применяемом ко всем слоям. Если имя слоя указано здесь, его не
+    следует указывать в :var:`config.layers` или :var:`config.bottom_layers`.
 
 .. var:: config.transient_layers = [ 'transient', ... ]
 
-    This variable gives a list of all of the transient
-    layers. Transient layers are layers that are cleared after each
-    interaction. "transient" should always be in this list.
+    Список всех временных (transient) слоев. Временные слои очищаются после каждого
+    взаимодействия. Слой "transient" всегда должен быть в этом списке.
 
 
-Media (Music, Sound, and Video)
--------------------------------
+Медиа (музыка, звук и видео)
+----------------------------
 
 .. var:: config.audio_directories = [ 'audio' ]
 
-    A list of directories that are searched for audio files and used to populate the
-    :ref:`audio-namespace`.
+    Список каталогов, в которых выполняется поиск аудиофайлов для заполнения
+    пространства имен :ref:`audio-namespace`.
 
 .. var:: config.audio_filename_callback = None
 
-    If not None, this is a function that is called with an audio filename,
-    and is expected to return a second audio filename, the latter of which
-    will be played.
+    Если не ``None``, функция, вызываемая с именем аудиофайла и возвращающая
+    другое имя аудиофайла, которое будет воспроизведено.
 
-    This is intended for use when an a games has audio file formats changed,
-    but it's not desired to update the game script.
+    Предназначена для случаев, когда формат аудиофайлов в игре изменился, но нет
+    желания переписывать сценарий игры.
 
-    As video files are played using the audio subsystem, this is also called for video files.
+    Поскольку видеофайлы воспроизводятся через аудиоподсистему, этот колбэк вызывается
+    и для видеофайлов.
 
 .. var:: config.auto_channels = { "audio" : ( "sfx", "", ""  ), ... }
 
-    This is used to define automatic audio channels. It's a map the
-    channel name to a tuple containing 3 components:
+    Используется для определения автоматических аудиоканалов. Словарь, сопоставляющий
+    имя канала кортежу из 3 компонентов:
 
-    * The mixer the channel uses.
-    * A prefix that is given to files played on the channel.
-    * A suffix that is given to files played on the channel.
+    * Микшер, который использует канал.
+    * Префикс, добавляемый к файлам, воспроизводимым на канале.
+    * Суффикс, добавляемый к файлам, воспроизводимым на канале.
 
 .. var:: config.auto_movie_channel = True
 
-    If True, and the `play` argument is given to :func:`Movie`, an
-    audio channel name is automatically generated for each movie.
+    Если True и объекту :func:`Movie` передан аргумент `play`, имя аудиоканала
+    генерируется автоматически для каждого видео.
 
-    :var:`config.single_movie_channel` takes precedence over this
-    variable.
+    Переменная :var:`config.single_movie_channel` имеет приоритет перед этой
+    переменной.
 
 .. var:: config.context_fadein_music = 0
 
-    The amount of time in seconds Ren'Py spends fading in music when the music is
-    played due to a context change. (Usually, when the game is loaded.)
+    Время плавного появления музыки (fadein) в секундах при ее запуске из-за смены
+    контекста (обычно при загрузке игры).
 
 .. var:: config.context_fadeout_music = 0
 
-    The amount of time in seconds Ren'Py spends fading out music when the music is
-    played due to a context change. (Usually, when the game is loaded.)
+    Время плавного затухания музыки (fadeout) в секундах при ее смене из-за перехода
+    в другой контекст (обычно при загрузке игры).
 
 .. var:: config.enter_sound = None
 
-    If not None, this is a sound file that is played when entering the
-    game menu.
+    Если не ``None``, звуковой файл, воспроизводимый при входе в игровое меню.
 
 .. var:: config.exit_sound = None
 
-    If not None, this is a sound file that is played when exiting the
-    game menu.
+    Если не ``None``, звуковой файл, воспроизводимый при выходе из игрового меню.
 
 .. var:: config.fadeout_audio = 0.016
 
-    The default audio fadeout time that's used to fade out audio, when
-    audio is stopped with the ``stop`` statement or :func:`renpy.music.stop`,
-    or when a new audio track is started with the ``play`` statement or
-    :func:`renpy.music.play`. This is not used when queued audio begins.
+    Время затухания звука по умолчанию при его остановке оператором ``stop``
+    или функцией :func:`renpy.music.stop`, либо при старте новой дорожки оператором
+    ``play`` или :func:`renpy.music.play`. Не используется при начале воспроизведения
+    звука из очереди.
 
-    A short fadeout is the default to prevent clicks and pops when
-    audio is stopped or changed.
+    Короткое затухание по умолчанию предотвращает щелчки и треск при резкой остановке
+    или смене аудио.
 
 .. var:: config.game_menu_music = None
 
-    If not None, a music file to play when at the game menu.
+    Если не ``None``, музыкальный файл для воспроизведения в игровом меню.
 
 .. var:: config.has_music = True
 
-    If True, the "music" mixer is enabled. Audio channels will not be assigned the "music" mixer when this is False. The
-    default GUI will hide the music mixer if this is False. When this, config.has_sound, and config.has_voice are all
-    False, the default GUI will hide the main mixer as well.
+    Если True, микшер "music" включен. Если False, аудиоканалам не будет назначаться
+    микшер "music". Стандартный GUI скроет микшер музыки, если установлено False.
+    Когда эта переменная, config.has_sound и config.has_voice все равны False, стандартный
+    GUI скроет и главный микшер.
 
 .. var:: config.has_sound = True
 
-    If True, the "sfx" mixer is enabled. Audio channels will not be assigned the "sfx" mixer when this is False.
-    The default GUI will hide the sound mixer if this is False.
+    Если True, микшер "sfx" включен. Если False, аудиоканалам не будет назначаться
+    микшер "sfx". Стандартный GUI скроет микшер звуков, если установлено False.
 
 .. var:: config.has_voice = True
 
-    If True, the "voice" mixer is enabled. Ren'Py's voice statement and other voice-related functionality will be
-    disabled when this is False. Audio channels will not be assigned the "voice" mixer when this is False. The default
-    GUI will hide the voice mixer if this is False.
+    Если True, микшер "voice" включен. Если False, оператор ``voice`` и вся голосовая
+    функциональность Ren'Py отключаются. Аудиоканалам не будет назначаться микшер "voice".
+    Стандартный GUI скроет микшер голоса, если установлено False.
 
 .. var:: config.main_menu_music = None
 
-    If not None, a music file to play when at the main menu.
+    Если не ``None``, музыкальный файл для воспроизведения в главном меню.
 
 .. var:: config.main_menu_music_fadein = 0.0
 
-    The number of seconds to take to fade in :var:`config.main_menu_music`.
+    Количество секунд плавного нарастания громкости для :var:`config.main_menu_music`.
 
 .. var:: config.main_menu_stop_channels = [ "movie", "sound", "voice", ... ]
 
-    A list of channels that are stopped when entering or returning to the
-    main menu.
+    Список каналов, которые останавливаются при переходе или возврате в главное меню.
 
 .. var:: config.mipmap_movies = False
 
-    The default value of the mipmap argument to :func:`Movie`.
+    Значение по умолчанию для аргумента mipmap в :func:`Movie`.
 
-    This takes the same values as :var:`config.mipmap`.
+    Принимает те же значения, что и :var:`config.mipmap`.
 
 .. var:: config.movie_mixer = "music"
 
-    The mixer that is used when a :func:`Movie` automatically defines
-    a channel for video playback.
+    Микшер, используемый, когда :func:`Movie` автоматически создает канал для
+    воспроизведения видео.
 
 .. var:: config.play_channel = "audio"
 
-    The name of the audio channel used by :func:`renpy.play`,
-    :propref:`hover_sound`, and :propref:`activate_sound`.
+    Имя аудиоканала, используемого :func:`renpy.play`, :propref:`hover_sound`
+    и :propref:`activate_sound`.
 
 .. var:: config.preserve_volume_when_muted = True
 
-    If False, the volume of channels are shown as 0 and
-    changing it disables mute when the channel is mute.
-    If True, the default, it is shown and adjustable while keeping mute.
+    Если False, громкость каналов отображается как 0, а ее изменение отключает заглушение
+    звука. Если True (по умолчанию), уровень громкости отображается и регулируется с
+    сохранением состояния заглушения (mute).
 
 .. var:: config.single_movie_channel = None
 
-    If not None, and the `play` argument is give to :func:`Movie`,
-    this is the name used for the channel the movie is played on.
-    This should not be "movie", as that name is reserved for
-    Ren'Py's internal use.
+    Если не ``None`` и передан аргумент `play` объекту :func:`Movie`, задает имя
+    канала, на котором проигрывается видео. Не должно быть равно "movie", так как это
+    имя зарезервировано для внутренних нужд Ren'Py.
 
 .. var:: config.skip_sounds = False
 
-    If True, non-looping audio will not be played when Ren'Py is
-    skipping.
+    Если True, незацикленные звуки не воспроизводятся при быстром пропуске игры.
 
 .. var:: config.sound = True
 
-    If True, sound works. If False, the sound/mixer subsystem is
-    completely disabled.
+    Если True, звук включен. Если False, подсистема звука и микшеров полностью
+    отключена.
 
 .. var:: config.sound_sample_rate = 48000
 
-    The sample rate that the sound card will be run at. If all of your
-    wav files are of a lower rate, changing this to that rate may make
-    things more efficient.
+    Частота дискретизации звуковой карты. Если все ваши файлы записаны с более
+    низкой частотой, указание этой частоты может повысить производительность.
 
 .. var:: config.web_unload_music = None
 
-    If not None, this should be an number of seconds. Music downloaded as part of
-    :ref:`progressive downloading <progressive-downloading>` will be unloaded after this number of seconds.
+    Если не ``None``, число секунд. Музыка, загруженная в рамках :ref:`прогрессивной загрузки <progressive-downloading>`,
+    выгружается из памяти по истечении указанного количества секунд.
 
 .. var:: config.web_video_base = "./game"
 
-    When playing a movie in the web browser, this is a URL that
-    is appended to the movie filename to get the full URL
-    to play the movie from. It can include directories in it, so
-    "https://share.renpy.org/movies-for-mygame" would also be fine.
+    При воспроизведении видео в веб-браузере этот URL добавляется перед именем файла видео
+    для получения полного адреса воспроизведения. Может содержать пути к каталогам
+    (например, "https://share.renpy.org/movies-for-mygame").
 
-    This allows large movie files to be hosted on a different server
-    than the rest of the game.
+    Это позволяет размещать тяжелые видеофайлы на отдельном сервере.
 
 .. var:: config.webaudio_required_types = [ "audio/ogg", "audio/mpeg", ... ]
 
-    When running on the web platform, Ren'Py will check the browser to
-    see if it can play audio files of these mime types. If the browser
-    can, it is used to play the files. If not, a slower and potentially skip
-    prone wasm decoder is used.
+    При работе на веб-платформе Ren'Py проверяет, поддерживает ли браузер эти MIME-типы.
+    Если поддерживает, браузер используется для прямого воспроизведения. В противном
+    случае используется более медленный декодер WebAssembly (Wasm).
 
-    By default, the browser's web audio system is used on Chrome and Firefox,
-    and wasm is used on safari. If your game only uses mp3 audio, this can
-    be changed using ::
+    По умолчанию Web Audio используется в Chrome и Firefox, а Wasm — в Safari. Если
+    игра использует только аудио mp3, можно указать::
 
         define config.webaudio_required_types = [ "audio/mpeg" ]
 
-    To used the faster web audio system on Safari as well.
+    чтобы задействовать быстрый движок Web Audio и в браузере Safari.
 
 
-Mouse
------
+Курсор мыши
+-----------
 
 .. var:: config.mouse = None
 
-    This variable controls the use of user-defined mouse cursors. If
-    None, the system mouse is used, which is usually a black-and-white
-    mouse cursor.
+    Управляет пользовательскими курсорами мыши. Если ``None``, используется системный
+    курсор мыши.
 
-    Otherwise, this should be a dictionary giving the
-    mouse animations for various mouse types. Keys used by the default
-    library include ``default``, ``say``, ``with``, ``menu``, ``prompt``,
-    ``imagemap``, ``button``, ``pause``, ``mainmenu``, and
-    ``gamemenu``. The ``default`` key should always be present, as it is
-    used when a more specific key is absent. Keys can have an optional
-    prefix ``pressed_`` to indicate that the cursor will be used when the
-    mouse is pressed.
+    В противном случае задается словарь кадров анимации для различных состояний курсора.
+    Ключи, используемые стандартной библиотекой: ``default``, ``say``, ``with``, ``menu``,
+    ``prompt``, ``imagemap``, ``button``, ``pause``, ``mainmenu`` и ``gamemenu``.
+    Ключ ``default`` должен присутствовать всегда, так как он используется при отсутствии
+    более конкретного ключа. Ключи могут иметь префикс ``pressed_`` для обозначения вида
+    курсора при зажатой кнопке мыши.
 
-    Each value in the dictionary should be a list of (`image`,
-    `xoffset`, `yoffset`) tuples, representing frames.
+    Каждое значение в словаре представляет собой список кортежей (`image`, `xoffset`, `yoffset`),
+    задающих кадры анимации:
 
     `image`
-        The mouse cursor image. The maximum size for this image
-        varies based on the player's hardware. 32x32 is guaranteed
-        to work everywhere, while 64x64 works on most hardware. Larger
-        images may not work.
+        Изображение курсора. Максимальный размер зависит от оборудования: 32x32 гарантированно
+        работает везде, 64x64 — на большинстве систем.
 
     `xoffset`
-        The offset of the hotspot pixel from the left side of the
-        cursor.
+        Смещение активной точки (hotspot) курсора от левого края.
 
     `yoffset`
-        The offset of the hotspot pixel from the top of the cursor.
+        Смещение активной точки (hotspot) курсора от верхнего края.
 
-    The frames are played back at 20Hz, and the animation loops after
-    all frames have been shown.
-
-    See :doc:`mouse` for more information and examples.
+    Кадры сменяются с частотой 20 Гц, анимация зацикливается.
+    Подробнее см. :doc:`mouse`.
 
 .. var:: config.mouse_displayable = None
 
-    If not None, this should either be a displayable, or a callable that
-    returns a displayable. The callable may return None, in which case
-    Ren'Py proceeds if the displayable is None.
+    Если не ``None``, отображаемый объект или вызываемый объект, возвращающий
+    отображаемый объект (или None).
 
-    If a displayable is given, the mouse cursor is hidden, and the
-    displayable is shown above anything else. This displayable is
-    responsible for positioning and drawing a synthetic mouse
-    cursor, and so should probably be a :func:`MouseDisplayable`
-    or something very similar.
-
-    See :doc:`mouse` for more information.
+    Если задан отображаемый объект, системный курсор мыши скрывается, а этот объект
+    отображается поверх всего остального. Объект отвечает за позиционирование и отрисовку
+    курсора (например, :func:`MouseDisplayable`).
+    Подробнее см. :doc:`mouse`.
 
 .. var:: config.mouse_focus_clickthrough = False
 
-    If True, clicks that cause a window to be focused will be processed
-    normally. If False, such clicks will be ignored.
+    Если True, клик, приводящий к получению окном фокуса, обрабатывается как обычный клик.
+    Если False, такой клик игнорируется.
 
 .. var:: config.mouse_hide_time = 30
 
-    The mouse is hidden after this number of seconds has elapsed
-    without any mouse input. This should be set to longer than the
-    expected time it will take to read a single screen, so mouse users
-    will not experience the mouse appearing then disappearing between
-    clicks.
+    Курсор мыши скрывается после указанного количества секунд бездействия. Рекомендуется
+    устанавливать значение больше времени чтения одного экрана диалога, чтобы курсор
+    не исчезал между кликами.
 
-    If None, the mouse will never be hidden.
+    Если ``None``, курсор мыши никогда не скрывается.
 
 
-Paths
------
+Пути
+----
 
 .. var:: config.archives = [ ... ]
 
-    A list of archive files that will be searched for images and other
-    data. The entries in this should consist of strings giving the
-    base names of archive files, without the .rpa extension.
+    Список архивов, в которых будет производиться поиск изображений и других данных.
+    Элементы представляют собой строки с базовыми именами архивов без расширения .rpa.
 
-    The archives are searched in the order they are found in this list.
-    A file is taken from the first archive it is found in.
+    Архивы просматриваются в порядке их перечисления. Файл извлекается из первого архива,
+    в котором он найден.
 
-    At startup, Ren'Py will automatically populate this variable with
-    the names of all archives found in the game directory, sorted in
-    reverse ascii order. For example, if Ren'Py finds the files
-    :file:`data.rpa`, :file:`patch01.rpa`, and :file:`patch02.rpa`,
-    this variable will be populated with ``['patch02', 'patch01', 'data']``.
+    При запуске Ren'Py автоматически заполняет этот список всеми архивами, найденными в
+    папке `game/`, отсортированными в обратном алфавитном порядке (например,
+    ``['patch02', 'patch01', 'data']``).
 
 .. var:: config.basedir = ...
 
-    The full path leading to the game's base directory. This is a read-only
-    variable. This is usually the directory above the :file:`game/` directory. It contains logs like :file:`log.txt`
-    and on PC plaforms contains the executable used to launch the game. There is no guarantee any file will be there,
-    as on Android files are stored inside the package.
+    Полный путь к базовому каталогу игры (только для чтения). Обычно это папка на уровень
+    выше каталога :file:`game/`. В ней находятся логи вроде :file:`log.txt` и исполняемые
+    файлы для запуска игры на ПК. Не гарантируется наличие файлов на Android, так как там
+    они упакованы внутри APK.
 
 .. var:: config.gamedir = ...
 
-    The full path leading to the game's :file:`game/` directory. This is a
-    read-only variable. There is no guarantee that any file will be there, as on
-    Android files are stored inside the package.
+    Полный путь к каталогу :file:`game/` (только для чтения). Не гарантируется наличие
+    файлов на Android, так как там они упакованы внутри APK.
 
 .. var:: config.savedir = ...
 
-    The complete path to the directory in which the game is
-    saved. This should only be set in a ``python early`` block. See also
-    :var:`config.save_directory`, which generates the default value for this
-    if it is not set during a ``python early`` block.
+    Полный путь к каталогу сохранений игры. Задается только в блоке ``python early``.
+    См. также :var:`config.save_directory`, формирующую значение по умолчанию, если оно
+    не задано явно.
 
 .. var:: config.search_prefixes = [ "", ... ]
 
-    A list of prefixes that are prepended to filenames that are loaded. This
-    is only used when a file is loaded or checked for being loadable. It does
-    not affect scans of files used to automatically define images or namespace
-    variables.
+    Список префиксов, добавляемых в начало имен загружаемых файлов. Используется только при
+    загрузке файлов или проверке возможности загрузки. Не влияет на автоматическое
+    определение изображений или переменных пространств имен.
 
-.. config.searchpath was formerly documented.
 
-Quit
-----
+Выход
+-----
 
 .. var:: config.quit_action : Action
-
-    The action that is called when the user clicks the quit button on
-    a window. The default action prompts the user to see if they want
-    to quit the game.
+    
+    Действие, выполняемое при нажатии пользователем кнопки закрытия окна. Действие
+    по умолчанию запрашивает подтверждение выхода из игры.
 
 .. var:: config.quit_callbacks = [ ... ]
 
-    A list of functions that are called without any arguments when
-    Ren'Py is either terminating or reloading the script. This is
-    intended to free resources, such as opened files or started threads,
-    that are created inside init code, if such things aren't freed
-    automatically.
+    Список функций, вызываемых без аргументов при завершении работы Ren'Py или
+    перезагрузке сценария. Предназначен для освобождения ресурсов (открытых файлов,
+    запущенных потоков), созданных в блоках инициализации.
 
 .. var:: config.quit_on_mobile_background = False
 
-    If True, the mobile app will quit when it loses focus, rather than
-    saving and restoring its state. (See also :var:`config.save_on_mobile_background`,
-    which controls this behavior.)
+    Если True, мобильное приложение завершит работу при потере фокуса вместо сохранения
+    и восстановления своего состояния (см. также :var:`config.save_on_mobile_background`).
 
 
-Replay
-------
+Повтор сцен (Replay)
+--------------------
 
 .. var:: config.after_replay_callback = None
 
-    If not None, a function that is called with no arguments after a
-    replay completes.
+    Если не ``None``, функция, вызываемая без аргументов после завершения повтора сцены.
 
 .. var:: config.replay_scope = { "_game_menu_screen" : "preferences", ... }
 
-    A dictionary mapping variables in the default store to the values
-    the variables will be given when entering a replay.
+    Словарь соответствия переменных хранилища по умолчанию значениям, которые они
+    получат при входе в режим повтора.
 
 
-Rollback
---------
+Откат (Rollback)
+----------------
 
 .. var:: config.call_screen_roll_forward = False
 
-    The value is used when the `roll_forward` property of
-    a screen is None.
+    Значение, используемое, когда свойство `roll_forward` экрана равно None.
 
 .. var:: config.ex_rollback_classes = [ ]
 
-    A list of class objects that should not generate a warning that
-    the object supported rollback in the past, but do not now. If you
-    have intentionally removed rollback support from a class, place
-    the class object in this list and the warning will be suppressed.
+    Список классов, для которых не должно выводиться предупреждение о том, что объект
+    ранее поддерживал откат, а теперь нет. Если вы намеренно убрали поддержку отката из
+    класса, добавьте его в этот список для подавления предупреждения.
 
-    Chances are, you don't want to use this - you want to add ``object``
-    to the list of base types for your class.
+    В большинстве случаев вместо этого достаточно добавить ``object`` в список базовых
+    типов вашего класса.
 
 .. var:: config.fix_rollback_without_choice = False
 
-    This option determines how the built-in menus or imagemaps behave
-    during fixed rollback. The default value is False, which means that
-    only the previously selected menu option remains clickable. If set
-    to True, the selected option is marked but no options are clickable.
-    The user can progress forward through the rollback buffer by
-    clicking.
+    Определяет поведение встроенных меню и imagemap при зафиксированном откате (fixed rollback).
+    По умолчанию False (только ранее выбранный пункт меню остается кликабельным).
+    Если True, выбранный пункт отмечается, но ни один пункт не кликабелен; игрок продвигается
+    вперед по буферу отката простым кликом мыши.
 
 .. var:: config.hard_rollback_limit = 100
 
-    This is the number of steps that Ren'Py will let the user
-    interactively rollback. Set this to 0 to disable rollback
-    entirely, although we don't recommend that, as rollback is useful
-    to let the user see text he skipped by mistake.
+    Максимальное количество шагов интерактивного отката назад. При значении 0 откат
+    полностью отключается (что не рекомендуется, так как откат полезен игрокам для
+    прочтения случайно пропущенного текста).
 
 .. var:: config.pause_after_rollback = False
 
-    If False, the default, rolling back will skip any pauses (timed or
-    not) and stop only at other interactions such as dialogues, menus...
-    If True, Ren'Py will include timeless pauses to the valid places a
-    rollback can take the user.
+    Если False (по умолчанию), при откате назад любые паузы (с таймером или без) пропускаются,
+    и откат останавливается только на других взаимодействиях (диалогах, меню...). Если True,
+    паузы без таймера включаются в список допустимых мест остановки при откате.
 
 .. var:: config.rollback_enabled = True
 
-    Should the user be allowed to rollback the game? If set to False,
-    the user cannot interactively rollback.
+    Разрешен ли откат назад игроку? Если False, игрок не может выполнять интерактивный откат.
 
 .. var:: config.rollback_length = 128
 
-    When there are more than this many statements in the rollback log,
-    Ren'Py will consider trimming the log. This also covers how many
-    steps Ren'Py will rollback when trying to load a save when the script
-    has changed.
+    Количество операторов в журнале отката, после превышения которого Ren'Py начинает
+    сокращать журнал. Также определяет максимальную глубину отката при попытке загрузить
+    сохранение с изменившимся скриптом.
 
-    Decreasing this below the default value may cause Ren'Py to become
-    unstable.
+    Уменьшение этого значения ниже значения по умолчанию может привести к нестабильности.
 
 .. var:: config.rollback_side_size = .2
 
-    If the rollback side is enabled, the fraction of the screen on the
-    rollback side that, when clicked or touched, causes a rollback to
-    occur.
+    Доля ширины экрана на стороне отката, клик или касание которой вызывают откат назад
+    (если включена соответствующая настройка).
 
 
-Saving and Loading
-------------------
+Сохранение и загрузка
+---------------------
 
 .. var:: config.after_load_callbacks = [ ... ]
 
-    A list of functions that are called (with no arguments) after a load
-    occurs.
+    Список функций, вызываемых без аргументов после завершения загрузки сохранения.
 
-    If these callbacks change data (for example, migrating data from an
-    old version of the game), :func:`renpy.block_rollback` should be
-    called to prevent the player from rolling back and reverting
-    the changes.
+    Если эти функции изменяют данные (например, мигрируют структуры старой версии),
+    следует вызвать :func:`renpy.block_rollback`, чтобы игрок не мог откатиться назад
+    и отменить внесенные изменения.
 
 .. var:: config.auto_load = None
 
-    If not None, the name of a save file to automatically load when
-    Ren'Py starts up. This is intended for developer use, rather than
-    for end users. Setting this to "1" will automatically load the
-    game in save slot 1.
+    Если не ``None``, имя файла сохранения для автоматической загрузки при старте Ren'Py.
+    Используется разработчиками (значение "1" автоматически загрузит слот 1).
 
 .. var:: config.autosave_callback = None
 
-    A callback or list of callbacks or Actions that will be called after
-    each time a background autosave happens. Although actions may be used,
-    the Return action will not function.
+    Колбэк, список колбэков или Действие (Action), выполняемое после каждого фонового
+    автосохранения. Хотя действия поддерживаются, действие Return работать не будет.
 
-    If a non-Action callback shows a displayable or screen,
-    :func:`renpy.restart_interaction` should be called.
+    Если колбэк отображает экран или объект, следует вызвать :func:`renpy.restart_interaction`.
 
     ::
-        define config.autosave_callback = Notify("Autosaved.")
+        define config.autosave_callback = Notify("Игра автосохранена.")
 
 .. var:: config.autosave_frequency = 200
 
-    Roughly, the number of interactions that will occur before an
-    autosave occurs. To disable autosaving, set :var:`config.has_autosave` to
-    False, don't change this variable.
+    Примерное количество взаимодействий между автосохранениями. Чтобы полностью отключить
+    автосохранение, установите :var:`config.has_autosave` в False, не меняя эту переменную.
 
 .. var:: config.autosave_on_choice = True
 
-    If True, Ren'Py will autosave upon encountering an in-game choice.
-    (When :func:`renpy.choice_for_skipping` is called.)
+    Если True, Ren'Py выполняет автосохранение перед каждым выбором в меню
+    (при вызове :func:`renpy.choice_for_skipping`).
 
 .. var:: config.autosave_on_input = True
 
-    If True, Ren'Py will autosave when the user inputs text.
-    (When :func:`renpy.input` is called.)
+    Если True, Ren'Py выполняет автосохранение при вводе текста игроком (при вызове :func:`renpy.input`).
 
 .. var:: config.autosave_on_quit = True
 
-    If True, Ren'Py will attempt to autosave when the user attempts to quit,
-    return to the main menu, or load a game over the existing game. (To
-    save time, the autosave occurs while the user is being prompted to confirm
-    his or her decision.)
+    Если True, Ren'Py пытается выполнить автосохранение при попытке выхода из игры,
+    возврата в главное меню или загрузки сохранения поверх текущей игры (автосохранение
+    происходит в фоновом режиме, пока игрок видит окно подтверждения).
 
 .. var:: config.autosave_prefix_callback = None
 
-    If not None, this is a function that is called with no arguments, and
-    return the prefix of autosave files. The default prefix used is "auto-",
-    which means the autosave slots will be "auto-1", "auto-2", etc.
+    Если не ``None``, функция, вызываемая без аргументов и возвращающая префикс файлов
+    автосохранения. По умолчанию префикс "auto-", поэтому слоты именуются "auto-1", "auto-2" и т. д.
 
 .. var:: config.autosave_slots = 10
 
-    The number of slots used by autosaves.
+    Количество слотов, используемых для автосохранений.
 
 .. var:: config.before_load_callbacks = [ ... ]
 
-    A list of functions that are called (with no arguments) before a load
-    occurs.
+    Список функций, вызываемых без аргументов непосредственно перед выполнением загрузки.
 
-    This can stop or change music before the load happens, but state changes
-    will be forgotten when the load occurs.
+    Позволяет остановить или изменить музыку перед загрузкой (изменения состояния переменных
+    будут перезаписаны загружаемым сохранением).
 
 .. var:: config.file_slotname_callback = None
 
-    If not None, this is a function that is used by the :ref:`file actions <file-actions>`
-    to convert a page and name into a slot name that can be passed to
-    the :ref:`save functions <save-functions>`.
+    Если не ``None``, функция, используемая :ref:`действиями с файлами <file-actions>` для
+    преобразования страницы и имени слота в имя слота для передачи в :ref:`функции сохранения <save-functions>`.
 
     `page`
-        This is a string containing the name of the page that is being
-        accessed. This is a string, usually containing a number, but it
-        also may contain special values like "quick" or "auto".
+        Строка с именем страницы (номер либо специальные имена "quick", "auto").
 
     `name`
-        The is a string that contains the name of the slot on the page.
-        It may also contain a regular expression pattern
-        (like r'\d+'), in which case the same pattern should be included
-        in the result.
+        Строка с именем слота на странице (может содержать шаблон регулярного выражения).
 
-    The default behavior is equivalent to::
+    Поведение по умолчанию эквивалентно::
 
         def file_slotname_callback(page, name):
             return page + "-" + name
 
         config.file_slotname_callback = file_slotname_callback
 
-    One use of this is to allow the game to apply a prefix to
-    save files.
-
-    See also :var:`config.autosave_prefix_callback`.
+    См. также :var:`config.autosave_prefix_callback`.
 
 .. var:: config.has_autosave = True
 
-    If True, the game will autosave. If False, no autosaving will
-    occur.
+    Если True, игра выполняет автосохранения. Если False, автосохранение отключено.
 
 .. var:: config.keep_screenshot_entering_menu = False
 
-    If True, a screenshot taken with :class:`FileTakeScreenshot` will be kept
-    when entering the game menu. When False, a new screenshot will be taken
-    just before menu entry.
+    Если True, снимок экрана, сделанный действием :class:`FileTakeScreenshot`, сохраняется
+    при входе в игровое меню. Если False, новый снимок делается непосредственно перед
+    входом в меню.
 
 .. var:: config.load_failed_label = None
 
-    If a string, this is a label that is jumped to when a load fails because
-    the script has changed so much that Ren'Py can't recover.
-    Before performing the load, Ren'Py will revert to the start of the
-    last statement, then it will clear the call stack.
+    Строка с именем метки, на которую выполняется переход jump, если загрузка не удалась
+    из-за существенных изменений в скрипте. Перед выполнением перехода Ren'Py откатится к
+    началу последнего оператора и очистит стек вызовов.
 
-    This may also be a function. If it is, the function is called with
-    no arguments, and is expected to return a string giving the label.
+    Может также являться функцией, возвращающей имя метки.
 
 .. var:: config.loadable_callback = None
 
-    When not None, a function that's called with a filename. It should return
-    True if the file is loadable, and False if not. This can be used with
-    :var:`config.file_open_callback` or :var:`config.missing_image_callback`.
+    Если не ``None``, функция, принимающая имя файла и возвращающая True, если файл доступен
+    для загрузки, и False в противном случае. Используется в связке с
+    :var:`config.file_open_callback` или :var:`config.missing_image_callback`.
 
 .. var:: config.persistent_callback = None
 
-    When not None, a function that's called with a persistent store whenever
-    a persistent save file is loaded. It should make any alterations in-place.
+    Если не ``None``, функция, вызываемая с хранилищем постоянных данных (persistent) при
+    загрузке постоянного файла сохранения. Должна изменять данные на месте (in-place).
 
-    This must be set with either the define statement, or inside a ``python
-    early`` block. It should only reference other things typically available
-    to ``python early`` blocks.
+    Задается оператором define или внутри блока ``python early``.
 
-    The callback can make use of :var:`persistent._version` to determine when
-    the data was originated and, if managed properly, when it was last
-    migrated. A value of None implies that the data predates this feature being
-    added in Ren'Py 8.4.
-
-    A extremely basic callback may look something like::
+    Колбэк может использовать :var:`persistent._version` для проверки версии данных и
+    их миграции. Значение None означает, что данные созданы до появления этой функции в Ren'Py 8.4::
 
         def migrate_persistent(data):
             if data._version is None:
-                # Update values in data to be suitable for current version.
+                # Обновление данных для текущей версии
                 ...
-
-                # Update originating version.
                 data._version = config.version
 
 .. var:: config.quicksave_slots = 10
 
-    The number of slots used by quicksaves.
+    Количество слотов для быстрых сохранений (quicksave).
 
 .. var:: config.save = True
 
-    If True, Ren'Py will allow the user to save the game. If False,
-    Ren'Py will not allow the user to save the game, and will not show
-    existing saves.
+    Если True, сохранение игры разрешено. Если False, сохранение запрещено, а существующие
+    сохранения не отображаются.
 
 .. var:: config.save_directory = "..."
 
-    This is used to generate the directory in which games and
-    persistent information are saved. The name generated depends on
-    the platform:
+    Используется для генерации каталога, в котором сохраняются файлы игры и постоянные данные.
+    Путь зависит от платформы:
 
     Windows
         %APPDATA%/RenPy/`save_directory`
@@ -1323,50 +1185,33 @@ Saving and Loading
     Mac OS X
         ~/Library/RenPy/`save_directory`
 
-    Linux/Other
+    Linux/Прочие
         ~/.renpy/`save_directory`
 
-    Setting this to None creates a "saves" directory underneath the
-    game directory. This is not recommended, as it prevents the game
-    from being shared between multiple users on a system. It can also
-    lead to problems when a game is installed as Administrator, but run
-    as a user.
+    Установка в None создает папку "saves" внутри каталога game. Это не рекомендуется, так как
+    мешает разделению данных между пользователями системы.
 
-    This must be set with either the define statement, or in a ``python
-    early`` block. In either case, this will be run before any other
-    statement, and so it should be set to a string, not an expression.
-
-    To locate the save directory, read :var:`config.savedir` instead of
-    this variable.
+    Задается оператором define или в блоке ``python early`` в виде строкового литерала.
+    Для чтения реального пути используйте :var:`config.savedir`.
 
 .. var:: config.save_dump = False
 
-    If set to True, Ren'Py will create the file save_dump.txt whenever it
-    saves a game. This file contains information about the objects contained
-    in the save file. Each line consists of a relative size estimate, the path
-    to the object, information about if the object is an alias, and a
-    representation of the object.
+    Если True, Ren'Py создает файл `save_dump.txt` при каждом сохранении игры. Файл
+    содержит подробную информацию о размерах и структуре сохраняемых объектов.
 
 .. var:: config.failed_save_dump = True
 
-    Similar to :var:`config.save_dump`, but only triggers when the save fails.
+    Аналогично :var:`config.save_dump`, но срабатывает только при сбое сохранения.
 
 .. var:: config.save_json_callbacks = [ ... ]
 
-    A list of callback functions that are used to create the json object
-    that is stored with each save and marked accessible through :func:`FileJson`
-    and :func:`renpy.slot_json`.
+    Список колбэков, формирующих JSON-объект, сохраняемый с каждым слотом и доступный
+    через :func:`FileJson` и :func:`renpy.slot_json`.
 
-    Each callback is called with a Python dictionary that will eventually be
-    saved. Callbacks should modify that dictionary by adding JSON-compatible
-    Python types, such as numbers, strings, lists, and dicts. The dictionary
-    at the end of the last callback is then saved as part of the save slot.
-
-    The dictionary passed to the callbacks may have already have keys
-    beginning with an underscore ``_``. These keys are used by Ren'Py,
-    and should not be changed.
-
-    For example::
+    Каждый колбэк принимает словарь Python, который будет сохранен. Колбэки дополняют
+    словарь JSON-совместимыми типами (числа, строки, списки, словари). В словаре могут
+    присутствовать системные ключи, начинающиеся с подчеркивания ``_``, которые нельзя
+    изменять::
 
         init python:
             def jsoncallback(d):
@@ -1374,538 +1219,364 @@ Saving and Loading
 
             config.save_json_callbacks.append(jsoncallback)
 
-    ``FileJson(slot)`` and ``renpy.slot_json(slot)`` will recover the state
-    of the ``d`` dict-like object as it was at the moment the game was saved.
-    The value of the ``player_name`` variable at the moment the game was saved
-    is also accessible by ``FileJson(slot, "playername")``.
-
 .. var:: config.save_on_mobile_background = True
 
-    If True, the mobile app will save its state when it loses focus. The state
-    is saved in a way that allows it to be automatically loaded (and the game
-    to resume its place) when the app starts again.
+    Если True, мобильное приложение автоматически сохраняет свое состояние при сворачивании
+    или потере фокуса для бесшовного возобновления при следующем запуске.
 
 .. var:: config.save_persistent = True
 
-    If True, Ren'Py will save persistent data. If False,
-    persistent data will not be saved, and changes to persistent will be
-    lost when the game ends.
+    Если True, постоянные данные (persistent) сохраняются. Если False, изменения постоянных
+    данных теряются при выходе из игры.
 
 .. var:: config.save_physical_size = True
 
-    If True, the physical size of the window will be saved in the
-    preferences, and restored when the game resumes.
+    Если True, физический размер окна сохраняется в настройках и восстанавливается при
+    следующем запуске.
 
 .. var:: config.save_token_keys = [ ]
 
-    A list of keys that the game will trust when loading a save file. This can
-    be used to allow the game's creator to distribute save files that will
-    be loaded without displaying a warning.
-
-    To allow the save token for the current computer to be trusted in this
-    way, open the :ref:`console <console>` and run::
+    Список ключей, которым игра доверяет при загрузке файлов сохранений. Позволяет
+    распространять сохранения без вывода предупреждений безопасности. Для получения ключа
+    текущего компьютера выполните в консоли::
 
         print(renpy.get_save_token_keys())
 
-    This will print the keys out in log.txt. The value can then be used to
-    define this config.save_token_keys. This variable must be set with a define
-    statement, or in a python early block.
-
 .. var:: config.thumbnail_height = 75
 
-    The height of the thumbnails that are taken when the game is
-    saved. These thumbnails are shown when the game is loaded. Please
-    note that the thumbnail is shown at the size it was taken at,
-    rather than the value of this setting when the thumbnail is shown
-    to the user.
-
-    This is changed by the default GUI.
+    Высота скриншотов-миниатюр, создаваемых при сохранении игры (в пикселях).
 
 .. var:: config.thumbnail_width = 100
 
-    The width of the thumbnails that are taken when the game is
-    saved. These thumbnails are shown when the game is loaded. Please
-    note that the thumbnail is shown at the size it was taken at,
-    rather than the value of this setting when the thumbnail is shown
-    to the user.
-
-    This is changed by the default GUI.
+    Ширина скриншотов-миниатюр, создаваемых при сохранении игры (в пикселях).
 
 
-Screen Language
----------------
+Язык экранов (Screen Language)
+------------------------------
 
 .. var:: config.always_shown_screens = [ ... ]
 
-    A list of names of screens that Ren'Py will always show, even in menus,
-    and when the interface is hidden. If a screen in this list is ever not
-    shown, that screen will be re-shown. This is used by Ren'Py, which may modify the list.
-
-    Setting :var:`config.overlay_screens` is usually more appropriate.
+    Список имен экранов, которые Ren'Py показывает всегда, даже в меню и при скрытии интерфейса.
+    Обычно для пользовательских экранов предпочтительнее использовать :var:`config.overlay_screens`.
 
 .. var:: config.context_copy_remove_screens = [ 'notify', ... ]
 
-    Contains a list of screens that are removed when a context is copied
-    for rollback or saving.
+    Список экранов, удаляемых при копировании контекста для отката или сохранения.
 
 .. var:: config.game_menu_action = None
 
-    If not None, this is an Action that is run when the user asks to enter the game
-    menu. This does not automatically start a new context - it's up to the action to do that.
+    Если не ``None``, Действие (Action), выполняемое при вызове игрового меню. Оно не
+    создает новый контекст автоматически — действие должно сделать это самостоятельно.
 
 .. var:: config.help = None
 
-    The default value for the :func:`Help` action.
+    Значение по умолчанию для действия :func:`Help`.
 
 .. var:: config.help_screen = "help"
 
-    The name of the screen shown by pressing f1 on the keyboard, or by
-    the :func:`Help` action under certain circumstances.
+    Имя экрана, отображаемого при нажатии клавиши F1 или при вызове действия :func:`Help`.
 
 .. var:: config.imagemap_auto_function : Callable
 
-    A function that expands the `auto` property of a screen language
-    :ref:`imagebutton <sl-imagebutton>` or :ref:`imagemap <sl-imagemap>`
-    statement into a displayable. It takes the value of the auto property,
-    and the desired image, one of: "insensitive", "idle", "hover",
-    "selected_idle", "selected_hover", or "ground". It should return a
-    displayable or None.
-
-    The default implementation formats the `auto` property with
-    the desired image, and then checks if the computed filename exists.
+    Функция, раскрывающая свойство `auto` операторов :ref:`imagebutton <sl-imagebutton>`
+    или :ref:`imagemap <sl-imagemap>` языка экранов в отображаемый объект. Принимает значение
+    свойства auto и имя требуемого состояния ("insensitive", "idle", "hover", "selected_idle",
+    "selected_hover" или "ground"). Должна возвращать отображаемый объект или None.
 
 .. var:: config.keep_side_render_order = True
 
-    If True, the order of substrings in the Side positions will be
-    determine the order of children render.
+    Если True, порядок подстрок в позициях Side определяет порядок отрисовки дочерних объектов.
 
 .. var:: config.menu_clear_layers = [ ... ]
 
-    A list of layer names (as strings) that are cleared when entering
-    the game menu.
+    Список имен слоев (в виде строк), очищаемых при входе в игровое меню.
 
 .. var:: config.notify : Callable
 
-    This is called by :func:`renpy.notify` or :func:`Notify` with a
-    single `message` argument, to display the notification. The default
-    implementation is :func:`renpy.display_notify`. This is intended
-    to allow creators to intercept notifications.
+    Вызывается функцией :func:`renpy.notify` или действием :func:`Notify` с аргументом
+    `message` для отображения уведомления. По умолчанию используется :func:`renpy.display_notify`.
+    Позволяет разработчикам перехватывать уведомления.
 
 .. var:: config.overlay_screens = [ ... ]
 
-    A list of screens that are displayed when the overlay is enabled,
-    and hidden when the overlay is suppressed. (The screens are shown
-    on the screens layer, not the overlay layer.)
+    Список экранов, отображаемых при включенном оверлее и скрываемых при его подавлении
+    (отображаются на слое screens, а не на слое overlay).
 
 .. var:: config.per_frame_screens = [ ... ]
 
-    This is a list of strings giving the name of screens that are updated
-    once per frame, rather than once per interaction. Ren'Py uses this internally,
-    so if you add a screen, append the name rather than replacing the list in
-    its entirety.
+    Список имен экранов, обновляемых один раз за кадр, а не один раз за взаимодействие.
+    Ren'Py использует этот список внутри движка, поэтому пользовательские экраны следует
+    добавлять в конец списка.
 
 .. var:: config.transition_screens = True
 
-    If True, screens will participate in transitions, dissolving from the
-    old state of the screen to the new state of the screen. If False, only
-    the latest state of the screen will be shown.
+    Если True, экраны участвуют в переходах, плавно растворяясь из старого состояния в новое.
+    Если False, показывается только последнее состояние экрана.
 
 .. var:: config.variants = [ ... ]
 
-    A list of screen variants that are searched when choosing a screen to
-    display to the user. This should always end with None, to ensure
-    that the default screens are chosen. See :ref:`screen-variants`.
+    Список вариантов экранов, опрашиваемых при выборе подходящего экрана для пользователя.
+    Всегда должен оканчиваться значением None для возврата к экранам по умолчанию.
+    См. :ref:`screen-variants`.
 
 
-Screenshots
------------
+Скриншоты
+---------
 
 .. var:: config.pre_screenshot_actions = [ Hide("notify", immediately=True), ... ]
 
-    A list of actions that are run before a screenshot is taken. This
-    is intended to hide transient elements that should not be shown in the
-    screenshot.
+    Список действий, выполняемых перед снятием скриншота. Предназначен для скрытия
+    временных элементов интерфейса (например, уведомлений).
 
 .. var:: config.screenshot_callback : Callable
 
-    A function that is called when a screenshot is taken. The function
-    is called with a single parameter, the full filename the screenshot
-    was saved as.
+    Функция, вызываемая после сохранения скриншота. Принимает один аргумент — полный
+    путь к сохраненному файлу снимка экрана.
 
 .. var:: config.screenshot_crop = None
 
-    If not None, this should be a (`x`, `y`, `height`, `width`)
-    tuple. Screenshots are cropped to this rectangle before being
-    saved.
+    Если не ``None``, кортеж (`x`, `y`, `height`, `width`). Скриншоты обрезаются до
+    указанной прямоугольной области перед сохранением.
 
 .. var:: config.screenshot_pattern = "screenshot%04d.png"
 
-    The pattern used to create screenshot files. This pattern is applied (using
-    Python's %-formatting rules) to the natural numbers to generate a sequence
-    of filenames. The filenames may be absolute, or relative to
-    config.renpy_base. The first filename that does not exist is used as the
-    name of the screenshot.
+    Шаблон для формирования имен файлов скриншотов. Применяется с использованием
+    правил форматирования ``%`` в Python к натуральным числам. Имена файлов могут быть
+    абсолютными или относительными по отношению к config.renpy_base. Используется первое
+    несуществующее имя файла. Папки создаются автоматически при их отсутствии.
 
-    Directories are created if they do not exist.
-
-    See also :var:`_screenshot_pattern`, which is used in preference to this
-    variable if not None.
+    См. также :var:`_screenshot_pattern`, имеющую приоритет перед этой переменной.
 
 .. var:: config.tracesave_screenshot = True
 
-    If True, a screenshot is taken when a traceback save is made. If False, no
-    screenshot is taken.
+    Если True, создается скриншот при аварийном сохранении после необработанной ошибки (traceback).
 
 
-Self-Voicing / Text to Speech
------------------------------
+Автоозвучивание / Синтез речи (TTS)
+-----------------------------------
 
 .. var:: config.auto_image_alt = False
 
-    If True, images displayed without an explicit :propref:`alt` style property
-    will be announced using their image name and attributes.
-
+    Если True, изображения без явного стилевого свойства :propref:`alt` будут озвучиваться
+    с использованием имени изображения и его атрибутов.
 
 .. var:: config.auto_screenreader_voicing = True
 
-    If True, Ren'Py will automatically enable screen reader voicing on launch
-    if an active screen reader (such as NVDA, JAWS, VoiceOver, or Orca) is
-    detected.
-
+    Если True, Ren'Py автоматически активирует автоозвучивание при запуске, если в
+    операционной системе обнаружена активная программа чтения с экрана (экранный диктор,
+    например NVDA, JAWS, VoiceOver или Orca).
 
 .. var:: config.tts_substitutions = [ ]
 
-    This is a list of (pattern, replacement) pairs that are used to perform
-    substitutions on text before it is passed to the text-to-speech engine,
-    so that the text-to-speech engine can pronounce it correctly.
+    Список пар (шаблон, замена), используемых для преобразования текста перед его
+    передачей в синтезатор речи, чтобы слова произносились правильно.
 
-    Patterns may be either strings or regular expressions, and replacements
-    must be strings.
-
-    If the pattern is a string, it is escaped, then prefixed
-    and suffixed with r'\\b' (to indicate it must begin and end at a word
-    boundary), and then compiled into a regular expression. When the pattern
-    is a string, the replacement is also escaped.
-
-    If the pattern is a regular expression, it is used as-is, and the
-    replacement is not escaped.
-
-    The substitutions are performed in the order they are given. If a substitution
-    matches the string, the match is checked to see if it is in title case,
-    upper case, or lower case ; and if so the corresponding casing is performed
-    on the replacement. Once this is done, the replacement is applied.
-
-    For example::
+    Шаблоны могут быть строками или скомпилированными регулярными выражениями, замены —
+    строками::
 
         define config.tts_substitutions = [
             ("Ren'Py", "Ren Pie"),
         ]
 
-    Will cause the string "Ren'Py is pronounced ren'py." to be voiced as if
-    it were "Ren Pie is pronounced ren pie."
+    Приведет к тому, что строка "Ren'Py is pronounced ren'py." будет прочитана как
+    "Ren Pie is pronounced ren pie."
 
 
-Showing Images
---------------
+Отображение изображений
+-----------------------
 
 .. var:: config.adjust_attributes = { }
 
-    If not None, this is a dictionary. When a statement or function that
-    contains image attributes executes or is predicted, the tag is
-    looked up in this dictionary. If it is not found, the None key
-    is looked up in this dictionary.
+    Словарь функций корректировки атрибутов изображений. Когда оператор или функция с
+    атрибутами изображения выполняется или прогнозируется, тег ищется в этом словаре
+    (или ключ None). Функция принимает имя изображения (кортеж тега и атрибутов) и
+    возвращает скорректированный кортеж с новым набором атрибутов.
 
-    If either is found, they're expected to be a function. The function
-    is given an image name, a tuple consisting of the tag and any
-    attributes. It should return an adjusted tuple, which contains
-    and a potential new set of attributes.
-
-    As this function may be called during prediction, it must not rely
-    on any state.
+    Так как функция может вызываться во время предзагрузки, она не должна зависеть от состояния игры.
 
 .. var:: config.cache_surfaces = False
 
-    If True, the underlying data of an image is stored in RAM, allowing
-    image manipulators to be applied to that image without reloading it
-    from disk. If False, the data is dropped from the cache, but kept as
-    a texture in video memory, reducing RAM usage.
+    Если True, графические данные изображений хранятся в RAM, позволяя применять манипуляторы
+    изображений без повторного чтения с диска. Если False, данные удаляются из оперативной
+    памяти и остаются только в виде текстур в видеопамяти, что снижает потребление RAM.
 
 .. var:: config.conditionswitch_predict_all = False
 
-    The default value of the predict_all argument for :func:`ConditionSwitch`
-    and :func:`ShowingSwitch`, which determines if all possible displayables
-    are shown.
+    Значение по умолчанию аргумента `predict_all` для :func:`ConditionSwitch` и
+    :func:`ShowingSwitch`, определяющее, прогнозируются ли все возможные варианты отображаемых объектов.
 
 .. var:: config.default_attribute_callbacks = { }
 
-    When a statement or function that contains image attributes executes or is
-    predicted, and the tag is not currently being shown, it's looked up in this
-    dictionary. If it is not found, the None key is looked up instead.
-
-    If either is found, they're expected to be a function. The function is
-    given an image name, a tuple consisting of the tag and any attributes. It
-    should return an iterable which contains any additional attributes to be
-    applied when an image is first shown.
-
-    The results of the function are treated as additive-only, and any explicit
-    conflicting or negative attributes will still take precedence.
-
-    As this function may be called during prediction, it must not rely on any
-    state.
+    Словарь функций, возвращающих набор атрибутов по умолчанию при первом отображении тега
+    (когда данный тег в настоящий момент не показан на экране).
 
 .. var:: config.default_transform = ...
 
-    When a displayable is shown using the show or scene statements,
-    the transform properties are taken from this transform and used to
-    initialize the values of the displayable's transform.
-
-    The default transform is :var:`center`.
+    Трансформация, свойства которой используются по умолчанию для инициализации трансформации
+    отображаемого объекта при его показе через show или scene. По умолчанию равна :var:`center`.
 
 .. var:: config.displayable_prefix = { }
 
-    See :ref:`Displayable prefixes <displayable-prefix>`.
+    См. раздел :ref:`Префиксы отображаемых объектов <displayable-prefix>`.
 
 .. var:: config.hide = renpy.hide
 
-    A function that is called when the :ref:`hide statement <hide-statement>`
-    is executed. This should take the same arguments as renpy.hide.
+    Функция, вызываемая при выполнении :ref:`оператора hide <hide-statement>`. Должна
+    принимать те же аргументы, что и renpy.hide.
 
 .. var:: config.image_cache_size = None
 
-    If not None, this is used to set the size of the :ref:`image cache <images>`, as a
-    multiple of the screen size. This number is multiplied by the size of
-    the screen, in pixels, to get the size of the image cache in pixels.
-
-    If set too large, this can waste memory. If set too small, images
-    can be repeatedly loaded, hurting performance.
+    Размер :ref:`кэша изображений <images>` в кратных долях от размера экрана. Число
+    умножается на количество пикселей экрана для получения емкости кэша.
 
 .. var:: config.image_cache_size_mb = 300
 
-    This is used to set the size of the :ref:`image cache <images>`, in
-    megabytes. If :var:`config.cache_surfaces` is False, an image takes
-    4 bytes per pixel, otherwise it takes 8 bytes per pixel.
-
-    If set too large, this can waste memory. If set too small, images
-    can be repeatedly loaded, hurting performance. If not None,
-    :var:`config.image_cache_size` is used instead of this variable.
+    Размер :ref:`кэша изображений <images>` в мегабайтах. Если :var:`config.cache_surfaces`
+    равно False, пиксель занимает 4 байта, иначе 8 байт. Если переменная :var:`config.image_cache_size`
+    не равна None, она используется вместо этой переменной.
 
 .. var:: config.keep_running_transform = True
 
-    If True, showing an image without supplying a transform or ATL
-    block will cause the image to continue the previous transform
-    an image with that tag was using, if any. If False, the transform
-    is stopped.
+    Если True, показ изображения без явного указания трансформации или блока ATL продолжит
+    предыдущую трансформацию этого тега (если она была). Если False, трансформация сбрасывается.
 
 .. var:: config.max_texture_size = (4096, 4096)
 
-    The maximum size of an image that Ren'Py will load as a single texture.
-    This is important for 3d models, while 2d images will be split into
-    multiple textures if necessary.
-
-    Live2d will adjust this to fit the largest live2d texture.
+    Максимальный размер текстуры, загружаемой Ren'Py как единый объект. Важно для 3D-моделей;
+    двумерные изображения при необходимости разделяются на несколько текстур автоматически.
 
 .. var:: config.optimize_texture_bounds = True
 
-    When True, Ren'Py will scan images to find the bounding box of the
-    non-transparent pixels, and only load those pixels into a texture.
+    Если True, Ren'Py вычисляет ограничивающий прямоугольник непрозрачных пикселей и загружает
+    в текстуру только значащую область изображения.
 
 .. var:: config.predict_shaders = True
 
-    If True, shader combinations used by predicted displayables are
-    compiled during expensive idle prediction.
+    Если True, комбинации шейдеров, используемые прогнозируемыми отображаемыми объектами,
+    компилируются во время предзагрузки в фоновом режиме.
 
 .. var:: config.predict_statements = 32
 
-    This is the number of statements, including the current one, to
-    consider when doing predictive image loading. A breadth-first
-    search from the current statement is performed until this number
-    of statements is considered, and any image referenced in those
-    statements is potentially predictively loaded. Setting this to 0
-    will disable predictive loading of images.
+    Количество операторов сценария, анализируемых вперед от текущего места для предиктивной
+    загрузки изображений. Установка в 0 отключает упреждающую загрузку.
 
 .. var:: config.scene = renpy.scene
 
-    A function that's used in place of :func:`renpy.scene` by the :ref:`scene
-    statement <scene-statement>`. Note that this is used to clear the screen,
-    and :var:`config.show` is used to show a new image. This should have the same
-    signature as :func:`renpy.scene`.
+    Функция, используемая вместо :func:`renpy.scene` :ref:`оператором scene <scene-statement>`.
+    Используется для очистки экрана, тогда как для показа нового фона вызывается :var:`config.show`.
 
 .. var:: config.show = renpy.show
 
-    A function that is used in place of :func:`renpy.show` by the :ref:`show
-    <show-statement>` and :ref:`scene <scene-statement>` statements. This
-    should have the same signature as :func:`renpy.show`, and pass unknown
-    keyword arguments unchanged.
+    Функция, используемая вместо :func:`renpy.show` операторами :ref:`show <show-statement>`
+    и :ref:`scene <scene-statement>`.
 
 .. var:: config.speaking_attribute = None
 
-    If not None, this should be a string giving an image attribute,
-    which is added to the character's image tag when the character
-    is speaking, and removed when the character stops.
-
-    This is applied to the image on the default layer for the tag,
-    which can be set using :var:`config.tag_layer`.
-
-    This is very similar to temporary attributes shown using @ in dialogue
-    lines. The attribute is not removed when the text apparition animation
-    ends, but when the dialogue window gets dismissed.
+    Если не ``None``, строка с именем атрибута изображения, который автоматически добавляется
+    к тегу персонажа, когда тот произносит реплику, и удаляется по завершении фразы.
 
 .. var:: config.tag_transform = { ... }
 
-    A dictionary mapping image tag strings to transforms or lists of
-    transforms. When an image is newly-shown without an at clause,
-    the image's tag is looked up in this dictionary to find a transform
-    or list of transforms to use.
+    Словарь соответствия тегов изображений трансформациям (или спискам трансформаций),
+    применяемым по умолчанию при показе тега без клаузы ``at``.
 
 .. var:: config.tag_zorder = { }
 
-    A dictionary mapping image tag strings to zorders. When an image is
-    newly-shown without a zorder clause, the image's tag is looked up
-    in this dictionary to find a zorder to use. If no zorder is found,
-    0 is used.
+    Словарь соответствия тегов изображений значениям zorder по умолчанию, применяемым при
+    показе без клаузы ``zorder``. По умолчанию 0.
 
 .. var:: config.transform_uses_child_position = True
 
-    If True, transforms will inherit :ref:`position properties
-    <position-style-properties>` from their child. If not, they won't.
+    Если True, трансформации наследуют :ref:`свойства позиционирования <position-style-properties>`
+    от своего дочернего отображаемого объекта.
 
 
-Skipping
---------
+Пропуск (Skipping)
+------------------
 
 .. var:: config.allow_skipping = True
 
-    If set to False, the user is not able to skip over the text of the
-    game. See :var:`_skipping`.
+    Если False, игроку запрещен быстрый пропуск текста. См. :var:`_skipping`.
 
 .. var:: config.fast_skipping = False
 
-    Set this to True to allow fast skipping outside of developer mode.
+    Установите в True для разрешения сверхбыстрого пропуска вне режима разработчика.
 
 .. var:: config.skip_delay = 5
 
-    The amount of time that dialogue will be shown for, when skipping
-    statements using ctrl, in milliseconds. (Although it's nowhere
-    near that precise in practice.)
+    Время показа реплики диалога в миллисекундах при быстром пропуске текста с зажатой клавишей Ctrl.
 
 .. var:: config.skip_indicator = True
 
-    If True, the library will display a skip indicator when skipping
-    through the script.
+    Если True, стандартная библиотека отображает индикатор пропуска во время перемотки скрипта.
 
 
-Text and Fonts
+Текст и шрифты
 --------------
 
 .. var:: config.font_hinting = { None : "auto" }
 
-    This is a dictionary from a string containing the font filename to a string
-    giving one of the font hinting modes in :propref:`hinting`. When
-    :propref:`hinting` is True, the value is looked up in this dictionary,
-    and the resulting mode is used.
-
-    If no key is found, None is looked up, and the resulting mode is used.
+    Словарь соответствия имен файлов шрифтов режимам хинтинга из :propref:`hinting`.
 
 .. var:: config.font_name_map = { }
 
-    This is a map from (font name) to (font filepath/fontgroup). Font names
-    simplify and shorten ``{font}`` tags, and gives them access to the
-    :ref:`fontgroup` feature.
+    Словарь соответствия псевдонимов шрифтов путям к файлам или группам :ref:`fontgroup`.
+    Упрощает использование тега текста ``{font}``.
 
 .. var:: config.font_transforms = { ... }
 
-    This is used to create new font transforms for accessibility purposes. The font transforms can be
-    activated by :func:`Preferences` using "font transform" as the first argument.
-
-    The dictionary maps strings giving the nam use to a function. The function is called with a font
-    or :class:`FontGroup` as the only argument, and is expected to return a font or font group. For
-    example, the dejavusans transform is defined as::
-
-        init python:
-            def dejavusans(f):
-                return "DejaVuSans.ttf"
-
-            config.font_transforms["dejavusans"] = dejavusans
+    Словарь функций трансформации шрифтов для обеспечения доступности. Активируются
+    через :func:`Preference` с аргументом "font transform".
 
 .. var:: config.font_replacement_map = { }
 
-    This is a map from (font, bold, italics) to (font, bold, italics),
-    used to replace a font with one that's specialized as having bold
-    and/or italics. For example, if you wanted to have everything
-    using an italic version of :file:`Vera.ttf` use :file:`VeraIt.ttf`
-    instead, you could write::
+    Словарь сопоставления (шрифт, жирный, курсив) -> (шрифт, жирный, курсив), используемый
+    для замены шрифта специализированными начертаниями::
 
         init python:
             config.font_replacement_map["Vera.ttf", False, True] = ("VeraIt.ttf", False, False)
 
-    Please note that these mappings only apply to specific variants of
-    a font. In this case, requests for a bold italic version of vera
-    will get a bold italic version of vera, rather than a bold version
-    of the italic vera.
-
 .. var:: config.font_size_adjust = { }
 
-    This is a dictionary mapping font names to size adjustments. The name is a string.
-    The size adjustment may be a float, in which case it is multiplied with the original
-    size. The size adjustment may also be a function that takes the filename (a string) and
-    the original size (a float) as arguments, and returns the adjusted size.
-
-    This can be used to adjust multiple font families to be the same visual size.
-    This only works with scalable fonts.
+    Словарь соответствия имен шрифтов корректировкам размера (число-множитель либо функция).
+    Позволяет визуально выровнять по размеру глифы разных гарнитур шрифтов.
 
 .. var:: config.hyperlink_handlers = { ... }
 
-    A dictionary mapping a hyperlink protocol to the handler for that
-    protocol. A handler is a function that takes the value (everything after
-    the :) and performs some action. If a value is returned, the interaction
-    ends. Otherwise, the click is ignored and the interaction continues.
+    Словарь соответствия протоколов гиперссылок функциям-обработчикам. Обработчик принимает
+    значение после двоеточия и выполняет необходимое действие.
 
 .. var:: config.hyperlink_protocol = "call_in_new_context"
 
-    The protocol that is used for hyperlinks that do not have a protocol
-    assigned to them. See the :tt:`a` text tag for a description
-    as to what the possible protocols mean.
+    Протокол гиперссылок по умолчанию, если протокол не указан явно в теге :tt:`a`.
 
 .. var:: config.mipmap_text = False
 
-    The default value of the mipmap argument to :func:`Text`, including
-    text used in screen statements.
+    Значение по умолчанию аргумента mipmap для объекта :func:`Text`.
 
 .. var:: config.new_substitutions = True
 
-    If True, Ren'Py will apply new-style (square-bracket)
-    substitutions to all text displayed.
+    Если True, ко всем выводимым текстам применяются подстановки нового стиля в квадратных скобках ``[...]``.
 
 .. var:: config.old_substitutions = True
 
-    If True, Ren'Py will apply old-style (percent) substitutions to
-    text displayed by the :ref:`say <say-statement>` and :doc:`menu
-    <menus>` statements.
+    Если True, к текстам в операторах :ref:`say <say-statement>` и :doc:`menu <menus>`
+    применяются подстановки старого стиля со знаком процента ``%``.
 
 .. var:: config.preload_fonts = [ ... ]
 
-    A list of the names of TrueType and OpenType fonts that Ren'Py should
-    load when starting up. Including the name of a font here can prevent
-    Ren'Py from pausing when introducing a new typeface.
+    Список шрифтов TrueType и OpenType, загружаемых Ren'Py при старте игры во избежание
+    микропауз при первом появлении нового шрифта.
 
 .. var:: config.replace_text = None
 
-    If not None, a function that is called with a single argument, a text to
-    be displayed to the user. The function can return the same text it was
-    passed, or a replacement text that will be displayed instead.
-
-    The function is called after substitutions have been performed and after
-    the text has been split on tags, so its argument contains nothing but
-    actual text. All displayed text passes through the function: not only
-    dialogue text, but also user interface text.
-
-    This can be used to replace specific ASCII sequences with corresponding
-    Unicode characters, as demonstrated by the following::
+    Функция, вызываемая с одним строковым аргументом (отображаемый текст) и возвращающая
+    заменяющий текст. Вызывается после подстановок и разбора тегов, поэтому получает чистый текст::
 
         def replace_text(s):
-            s = s.replace("'", u'\u2019') # apostrophe
-            s = s.replace('--', u'\u2014') # em dash
-            s = s.replace('...', u'\u2026') # ellipsis
+            s = s.replace("'", u'\u2019') # апостроф
+            s = s.replace('--', u'\u2014') # длинное тире
+            s = s.replace('...', u'\u2026') # многоточие
             return s
         config.replace_text = replace_text
 
@@ -1913,646 +1584,407 @@ Text and Fonts
 
 .. var:: config.safe_text = ...
 
-    If True, Ren'Py will attempt to display text even if it contains errors, like unmatched text tags.
-    If False, Ren'Py will raise an error when such text is encountered. This defaults to True in released games, and
-    False in developer mode.
+    Если True, Ren'Py пытается отобразить текст даже при наличии ошибок разметки (незакрытые теги).
+    По умолчанию True в релизных сборках и False в режиме разработчика.
 
 .. var:: config.say_menu_text_filters = [ ]
 
-    A list of functions that are given the text found
-    in strings in the :ref:`say <say-statement>` and :doc:`menu
-    <menus>` statements. Each is expected to return new
-    (or the same) strings to replace them.
-
-    These run very early in the say statement processing, and in menu
-    statement processing when :var:`config.use_menu_text_filter` is True,
-    before translation and substitutions are applied. For a filter that runs
-    later, see :var:`config.replace_text`.
+    Список функций-фильтров, получающих сырой текст операторов :ref:`say <say-statement>`
+    и :doc:`menu <menus>` до выполнения переводов и подстановок переменных.
 
 .. var:: config.textshader_callbacks = { }
 
-    This is dictionary that maps strings to callables. When :doc:`textshaders`
-    with the string are used, the function is called to return a string
-    giving another textshader. This can be used to make a textshader that
-    changes based on a persistent variable, for example.
+    Словарь строк и вызываемых объектов для динамического выбора :doc:`шейдеров текста <textshaders>`.
 
 .. var:: config.use_menu_text_filter = True
 
-    If True, text in :doc:`menu <menus>` statements is passed through
-    :var:`config.say_menu_text_filter` and :var:`config.say_menu_text_filters`.
-    If False, menu text is left unchanged by those filters.
+    Если True, текст в операторах :doc:`menu <menus>` проходит через фильтры
+    :var:`config.say_menu_text_filter` и :var:`config.say_menu_text_filters`.
 
 
-Transitions
------------
+Переходы (Transitions)
+----------------------
 
 .. var:: config.adv_nvl_transition = None
 
-    A transition that is used to show the NVL-mode window when
-    showing ADV-mode text directly after NVL-mode text.
+    Переход, используемый для отображения окна режима NVL при показе текста ADV сразу после NVL.
 
 .. var:: config.after_load_transition = None
 
-    A transition that is used after loading, when entering the loaded
-    game.
+    Переход, выполняемый при входе в игру после успешной загрузки сохранения.
 
 .. var:: config.end_game_transition = None
 
-    The transition that is used to display the main menu after the
-    game ends normally, either by invoking return with no place to
-    return to, or by calling :func:`renpy.full_restart`.
+    Переход, используемый для отображения главного меню при нормальном завершении игры
+    (возврат по return или вызов :func:`renpy.full_restart`).
 
 .. var:: config.end_splash_transition = None
 
-    The transition that is used to display the main menu after the end
-    of the splashscreen.
+    Переход для показа главного меню после завершения заставки (splashscreen).
 
 .. var:: config.enter_replay_transition = None
 
-    If not None, a transition that is used when entering a replay.
+    Переход, выполняемый при входе в режим повтора сцены (replay).
 
 .. var:: config.enter_transition = None
 
-    If not None, this variable should give a transition that will be
-    used when entering the game menu.
+    Переход, выполняемый при входе в игровое меню.
 
 .. var:: config.enter_yesno_transition = None
 
-    If not None, a transition that is used when entering the yes/no
-    prompt screen.
+    Переход, используемый при открытии экрана подтверждения да/нет.
 
 .. var:: config.exit_replay_transition = None
 
-    If not None, a transition that is used when exiting a replay.
+    Переход, выполняемый при выходе из режима повтора сцены.
 
 .. var:: config.exit_transition = None
 
-    If not None, this variable should give a transition that will be
-    performed when exiting the game menu.
+    Переход, выполняемый при выходе из игрового меню.
 
 .. var:: config.exit_yesno_transition = None
 
-    If not None, a transition that is used when exiting the yes/no
-    prompt screen.
+    Переход, используемый при закрытии экрана подтверждения да/нет.
 
 .. var:: config.game_main_transition = None
 
-    If not None, a transition that is used when returning to the main
-    menu from the game menu, using the :func:`MainMenu` action.
+    Переход, выполняемый при возврате в главное меню из игрового меню через действие :func:`MainMenu`.
 
 .. var:: config.intra_transition = None
 
-    The transition that is used between screens of the game and main
-    menu. (That is, when the screen is changed with :func:`ShowMenu`.)
+    Переход между экранами главного и игрового меню (при переключении экранов через :func:`ShowMenu`).
 
 .. var:: config.nvl_adv_transition = None
 
-    A transition that is used to hide the NVL-mode window when
-    showing ADV-mode text directly after NVL-mode text.
+    Переход для скрытия окна режима NVL при показе текста ADV сразу после NVL.
 
 .. var:: config.pause_with_transition = False
 
-    If False, :func:`renpy.pause` is always used by the ``pause`` statement.
-    If True, when given a delay, ``pause 5`` is equivalent to ``with Pause(5)``.
+    Если False, оператор ``pause`` всегда использует :func:`renpy.pause`. Если True, оператор
+    ``pause 5`` эквивалентен ``with Pause(5)``.
 
 .. var:: config.say_attribute_transition = None
 
-    If not None, a transition to use when the image is changed by a
-    say statement with image attributes.
+    Переход, применяемый при смене изображения оператором say с атрибутами.
 
 .. var:: config.say_attribute_transition_callback : Callable
 
-    This is a function that return a transition to apply and a layer to
-    apply it on
-
-    This should be a function that takes four arguments, the image tag
-    being shown, a `mode` parameter, a `set` containing pre-transition tags
-    and a `set` containing post-transition tags. Where the value of the
-    `mode` parameter is one of:
-
-    * "permanent", for permanent attribute change (one that lasts longer
-      than the current say statement).
-    * "temporary", for a temporary attribute change (one that is restored
-      at the end of the current say statement).
-    * "both", for a simultaneous permanent and temporary attribute change
-      (one that in part lasts longer than the current say statement, and in
-      part is restored at the end of the current say statement).
-    * "restore", for when a temporary (or both) change is being restored.
-
-    This should return a 2-component tuple, consisting of:
-
-    * The transition to use, or None if no transition should occur.
-    * The layer the transition should be on, either a string or None. This is
-      almost always None.
-
-    The default implementation of this returns (config.say_attribute_transition,
-    config.say_attribute_transition_layer).
+    Функция, возвращающая кортеж (переход, имя слоя), применяемый при изменении атрибутов
+    в строке диалога.
 
 .. var:: config.say_attribute_transition_layer = None
 
-    If not None, this must be a string giving the name of a layer. (Almost always
-    "master".) The say attribute is applied to the named layer, and Ren'Py
-    will not pause to wait for the transition to occur. This will have the
-    effect of transitioning in the attribute as dialogue is shown.
+    Имя слоя (обычно "master"), к которому применяется переход атрибута say в фоновом
+    режиме без блокирующей паузы.
 
 .. var:: config.window_hide_transition = None
 
-    The transition used by the window hide statement when no
-    transition has been explicitly specified.
+    Переход, используемый оператором ``window hide``, если переход не указан явно.
 
 .. var:: config.window_show_transition = None
 
-    The transition used by the window show statement when no
-    transition has been explicitly specified.
+    Переход, используемый оператором ``window show``, если переход не указан явно.
 
 
-Transition Control
-------------------
+Управление переходами
+---------------------
 
 .. var:: config.implicit_with_none = True
 
-    If True, then by default the equivalent of a :ref:`with None <with-none>`
-    statement will be performed after interactions caused by dialogue, menus
-    input, and imagemaps. This ensures that old screens will not show
-    up in transitions.
+    Если True, неявный переход :ref:`with None <with-none>` выполняется после взаимодействий,
+    вызванных диалогами, меню, вводом и imagemap. Это гарантирует, что старые экраны не
+    появятся при следующем переходе.
 
 .. var:: config.load_before_transition = True
 
-    If True, the start of an interaction will be delayed until all
-    images used by that interaction have loaded. (Yeah, it's a lousy
-    name.)
+    Если True, начало взаимодействия откладывается до полной загрузки всех используемых
+    в нем изображений.
 
 .. var:: config.mipmap_dissolves = False
 
-    The default value of the mipmap argument to :func:`Dissolve`,
-    :func:`ImageDissolve`, :func:`AlphaDissolve`, and :func:`AlphaMask`.
+    Значение по умолчанию аргумента mipmap для переходов :func:`Dissolve`, :func:`ImageDissolve`,
+    :func:`AlphaDissolve` и :func:`AlphaMask`.
 
 .. var:: config.overlay_during_with = True
 
-    True if we want overlays to be shown during :ref:`with statements
-    <with-statement>`, or False if we'd prefer that they be hidden during
-    the with statements.
+    Если True, оверлей отображается во время выполнения :ref:`операторов with <with-statement>`.
+    Если False, оверлей скрывается на время перехода.
 
 
-Translation
------------
+Локализация и перевод
+---------------------
 
 .. var:: config.clear_history_on_language_change = True
 
-    If True, the history is cleared when the language changes. This
-    is used to ensure that the history only contains strings that are
-    representable in the current font. If False, the history is kept
-    when the language changes.
+    Если True, история диалогов очищается при смене языка, чтобы гарантировать корректное
+    отображение символов текущим шрифтом. Если False, история сохраняется.
 
 .. var:: config.default_language = None
 
-    If not None, this should be a string giving the default language
-    that the game is translated into by the translation framework.
-
-    See :doc:`translation` for more details.
+    Строка с именем языка по умолчанию, на который переведена игра. Подробнее см. :doc:`translation`.
 
 .. var:: config.defer_styles = False
 
-    When True, the execution of style statements is deferred until after
-    all ``translate python`` blocks have executed. This lets a ``translate
-    python`` block update variables that are then used in style (not
-    translate style) statements.
-
-    While this defaults to False, it's set to True when :func:`gui.init`
-    is called.
+    Если True, применение операторов стилей откладывается до завершения выполнения всех
+    блоков ``translate python``. Устанавливается в True при вызове :func:`gui.init`.
 
 .. var:: config.defer_tl_scripts = False
 
-    When True, avoids loading scripts in the tl directory until the
-    language is selected. See :ref:`deferred-translations`.
+    Если True, предотвращает загрузку скриптов из папки `tl/` до тех пор, пока соответствующий
+    язык не будет выбран игроком. См. :ref:`deferred-translations`.
 
 .. var:: config.enable_language_autodetect = False
 
-    If True, Ren'Py will attempt to determine the name of the language
-    to use based on the locale of the player's system. If successful,
-    this language will be used as the default language.
-
-    This can be customized with :var:`config.locale_to_language_function`
-    below, the default implementation of which uses :var:`config.locale_to_language_map`.
+    Если True, Ren'Py пытается определить язык интерфейса на основе системной локали игрока
+    при первом запуске игры.
 
 .. var:: config.locale_to_language_function : Callable
 
-    A function that determines the language the game should use,
-    based on the user's locale.
-    It takes 2 string arguments that give the ISO code of the locale
-    and the ISO code of the region. These are normalized to lower case
-    before this function is called.
-
-    It should return a string giving the name of a translation to use, or
-    None to use the default translation.
-
-    :var:`config.enable_language_autodetect` must be True for this function
-    to be called.
+    Функция определения языка на основе локали пользователя. Принимает два аргумента:
+    ISO-код языка и ISO-код региона в нижнем регистре. Должна возвращать имя перевода или None.
 
 .. var:: config.locale_to_language_map = { ... }
 
-    This is a table used by the default implementation of locale_to_language_function.
-    It maps (locale, region) pairs to language names. The default value of this table
-    can be found in the locale symbol of `renpy/translation/__init__.py <https://github.com/renpy/renpy/blob/master/renpy/translation/__init__.py#L959>`_
-
-    The following things are looked up in this table, in order, until a match is found:
-
-    1. language_region (en_us)
-    2. language (en)
-    3. region (us)
+    Таблица соответствий пар (локаль, регион) именам языков, используемая функцией
+    определения языка по умолчанию.
 
 .. var:: config.new_translate_order = True
 
-    Enables the new order of style and translate statements introduced in
+    Включает новый порядок выполнения операторов стилей и переводов, представленный в
     :ref:`Ren'Py 6.99.11 <renpy-6.99.11>`.
 
 .. var:: config.translate_clean_stores = [ "gui", ... ]
 
-    A list of named stores that are cleaned to their state at the end of
-    the init phase when the translation language changes.
+    Список именованных хранилищ, сбрасываемых к их состоянию на момент конца инициализации
+    при переключении языка перевода.
 
 .. var:: config.translate_additional_strings_callbacks = [ ]
 
-    A list of callbacks that are called when the translation system is searching for
-    strings. Each callback is expected to be return and iterable or iterator of
-    (filename, linenumber, string) tuples. The strings will then be treated as
-    additional strings to translate.
-
-    The line number doesn't need to correspond to an actual line in the file, but is used to control
-    the order in which string translations are added to transdlation files.
-
+    Список колбэков, вызываемых при поиске строк для перевода и возвращающих кортежи
+    (имя файла, номер строки, строка) дополнительных строковых ресурсов.
 
 .. var:: config.translate_ignore_who = [ ]
 
-    A list of strings giving characters that will not have translations generated. This is useful
-    for characters that are used for debugging or note purposes. This compares against string value
-    of the expression in the statement. (So "e" will match ``e`` but not ``l``, even if e and l are
-    the same object.)
+    Список имен персонажей, для реплик которых переводы не генерируются (полезно для
+    технических или отладочных персонажей).
 
 
-
-Voice
------
+Голос и озвучка
+---------------
 
 .. seealso:: :var:`config.has_voice`
 
 .. var:: config.auto_voice = None
 
-    This may be a string, a function, or None. If None, auto-voice is
-    disabled.
-
-    If a string, this is formatted with the ``id`` variable bound to the
-    identifier of the current line of dialogue. If this gives an existing
-    file, that file is played as voice audio.
-
-    If a function, the function is called with a single argument, the
-    identifier of the current line of dialogue. The function is expected to
-    return a string. If this gives an existing file, that file is played as
-    voice audio.
-
-    See :ref:`Automatic Voice <automatic-voice>` for more details.
+    Шаблон имени файла, функция или None. Если задана строка, она форматируется с переменной
+    ``id``, содержащей идентификатор текущей реплики диалога, и при наличии такого файла он
+    автоматически воспроизводится. Подробнее см. :ref:`Автоматическая озвучка <automatic-voice>`.
 
 .. var:: config.emphasize_audio_channels = [ 'voice' ]
 
-    A list of strings giving audio channel names.
-
-    If the "emphasize audio" preference is enabled, when one of the audio
-    channels listed starts playing a sound, all channels that are not
-    listed in this variable have their secondary audio volume reduced
-    to :var:`config.emphasize_audio_volume` over :var:`config.emphasize_audio_time`
-    seconds.
-
-    When no channels listed in this variable are playing audio, all channels
-    that are not listed have their secondary audio volume raised to 1.0 over
-    :var:`config.emphasize_audio_time` seconds.
-
-    For example, setting this to ``[ 'voice' ]`` will lower the volume of all
-    non-voice channels when a voice is played.
+    Список имен аудиоканалов. При включенной настройке выделения звука во время звучания на этих
+    каналах громкость всех остальных каналов плавно снижается до уровня
+    :var:`config.emphasize_audio_volume` за время :var:`config.emphasize_audio_time`.
 
 .. var:: config.emphasize_audio_time = 0.5
 
-    See above.
+    Время перехода громкости при выделении звука в секундах.
 
 .. var:: config.emphasize_audio_volume = 0.8
 
-    See above.
+    Уровень громкости других каналов при активном выделении звука.
 
 .. var:: config.voice_callbacks = [ ]
 
-    A list of functions that are called by the voice system. The function should take two arguments:
-
-    `event`
-        The event that was triggered. This is one of:
-
-        "play"
-            The voice system is about to play a voice file.
-        "stop"
-            The voice system has stopped playing a voice file.
-
-    `info`
-        An object containing information about the voice file that is being played. This is the same
-        object that is return from :func:`_get_voice_info`.
-
-    The function should also accept unknown keyword arguments, though no keyword arguments are
-    currently documented.
+    Список функций, вызываемых голосовой системой при событиях "play" и "stop".
 
 .. var:: config.voice_filename_format = "{filename}"
 
-    A string that is formatted with the string argument to the voice
-    statement to produce the filename that is played to the user. For
-    example, if this is "{filename}.ogg", the ``voice "test"`` statement
-    will play :file:`test.ogg`.
+    Шаблон форматирования имени аудиофайла в операторе ``voice``. Например, при "{filename}.ogg"
+    оператор ``voice "test"`` воспроизведет файл :file:`test.ogg`.
 
 
-Window Management
------------------
+Управление окном диалога
+------------------------
 
 .. var:: config.choice_empty_window = None
 
-    If not None, and a choice menu (usually invoked with the ``menu``
-    statement) does not have a caption, this function is called with
-    the arguments ("", interact=False).
-
-    The expected use of this is::
-
-        define config.choice_empty_window = extend
-
-    Doing this displays repeats the last line of dialogue as the
-    caption of the menu, if no other caption is given.
-
-    Other implementations are possible, but it's assumed that this will
-    always display a dialogue window.
+    Если не ``None`` и меню выбора не имеет заголовка, эта функция вызывается с аргументами
+    ("", interact=False). Например, указание ``extend`` повторит последнюю реплику диалога
+    в качестве подписи к меню.
 
 .. var:: config.empty_window : Callable
 
-    This is called with no arguments when _window is True, and no window has been shown
-    on the screen. (That is, no call to :func:`renpy.shown_window` has
-    occurred.) It's expected to show an empty window on the screen, and
-    return without causing an interaction.
-
-    The default implementation of this uses the narrator character to
-    display a blank line without interacting.
+    Вызывается без аргументов, когда `_window` равно True, но окно диалога еще не было показано.
+    По умолчанию использует персонажа narrator для вывода пустой строки без ожидания клика.
 
 .. var:: config.window = None
 
-    This controls the default method of dialogue window management. If
-    not None, this should be one of "show", "hide", or "auto".
-
-    When set to "show", the dialogue window is shown at all times.
-    When set to "hide", the dialogue window is hidden when not in a
-    say statement or other statement that displays dialogue. When set
-    to "auto", the dialogue window is hidden before scene statements,
-    and shown again when dialogue is shown.
-
-    This sets the default. Once set, the default can be changed using the
-    ``window show``, ``window hide`` and ``window auto`` statements. See
-    :ref:`dialogue-window-management` for more information.
-
+    Управляет методом управления окном диалога по умолчанию: "show" (всегда открыто),
+    "hide" (скрыто вне реплик) или "auto" (автоматическое скрытие перед сценами и показ при диалоге).
+    См. :ref:`dialogue-window-management`.
 
 .. var:: config.window_auto_hide = [ "scene", "call screen", "menu", "say-centered", "say-bubble", ... ]
 
-    A list of statements that cause ``window auto`` to hide the empty
-    dialogue window.
+    Список операторов, заставляющих режим ``window auto`` автоматически скрывать пустое окно диалога.
 
 .. var:: config.window_auto_show = [ "say", "say-nvl", "menu-with-caption", "nvl-menu", "nvl-menu-with-caption", ... ]
 
-    A list of statements that cause ``window auto`` to show the empty
-    dialogue window.
+    Список операторов, заставляющих режим ``window auto`` автоматически отображать пустое окно диалога.
 
 
-Developer
----------
+Разработка и отладка
+--------------------
 
-Compatibility
+Совместимость
 ^^^^^^^^^^^^^
 
 .. var:: config.label_overrides = { }
 
-    This variable gives a way of causing jumps and calls of labels in
-    Ren'Py script to be redirected to other labels. For example, if you
-    add a mapping from "start" to "mystart", all jumps and calls to
-    "start" will go to "mystart" instead.
+    Словарь перенаправления переходов по меткам (jump и call) на другие метки (например,
+    сопоставление "start" -> "mystart").
 
 .. var:: config.script_version = None
 
-    If not None, this is interpreted as a script version. Ren'Py
-    uses the script version to enable some compatibility
-    features, if necessary. If None, we assume this is a
-    latest-version script.
-
-    This is normally set in a file added by the Ren'Py launcher when
-    distributions are built, and so generally shouldn't be set.
+    Версия скрипта для активации режимов обратной совместимости Ren'Py. Обычно устанавливается
+    автоматически лаунчером при сборке дистрибутива.
 
 
-Development
-^^^^^^^^^^^
+Режим разработчика
+^^^^^^^^^^^^^^^^^^
 
 .. var:: config.console = False
 
-    This enables the console in the case :var:`config.developer` is not
-    set to True.
+    Включает встроенную консоль даже в том случае, если :var:`config.developer` не установлен в True.
 
 .. var:: config.developer = "auto"
 
-    If set to True, developer mode is enabled. Developer mode gives
-    access to the shift+D developer menu, shift+R reloading, and
-    various other features that are not intended for end users.
-
-    This can be True, False, or "auto". If "auto", Ren'Py will
-    detect if the game has been packaged into a distribution, and
-    set config.developer as appropriate.
+    Если True, режим разработчика активен (доступны Shift+D, перезагрузка по Shift+R, консоль и др.).
+    Значение "auto" автоматически отключает режим разработчика в собранных дистрибутивах.
 
 
-Debugging
-^^^^^^^^^
+Отладка
+^^^^^^^
 
 .. var:: config.clear_log = False
 
-    If True, the log created by :var:`config.log` is cleared each time
-    Ren'Py starts.
+    Если True, файл журнала :var:`config.log` очищается при каждом запуске Ren'Py.
 
 .. var:: config.debug_image_cache = False
 
-    If True, Ren'Py will write information about the :ref:`image cache <images>`
-    to image_cache.txt.
+    Если True, Ren'Py записывает подробную информацию о состоянии :ref:`кэша изображений <images>`
+    в файл `image_cache.txt`.
 
 .. var:: config.debug_prediction = False
 
-    If True, Ren'Py will write information about and errors that
-    occur during prediction (of execution flow, images, and screens) to
-    log.txt and the console.
+    Если True, данные и ошибки упреждающего прогнозирования (изображений, экранов, переходов)
+    выводятся в консоль и в файл `log.txt`.
 
 .. var:: config.debug_sound = False
 
-    Enables debugging of sound functionality. This disables the
-    suppression of errors when generating sound. However, if a sound
-    card is missing or flawed, then such errors are normal, and
-    enabling this may prevent Ren'Py from functioning normally. This
-    should always be False in a released game.
+    Включает режим отладки звука (не подавляет системные ошибки аудиокарты). Должно быть
+    False в релизных версиях игры.
 
 .. var:: config.debug_text_overflow = False
 
-    When True, Ren'Py will log text overflows to text_overflow.txt. A text
-    overflow occurs when a :class:`Text` displayable renders to a size
-    larger than that allocated to it. By setting this to True and setting
-    the :propref:`xmaximum` and :propref:`ymaximum` style properties of the dialogue
-    window to the window size, this can be used to report cases where the
-    dialogue is too large for its window.
+    Если True, переполнения текстовых блоков записываются в файл `text_overflow.txt`.
 
 .. var:: config.disable_input = False
 
-    When True, :func:`renpy.input` terminates immediately and returns its
-    `default` argument.
+    Если True, функция :func:`renpy.input` мгновенно возвращает значение по умолчанию без запроса ввода.
 
 .. var:: config.exception_handler = None
 
-    If not None, this should be a function that takes three arguments:
-
-    * A string giving the text of a traceback, abbreviated so that it only includes
-      creator-written files.
-    * The full text of the traceback, including both creator-written and Ren'Py
-      files.
-    * The path to a file containing a traceback method.
-
-    This function can present the error to a user in any way fit. If it returns True,
-    the exception is ignored and control is transferred to the next statement. If it
-    returns False, the built-in exception handler is use. This function may also call
-    :func:`renpy.jump` to transfer control to some other label.
+    Пользовательская функция перехвата и обработки исключений.
 
 .. var:: config.lint_character_statistics = True
 
-    If True, and :var:`config.developer` is True, the lint report will include
-    statistics about the number of dialogue blocks spoken for each character.
-    The character statistics are disabled when the game is packaged, to
-    prevent spoilers.
+    Если True (и активен режим разработчика), отчет lint включает статистику количества строк
+    диалога каждого персонажа.
 
 .. var:: config.lint_show_names = False
 
-    If True, and :var:`lint_character_statistics` is True, the lint report will expand the aliases
-    of the character names to the name parameter given it :func:`Character`, if possible.
+    Если True, отчет lint подставляет отображаемые имена персонажей вместо имен переменных.
 
 .. var:: config.lint_hooks = [ ... ]
 
-    This is a list of functions that are called, with no arguments,
-    when lint is run. The functions are expected to check the script
-    data for errors, and print any they find to standard output (using
-    the Python ``print`` statement is fine in this case).
+    Список пользовательских функций проверки скрипта, вызываемых при запуске инструмента lint.
 
 .. var:: config.log = None
 
-    If not None, this is expected to be a filename. Much of the text
-    shown to the user by :ref:`say <say-statement>` or :doc:`menu
-    <menus>` statements will be logged to this file.
+    Имя файла, в который будет записываться текст, отображаемый операторами :ref:`say <say-statement>`
+    и :doc:`menu <menus>`.
 
 .. var:: config.log_events = False
 
-    If True, Ren'Py will log pygame-style events to the log.txt file. This will hurt performance, but might be
-    useful for debugging certain problems.
+    Если True, Ren'Py записывает низкоуровневые события pygame в файл `log.txt`.
 
 .. var:: config.log_width = 78
 
-    The width of lines logged when :var:`config.log` is used.
+    Ширина строки в символах при записи в журнал :var:`config.log`.
 
 .. var:: config.missing_image_callback = None
 
-    If not None, this function is called when an attempt to load an
-    image fails. The callback is passed the filename of the missing image.
-    It may return None, or it may return an :doc:`image manipulator <im>`.
-    If an image manipulator is returned, that image
-    manipulator is loaded in the place of the missing image.
-
-    One may want to also define a :var:`config.loadable_callback`,
-    especially if this is used with a :func:`DynamicImage`.
+    Функция, вызываемая при неудачной попытке загрузить изображение (может вернуть замещающий
+    :doc:`манипулятор изображения <im>`).
 
 .. var:: config.missing_label_callback = None
 
-    If not None, this function is called when Ren'Py attempts to access
-    a label that does not exist in the game. The callback should take a
-    single parameter, the name of the missing label. It should return the
-    name of a label to use as a replacement for the missing label, or None
-    to cause Ren'Py to raise an exception.
+    Функция, вызываемая при обращении к несуществующей метке label. Возвращает замещающую
+    метку или None для вызова исключения.
 
 .. var:: config.profile = False
 
-    If set to True, some profiling information will be output to
-    stdout.
+    Если True, базовая информация о профилировании производительности выводится в стандартный вывод.
 
 .. var:: config.profile_init = 0.25
 
-    ``init`` and ``init python`` blocks taking longer than this amount of time
-    to run are reported to log file.
+    Порог времени выполнения блоков ``init`` и ``init python`` в секундах, превышение которого
+    заносится в лог.
 
 .. var:: config.raise_image_exceptions = None
 
-    If True, Ren'Py will raise an exception when an image name is
-    not found. If False, Ren'Py will display a textual error message in place of the image.
-
-    If None, this takes on the value of config.developer.
-
-    This is set to False when Ren'Py ignores an exception.
+    Вызывать ли исключение при отсутствии изображения. Если None, соответствует значению
+    :var:`config.developer`.
 
 .. var:: config.raise_image_load_exceptions = None
 
-    If True, Ren'Py will raise an exception when an exception happens
-    during image loading. If False, Ren'Py will display a textual error
-    message in place of the image.
-
-    If None, this takes on the value of config.developer.
-
-    This is set to False when Ren'Py ignore an exception.
+    Вызывать ли исключение при ошибке загрузки графического файла. Если None, соответствует
+    значению :var:`config.developer`.
 
 .. var:: config.return_not_found_label = None
 
-    If not None, a label that is jumped to when a return site is not found.
-    The call stack is cleared before this jump occurs.
+    Имя метки, на которую выполняется переход, если целевая точка возврата оператора return не найдена.
 
 
-Garbage Collection
-^^^^^^^^^^^^^^^^^^
+Сборка мусора (Garbage Collection)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. var:: config.gc_print_unreachable = False
 
-    If True, Ren'Py will print to its console and logs information about the
-    objects that are triggering collections.
+    Если True, в консоль и логи выводится информация об объектах, вызывающих запуск сборщика мусора.
 
 .. var:: config.gc_thresholds = (25000, 10, 10)
 
-    The GC thresholds that Ren'Py uses when not idle. These are set to try
-    to ensure that garbage collection doesn't happen. The three numbers are:
-
-    * The net number of objects that need to be allocated before a level-0
-      collection.
-    * The number of level-0 collections that trigger a level-1 collection.
-    * The number of level-1 collections that trigger a level-2 collection.
-
-    (Level-0 collections should be fast enough to not cause a frame drop,
-    level-1 collections might, level-2 will.)
+    Пороговые значения сборщика мусора при активной игре для предотвращения просадки кадров.
 
 .. var:: config.idle_gc_count = 2500
 
-    The net number of objects that triggers a collection when Ren'Py has
-    reached a steady state. (The fourth frame or later after the screen has been
-    updated.)
+    Количество объектов, вызывающее сборку мусора в состоянии покоя (steady state).
 
 .. var:: config.manage_gc = True
 
-    If True, Ren'Py will manage the GC itself. This means that it will apply
-    the settings below.
+    Если True, Ren'Py управляет сборщиком мусора автоматически согласно указанным настройкам.
 
 
-Reload
-^^^^^^
+Перезагрузка
+^^^^^^^^^^^^
 
 .. var:: config.autoreload = True
 
-    If True, Shift+R will toggle automatic reloading. When automatic
-    reloading is enabled, Ren'Py will reload the game whenever a used
-    file is modified.
-
-    If False, Ren'Py will reload the game once per press of Shift+R.
+    Если True, комбинация клавиш Shift+R переключает режим автоматической перезагрузки игры
+    при изменении файлов скрипта. Если False, игра перезагружается однократно при каждом нажатии.
 
 .. var:: config.reload_modules = [ ... ]
 
-    A list of strings giving the names of python modules that should be
-    reloaded along with the game. Any submodules of these modules
-    will also be reloaded.
+    Список имен модулей Python, перезагружаемых вместе со скриптом игры.

@@ -1,25 +1,27 @@
-Screenshots
-===========
+=============
+Снимки экрана
+=============
 
-Ren'Py includes built-in functionality for taking screenshots of the game, as well as of displayables
-in the game. The latter is suitable for creating "paper dolls" made of multiple displayables and saving
-them to disk for the player's later use, such as an avatar creator.
+В Ren'Py есть встроенная поддержка создания снимков экрана (скриншотов) как всей игры, так и
+отдельных отображаемых объектов. Последнее подходит для создания составных «бумажных кукол»
+(аватаров, гардеробов персонажей) из нескольких отображаемых объектов и сохранения их на диск
+для последующего использования игроком.
 
-When Ren'Py takes a screenshot, of the entire screen or a displayable, the screenshot will be taken
-at the drawable size, after window scaling and High DPI adjustments are applied. This generally
-captures what the user is seeing or would be seeing, rather than the native size of the assets.
+Когда Ren'Py делает снимок экрана (всего экрана или отдельного отображаемого объекта), снимок
+создаётся в размере отрисовки (drawable size), после применения масштабирования окна и настроек High DPI.
+Это позволяет запечатлеть именно то, что пользователь видит на своём экране, а не исходный размер файлов ассетов.
 
-By default, capturing a screenshot is bound to the 's' key.
+По умолчанию захват снимка экрана привязан к клавише «s».
 
-There are a few screenshot-related actions and screen functions.
+Существует несколько действий и функций экранов, связанных со снимками экрана:
 
 * :class:`Screenshot`
 * :class:`FileScreenshot`
 * :class:`FileTakeScreenshot`
 
-Functions
----------
+Функции
+-------
 
-There are also functions that can be used to take screenshots:
+Для создания снимков экрана также можно использовать следующие функции:
 
 .. include:: inc/screenshot

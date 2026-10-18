@@ -1,30 +1,33 @@
-=================
-Automated Testing
-=================
+.. _automated-testing:
 
-Ren'Py allows creators to put automated tests in their games to make sure that
-alterations to the game don't break existing functionality. This is especially
-useful for large games, or for games that are frequently updated.
+===============================
+Автоматизированное тестирование
+===============================
 
-The two main components of the testing system are the ``testcase`` and
-``testsuite`` statements.
+Ren'Py позволяет разработчикам внедрять в свои проекты автоматизированные тесты,
+гарантирующие, что внесённые изменения и доработки не нарушают существующую
+функциональность игры. Это особенно ценно для масштабных проектов и новелл,
+получающих регулярные обновления контента.
 
-The :func:`renpy.is_in_test` function is helpful to know whether a test is currently
-executing or not.
+Основными компонентами системы тестирования являются операторы ``testcase``
+и ``testsuite``.
+
+Функция :func:`renpy.is_in_test` позволяет узнать в коде Python, выполняется ли
+в данный момент автотест или игра запущена в обычном режиме.
 
 
-Quick Start
-===========
+Быстрый старт
+=============
 
-This section shows a minimal example using statements that are common in
-real testcases:
+В этом разделе показан минимальный практический пример с использованием операторов,
+наиболее часто встречающихся в реальных сценариях тестирования:
 
-- ``run Jump("...")`` to start from a known label.
-- ``advance until screen "choice"`` to get to a menu.
-- ``click "Choice Text"`` to pick a menu option.
-- ``click id "..." until not screen "..."`` to keep clicking until a screen disappears.
+- ``run Jump("...")`` — начинает выполнение с определённой метки.
+- ``advance until screen "choice"`` — листает диалог до появления меню выбора.
+- ``click "Choice Text"`` — выбирает пункт меню по тексту.
+- ``click id "..." until not screen "..."`` — повторяет клик до закрытия указанного экрана.
 
-Add the following Ren'Py code to your game script:
+Добавьте следующий скрипт Ren'Py в ваш проект:
 
 .. code-block:: renpy
 
@@ -37,34 +40,34 @@ Add the following Ren'Py code to your game script:
 
             vbox:
                 spacing 12
-                text "Quick Start Popup"
+                text "Всплывающее окно быстрого старта"
 
-                textbutton "Close":
+                textbutton "Закрыть":
                     id "quickstart_close"
                     action Hide("quickstart_popup")
 
 
     label quickstart_demo:
-        "Welcome to the testcase quick start demo."
+        "Добро пожаловать в демонстрацию быстрого старта тест-кейсов."
 
         show screen quickstart_popup
-        "Close the popup to continue."
+        "Закройте всплывающее окно для продолжения."
 
         menu:
-            "Take the map":
-                "You picked the map."
-            "Leave it":
-                "You left the map behind."
+            "Взять карту":
+                "Вы взяли карту."
+            "Оставить её":
+                "Вы оставили карту на месте."
 
-        "End of demo."
+        "Конец демонстрации."
         return
 
-    # ==== Test cases ====
-    # These can go in the same file, or in a separate file (e.g. testcases.rpy).
+    # ==== Тестовые сценарии ====
+    # Их можно поместить в тот же файл или вынести в отдельный (например, testcases.rpy).
 
     testsuite quick_start:
         before testcase:
-            # Make sure each test has the same starting point
+            # Гарантируем одинаковую начальную точку для каждого теста
             run Jump("quickstart_demo")
             advance until screen "quickstart_popup"
 
@@ -73,8 +76,8 @@ Add the following Ren'Py code to your game script:
             click id "quickstart_close" until not screen "quickstart_popup"
             pause 0.5
             advance until screen "choice"
-            click "Take the map"
-            advance until "You picked the map."
+            click "Взять карту"
+            advance until "Вы взяли карту."
             pause 0.5
 
         testcase leave_map:
@@ -82,23 +85,24 @@ Add the following Ren'Py code to your game script:
             click id "quickstart_close" until not screen "quickstart_popup"
             pause 0.5
             advance until screen "choice"
-            click "Leave it"
-            advance until "You left the map behind."
+            click "Оставить её"
+            advance until "Вы оставили карту на месте."
             pause 0.5
 
-After saving the file, run the test using the launcher or the command line.
-See :ref:`running-testcases` for additional details.
+После сохранения файла запустите тест через лаунчер или командную строку.
+Подробнее см. раздел :ref:`running-testcases`.
 
-Launcher
---------
-You can run the test from the launcher by selecting "Run Testcases" from the Ren'Py launcher.
-If the button does not appear, try launching the game first (or recompiling), then
-click the "Refresh" button in the launcher.
+Лаунчер
+-------
 
-Command Line
-------------
+Запустить тест можно прямо из графического лаунчера, выбрав пункт «Запустить тест-кейсы» (Run Testcases).
+Если эта кнопка не отображается, попробуйте сначала запустить игру (или выполнить перекомпиляцию),
+а затем нажмите кнопку «Обновить» (Refresh) в лаунчере.
 
-If you're running the test from the command line, the command should look something like this:
+Командная строка
+----------------
+
+Для запуска теста из командной строки используйте команду следующего вида:
 
 .. tabs::
 
@@ -114,43 +118,45 @@ If you're running the test from the command line, the command should look someth
 
             .\lib\py3-windows-x86_64\python.exe renpy.py C:\path\to\game test quick_start
 
-.. note ::
+.. note::
 
-    The pauses in this demo are not necessary, they are just there to make the test
-    execute more slowly so you can see what's happening.
-    In a real test, you can remove them to make the test run faster.
+    Паузы ``pause`` в этой демонстрации добавлены исключительно для наглядности, чтобы замедлить выполнение
+    и позволить вам визуально наблюдать за происходящим на экране. В реальных тестах паузы можно удалить,
+    чтобы тесты проходили с максимальной скоростью.
+
 
 .. _running-testcases:
 
-Running Testcases
-=================
+Запуск тест-кейсов
+==================
 
-On desktop platforms, test runs use a non-resizable window whose physical and
-drawable resolution matches the game's virtual resolution
-(:var:`config.screen_width` by :var:`config.screen_height`). Saved window sizes,
-fullscreen and maximized preferences, and high-DPI scaling do not change the
-test window's resolution. This makes screenshot dimensions and crop coordinates
-consistent across test runs. Test window sizes are not saved to preferences.
+На настольных платформах запуск тестов выполняется в окне фиксированного размера, физическое
+и отрисовываемое разрешение которого строго совпадает с виртуальным разрешением игры
+(:var:`config.screen_width` на :var:`config.screen_height`). Сохранённые пользователем размеры окна,
+полноэкранный режим, развёрнутое состояние и масштабирование High-DPI не влияют на разрешение тестового окна.
+Это обеспечивает абсолютную повторяемость размеров скриншотов и координат обрезки между прогонами.
+Размеры тестового окна не сохраняются в пользовательские настройки игры.
 
-Launcher
---------
+Лаунчер
+-------
 
-To run tests from the launcher, select the project and press the "Run Testcases" button.
-If the button is not visible, do the following:
+Чтобы запустить тесты из лаунчера, выберите проект и нажмите кнопку «Запустить тест-кейсы» (Run Testcases).
+Если кнопка не отображается:
 
-1. Ensure that you have at least one testcase defined in your game.
-2. Launch the game normally by clicking the "Launch Project" button.
-3. Click the "Refresh" button in the launcher.
+1. Убедитесь, что в проекте определён хотя бы один оператор ``testcase``.
+2. Запустите игру в обычном режиме кнопкой «Запустить проект».
+3. Нажмите кнопку «Обновить» в лаунчере.
 
-This will run the "global" test suite by default.
+По умолчанию запускается глобальный тестовый набор «global».
+
 
 .. _test-command-line:
 
-Command Line
-------------
+Командная строка
+----------------
 
-To run tests from the :doc:`command line <cli>`, open a terminal in the Ren'Py SDK directory and
-use the test command:
+Для запуска тестов из :doc:`командной строки <cli>` откройте консоль в каталоге SDK Ren'Py
+и используйте команду ``test``:
 
 .. tabs::
 
@@ -170,58 +176,56 @@ use the test command:
 
 .. option:: <basedir>
 
-    Specifies the path to the project.
+    Задаёт путь к каталогу проекта игры.
 
 .. option:: <filters>
 
-    Specifies the test cases or suites to run. If not given, the "global"
-    test suite will be run. Filters are case-sensitive.
+    Указывает имена запускаемых тест-кейсов или наборов тестов (сьютов). Если фильтр не указан,
+    запускается глобальный набор «global». Фильтры чувствительны к регистру символов.
 
-    Multiple filters can be provided, separated by a space.
-    These are combined, so that a test will be run if it
-    matches any of the filters.
+    Можно указать несколько фильтров через пробел. Они объединяются по правилу логического «ИЛИ»
+    (тест выполняется, если соответствует хотя бы одному из фильтров).
 
-    See :ref:`test-filter-examples` for examples.
+    Примеры см. в разделе :ref:`test-filter-examples`.
 
 .. option:: --enable-all
 
-    Executes all test cases and test suites, regardless of their ``enabled`` property.
-    Does not work if a specific test case or suite is specified.
+    Принудительно выполняет все тест-кейсы и тест-сьюты независимо от значения их свойства ``enabled``.
+    Не действует при явном указании конкретного теста или сьюта.
 
 .. option:: --overwrite-screenshots
 
-    Overwrite existing screenshots when a
-    :ref:`screenshot statement <test-screenshot-statement>` is executed.
+    Перезаписывает существующие эталонные снимки экрана при выполнении
+    :ref:`оператора screenshot <test-screenshot-statement>`.
 
 .. option:: --hide-header
 
-    Disables the header at the start of the test run.
+    Отключает вывод начального информационного заголовка при старте прогона тестов.
 
 .. option:: --hide-execution {no|hooks|testcases|all}
 
-    Hides information about test execution. ``--hide-execution hooks`` hides hooks,
-    ``--hide-execution testcases`` hides test cases and hooks, and ``--hide-execution all``
-    hides everything.
+    Скрывает подробности выполнения тестов в консоли. Значение ``--hide-execution hooks`` скрывает хуки,
+    ``--hide-execution testcases`` скрывает тест-кейсы и хуки, а ``--hide-execution all`` скрывает весь лог выполнения.
 
 .. option:: --hide-summary
 
-    Disables the summary at the end of the test run.
+    Отключает вывод итоговой сводки по результатам прогона тестов.
 
 .. option:: --report-detailed
 
-    Shows detailed information about each test during the run.
+    Выводит подробную информацию о каждом тесте в процессе выполнения.
 
 .. option:: --report-skipped
 
-    Shows information about skipped tests. This option should be used together
-    with ``--report-detailed``.
+    Выводит информацию о пропущенных тестах. Используется совместно с параметром ``--report-detailed``.
+
 
 .. _test-filter-examples:
 
-Filter Examples
-^^^^^^^^^^^^^^^
+Примеры фильтрации тестов
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Consider a game with the following test structure::
+Рассмотрим проект со следующей иерархией тестов::
 
     testsuite math:
         testcase addition: ...
@@ -244,26 +248,26 @@ Consider a game with the following test structure::
 
     testcase reload: ...
 
-All tests live inside the implicit root suite called ``global``.
+Все объявленные тесты неявно входят в корневой сьют с именем ``global``.
 
-**Running all tests**
+**Запуск всех тестов**
 
-Omitting filters, or using ``global``, runs everything:
+Если опустить фильтры или передать ``global``, запускаются абсолютно все тесты:
 
-======================  ==============
-Command                 Selected Tests
-======================  ==============
-``test``                All tests
-``test global``         All tests
-======================  ==============
+======================  ========================
+Команда                 Выбранные тесты
+======================  ========================
+``test``                Все тесты проекта
+``test global``         Все тесты проекта
+======================  ========================
 
-**Selecting a suite or test case**
+**Выбор конкретного сьюта или тест-кейса**
 
-Use ``.`` to separate suite names:
+Для разделения уровней вложенности используется точка ``.``:
 
-========================  ==============
-Command                   Selected Tests
-========================  ==============
+========================  ======================================================
+Команда                   Выбранные тесты
+========================  ======================================================
 ``test reload``           ``reload``
 ``test audio``            ``audio.save``, ``audio.load``
 ``test audio.save``       ``audio.save``
@@ -271,93 +275,90 @@ Command                   Selected Tests
                           ``math.graphs.dot``, ``math.graphs.save``
 ``test math.graphs``      ``math.graphs.dot``, ``math.graphs.save``
 ``test math.graphs.dot``  ``math.graphs.dot``
-========================  ==============
+========================  ======================================================
 
-You may optionally add ``global.`` to the start of the filter, but it is not required.
-For example, ``test math`` and ``test global.math`` will both select the same tests.
+Префикс ``global.`` в начале фильтра можно опускать: команды ``test math`` и ``test global.math``
+выбирают один и тот же набор тестов.
 
-**Wildcards**
+**Маски подстановки (Wildcards)**
 
-``*`` matches any sequence of characters within a single name segment.
-One ``*`` cannot cross a ``.`` boundary.
+Символ звёздочки ``*`` заменяет любую последовательность символов внутри одного сегмента имени
+(одна звёздочка не может пересекать границу точки ``.``):
 
-================  ==============
-Command           Selected Tests
-================  ==============
+================  ======================================
+Команда           Выбранные тесты
+================  ======================================
 ``test re*``      ``reload``
 ``test math.s*``  ``math.subtraction``, ``math.shapes``
 ``test *.save``   ``audio.save``, ``sprites.save``
-================  ==============
+================  ======================================
 
+**Параметризованные тесты**
 
-**Parameters**
+Когда тест-кейс использует ключевое слово ``parameter``, каждая комбинация параметров считается
+отдельным запуском теста.
 
-When a test case uses the ``parameter`` keyword, each value combination is a separate run.
+Подробнее см. :ref:`parameterized-tests`.
 
-See :ref:`parameterized-tests` for more information.
-
-==================================  ==============
-Command                             Selected Tests
-==================================  ==============
+==================================  ====================================================
+Команда                             Выбранные тесты
+==================================  ====================================================
 ``test "math.addition(a=2, b=1)"``  ``math.addition(a=2, b=1)``
 ``test "math.addition(a=3)"``       ``addition(a=3, b=1)``, ``addition(a=3, b=2)``
 ``test "math.*(a=3, b=2)"``         ``addition(a=3, b=2)``, ``subtraction(a=3, b=2)``
-==================================  ==============
+==================================  ====================================================
 
 .. note::
 
-    Quote filters that contain parentheses to prevent the shell from interpreting them.
+    Фильтры, содержащие круглые скобки, заключайте в кавычки во избежание их интерпретации командной оболочкой (shell).
 
-**Multiple filters**
+**Несколько фильтров одновременно**
 
-Separate filters with spaces. A test is selected if it matches *any* filter:
+Разделяйте фильтры пробелами. Тест запускается, если он соответствует *любому* из указанных фильтров:
 
-=============================   ==============
-Command                         Selected Tests
-=============================   ==============
+=============================   ========================================================
+Команда                         Выбранные тесты
+=============================   ========================================================
 ``test audio sprites``          ``audio.save``, ``audio.load``, ``sprites.save``,
                                 ``sprites.load``
-``test *.save math``            ``sprites.save``, ``sounds.save``, plus all of ``math``
-=============================   ==============
+``test *.save math``            ``sprites.save``, ``sounds.save``, плюс все тесты ``math``
+=============================   ========================================================
 
-**Quick Reference**
+**Краткая шпаргалка по синтаксису фильтров**
 
-======  =========================  =======
-Symbol  Meaning                    Example
-======  =========================  =======
-``.``   Test suite separator       ``math.graphs``
-``*``   Wildcard (one level only)  ``*.save``, ``math.s*``
-``()``  Parameter values           ``addition(a=2, b=1)``
-======  =========================  =======
+======  ==============================  =======================
+Символ  Значение                        Пример
+======  ==============================  =======================
+``.``   Разделитель сьютов              ``math.graphs``
+``*``   Маска (только один уровень)     ``*.save``, ``math.s*``
+``()``  Значения параметров             ``addition(a=2, b=1)``
+======  ==============================  =======================
+
 
 .. _testcase-statement:
 
-Testcase Statement
-==================
+Оператор Testcase
+=================
 
-The ``testcase`` statement creates a named test case. Each case contains a
-block of test statements (see below). Test cases are similar to Ren'Py
-:ref:`labels <label-statement>`, with a few differences:
+Оператор ``testcase`` создаёт именованный тест-кейс (тестовый сценарий). Каждый кейс содержит
+блок тестовых инструкций (описанных ниже). Тест-кейсы концептуально похожи на
+:ref:`метки Ren'Py (labels) <label-statement>`, но имеют важные отличия:
 
-- The Ren'Py label statement takes Ren'Py code, while the testcase statement
-  takes test statements (listed on this page). They are mutually exclusive.
-- There is no testcase equivalent of the return statement.
-- There can be no test statement outside of a test block, while there can be
-  Ren'Py code outside labels.
+- Метка label принимает обычный код сценария Ren'Py, тогда как оператор testcase принимает
+  специализированные тестовые команды. Они взаимоисключающи.
+- В тест-кейсах отсутствует эквивалент оператора return.
+- Тестовые инструкции не могут находиться вне тестовых блоков, тогда как код Ren'Py может объявляться вне меток.
 
-It takes the following properties:
+Оператор поддерживает следующие свойства:
 
 .. var:: description
 
-    A string describing the test case. This is used in the test report.
+    Строка с описанием теста, отображаемая в итоговом отчёте.
 
 .. var:: enabled
 
-    If this expression evaluates to ``False``, this test is skipped.
-    Defaults to ``True``.
-
-    This can conditionally disable tests, for example on platforms
-    where they are not supported. ::
+    Если выражение вычисляется в ``False``, тест пропускается. По умолчанию — ``True``.
+    Позволяет выборочно отключать тесты (например, на неподдерживаемых платформах)::
 
         testcase windows:
             enabled renpy.windows
@@ -367,123 +368,116 @@ It takes the following properties:
             enabled not renpy.mobile
             ...
 
-    See :ref:`skipping-testcases` for more information.
+    Подробнее см. раздел :ref:`skipping-testcases`.
 
 .. var:: only
 
-    If this expression evaluates to ``True``, only this test case
-    (and other tests with ``only True``) will be run. Defaults to ``False``.
-
-    See :ref:`skipping-testcases` for more information.
+    Если выражение вычисляется в ``True``, будут выполнены только данный тест-кейс
+    (и другие тесты со свойством ``only True``). По умолчанию — ``False``.
+    Подробнее см. :ref:`skipping-testcases`.
 
 .. var:: xfail
 
-    If this expression evaluates to ``True``, the test is expected to fail.
-    If the test does fail, it will be marked as xfailed instead of failed.
-    Defaults to ``False``.
+    Если выражение вычисляется в ``True``, тест помечается как ожидаемо падающий (expected failure).
+    Если он завершится ошибкой, в отчёте он будет отмечен статусом ``xfailed`` вместо ``failed``.
+    По умолчанию — ``False``.
 
 .. var:: parameter
 
-    A variable name (or tuple of variable names) and a list of values (or
-    list of tuples of values). The test will run once for each value (or
-    tuple of values) in the list.
+    Имя переменной (или кортеж имён переменных) и список значений (или список кортежей значений).
+    Тест будет выполнен по одному разу для каждого значения из списка.
 
-    A test may have multiple ``parameter`` properties, in which case
-    the test will run for every possible combination of the values.
-
-    See :ref:`parameterized-tests` for more information.
+    Тест может иметь несколько свойств ``parameter``: в этом случае он запустится для всех
+    возможных комбинаций параметров (декартово произведение).
+    Подробнее см. :ref:`parameterized-tests`.
 
 
-Testsuite Statement
-===================
+.. _testsuite-statement:
 
-The ``testsuite`` statement is used to group test cases together. Test suites
-can contain test cases, other test suites, and hooks (see below).
+Оператор Testsuite
+==================
 
-The default test suite is named ``global``, and it is automatically created
-by Ren'Py if not specified by the user. It contains all other top-level test suites
-and test cases in the game.
+Оператор ``testsuite`` объединяет тест-кейсы в логические группы (сьюты). Тестовые наборы могут
+включать в себя отдельные тест-кейсы, другие вложенные наборы тестов, а также хуки жизненного цикла.
 
-It takes the same properties as the :ref:`testcase statement <testcase-statement>`.
+По умолчанию корневой набор тестов называется ``global`` и создаётся Ren'Py автоматически,
+если не объявлен разработчиком явно. Он содержит все сьюты и тест-кейсы верхнего уровня.
 
-Hooks
------
-The ``testsuite`` statement can contain the following hooks:
+Оператор testsuite принимает те же свойства, что и :ref:`оператор testcase <testcase-statement>`.
+
+Хуки жизненного цикла (Hooks)
+-----------------------------
+
+Оператор ``testsuite`` может содержать следующие хуки:
 
 .. describe:: setup
 
-    A block of test statements that is executed at the beginning of the testsuite,
-    before running any tests contained within the current suite.
+    Блок тестовых команд, выполняемый один раз в самом начале сьюта перед запуском любых входящих в него тестов.
 
 .. describe:: before testsuite
 
-    A block of test statements that is executed before each test suite
-    within the current suite.
+    Блок тестовых команд, выполняемый перед каждым дочерним тестовым набором внутри текущего сьюта.
 
 .. describe:: before testcase
 
-    A block of test statements that is executed before each test case
-    within the current suite.
+    Блок тестовых команд, выполняемый перед каждым тест-кейсом внутри текущего сьюта.
 
 .. describe:: after testcase
 
-    A block of test statements that is executed repeatedly, running after each test case
-    in the current suite. This is run even if the testcase fails or raises an
-    exception.
+    Блок тестовых команд, выполняемый после каждого тест-кейса в текущем сьюте. Вызывается всегда,
+    даже если тест-кейс упал с ошибкой или выбросил исключение.
 
 .. describe:: after testsuite
 
-    A block of test statements that is executed repeatedly, running after each test suite
-    in the current suite. This is run even if the testsuite fails or raises an
-    exception.
+    Блок тестовых команд, выполняемый после каждого дочернего сьюта в текущем сьюте. Вызывается всегда,
+    даже если сьют завершился ошибкой.
 
 .. describe:: teardown
 
-    A block of test statements that is executed after running all tests
-    contained within the current suite. This is run even if a test
-    fails or raises an exception.
+    Блок тестовых команд, выполняемый один раз в конце сьюта после завершения всех его тестов.
+    Вызывается всегда, даже если тесты упали с ошибкой.
 
-The ``before *`` and ``after *`` hooks take the following properties:
+Хуки ``before *`` и ``after *`` поддерживают следующее свойство:
 
 .. var:: depth
 
-    Controls how many levels of nested tests the hook applies to.
+    Определяет глубину вложенности тестов, на которую распространяется действие хука:
 
-    - ``-1``: Run hook for all nested tests, at any depth
-    - ``0``: Run hook for only direct children of this suite (no nesting)
-    - Positive number: Run hook for tests up to that many levels deep
+    - ``-1``: хук выполняется для всех вложенных тестов на любой глубине.
+    - ``0``: хук выполняется только для прямых потомков текущего сьюта (без вложенности).
+    - Положительное число: глубина вложенности уровней.
 
-    **Defaults:**
+    **Значения по умолчанию:**
 
-    - ``-1`` for ``before testcase`` and ``after testcase`` (runs for all nested testcases)
-    - ``0`` for ``before testsuite`` and ``after testsuite`` (runs for direct child testsuites only)
+    - ``-1`` для ``before testcase`` и ``after testcase`` (действует на все вложенные кейсы).
+    - ``0`` для ``before testsuite`` и ``after testsuite`` (действует только на прямые дочерние сьюты).
 
-    For more information, see :ref:`lifecycle-of-a-test-run`.
+    Подробнее см. раздел :ref:`lifecycle-of-a-test-run`.
 
 .. _lifecycle-of-a-test-run:
 
-Lifecycle of a Test Run
-=======================
+Жизненный цикл выполнения тестов
+================================
 
-This section describes the order in which testcases and testsuites are
-executed, and how the hooks are called. The following example illustrates this:
+В этом разделе описывается порядок выполнения тест-кейсов и сьютов, а также последовательность
+вызова хуков. Следующий пример наглядно иллюстрирует этот процесс:
 
 .. csv-table::
-   :header: "Code", "Execution Order"
+   :header: "Код", "Порядок выполнения"
    :widths: 50, 50
 
    "::
 
         label test_demo:
-            ""This is a demo for testcases.""
-            ""It has a few messages and a menu.""
+            ""Это демо для тест-кейсов.""
+            ""Оно содержит несколько реплик и меню.""
             menu:
-                ""First Choice"":
-                    ""Selected first choice.""
-                ""Second Choice"":
-                    ""Selected second choice.""
-                ""Third Choice"":
-                    ""Selected third choice.""
+                ""Первый выбор"":
+                    ""Выбран первый вариант.""
+                ""Второй выбор"":
+                    ""Выбран второй вариант.""
+                ""Третий выбор"":
+                    ""Выбран третий вариант.""
             return
 
         testsuite global:
@@ -532,16 +526,16 @@ executed, and how the hooks are called. The following example illustrates this:
 
                 testcase choice1:
                     $ print(""test_choices.choice1"")
-                    click ""First Choice""
+                    click ""Первый выбор""
 
                 testcase choice2:
                     enabled False
                     $ print(""test_choices.choice2 (disabled)"")
-                    click ""Second Choice""
+                    click ""Второй выбор""
 
                 testcase choice3:
                     $ print(""test_choices.choice3"")
-                    click ""Third Choice""
+                    click ""Третий выбор""
 
 
     ",".. container :: execution-block
@@ -641,93 +635,93 @@ executed, and how the hooks are called. The following example illustrates this:
                 **global** :: teardown
     "
 
-Note that ``global :: before testcase`` and ``global :: after testcase`` are
-executed before and after each test case, even if the test case is inside a
-nested test suite.
+Обратите внимание, что хуки ``global :: before testcase`` и ``global :: after testcase``
+выполняются до и после каждого тест-кейса, даже если тест-кейс находится внутри глубоко
+вложенного тестового набора.
 
-In order to limit the scope of a hook, set its ``depth`` property.
-Setting it to ``0`` will make the hook execute only for tests
-directly inside the test suite containing the hook.
+Чтобы ограничить область действия хука, задайте его свойство ``depth``.
+Установка значения ``0`` заставит хук срабатывать только для тестов, непосредственно
+расположенных в данном сьюте.
 
-For example::
+Например::
 
     testsuite global:
         before testcase:
             depth 0
-            $ print("Starting a testcase.")
+            $ print("Запуск тест-кейса верхнего уровня.")
 
-On the other hand, the ``before testsuite`` and ``after testsuite`` hooks
-have a default ``depth`` of ``0``, meaning they will only execute for testsuites
-directly inside the testsuite containing the hook.
+С другой стороны, хуки ``before testsuite`` и ``after testsuite`` имеют значение ``depth``
+по умолчанию, равное ``0``, то есть они выполняются только для сьютов, являющихся прямыми
+потомками данного сьюта.
 
-To increase the scope of a hook to include nested testsuites and testcases,
-set its ``depth`` property to ``-1`` (for infinite depth) or to a positive
-integer (for a specific depth).
+Чтобы расширить область действия хука на все уровни вложенности, установите свойство ``depth``
+в ``-1`` (для бесконечной глубины) или в положительное целое число (для точного количества уровней).
 
 .. note::
 
-    When a testsuite finishes executing, the game doesn't close itself.
-    Instead, it will return control of the game back to the player,
-    awaiting user input.
+    По завершении прогона тестов игра не закрывается автоматически. Вместо этого управление
+    возвращается игроку в текущий момент сценария, ожидая пользовательского ввода.
 
-    To close the game after a testsuite, you can use the ``exit`` test
-    statement in the ``after`` hook of the testsuite::
+    Чтобы автоматически закрыть игру после выполнения сьюта, вызовите тестовую инструкцию
+    ``exit`` в хуке ``teardown``::
 
         testsuite global:
             teardown:
                 exit
 
+
 .. _skipping-testcases:
 
-Skipping Testcases
-==================
+Пропуск тест-кейсов
+===================
 
-If a testcase is skipped, it will not be executed. In addition, the
-``before testcase`` and ``after testcase`` hooks of the testsuite will not be executed
-for that testcase.
+Если тест-кейс пропущен, он не выполняется. Кроме того, для него не вызываются хуки
+``before testcase`` и ``after testcase`` окружающего сьюта.
 
-If *all* tests are skipped in a testsuite, then the ``setup`` and
-``teardown`` hooks will not be executed either. In addition, the
-``before testsuite`` and ``after testsuite`` hooks will not be executed from
-the parent testsuite(s).
+Если в сьюте пропущены *все* тесты, хуки ``setup`` и ``teardown`` данного сьюта также
+не выполняются. Дополнительно родительский сьют не выполняет для него хуки ``before testsuite``
+и ``after testsuite``.
+
 
 .. _parameterized-tests:
 
-Parameterized Tests
-===================
+Параметризованные тесты
+=======================
 
-A test case can run multiple times with different values by using the ``parameter`` property.
+Один и тот же тест-кейс можно выполнить многократно с различными наборами входных данных
+с помощью свойства ``parameter``.
 
-To do this, give a variable name and a list of values. The test will run once
-for each value in the list. For example::
+Для этого укажите имя переменной и список значений. Тест выполнится по одному разу для каждого
+значения из списка. Например::
 
     testcase click_buttons:
         parameter button_name = ["Load", "Save"]
         click text button_name
 
-This runs twice: first clicking "Load", then clicking "Save".
+Этот тест запустится дважды: сначала нажав кнопку «Load», затем «Save».
 
-Parameters should be thought of as defining multiple testsuites or testcases, with
-the hooks (including ``setup`` and ``teardown``) being run for each value.
+Параметризация концептуально эквивалентна генерации нескольких независимых тест-кейсов
+или сьютов, при этом все соответствующие хуки (включая ``setup`` и ``teardown``) выполняются
+для каждого значения параметра отдельно.
 
-Grouped Parameters
-------------------
+Группированные параметры
+------------------------
 
-It is possible to specify several variables at once by grouping them
-in parentheses and giving a list of value groups. For example::
+Можно задавать несколько связанных переменных одновременно, объединив их в круглые скобки
+и передав список кортежей значений. Например::
 
     testcase addition:
         parameter (x, y, z) = [ (1, 2, 3), (2, 3, 5), (3, 5, 8) ]
         assert eval (x + y == z)
 
-This will run three times, using the following values:
-``(x=1, y=2, z=3)``, ``(x=2, y=3, z=5)``, and ``(x=3, y=5, z=8)``.
+Этот тест выполнится три раза со следующими значениями:
+``(x=1, y=2, z=3)``, ``(x=2, y=3, z=5)`` и ``(x=3, y=5, z=8)``.
 
-Parameter Combinations
-----------------------
+Комбинации параметров
+---------------------
 
-If multiple ``parameter`` properties are provided, the test case will run
-for every possible combination of the values. For example::
+Если тест содержит несколько свойств ``parameter``, тест-кейс запустится для каждой возможной
+комбинации значений (декартово произведение). Например::
 
     testcase combinations:
         parameter a = [1, 2]
@@ -736,11 +730,12 @@ for every possible combination of the values. For example::
 
         assert eval (a + b + c in [9, 10, 11, 12])
 
-This will run eight times, once for each combination of ``(a, b, c)``:
+Этот тест выполнится восемь раз — по одному разу для каждой тройки ``(a, b, c)``:
 
-    ``(1, 3, 5)``, ``(1, 3, 6)``, ``(1, 4, 5)``, ``(1, 4, 6)``, ``(2, 3, 5)``, ``(2, 3, 6)``, ``(2, 4, 5)``, ``(2, 4, 6)``
+    ``(1, 3, 5)``, ``(1, 3, 6)``, ``(1, 4, 5)``, ``(1, 4, 6)``,
+    ``(2, 3, 5)``, ``(2, 3, 6)``, ``(2, 4, 5)``, ``(2, 4, 6)``
 
-It is possible to mix grouped parameters with non-grouped parameters. For example::
+Группированные и одиночные параметры можно свободно комбинировать между собой::
 
     testcase mixed:
         parameter a = [1, 2]
@@ -748,18 +743,18 @@ It is possible to mix grouped parameters with non-grouped parameters. For exampl
 
         assert eval (a + b + c in [9, 10, 11, 12])
 
-This will run four times, using these combinations for ``(a, (b, c))``:
+Этот тест запустится четыре раза:
 
     ``(1, (3, 5))``, ``(1, (4, 6))``, ``(2, (3, 5))``, ``(2, (4, 6))``
 
 
-Using Parameters in Expressions
--------------------------------
+Использование параметров в выражениях
+-------------------------------------
 
-You can use parameters in any test property that takes an expression.
+Параметры можно использовать в любых свойствах тестов, принимающих выражения.
 
-For example, here's a test that runs three times, once for each value of ``x``.
-The test will pass when ``x`` is 0 or 1, and will be expected to fail (``xfail``) when ``x`` is 2::
+Например, тест выполняется трижды для значений ``x``. Тест считается успешно пройденным,
+когда ``x`` равен 0 или 1, и ожидаемо падает (``xfail``), когда ``x`` равен 2::
 
     testcase choice_test:
         parameter x = [0, 1, 2]
@@ -767,9 +762,7 @@ The test will pass when ``x`` is 0 or 1, and will be expected to fail (``xfail``
 
         assert eval (x < 2)
 
-You can also use parameters to select screens or buttons by name.
-For example, this test will click either the "first" or "second" choice,
-depending on the value of ``choice_text``::
+Параметры также можно использовать для выбора экранов или кнопок по имени::
 
     testcase show_menu:
         parameter screen_name = ["preferences", "load"]
@@ -778,32 +771,31 @@ depending on the value of ``choice_text``::
         pause until screen screen_name
         run Return()
 
-Parameters can also be used inside Python code blocks.
-For example, this test prints the current values of ``x`` and ``y``,
-and then clicks at that position::
+Параметры доступны и внутри блоков кода Python::
 
     testcase param_test:
         parameter (x, y) = [(0.0, 0.0), (0.5, 0.5), (1.0, 1.0)]
 
-        $ print(f"Clicking at position ({x}, {y})")
+        $ print(f"Клик в позицию ({x}, {y})")
         click pos (x, y)
 
-Parameterized Test Suites
--------------------------
 
-Parameters can also be provided to the whole test suite. In this case, all hooks and test cases
-inside the suite will run once for each parameter set.
+Параметризованные наборы тестов (сьюты)
+---------------------------------------
 
-Each parameterized run will execute the ``setup``, ``before/after testsuite``,
-and ``teardown`` hooks.
+Параметры можно задавать для всего тест-сьюта целиком. В этом случае все хуки и тест-кейсы
+внутри сьюта будут выполнены для каждого набора параметров.
 
-For example::
+Каждый параметризованный прогон сьюта заново выполняет хуки ``setup``, ``before/after testsuite``
+и ``teardown``.
+
+Пример::
 
     testsuite math_tests:
         parameter (x, y, z) = [ (1, 2, 3), (2, 3, 5), (3, 5, 8) ]
 
         setup:
-            $ print(f"Running math tests with x={x}, y={y}, z={z}")
+            $ print(f"Запуск математических тестов: x={x}, y={y}, z={z}")
 
         testcase addition:
             assert eval (x + y == z)
@@ -811,7 +803,7 @@ For example::
         testcase multiplication:
             assert eval (x*y == z*y - y*y)
 
-Parameters may be nested, and all combinations will be tested. For example::
+Параметры могут быть вложенными, при этом перебираются все их комбинации::
 
     testsuite parameter_field:
         parameter choice_text = ["first", "second"]
@@ -823,226 +815,221 @@ Parameters may be nested, and all combinations will be tested. For example::
             click choice_text
             click pos (x, y)
 
-This will run four times, once for each combination of ``(choice_text, (x, y))``:
-
-    ``("first", (0.0, 0.0))``, ``("first", (0.5, 0.5))``,
-    ``("second", (0.0, 0.0))``, ``("second", (0.5, 0.5))``
+Этот набор запустится 4 раза — для каждой пары ``(choice_text, (x, y))``.
 
 .. warning::
 
-    Parameters are passed by reference. If you change a mutable parameter (e.g. a list or dict),
-    that value will be affected in all other tests that share the same object.
-
-Exceptions And Failures
-=======================
-If an error occurs during a test case:
-
-1. The test case will stop executing immediately
-2. The ``after testcase`` hook of the testsuite containing the test case will run
-3. If there are more test cases, they will continue to be executed (including the
-   ``before testcase`` hook)
-4. If no more test cases exist, the ``after testsuite`` hook of the testsuite will run
-
-If an error occurs during a hook (eg. ``before testcase``):
-
-1. The test suite will stop executing immediately
-2. If the suite was called by another suite, the parent suite will continue
-   executing.
-3. If no parent suite exists, the game will end the test run.
+    Параметры передаются по ссылке. Если вы модифицируете изменяемый объект (например, список или словарь),
+    эти изменения затронут все последующие тесты, использующие тот же объект.
 
 
-Test Reporting
-===================
+Исключения и ошибки выполнения
+==============================
 
-After a test run, a report is printed to the console, listing all test cases
-and their results. If the :option:`--report-detailed` option is provided, the report
-will include additional information about each test.
+Если во время выполнения тест-кейса возникает ошибка:
 
-Below is an example of a test report after successfully testing "The Question":
+1. Выполнение текущего тест-кейса немедленно прекращается.
+2. Вызывается хук ``after testcase`` содержащего его сьюта.
+3. Если в сьюте остались другие тест-кейсы, их выполнение продолжается в обычном порядке
+   (включая хук ``before testcase``).
+4. После завершения всех тест-кейсов вызывается хук ``after testsuite``.
+
+Если ошибка возникает внутри хука (например, в ``before testcase``):
+
+1. Выполнение текущего тестового набора немедленно прекращается.
+2. Если сьют был вызван родительским набором тестов, выполнение родительского сьюта продолжается.
+3. Если родительского сьюта нет, весь прогон тестов завершается.
+
+
+Отчёты о тестировании
+=====================
+
+По завершении прогона тестов в консоль выводится сводный отчёт со списком всех тест-кейсов
+и их результатами. Если указан параметр :option:`--report-detailed`, отчёт содержит подробную
+информацию по каждому шагу теста.
+
+Ниже приведён пример отчёта после успешного тестирования новеллы «The Question»:
 
 .. image :: testcases_the_question.png
-    :alt: Test report example
+    :alt: Пример отчёта тестирования
     :class: screenshot
 
-Test results
-------------
+Результаты тестирования
+-----------------------
 
-A test can have one of the following results:
+Тест может завершиться с одним из следующих результатов:
 
-- **Passed**: The test executed successfully, without any errors.
-- **Failed**: The test executed, but one of the statements failed.
-- **XFailed**: The test was expected to fail (because its ``xfail``
-  property evaluated to ``True``), and it did fail.
-- **XPassed**: The test was expected to fail (because its ``xfail``
-  property evaluated to ``True``), but it passed instead.
-- **Skipped**: The test was skipped, either because its ``enabled``
-  property evaluated to ``False``, or because another test with ``only True``
-  exists.
+- **Passed** (Пройден): тест успешно выполнился без ошибок.
+- **Failed** (Провален): тест выполнялся, но одна из инструкций или проверок завершилась сбоем.
+- **XFailed** (Ожидаемо провален): тест должен был упасть (свойство ``xfail`` вычислено в ``True``)
+  и действительно завершился ошибкой.
+- **XPassed** (Неожиданно пройден): тест должен был упасть (свойство ``xfail`` вычислено в ``True``),
+  но неожиданно выполнился без ошибок.
+- **Skipped** (Пропущен): тест был пропущен (свойство ``enabled`` вычислено в ``False``
+  либо запущен другой тест с директивой ``only True``).
 
-In general, a test is considered successful if it passed or xfailed,
-and unsuccessful if it failed or xpassed.
+В целом тестовый прогон считается успешным, если все тесты имеют статус Passed или XFailed,
+и неуспешным при наличии тестов со статусом Failed или XPassed.
 
-Test Settings
-=================
 
-The following variables can be set to change the behavior of tests:
+Настройки тестирования
+======================
+
+Поведение подсистемы тестирования можно настраивать с помощью следующих переменных:
 
 .. var:: _test.maximum_framerate
 
-    A boolean specifying whether to use maximum framerate mode during tests.
-    This will unlock the framerate beyond your screens refresh rate if possible.
-    Defaults to ``True``.
+    Логическая переменная, определяющая, должен ли использоваться режим максимальной частоты кадров
+    во время тестов. По возможности снимает ограничение FPS выше частоты развёртки монитора.
+    По умолчанию — ``True``.
 
 .. var:: _test.timeout
 
-    A float specifying the maximum number of seconds a test statement
-    should wait for a condition to be met. Defaults to ``10.0``.
+    Число с плавающей запятой, задающее максимальное время ожидания выполнения условия (в секундах)
+    для тестовых инструкций. По умолчанию — ``10.0``.
 
-    This can be overridden on a per-statement basis by providing a ``timeout``
-    property to statements that support it (like ``assert`` and ``until``).
+    Может переопределяться для отдельных инструкций с помощью локального параметра ``timeout``
+    (поддерживаемого, например, инструкциями ``assert`` и ``until``).
 
 .. var:: _test.force
 
-    A boolean specifying whether to force the test to proceed even if
-    ``renpy.config.suppress_underlay`` is ``True``. Defaults to ``False``.
+    Определяет, должен ли тест продолжать выполнение, даже если переменная
+    ``renpy.config.suppress_underlay`` установлена в ``True``. По умолчанию — ``False``.
 
 .. var:: _test.transition_timeout
 
-    A float specifying the maximum number of seconds to wait for a transition
-    to complete before skipping it and proceeding with the test.
-    Defaults to ``5.0``.
+    Максимальное время ожидания завершения визуального перехода (в секундах) до его принудительного
+    пропуска и продолжения теста. По умолчанию — ``5.0``.
 
 .. var:: _test.focus_trials
 
-    An integer specifying how many times the test system should try to find
-    a valid spot to :ref:`move the mouse <test-move-statement>` when using a
-    selector without a position. Defaults to ``100``.
+    Количество попыток поиска подходящей точки для :ref:`перемещения мыши <test-move-statement>`
+    при использовании селектора без явного указания позиции. По умолчанию — ``100``.
 
 .. var:: _test.screenshot_directory
 
-    A string specifying the directory to store screenshots in.
-    Defaults to ``tests/screenshots``.
+    Каталог для сохранения эталонных и проверочных снимков экрана. По умолчанию — ``tests/screenshots``.
 
 .. var:: _test.vc_revision
 
-    The version control (often git) revision of the current source tree, if available.
-    Defaults to the :envvar:`RENPY_TEST_VC_REVISION` :doc:`environment variable <environment_variables>`,
-    or an empty string if not set.
-
+    Идентификатор ревизии системы контроля версий (обычно хэш коммита git), если доступен.
+    По умолчанию берётся из :doc:`переменной окружения <environment_variables>` :envvar:`RENPY_TEST_VC_REVISION`
+    или остаётся пустой строкой.
 
 .. _test-statements:
 
-Test Statements
-===============
+Тестовые инструкции
+===================
 
-Test statements are the building blocks of test cases. They can be broadly
-divided into three categories: command statements, condition/selector statements, and
-control statements.
+Тестовые инструкции — это базовые команды, из которых строятся сценарии тестирования.
+Их можно разделить на три основные категории: команды действий, условия/селекторы
+и управляющие конструкции.
 
-Command statements may be followed by the :ref:`test-repeat-statement` and
-:ref:`test-until-statement` statements.
+За командными инструкциями могут следовать конструкции :ref:`test-repeat-statement`
+и :ref:`test-until-statement`.
 
-The syntax descriptions on this page use the following notation:
+В описании синтаксиса на этой странице используются следующие обозначения:
 
-- ``[]`` encloses an optional group.
-- ``<name>`` is a required value supplied by the test author.
-- ``<name: type>`` is a value with a documented type.
-- Literal words outside ``<>`` must be written verbatim.
-- Parentheses and commas shown in syntax are literal punctuation.
+- ``[]`` — необязательный фрагмент синтаксиса.
+- ``<name>`` — обязательное значение, подставляемое автором теста.
+- ``<name: type>`` — значение с указанием ожидаемого типа данных.
+- Слова без скобок ``<>`` записываются буквально, как есть.
+- Круглые скобки и запятые являются обязательными элементами синтаксиса.
 
-For example, ``click [pos (<x: int>, <y: int>)]``:
+Например, для конструкции ``click [pos (<x: int>, <y: int>)]``:
 
-- ``click`` is a literal string that must be typed as-is.
-- Everything between ``[]`` is optional.
-- ``pos (`` is a literal string that must be typed as-is.
-- ``<x: int>`` describes that the x-coordinate takes an integer.
-- ``<y: int>`` describes that the y-coordinate takes an integer.
-- ``)`` is a literal string that must be typed as-is.
+- ``click`` — буквальное ключевое слово команды.
+- Всё внутри ``[]`` необязательно.
+- ``pos (`` — литеральная строка.
+- ``<x: int>`` — координата X (целое число).
+- ``<y: int>`` — координата Y (целое число).
+- ``)`` — закрывающая скобка.
 
-Valid statements include:
+Примеры допустимых вызовов:
 
 - ``click``
 - ``click pos (0, 0)``
 - ``click pos (10, 50)``
 
 
-Basic Commands
---------------
+Базовые команды
+---------------
 
 .. _test-advance-statement:
 
 Advance
-^^^^^^^^^^
+^^^^^^^
 
-    Type: :dfn:`Command`
+    Тип: :dfn:`Команда`
 
     .. describe:: advance
 
-Advances the game by one dialogue line. ::
+Продвигает диалог вперёд на одну реплику. ::
 
     advance
     advance until screen "choice"
 
 
 Exit
-^^^^^^^^^^
+^^^^
 
-    Type: :dfn:`Command`
+    Тип: :dfn:`Команда`
 
     .. describe:: exit
 
-Quits the game without calling the confirmation screen.
-Does not save the game when quitting. ::
+Завершает игру без показа экрана подтверждения выхода.
+При выходе игра не сохраняется. ::
 
     if eval need_to_confirm:
-        # Asks for confirmation, and autosaves if config.autosave_on_quit is True
+        # Запрашивает подтверждение и сохраняет игру, если config.autosave_on_quit = True
         run Quit(confirm=True)
 
     if eval persistent.quit_test_using_action:
-        # Does not ask, but still autosaves if config.autosave_on_quit is True
+        # Выходит без запроса, но сохраняет игру при config.autosave_on_quit = True
         run Quit(confirm=False)
 
-    exit # neither asks nor autosaves
+    exit # мгновенный выход без запросов и сохранений
+
 
 Pass
-^^^^^^^^^^
+^^^^
 
-    Type: :dfn:`Command`
+    Тип: :dfn:`Команда`
 
     .. describe:: pass
 
-Does not do anything. It's a no-op, allowing for empty testcases. ::
+Пустая операция (no-op). Позволяет создавать пустые тест-кейсы без команд. ::
 
     testcase not_yet_implemented:
         pass
 
-Pause
-^^^^^^^^^^
 
-    Type: :dfn:`Command`
+Pause
+^^^^^
+
+    Тип: :dfn:`Команда`
 
     .. describe:: pause [<seconds: float>]
 
-Pauses test execution for a given number of seconds.
-The duration may be omitted if used with an
-:ref:`test-until-statement` clause.  ::
+Приостанавливает выполнение теста на указанное количество секунд.
+Длительность можно опустить, если команда используется совместно с условием
+:ref:`test-until-statement`. ::
 
     pause 5.0
     pause until screen "inventory"
 
-Run
-^^^^^^^^^^
 
-    Type: :dfn:`Command`
+Run
+^^^
+
+    Тип: :dfn:`Команда`
 
     .. describe:: run <action>
 
-Runs the provided :doc:`screen-language action <screen_actions>` (or list of
-actions).
+Выполняет указанное :doc:`действие экранного языка (Action) <screen_actions>` (или список действий).
 
-The statement waits until the supplied action is available, then invokes it.
-This is equivalent to waiting for a button with this action to become sensitive,
-then clicking it.
+Инструкция ожидает, пока действие станет доступно (чувствительно к нажатию), после чего активирует его.
+Это эквивалентно ожиданию кликабельности экранной кнопки с данным действием с последующим кликом по ней.
 
 ::
 
@@ -1050,19 +1037,20 @@ then clicking it.
     run Jump("chapter_3")
     run Preference("main volume", 0.5)
 
+
 .. _test-skip-statement:
 
 Skip
-^^^^^^^^^^
+^^^^
 
-    Type: :dfn:`Command`
+    Тип: :dfn:`Команда`
 
     .. describe:: skip [fast]
 
-Causes the game to begin skipping. If the game is in a menu,
-then this exits the menu and returns to the game. Otherwise, it enables in-game skipping.
+Включает режим пропуска (скипа). Если игра находится в меню, она выходит из меню и возвращается
+в игровой процесс. В противном случае включает ускоренный пропуск текста.
 
-If ``fast`` is provided, the game will skip directly to the next menu choice.
+Если указан флаг ``fast``, игра мгновенно перематывает сценарий до следующего меню выбора.
 
 ::
 
@@ -1071,98 +1059,92 @@ If ``fast`` is provided, the game will skip directly to the next menu choice.
     skip until screen "choice"
 
 
-Mouse Commands
-----------------
+Команды мыши
+------------
 
-Properties that are common to all mouse commands:
+Свойства, общие для всех команд работы с мышью:
 
 .. describe:: <target>
 
-Equivalent to ``[<selector>] [pos (<x: int or float>, <y: int or float>)]``
+Эквивалентно выражению ``[<selector>] [pos (<x: int or float>, <y: int or float>)]``
 
-- ``<selector>``: A :ref:`Selector Statement <test-selectors>` like ``id "my_button"`` or ``"Text"``.
-- ``pos``: An (x, y) pair. If a coordinate is an integer, an absolute number of pixels is used.
-  If a coordinate is a float, it is treated as a normalized coordinate from ``0.0``
-  (the left/top edge) to ``1.0`` (the right/bottom edge), relative to the width or
-  height of the target. When no selector is given, the float is relative to the
-  screen width or height.
+- ``<selector>`` — :ref:`инструкция селектора <test-selectors>`, например ``id "my_button"`` или ``"Текст"``.
+- ``pos`` — пара координат (x, y). Если координата задана целым числом (int), она означает абсолютное
+  число пикселей. Если число с плавающей запятой (float), оно трактуется как нормализованная координата
+  от ``0.0`` (левый/верхний край) до ``1.0`` (правый/нижний край) относительно ширины или высоты цели.
+  Если селектор не указан, float рассчитывается относительно разрешения всего экрана.
 
 .. note::
 
-    A float value of ``1.0`` maps to ``width - 1`` (or ``height - 1``),
-    so ``1.0`` maps to the last pixel **within** the target
-    rather than one past the edge.
+    Значение float, равное ``1.0``, проецируется на пиксель ``width - 1`` (или ``height - 1``),
+    поэтому координата ``1.0`` попадает на крайний пиксель **внутри** элемента, а не за его пределы.
 
-========  =======  =======
-Selector  ``pos``  Result
-========  =======  =======
-No        No       Current mouse position\*
-Yes       No       A random focusable point within the selector
-No        Yes      The point relative to the screen
-Yes       Yes      The point relative to the selector
-========  =======  =======
+========  =======  ==============================================================
+Селектор  ``pos``  Результат
+========  =======  ==============================================================
+Нет       Нет      Текущая позиция курсора мыши\*
+Да        Нет      Случайная кликабельная точка внутри селектора
+Нет       Да       Координаты относительно экрана
+Да        Да       Координаты относительно выбранного селектора
+========  =======  ==============================================================
 
-\* *If the mouse was never moved before, a random screen position is used.*
+\* *Если мышь до этого ни разу не перемещалась, выбирается случайная позиция на экране.*
 
 .. describe:: button <int>
 
-Determines which button the simulated mouse uses. Defaults to ``1``.
+Задаёт виртуальную кнопку мыши. По умолчанию — ``1``.
 
-    - ``1``: Left click
-    - ``2``: Right click
-    - ``3``: Middle click
-    - ``4`` and ``5``: Additional buttons found on some devices
+    - ``1``: Левая кнопка мыши (ЛКМ)
+    - ``2``: Правая кнопка мыши (ПКМ)
+    - ``3``: Средняя кнопка мыши (колёсико)
+    - ``4`` и ``5``: Дополнительные боковые кнопки
 
 
 Click
-^^^^^^^^^^
+^^^^^
 
-    Type: :dfn:`Command`
+    Тип: :dfn:`Команда`
 
     .. describe:: click [<target>] [button <int>]
 
-Executes a simulated click on the screen.
+Выполняет виртуальный клик мыши на экране. ::
 
-.. ``always`` is not documented because useless in the case of the click clause by itself
-
-::
-
-    # Click at the current mouse position
+    # Клик в текущей позиции указателя мыши
     click
 
-    # Click a button with specific text
+    # Клик по кнопке с конкретным текстом
     click "Start"
 
-    # Click a button using a variable.
+    # Клик по кнопке с текстом из переменной
     $ button_name = "Load"
     click text button_name
 
-    # Right-click on a specific target.
+    # Правый клик по конкретному элементу
     click id "inventory_button" button 2
 
-    # Click the center of the selected target.
+    # Клик в центр целевого элемента
     click id "inventory_button" pos (0.5, 0.5)
-
 
 .. note::
 
-    Do not use ``click`` to advance dialogue. The result depends on the current mouse
-    position and may activate unrelated screen elements. Use
-    :ref:`advance <test-advance-statement>` or :ref:`skip <test-skip-statement>` instead.
+    Не используйте команду ``click`` для перелистывания диалогов: её результат зависит от текущего
+    положения курсора и может случайно активировать посторонние элементы интерфейса.
+    Используйте команды :ref:`advance <test-advance-statement>` или :ref:`skip <test-skip-statement>`.
+
 
 Drag
-^^^^^^^^^^
+^^^^
 
-    Type: :dfn:`Command`
+    Тип: :dfn:`Команда`
 
     .. describe:: drag <target> to <target> [button <int>] [steps <int>]
 
-Simulates a drag action on the screen. It takes the following properties:
+Имитирует перетаскивание (drag-and-drop) на экране:
 
-- The first ``<target>`` specifies the starting point of the drag.
-- The second ``<target>``  specifies the ending point of the drag.
-- ``steps`` specifies how many intermediate steps the drag should take.
-  Defaults to ``10``. More steps result in a smoother drag, but also take more time.
+- Первый аргумент ``<target>`` задаёт начальную точку захвата.
+- Второй аргумент ``<target>`` задаёт конечную точку перемещения.
+- Параметр ``steps`` определяет количество промежуточных шагов интерполяции. По умолчанию — ``10``.
+  Большее число шагов делает перетаскивание более плавным, но занимает больше времени.
 
 ::
 
@@ -1172,76 +1154,75 @@ Simulates a drag action on the screen. It takes the following properties:
     drag pos (50, 50) to id "inventory_slot_1"
     drag pos (50, 50) to pos (150, 150)
 
+
 .. _test-move-statement:
 
 Move
-^^^^^^^^^^
+^^^^
 
-    Type: :dfn:`Command`
+    Тип: :dfn:`Команда`
 
     .. describe:: move <target>
 
-Moves the virtual test mouse to a given position on the screen.
+Перемещает виртуальный курсор мыши в указанную точку экрана. ::
 
-::
-
-    # Move to a random clickable point within `back_btn`
+    # Перемещение в случайную точку внутри кнопки back_btn
     move id "back_btn"
 
-    # Move to the center of `back_btn`
+    # Перемещение точно в центр back_btn
     move id "back_btn" pos (0.5, 0.5)
 
-    # Move to a point 20 pixels right and 10 pixels down from the top-left corner of `back_btn`
+    # Перемещение со смещением 20px вправо и 10px вниз от левого верхнего угла back_btn
     move id "back_btn" pos (20, 10)
 
-    # Move to the top right corner of the screen
+    # Перемещение в правый верхний угол экрана
     move pos (1.0, 0.0)
 
-    # Move to a point 20 pixels right and 10 pixels down from the top-left corner of the screen
+    # Перемещение в точку (20, 10) от левого верхнего угла экрана
     move pos (20, 10)
 
-Scroll
-^^^^^^^^^^
 
-    Type: :dfn:`Command`
+Scroll
+^^^^^^
+
+    Тип: :dfn:`Команда`
 
     .. describe:: scroll [amount <int>] [<target>]
 
-Simulates a scroll event. It takes the following optional properties:
+Имитирует вращение колёсика мыши.
 
-- ``amount`` specifies how many "notches" to scroll. Defaults to ``1``.
-  Positive values scroll down, negative values scroll up.
+- ``amount`` задаёт число шагов прокрутки. По умолчанию — ``1``.
+  Положительные значения прокручивают вниз, отрицательные — вверх.
 
 ::
 
     scroll "bar"
     scroll id "inventory_scroll"
     scroll amount 10 id "inventory_scroll" pos (0.5, 0.5)
-    scroll # scrolls down at the current mouse position
+    scroll # прокрутка вниз в текущей позиции курсора
 
 .. note::
 
-    This simulates a mousewheel event and may not directly change an adjustment.
-
-    Consider using the Scroll action from :doc:`screen_actions`. ::
+    Команда посылает низкоуровневое событие колёсика мыши, которое может напрямую не сдвинуть полосу прокрутки.
+    Для надёжного управления прокруткой рекомендуется использовать действие Scroll из :doc:`screen_actions`::
 
         run Scroll("inventory_scroll", "increase", amount="step", delay=1.0)
 
-Keyboard Commands
------------------
 
-Keysym
-^^^^^^^^^^
+Команды клавиатуры
+------------------
 
 .. _test-keysym-statement:
 
-    Type: :dfn:`Command`
+Keysym
+^^^^^^
+
+    Тип: :dfn:`Команда`
 
     .. describe:: keysym <str> [<target>]
 
-Simulates a keysym event. This includes the keys of :doc:`config.keymap <keymap>`.
-
-::
+Имитирует нажатие клавиши по её символьному имени (keysym). Поддерживает все имена клавиш
+из раскладки :doc:`config.keymap <keymap>`. ::
 
     keysym "skip"
     keysym "help"
@@ -1249,149 +1230,135 @@ Simulates a keysym event. This includes the keys of :doc:`config.keymap <keymap>
     keysym "K_BACKSPACE" repeat 30
     keysym "pad_a_press"
 
+
 .. _test-type-statement:
 
 Type
-^^^^^^^^^^
+^^^^
 
-    Type: :dfn:`Command`
+    Тип: :dfn:`Команда`
 
     .. describe:: type <str> [<target>]
 
-Types the provided string as if it were typed on the keyboard.
+Вводит указанную текстовую строку так, словно она была набрана пользователем на клавиатуре. ::
 
-::
+    type "Привет, мир!"
 
-    type "Hello, World!"
 
 .. _test-conditions:
 
-Condition Statements
---------------------
+Условные инструкции
+-------------------
 
-Conditions are used to check whether a certain condition is true or not.
-They are used in condition-taking test statements
-like ``if``, ``assert`` or ``until``.
+Условия проверяют истинность определённого состояния игры. Они используются в инструкциях,
+принимающих логические выражения, таких как ``if``, ``assert`` или ``until``.
 
 
-Boolean Values
-^^^^^^^^^^^^^^^^
+Логические значения
+^^^^^^^^^^^^^^^^^^^
 
-Tests can use the literal boolean values ``True`` and ``False``.
-These are always ready. ::
+В тестах можно напрямую использовать булевы литералы ``True`` и ``False``::
 
     if True:
         click "Start"
 
     if False:
-        click "Settings" # does not execute, since the condition is always false
+        click "Settings" # никогда не выполнится
 
 
-Boolean Operations
-^^^^^^^^^^^^^^^^^^
+Логические операции
+^^^^^^^^^^^^^^^^^^^
 
-    Conditions support the ``not``, ``and`` and ``or`` operators.
-    That expression may or may not be enclosed in parentheses. ::
+Условия поддерживают стандартные логические операторы ``not``, ``and`` и ``or`` (выражения можно брать в скобки)::
 
-        assert screen "main_menu" and eval renpy.is_in_test()
-        advance until "ask her right" or label "chapter_five"
-        click "Next" until not screen "choice"
+    assert screen "main_menu" and eval renpy.is_in_test()
+    advance until "спросить прямо" or label "chapter_five"
+    click "Next" until not screen "choice"
+
 
 .. _test-eval-statement:
 
 Eval
-^^^^^^^^^
+^^^^
 
-    Type: :dfn:`Condition`
+    Тип: :dfn:`Условие`
 
     .. describe:: eval <python_expression>
 
-Evaluates the provided Python expression. This exists only to be used inside condition-taking test
-statements like ``assert``, ``if`` or ``until``. ::
+Вычисляет переданное выражение Python. Используется исключительно внутри условий таких инструкций,
+как ``assert``, ``if`` или ``until``. ::
 
     assert eval some_function(args)
-    assert eval (x + y == z) # Parentheses may be used optionally
+    assert eval (x + y == z) # Скобки можно использовать опционально
     if eval persistent.should_advance:
 
 .. note::
 
-    Differences between a dollar-line and the eval clause:
+    Различия между строкой Python с долларом (``$``) и конструкцией ``eval``:
 
-    - Eval cannot be used on a line by itself, it must be used inside a
-      statement like ``if`` or ``until``, while dollar-lines must be on
-      their own line.
-    - A dollar-line executes any python statement, which does not necessarily
-      have a value - for example ``$ import math`` - while the eval clause
-      requires a return value.
+    - ``eval`` не может стоять на отдельной строке — он используется только внутри условий ``if``, ``until`` и т. д.
+    - Строка с долларом выполняет инструкцию Python, не обязательно возвращающую значение (например, ``$ import math``),
+      тогда как выражение ``eval`` обязательно должно возвращать значение.
+
 
 Label
-^^^^^^^^^
+^^^^^
 
-    Type: :dfn:`Condition`
+    Тип: :dfn:`Условие`
 
     .. describe:: label <name: str>
 
-Checks if the provided Ren'Py label has been reached since the last time
-a test statement was executed.
+Проверяет, достигало ли выполнение указанной метки Ren'Py (label) с момента последнего выполнения
+предыдущей тестовой инструкции.
 
-Considering the following example::
+Рассмотрим пример::
 
     run Jump("chapter_1")
-    assert label chapter_1 # works
-    assert label chapter_1 # fails
+    assert label chapter_1 # успешно
+    assert label chapter_1 # ошибка
 
-The first ``assert`` statement works because the label ``chapter_1`` has been
-reached by the ``run Jump("chapter_1")`` statement. The second ``assert``
-statement fails because the label ``chapter_1`` has not been reached again
-since the first ``assert`` statement.
+Первая инструкция ``assert`` успешна, потому что метка ``chapter_1`` была достигнута вызовом
+``run Jump("chapter_1")``. Вторая инструкция завершится сбоем, так как после первого assert
+метка ``chapter_1`` заново не достигалась.
 
-That also means the following example will not work::
+Это также означает, что следующий код не сработает::
 
     run Jump("chapter_1")
     advance repeat 3
-    assert label chapter_1 # fails since the label was reached and passed by the advance statements
+    assert label chapter_1 # ошибка: метка была пройдена инструкциями advance
 
-.. warning::
-
-    This test statement should not be confused with the Ren'Py native
-    :ref:`label <label-statement>` statement it refers to, or with the unrelated
-    :ref:`label element <sl-label>` used in screens.
 
 .. _test-selectors:
 
-Selector Statements
--------------------
+Инструкции селекторов
+---------------------
 
-Selector statements are used to check if a certain element is on the screen,
-and to use that element for further actions.
+Селекторы проверяют наличие определённых элементов на экране и позволяют взаимодействовать с ними.
+Селекторы являются специализированным видом условий.
 
-Selectors are a special kind of condition.
+В сигнатурах команд ``<target>`` и ``<selector>`` селектором может выступать ``screen <имя>``,
+``id <идентификатор>``, строка в кавычках ``"текст"`` или выражение ``text <выражение>``.
 
-In command signatures, ``<selector>`` represents any selector form documented
-in this section, including ``screen <name: str>``, ``id <name: str>``,
-a quoted text selector, or ``text <expression>``.
 
-Displayable Selector
-^^^^^^^^^^^^^^^^^^^^
+Селектор отображаемых объектов
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    Type: :dfn:`Condition, Selector`
+    Тип: :dfn:`Условие, Селектор`
 
-Selects a displayed screen or displayable by screen name or id, optionally restricted to a layer.
-
-It takes one or more of the following properties:
+Выбирает отображаемый экран или элемент по его имени или уникальному идентификатору (id),
+с возможностью ограничения конкретным графическим слоем:
 
     .. describe:: screen <name: str>
 
-        The name of the screen to check.
+        Имя проверяемого экрана.
 
     .. describe:: id <name: str>
 
-        The id of the element to check.
+        Идентификатор id проверяемого элемента.
 
     .. describe:: layer <name: str>
 
-        The layer on which the screen is displayed. If not given, the layer is
-        automatically determined by the screen name.
+        Слой, на котором отображается экран. Если не указан, слой определяется автоматически по имени экрана.
 
 ::
 
@@ -1405,152 +1372,127 @@ It takes one or more of the following properties:
 
 .. _test-text-selector:
 
-Text Selector
-^^^^^^^^^^^^^^^^^^^^
+Текстовый селектор
+^^^^^^^^^^^^^^^^^^
 
-    Type: :dfn:`Condition, Selector`
+    Тип: :dfn:`Условие, Селектор`
 
     .. describe:: text <expression> [raw]
     .. describe:: "<text>" [raw]
 
-The ``text`` selector takes a string which resolves to a target
-found on the screen. The search is performed by going through all focusable
-elements on the screen (which are typically buttons and the main textbox),
-and looking through their text and :propref:`alt` text.
+Селектор ``text`` принимает строку и находит соответствующий элемент на экране. Поиск выполняется
+по всем элементам экрана, способным получать фокус (кнопкам, полям ввода, текстовому окну диалога),
+проверяя их видимый текст и свойство :propref:`alt`.
 
-This search is case-insensitive and looks for the shortest match.
-For example, if the string ``"log"`` is given, and the screen contains
-the texts ``"LOGS"`` and ``"illogical"``, the target
-will be the ``"LOGS"`` text.
+Поиск нечувствителен к регистру символов и выбирает кратчайшее совпадение. Например, при поиске строки
+``"лог"`` среди текстов ``"Логи"`` и ``"диалоговое окно"`` целью будет выбран элемент ``"Логи"``.
 
-If ``raw`` is given, the search is performed on the text as given in the
-script, before translation and :ref:`interpolation <text-interpolation>`.
-If not given, the search is performed on the text as it appears on screen,
-after translation and interpolation.
+Если указан флаг ``raw``, поиск осуществляется по исходному тексту сценария до применения
+переводов и :ref:`текстовых подстановок <text-interpolation>`. Без флага поиск проверяет текст
+в том виде, как он реально отображается на экране.
 
 ::
 
-    # This may be in a button
-    skip until "Start Game"
+    # Поиск текста на кнопке
+    skip until "Начать игру"
 
-    # This may be in the main textbox
-    advance until "Hey, that's not fair!"
+    # Поиск текста в диалоговом окне
+    advance until "Эй, это нечестно!"
 
-    # Case-insensitive search
-    assert "AsK HeR RighT AwaY"
+    # Регистронезависимый поиск
+    assert "сПросиТь ПрЯмО СейЧаС"
 
-    # Search unsubstituted text
-    assert "Welcome, Eileen!"
-    assert "Welcome, [player_name]!" raw
+    # Поиск текста без подстановок
+    assert "Добро пожаловать, Эйлин!"
+    assert "Добро пожаловать, [player_name]!" raw
 
-    # Search untranslated text after changing the language
+    # Поиск непереведённого текста после смены языка
     run Language("japanese")
     assert "スタート"
     assert "Start" raw
 
-    # Look for variable text
-    $ string_to_find = "Hello!"
+    # Поиск по значению переменной
+    $ string_to_find = "Привет!"
     assert text string_to_find
 
-.. note ::
+.. note::
 
-    Prefer `id` selectors for stable UI tests.
-    Use text selectors when the visible wording itself is part of the behavior being tested.
+    Для стабильных тестов графического интерфейса рекомендуется отдавать предпочтение селекторам по ``id``.
+    Текстовые селекторы используйте в тех случаях, когда проверяется сам текст реплик или надписей.
 
-Control Statements
-------------------
 
-These statements control the flow of the test execution.
+Управляющие инструкции
+----------------------
 
 Assert
-^^^^^^^^^^
+^^^^^^
 
-    Type: :dfn:`Control`
+    Тип: :dfn:`Управление`
 
     .. describe:: assert <condition> [timeout <seconds: float>] [xfail <bool>]
 
-Verifies that the condition is true when the assert statement is executed.
+Проверяет истинность условия в момент выполнения инструкции assert.
 
-If a ``timeout`` is given, the statement will wait up to that many seconds
-for the condition to be met. If ``timeout`` is not given, the assertion is tested
-immediately.
+Если указан параметр ``timeout``, инструкция ожидает выполнения условия до указанного числа секунд.
+Если timeout не задан, проверка выполняется мгновенно.
 
-If the condition is not met, a RenpyTestTimeoutError is raised.
+Если условие не выполняется, возбуждается исключение ``RenpyTestTimeoutError``.
 
-If ``xfail`` is set to ``True``, the assert statement is expected to fail.
-This inverts the meaning of the statement: if the condition is met, the
-assertion fails. If the condition is not met, the assertion passes.
+Если параметр ``xfail`` установлен в ``True``, утверждение считается ожидаемо падающим: условие инвертируется,
+и прохождением проверки считается ситуация, когда условие НЕ выполняется.
 
 ::
 
-    # Selector condition only.
+    # Проверка наличия экрана
     assert screen "main_menu"
 
-    # Python condition only.
+    # Проверка условия Python
     assert eval persistent.seen_intro
 
-    # Combined Python and selector conditions.
+    # Комбинированное условие
     assert eval persistent.seen_intro and screen "main_menu"
 
-    # With timeout
+    # С таймаутом ожидания
     assert id "start_button" timeout 5.0
 
-.. seealso::
-
-    - `Python asserts <https://docs.python.org/reference/simple_stmts.html#the-assert-statement>`__
-    - `Boolean evaluation <https://docs.python.org/library/stdtypes.html#truth-value-testing>`__
 
 For
 ^^^
 
-    Type: :dfn:`Control`
+    Тип: :dfn:`Управление`
 
     .. describe:: for <variable> in <iterable>
 
-Executes a block of test statements for each item in the provided
-iterable. ``<iterable>`` is evaluated as a Python expression.
-You can use `break` and `continue` statements to control the flow of the loop.
+Выполняет блок тестовых инструкций для каждого элемента переданного итерируемого объекта.
+Параметр ``<iterable>`` вычисляется как выражение Python. Внутри цикла поддерживаются операторы
+`break` и `continue`.
 
-Example::
+Пример::
 
-    # Click "Next" three times
+    # Кликнуть «Далее» три раза
     for _ in range(3):
-        click "Next"
+        click "Далее"
 
-    # Click each of the choices, skipping "Trade" if the shop is not unlocked
-    for choice in ["Talk", "Trade", "Leave"]:
-        if eval (choice == "Trade" and not persistent.shop_unlocked):
+    # Перебрать варианты выбора, пропустив торговлю, если магазин заблокирован
+    for choice in ["Поговорить", "Торговать", "Уйти"]:
+        if eval (choice == "Торговать" and not persistent.shop_unlocked):
             continue
         click text choice
         if screen "shop":
             break
 
-    # Click each of the tabs in the stats screen, skipping "Quests" if quests are not enabled
-    for stat_tab in ["Stats", "Skills", "Quests"]:
-        click text stat_tab
-        if eval (stat_tab == "Quests" and not persistent.quests_enabled):
-            continue
-        assert text stat_tab timeout 2.0
 
 If
-^^^^^^^^^
+^^
 
-    Type: :dfn:`Control`
+    Тип: :dfn:`Управление`
 
     .. describe:: if <condition>
 
-Executes a block of test statements if the provided condition is met.
-
-Example::
+Выполняет блок тестовых инструкций, если условие истинно. Поддерживает ветки ``elif`` и ``else``. ::
 
     if label "chapter_five":
         exit
-
-    if eval (persistent.should_advance and i_should_advance["now"]):
-        advance
-
-The ``elif`` and ``else`` statements can be used to add
-additional conditions to the ``if`` statement. ::
 
     if eval persistent.should_advance:
         advance
@@ -1559,55 +1501,50 @@ additional conditions to the ``if`` statement. ::
     else:
         click "Start"
 
+
 .. _test-repeat-statement:
 
 Repeat
-^^^^^^^^^
+^^^^^^
 
-    Type: :dfn:`Control`
+    Тип: :dfn:`Управление`
 
     .. describe:: <command> repeat <count: int> [timeout <seconds: float>]
 
-Repeats a statement for a given number of times. It consists of a
-Command statement on the left-hand side and a number of repetitions
-on the right-hand side, separated by the word ``repeat``. ::
+Повторяет указанную команду заданное количество раз. Слева записывается команда, справа — число
+повторений после слова ``repeat``. ::
 
     click "+" repeat 3
     keysym "K_BACKSPACE" repeat 10
     advance repeat 3
+
 
 .. _test-screenshot-statement:
 
 Screenshot
 ^^^^^^^^^^
 
-    Type: :dfn:`Control`
+    Тип: :dfn:`Управление`
 
     .. describe:: screenshot <path: str> [max_pixel_difference <int or float>] [crop (<x: int>, <y: int>, <width: int>, <height: int>)]
 
-Takes a screenshot of the current screen and saves it to the provided path.
+Создаёт снимок экрана и сохраняет его по указанному пути.
 
-If the file already exists, the current screenshot is compared to the existing
-file. If the files differ by more than ``max_pixel_difference`` pixels, a
-RenpyTestScreenshotError is raised.
+Если эталонный графический файл уже существует на диске, текущий скриншот попиксельно сравнивается
+с эталоном. Если различие превышает порог ``max_pixel_difference``, возбуждается исключение
+``RenpyTestScreenshotError``.
 
-- ``path`` specifies the path (relative to ``_test.screenshot_directory``)
-  where the screenshot will be saved. It may include a file extension.
-  Only ``.png`` is supported.
-- ``max_pixel_difference`` specifies how many pixels may differ between
-  the taken screenshot and an existing screenshot for the test to pass.
-  Integer values specify the number of pixels, while float values
-  specify a percentage of the total number of pixels. Defaults to ``0``.
-- ``crop`` specifies a rectangle to crop the screenshot to, given as
-  ``(x, y, width, height)``. Coordinates must be given as integers.
+- ``path`` — путь к файлу (относительно каталога ``_test.screenshot_directory``). Поддерживается только формат ``.png``.
+- ``max_pixel_difference`` — допустимый порог различий пикселей. Целое число задаёт абсолютное количество пикселей,
+  а float — процент от общего числа пикселей изображения. По умолчанию — ``0``.
+- ``crop`` — прямоугольная область обрезки скриншота в формате ``(x, y, width, height)``. Координаты задаются целыми числами.
 
-If ``_test.vc_revision`` is set, the value is automatically appended to the filename
-as ``@{_test.vc_revision}.png``. This allows the developer to track changes to
-screenshots over time. For example, :file:`screens/main_menu.png` becomes
-:file:`screens/main_menu@a1b2c3d.png`.
+Если переменная ``_test.vc_revision`` задана, её значение автоматически добавляется к имени файла
+в формате ``@{_test.vc_revision}.png`` (например, :file:`screens/main_menu@a1b2c3d.png`), что позволяет
+отслеживать визуальные изменения экранов по коммитам.
 
-To overwrite an existing screenshot, either delete the file or run the test with
-the :option:`--overwrite-screenshots` command-line option.
+Чтобы перезаписать существующий эталонный скриншот, удалите старый файл либо запустите тесты
+с флагом :option:`--overwrite-screenshots`.
 
 ::
 
@@ -1615,70 +1552,56 @@ the :option:`--overwrite-screenshots` command-line option.
     screenshot "screens/inventory" max_pixel_difference 0.01
     screenshot "button.png" crop (10, 10, 100, 50)
 
-This may be used in a parameterized test to take multiple screenshots::
-
-    testcase screen_tester:
-        parameter screen_name = ["inventory", "stats", "map"]
-
-        run Show(screen_name)
-        screenshot f"screens/{screen_name}.png"
 
 .. _test-until-statement:
 
 Until
-^^^^^^^^^
+^^^^^
 
-    Type: :dfn:`Control`
+    Тип: :dfn:`Управление`
 
     .. describe:: <command> until <condition> [timeout <seconds: float>]
 
-Repeats the command until the condition becomes true.
-If the condition does not become true before the timeout, the test fails.
+Повторяет выполнение команды до тех пор, пока условие не станет истинным. Если условие не выполнилось
+до истечения таймаута, тест падает с ошибкой ``RenpyTestTimeoutError``.
 
-This timeout temporarily overrides the global ``_test.timeout`` setting.
-A RenpyTestTimeoutError is raised if the statement times out.
+Локальный параметр ``timeout`` временно переопределяет глобальную настройку ``_test.timeout``.
 
 ::
 
     advance until screen "choice"
     click "Next"
     advance until label "chapter_5"
-
     skip until screen "inventory" timeout 20.0
+
 
 While
 ^^^^^
 
-    Type: :dfn:`Control`
+    Тип: :dfn:`Управление`
 
     .. describe:: while <condition>
 
-Executes a block of test statements while the provided
-condition remains met. You can use `break` and `continue` statements
-to control the flow of the loop.
-
-Example::
+Выполняет блок инструкций в цикле до тех пор, пока условие остаётся истинным.
+Поддерживает операторы `break` и `continue`. ::
 
     $ should_advance = True
     while eval should_advance:
         advance
         if screen "main_menu":
             break
-
         $ should_advance = some_evaluation_function()
 
 
-Python Blocks And Dollar-Lines
-------------------------------
+Блоки Python и однострочные инструкции ($)
+------------------------------------------
 
-A :ref:`python block <python-statement>` or a :ref:`dollar-line` can be added
-within a testcase. Unlike in normal Ren'Py code, the python blocks don't take
-the ``in substore`` parameter, but they do take the ``hide`` keyword. Both
-allow execution of arbitrary python code.
+Внутри тест-кейса можно использовать :ref:`блоки python <python-statement>` и :ref:`однострочные инструкции ($) <dollar-line>`.
+В отличие от обычного скрипта игры, блоки python в тестах не поддерживают конструкцию ``in substore``,
+но поддерживают ключевое слово ``hide``. Оба варианта позволяют выполнять произвольный код Python.
 
-Init code gets executed before the test occurs, so functions and classes defined
-in ``init python`` blocks can be called in test python blocks and in test
-dollar-lines. For example::
+Код блоков инициализации (init) выполняется до запуска тестов, поэтому функции и классы,
+объявленные в блоках ``init python``, доступны для вызова в тестовых инструкциях::
 
     init python in test:
         def afunction():
@@ -1687,12 +1610,13 @@ dollar-lines. For example::
             return "not test"
 
     testcase default:
-        $ print(test.afunction()) # ends up in the console
+        $ print(test.afunction()) # вывод попадёт в консоль
 
-See Also
-========
 
-You can find real tests in the Ren'Py source code:
+См. также
+=========
+
+Примеры реальных автотестов можно изучить в исходном коде Ren'Py:
 
 * `<https://github.com/renpy/renpy/blob/master/tutorial/game/testcases.rpy>`_
 * `<https://github.com/renpy/renpy/blob/master/gui/game/testcases.rpy>`_

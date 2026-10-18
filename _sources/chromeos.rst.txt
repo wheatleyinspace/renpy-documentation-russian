@@ -1,58 +1,57 @@
-Chrome OS/Chromebook
-====================
+.. _chromeos:
 
-There are two ways to run Ren'Py under Chrome OS.
+======================
+Chrome OS / Chromebook
+======================
 
-Android on Chrome OS
---------------------
+Существует два способа запуска Ren'Py под управлением Chrome OS.
 
-The easiest way to make a game available for Chrome OS is to package it for
-Android, as described in the :doc:`Android documentation <android>`. Ren'Py's
-Android support was designed with Chrome OS in mind as well.
+Android в Chrome OS
+-------------------
 
-This mode only supports playing games, not developing new games.
+Самый простой способ сделать игру доступной на Chrome OS — собрать её для платформы
+Android, как описано в :doc:`документации по Android <android>`. Поддержка Android
+в Ren'Py изначально разрабатывалась с учётом совместимости с Chrome OS.
 
-Linux on Chrome OS
-------------------
+Этот режим предназначен исключительно для запуска и прохождения игр, а не для разработки новых проектов.
 
-Ren'Py games and the Ren'Py SDK can also be installed on a Chromebook. This allows
-you to develop Ren'Py games on your Chromebook.
+Linux в Chrome OS
+-----------------
 
-To install it:
+Игры Ren'Py и сам Ren'Py SDK также можно установить непосредственно на Chromebook.
+Это позволяет разрабатывать игры Ren'Py прямо на вашем хромбуке.
 
-1. Install Linux for Chromebook, as described at https://support.google.com/chromebook/answer/9145439?hl=en .
+Для установки:
 
-2. Change the Crosstini GPU Support setting to enabled, by typing chrome://flags/#crostini-gpu-support, and choosing enable.
+1. Установите среду Linux для Chromebook, следуя инструкциям на https://support.google.com/chromebook/answer/9145439?hl=ru .
 
-3. Restart your Chromebook.
+2. Включите поддержку графического ускорения Crosstini GPU Support: откройте в браузере chrome://flags/#crostini-gpu-support и установите значение «enable».
 
-4. Upgrade Linux, by launching a terminal, and running::
+3. Перезагрузите Chromebook.
+
+4. Обновите пакеты Linux, открыв терминал и выполнив::
 
     sudo apt update
     sudo apt dist-upgrade
 
-5. Install some the required dependencies, with:
+5. Установите необходимые системные зависимости::
 
     sudo apt install libnss3 python3-tk
 
-To install a version of Ren'Py, open a terminal and run (changing the version as
-appropriate):
+Чтобы установить нужную версию Ren'Py, откройте терминал и выполните (заменив номер версии при необходимости):
 
 .. parsed-literal::
 
     wget https://www.renpy.org/dl/|RELEASE_VERSION|/renpy-|RELEASE_VERSION|-sdkarm.tar.bz2
     tar xaf renpy-|RELEASE_VERSION|-sdkarm.tar.bz2
 
-To run that version of Ren'Py, open a terminal and run:
+Чтобы запустить установленную версию Ren'Py, откройте терминал и выполните:
 
 .. parsed-literal::
 
     cd ~/ab/renpy-|RELEASE_VERSION|-sdkarm
     ./renpy.sh
 
-Note that this works with other versions of Ren'Py if you change |RELEASE_VERSION| to the version you want.
+Обратите внимание, что эта инструкция работает и для других версий Ren'Py, если заменить |RELEASE_VERSION| на требуемую версию.
 
-An SDK installed in this way can be used to run games that do not natively
-support ARM Chromebooks on an ARM Chromebook. Just unpack the game into
-the projects directory and hit refresh, then launch it through the
-Ren'Py launcher. (The projects directory can be set in preferences.)
+Установленный таким образом SDK можно использовать для запуска игр, изначально не поддерживающих ARM Chromebook, на хромбуках с процессорами ARM. Достаточно распаковать игру в каталог проектов и нажать кнопку обновления в лаунчере, после чего запустить её через лаунчер Ren'Py. (Каталог проектов можно настроить в настройках лаунчера).

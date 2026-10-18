@@ -1,6 +1,7 @@
 .. _matrix:
 
-Matrix
-======
+=======
+Матрицы
+=======
 
 .. include:: inc/matrix

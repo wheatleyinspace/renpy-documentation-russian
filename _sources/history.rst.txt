@@ -1,77 +1,66 @@
 .. _history:
 
-Dialogue History
+================
+История диалогов
 ================
 
-Ren'Py includes a dialogue history system that stores each line of dialogue
-after it has been shown to the player. This stored dialogue can then be
-retrieved and re-shown to the player.
+В Ren'Py есть система истории диалогов (лога реплик), которая сохраняет каждую строку диалога
+после её показа игроку. Сохранённые строки можно повторно просматривать в специальном окне журнала.
 
-The dialogue history system is controlled by two variables.
-The :var:`config.history_length` variable controls the maximum number
-of history entries that are stored, and must be set to enable history
-at all. The :var:`_history` variable can be used to disable and re-enable
-history storage.
+Система истории диалогов управляется двумя переменными:
 
-Finally, the :var:`_history_list` variable stores the actual history, as
-a list of HistoryEntry objects. HistoryEntry objects contain data in
-their fields, as defined below.
+Переменная :var:`config.history_length` задаёт максимальное количество сохраняемых записей истории
+и должна быть установлена для включения истории в игре. Переменная :var:`_history` позволяет
+временно отключать и повторно включать запись реплик в историю.
+
+Переменная :var:`_history_list` хранит фактический список записей истории в виде объектов HistoryEntry.
+Объекты HistoryEntry содержат следующие поля данных:
 
 .. class:: HistoryEntry
 
     .. attribute:: kind
 
-        The kind of character that created this history. Ren'Py sets this
-        to "current" while a line of dialogue is displaying, and then
-        to either "adv" or "nvl".
+        Тип персонажа, создавшего запись. Во время показа реплики Ren'Py устанавливает это поле
+        в "current", а затем в "adv" или "nvl".
 
     .. attribute:: who
 
-        A string giving the name of the character that is speaking, or None
-        if no such string exists.
+        Строка с именем говорящего персонажа или None, если имя отсутствует.
 
     .. attribute:: what
 
-        A string giving the dialogue text.
+        Строка с текстом произнесённой реплики.
 
     .. attribute:: who_args
 
-        A dictionary giving the properties that were supplied to the who
-        text widget when the dialogue was originally shown.
+        Словарь со свойствами стиля, переданными текстовому виджету who (имя персонажа) при показе.
 
     .. attribute:: what_args
 
-        A dictionary giving the properties that were supplied to the what
-        text widget when the dialogue was originally shown.
+        Словарь со свойствами стиля, переданными текстовому виджету what (текст реплики).
 
     .. attribute:: window_args
 
-        A dictionary giving the properties that were supplied to the
-        dialogue window when the dialogue was originally shown.
+        Словарь свойств стиля окна диалога при показе.
 
     .. attribute:: show_args
 
-        A dictionary giving the properties that were supplied to the say
-        screen when the dialogue was originally shown.
+        Словарь свойств, переданных экрану say при показе реплики.
 
     .. attribute:: image_tag
 
-        The image tag given to the :func:`Character`, or None if no such
-        tag was given.
+        Тег изображения, связанный с :func:`Character`, или None, если тег не был задан.
 
     .. attribute:: voice
 
-        This is the object returned from :func:`_get_voice_info`, storing
-        information about the voice that is being played.
+        Объект, возвращаемый функцией :func:`_get_voice_info`, хранящий информацию о воспроизводимом голосовом файле.
 
     .. attribute:: rollback_identifier
 
-        This is an identifier that can be passed to the :func:`RollbackToIdentifier`
-        action, to cause a rollback to the line of script that generated
-        this history entry. The rollback only occurs if the location is still in
-        the script log, otherwise the action is insensitive.
+        Идентификатор, который можно передать действию :func:`RollbackToIdentifier` для отката
+        к строке сценария, создавшей эту запись истории. Откат возможен только в том случае, если точка
+        всё ещё присутствует в журнале отката; иначе действие неактивно.
 
 
-Once a HistoryEntry has been created, it is passed to each of the
-callbacks in :var:`config.history_callbacks`, which allows creator-written
-code to add new fields.
+После создания объект HistoryEntry передаётся каждой функции обратного вызова из списка
+:var:`config.history_callbacks`, что позволяет пользовательскому коду добавлять собственные поля данных.

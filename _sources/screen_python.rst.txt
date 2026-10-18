@@ -1,271 +1,235 @@
-==================
-Screens and Python
-==================
+===============
+Экраны и Python
+===============
 
-Screen Functions
-================
+Функции экранов
+===============
 
-The following functions support various operations related to screens.
+Следующие функции обеспечивают выполнение различных операций, связанных с экранами.
 
 .. include:: inc/screens
 
 .. include:: inc/ui
 
-Actions
-=======
+Действия (Actions)
+==================
 
-Many of the displayables created in the screen language take actions
-as arguments. An action is one of three things:
+Многие отображаемые объекты, создаваемые в языке экранов, принимают действия
+в качестве аргументов. Действие может представлять собой одно из трех:
 
-* A callable Python object (like a function or bound method) that
-  takes no arguments.
-* An object of a class that inherits from the Action class.
-* A list of other Actions.
+* Вызываемый объект Python (например, функцию или связанный метод), не принимающий аргументов.
+* Экземпляр класса, наследующего от класса Action.
+* Список других объектов Action.
 
-The advantage to inheriting from the Action class is that it allows
-you to override the methods that determine when a button should be
-sensitive, and when it is selected.
+Преимущество наследования от класса Action заключается в возможности переопределять
+методы, определяющие, когда кнопка должна быть чувствительной к нажатию и когда она выбрана.
 
 .. class:: Action
 
-    To define a new action, inherit from this class. Override the
-    methods in this class to change the behavior of the action.
+    Для создания нового действия наследуйте от этого класса. Переопределите
+    методы этого класса для настройки поведения действия.
 
     .. method:: __call__(self)
 
-        This is the method that is called when the action is
-        activated. In many cases, returning a non-None value from the
-        action will cause the current interaction to end.
+        Метод, вызываемый при активации действия. Во многих случаях возвращение
+        значения, отличного от None, приведет к завершению текущего взаимодействия.
 
-        This method must be overridden, as the default method will
-        raise a NotImplementedError (and hence cause Ren'Py to
-        report an error).
+        Этот метод обязательно должен быть переопределен, так как метод по умолчанию
+        вызывает исключение NotImplementedError (что вызовет ошибку в Ren'Py).
 
     .. method:: get_sensitive(self)
 
-        This is called to determine if the button with this action
-        should be sensitive. It should return true if the button is
-        sensitive.
+        Вызывается для определения чувствительности кнопки с этим действием к нажатию.
+        Должен возвращать True, если кнопка чувствительна.
 
-        Note that __call__ can be called, even if this returns False.
+        Обратите внимание: метод __call__ может быть вызван, даже если get_sensitive вернул False.
 
-        The default implementation returns True.
+        Реализация по умолчанию возвращает True.
 
     .. method:: get_selected(self)
 
-        This should return true if the button should be rendered as a
-        selected button, and false otherwise.
+        Должен возвращать True, если кнопка должна отрисовываться как выбранная (selected),
+        и False в противном случае.
 
-        The default implementation returns False.
+        Реализация по умолчанию возвращает False.
 
     .. method:: get_tooltip(self)
 
-        This gets a default tooltip for this button, if a specific
-        tooltip is not assigned. It should return the tooltip value,
-        or None if a tooltip is not known.
+        Возвращает всплывающую подсказку (tooltip) по умолчанию для кнопки, если
+        кнопке не назначена конкретная подсказка. Должен возвращать значение подсказки
+        или None.
 
-        This defaults to returning None.
+        По умолчанию возвращает None.
 
     .. method:: periodic(self, st)
 
-        This method is called once at the start of each interaction,
-        and then is called periodically thereafter. If it returns a
-        number, it will be called before that many seconds elapse, but
-        it might be called sooner.
+        Этот метод вызывается один раз в начале каждого взаимодействия и затем
+        периодически повторяется. Если он возвращает число, следующий вызов произойдет
+        не позже, чем через указанное количество секунд (но может произойти и раньше).
 
-        The main use of this is to call
-        :func:`renpy.restart_interaction` if the value of
-        get_selected or get_sensitive should change.
+        Основное назначение — вызов :func:`renpy.restart_interaction`, если значения
+        get_selected или get_sensitive должны измениться.
 
-        It takes one argument:
+        Принимает один аргумент:
 
         `st`
-            The number of seconds since the screen or displayable this
-            action is associated with was first shown.
+            Количество секунд с момента первого показа экрана или отображаемого объекта,
+            с которым связано это действие.
 
     .. method:: unhovered(self)
 
-        When the action is used as the `hovered` parameter to a button (or
-        similar object), this method is called when the object loses focus.
+        Когда действие передано параметру `hovered` кнопки (или аналогичного объекта),
+        этот метод вызывается при потере объектом фокуса.
 
     .. attribute:: alt
 
-        The text-to-speech text used for buttons that use this Action, if
-        the button does not have the :propref:`alt` property set. This can
-        set to a string in the class, or in the constructor, or it can be
-        a Python property that returns a string.
+        Текст для синтезатора речи, используемый для кнопок с этим действием, если у кнопки
+        не задано свойство :propref:`alt`. Может быть строкой в классе, конструкторе
+        или свойством Python (@property), возвращающим строку.
 
-To run an action from Python, use :func:`renpy.run`.
+Для запуска действия из кода Python используйте :func:`renpy.run`.
 
 .. include:: inc/run
 
-BarValues
-=========
+Значения полос (BarValues)
+==========================
 
-When creating a bar, vbar, or hotbar, a BarValue object can be supplied as
-the `value` property. Methods on the BarValue object are called to get
-the adjustment and styles.
+При создании bar, vbar или hotbar объект BarValue может быть передан свойству `value`.
+Методы объекта BarValue вызываются для получения регулятора (adjustment) и стилей.
 
 
 .. class:: BarValue
 
-    To define a new BarValue, inherit from this class and override
-    some of the methods.
+    Для определения нового значения полосы создайте класс-наследник и переопределите
+    нужные методы.
 
     .. method:: get_adjustment(self)
 
-        This method is called to get an adjustment object for the
-        bar. It should create the adjustment with
-        :func:`ui.adjustment`, and then return the object created this
-        way.
+        Этот метод вызывается для получения объекта регулятора для полосы. Он должен
+        создать регулятор с помощью :func:`ui.adjustment` и вернуть созданный объект.
 
-        This method must be overridden, as the default method will
-        raise NotImplementedError (and hence cause Ren'Py to report an
-        error).
+        Обязательно должен быть переопределен, иначе будет вызвано исключение NotImplementedError.
 
     .. method:: get_style(self)
 
-        This is used to determine the style of bars that use this
-        value. It should return a tuple of two style names or style
-        objects. The first is used for a bar, and the
-        second for vbar.
+        Используется для определения стиля полос с этим значением. Должен возвращать
+        кортеж из двух имен стилей или объектов стиля: первый используется для bar,
+        а второй — для vbar.
 
-        This defaults to ("bar", "vbar").
+        По умолчанию ("bar", "vbar").
 
     .. method:: get_tooltip(self)
 
-        This gets a default tooltip for this button, if a specific
-        tooltip is not assigned. It should return the tooltip value,
-        or None if a tooltip is not known.
-
-        This defaults to returning None.
+        Возвращает подсказку по умолчанию для этой полосы. По умолчанию возвращает None.
 
     .. method:: replaces(self, other)
 
-        This is called when a BarValue replaces another BarValue, such
-        as when a screen is updated. It can be used to update this
-        BarValue from the other. It is called before get_adjustment.
+        Вызывается, когда один BarValue заменяет другой (например, при обновлении экрана).
+        Может использоваться для переноса состояния из старого значения. Вызывается
+        до get_adjustment.
 
-        Note that `other` is not necessarily the same type as `self`.
+        Обратите внимание, что `other` не обязательно того же типа, что и `self`.
 
     .. method:: periodic(self, st)
 
-        This method is called once at the start of each interaction. If
-        it returns a number of seconds, it will be called before that
-        many seconds elapse, but it might be called sooner. It is
-        called after get_adjustment.
+        Вызывается один раз в начале каждого взаимодействия. Если возвращает число секунд,
+        будет вызван снова не позже, чем через это время. Вызывается после get_adjustment.
 
-        It can be used to update the value of the bar over time, like
-        :func:`AnimatedValue` does. To do this, get_adjustment should
-        store the adjustment, and periodic should call the
-        adjustment's changed method.
+        Может использоваться для плавного обновления значения полосы во времени, подобно
+        :func:`AnimatedValue`.
 
     .. attribute:: alt
 
-        The text-to-speech text used for bars that use this BarValue, if
-        the bar does not have the :propref:`alt` property set. This can
-        set to a string in the class, or in the constructor, or it can be
-        a Python property that returns a string.
+        Текст для синтезатора речи для полос с этим BarValue (если у полосы не задано :propref:`alt`).
 
 
-InputValue
-==========
+Значения ввода (InputValue)
+===========================
 
-When creating an input, an InputValue object can be supplied as the
-`value` property. Methods on the InputValue object are called to
-get and set the text, determine if the input is editable, and handle
-the enter key being pressed.
+При создании поля ввода (input) объект InputValue может быть передан свойству `value`.
+Методы InputValue вызываются для получения и установки текста, проверки доступности
+редактирования и обработки нажатия клавиши Enter.
 
 .. class:: InputValue
 
-    To define a new InputValue, inherit from this class, override
-    some or all of the methods, and set the value of the default
-    field.
+    Для создания нового значения ввода наследуйте от этого класса, переопределите методы
+    и задайте значение поля default.
 
     .. attribute:: editable
 
-        If not true, disables the input field from being editable at all.
+        Если False, полностью отключает редактирование поля ввода.
 
     .. attribute:: default
 
-        If true, the input is eligible to be editable by default. (That
-        is, it may be given the caret when the screen is shown.)
+        Если True, поле ввода активно для редактирования по умолчанию (получает каретку
+        при показе экрана).
 
     .. method:: get_text(self)
 
-        Returns the default text of the input. This must be implemented.
+        Возвращает текст поля ввода по умолчанию. Обязателен к реализации.
 
     .. method:: set_text(self, s)
 
-        Called when the text of the input is changed, with the new text.
-        This must be implemented.
+        Вызывается при изменении текста поля ввода, принимая новый текст. Обязателен к реализации.
 
     .. method:: enter(self)
 
-        Called when the user presses enter. If this returns a non-None
-        value, that value is returned from the interaction. This may also
-        raise :exc:`renpy.IgnoreEvent` to ignore the press. Otherwise, the
-        enter-press is propagated to other displayables.
+        Вызывается при нажатии клавиши Enter пользователем. Если возвращает значение,
+        отличное от None, это значение возвращается из взаимодействия. Может вызывать
+        :exc:`renpy.IgnoreEvent` для игнорирования нажатия.
 
-    The following actions are available as methods on InputValue:
+    Следующие действия доступны как методы InputValue:
 
     .. method:: Enable()
 
-        Returns an action that enables text editing on the input.
+        Возвращает действие, включающее редактирование текста в данном поле ввода.
 
     .. method:: Disable()
 
-        Returns an action that disables text editing on the input.
+        Возвращает действие, отключающее редактирование текста.
 
     .. method:: Toggle()
 
-        Returns an action that toggles text editing on the input.
+        Возвращает действие, переключающее режим редактирования текста.
 
 
 .. _creator-defined-sl:
 
-Creator-Defined Screen Language Statements
-==========================================
+Пользовательские операторы языка экранов
+========================================
 
-Ren'Py supports defining custom screen language statements. Creator-defined screen
-language statements are wrappers for the screen language :ref:`use statement <sl-use>`.
-Positional arguments remain positional arguments, properties become keyword
-arguments, and if the statement takes a block, so does the use statement. For
-example, the custom screen language statement::
+Ren'Py поддерживает создание пользовательских операторов языка экранов. Созданные разработчиком
+операторы представляют собой обертки вокруг оператора :ref:`use <sl-use>`. Позиционные
+аргументы остаются позиционными, свойства становятся именованными аргументами, а если
+оператор принимает блок строк, то его принимает и оператор use. Например, пользовательский
+оператор::
 
-    titledwindow "Test Window":
+    titledwindow "Окно теста":
         icon "icon.png"
 
-        text "This is a test."
+        text "Это тест."
 
-becomes::
+превращается в::
 
-    use titledwindow("Test Window", icon="icon.png"):
-        text "This is a test."
+    use titledwindow("Окно теста", icon="icon.png"):
+        text "Это тест."
 
-Creator-defined screen language statements must be registered in a ``python early`` block.
-What's more, the filename containing the creator-defined statement must be loaded earlier
-than any file that uses it. Since Ren'Py loads files in the Unicode sort order of their paths,
-it generally makes sense to prefix the name of any file registering a user-defined
-statement with 01, or some other small number.
+Пользовательские операторы языка экранов должны регистрироваться в блоке ``python early``.
+Кроме того, файл с регистрацией должен загружаться раньше любого файла, использующего этот оператор.
+Поскольку Ren'Py загружает файлы в порядке сортировки Unicode их путей, имя файла с регистрацией
+обычно предваряют цифрами 01 (например, 01custom.rpy).
 
-Creator-defined screen language statements are registered with the renpy.register_sl_statement
-function:
+Пользовательские операторы регистрируются с помощью функции renpy.register_sl_statement:
 
 .. include:: inc/custom_sl
 
-As an example of a creator-defined screen language statement, here's an
-implementation of the ``titledwindow`` statement given above. First, the
-statement must be registered in a ``python early`` block in a file that is loaded
-early – a name like 01custom.rpy will often load soon enough. The registration
-call looks like::
-
+В качестве примера пользовательского оператора рассмотрим реализацию оператора ``titledwindow``,
+приведенного выше. Сначала оператор регистрируется в блоке ``python early``::
 
     python early:
         renpy.register_sl_statement("titledwindow", children=1).add_positional("title").add_property("icon").add_property("pos")
 
-Then, we define a screen that implements the custom statement. This screen can be defined in
-any file. One such screen is::
+Затем мы определяем экран, реализующий пользовательский оператор (экран может быть в любом файле)::
 
     screen titledwindow(title, icon=None, pos=(0, 0)):
         drag:
@@ -287,12 +251,12 @@ any file. One such screen is::
                 transclude
 
 
-When are used large property groups like a `add_property_group`, it makes sense to use
-the \*\*properties syntax with a properties keyword in some place. For example::
+При использовании больших групп свойств (через `add_property_group`) имеет смысл использовать
+синтаксис \*\*properties со свойством properties. Например::
 
     screen titledwindow(title, icon=None, **properties):
         frame:
-            # When background not in properties it will use it as default value.
+            # Если background не передан в properties, используется значение по умолчанию.
             background "#00000080"
 
             properties properties
@@ -309,5 +273,5 @@ the \*\*properties syntax with a properties keyword in some place. For example::
 
             transclude
 
-Custom defined screen language statements support the ``as`` clause, which takes the name of the variable. If present,
-this variable will be assigned the value of `main` in the scope of the screen.
+Пользовательские операторы языка экранов поддерживают предложение ``as``, принимающее имя переменной.
+Если оно присутствует, этой переменной будет присвоено значение `main` из области видимости экрана.

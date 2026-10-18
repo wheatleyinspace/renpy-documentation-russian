@@ -1,13 +1,13 @@
-Creator-Defined Statements
-==========================
+Пользовательские инструкции (CDS)
+=================================
 
-Creator-Defined Statements (CDS) allow you to add your own statements to
-Ren'Py's scripting language. This makes it possible to add functionality that
-is not supported by the current syntax.
+Пользовательские инструкции (Creator-Defined Statements, CDS) позволяют добавлять
+собственные инструкции в скриптовый язык Ren'Py. Это даёт возможность расширять
+синтаксис возможностями, которые не поддерживаются стандартными средствами.
 
-CDS can be more flexible than the direct Python code equivalent.
+CDS могут быть более гибкими и выразительными, чем прямой эквивалент на чистом Python.
 
-For example, picking a line of dialogue at random::
+Например, выбор случайной реплики диалога::
 
     label introduction:
         python:
@@ -17,20 +17,20 @@ For example, picking a line of dialogue at random::
         "[greeting]"
 
 
-Ren'Py's parser does not know ahead of time what happens in the python block or how it should be executed.
-It does not do anything with this code until execution and triggers an error if an exception occurs.
+Парсер Ren'Py заранее не знает, что именно происходит в блоке python или как его следует выполнять.
+Он ничего не делает с этим кодом до момента непосредственного выполнения и вызовет ошибку, если возникнет исключение.
 
-Using a CDS allows you to:
+Использование CDS позволяет вам:
 
-- Check the correctness of the parsed syntax (For example, check that the items in the list sent to renpy.random.choice have valid text)
+- Проверять корректность синтаксиса при разборе (например, убедиться, что элементы списка, передаваемого в renpy.random.choice, содержат валидный текст).
 
-- Ignore incorrect data at execution (For non-critical functions, it is often better to skip the execution than to throw an exception)
+- Игнорировать некорректные данные при выполнении (для некритичных функций зачастую лучше пропустить выполнение, чем вызывать исключение).
 
-- Predict Displayables (If the function uses them)
+- Предсказывать отображаемые объекты (если функция использует их).
 
-- Give you addition information during :ref:`lint` (If at runtime an error was ignored you can have a report here).
+- Предоставлять дополнительную информацию во время линтинга (:ref:`lint`) (если во время выполнения ошибка была проигнорирована, здесь можно вывести отчёт о ней).
 
-For example, the above behaviour, but written as a CDS::
+Например, то же поведение, но оформленное в виде CDS::
 
     python early:
         def parse_random(lexer):
@@ -65,7 +65,7 @@ For example, the above behaviour, but written as a CDS::
         )
 
 
-``random`` is now available as a statement::
+Теперь ``random`` доступен как инструкция языка::
 
     label introduction:
         random:
@@ -74,39 +74,34 @@ For example, the above behaviour, but written as a CDS::
             "Can I help you?"
 
 
-Using a CDS does not guarantee that the execution will be successful,
-but the better you code your statement, the better Ren'Py can "understand" what
-you expect from it.
+Использование CDS само по себе не гарантирует успешности выполнения, но чем качественнее
+написан разбор вашей инструкции, тем лучше Ren'Py сможет «понять», чего именно вы от неё ожидаете.
 
 
-Usage
------
+Использование
+-------------
 
-Creator-Defined Statements (CDS) must conform to the following rules:
+Пользовательские инструкции (CDS) должны подчиняться следующим правилам:
 
-- They must be defined in a ``python early`` block.
+- Они должны быть определены в блоке ``python early``.
 
-- They cannot be used in the same file in which they are defined.
+- Их нельзя использовать в том же файле, где они определены.
 
-- The file containing the CDS must be loaded earlier than any file that uses it.
-  (Since Ren'Py loads files in the Unicode sort order of their path, it generally makes sense to
-  prefix the name of any file containing a CDS with 01 or some other small number. See :ref:`early-phase` for
-  more information about the order in which Ren'Py loads files, with special details about the  game/libs/ and
-  game/mods/ directories.)
+- Файл, содержащий CDS, должен загружаться раньше любого файла, использующего эту инструкцию.
+  (Поскольку Ren'Py загружает файлы в порядке сортировки путей по Unicode, обычно имеет смысл
+  начинать имя файла с CDS с префикса 01 или другого меньшего номера. Подробнее о порядке
+  загрузки файлов Ren'Py с нюансами каталогов game/libs/ и game/mods/ см. в разделе :ref:`early-phase`.)
 
-Creator-Defined Statements are registered using the :func:`renpy.register_statement`
-function. This functions takes other functions that perform operations on the content of the CDS.
+Пользовательские инструкции регистрируются с помощью функции :func:`renpy.register_statement`.
+Эта функция принимает другие функции, выполняющие различные операции над содержимым CDS.
 
-For example, a new statement named ``line`` that allows lines of text to be specified
-without quotes.
-
-::
+Например, новая инструкция ``line``, позволяющая указывать реплики текста без кавычек::
 
     line e "These quotes will show up," Eileen said, "and don't need to be backslashed."
 
-The parse function will be sent the lexed content for parsing.
-The execute function should run an operation on the parsed content.
-The lint function should report any errors in the parsed content.
+Функции parse передаётся содержимое лексера для синтаксического анализа.
+Функция execute должна выполнять действие над разобранным содержимым.
+Функция lint должна сообщать о любых ошибках в разобранном содержимом.
 
 ::
 
@@ -139,202 +134,186 @@ The lint function should report any errors in the parsed content.
         )
 
 
-API Reference
--------------
+Справочник API
+--------------
 
 .. include:: inc/statement_register
 
 
-Lexer object
+Объект Lexer
 ~~~~~~~~~~~~
 
-A custom statement's parse function takes an instance of a Lexer object.
+Функция parse пользовательской инструкции принимает экземпляр объекта Lexer.
 
 .. class:: Lexer
 
     .. property:: init
 
-        This is true if the lexer is inside an init statement, else false.
+        True, если лексер находится внутри инструкции init, иначе False.
 
     .. property:: init_priority
 
-        If init is true, this is the priority of the init block.
+        Если init равен True, содержит приоритет блока init.
 
     .. method:: error(msg)
 
-        :param str msg: Message to add to the list of detected parsing errors.
+        :param str msg: Сообщение для добавления в список обнаруженных ошибок синтаксического анализа.
 
-        Add `msg` (with the current position) to the list of detected
-        parsing errors. This interrupts the parsing of the current statement,
-        but does not prevent further parsing.
+        Добавляет `msg` (с указанием текущей позиции) в список обнаруженных ошибок синтаксического
+        анализа. Это прерывает разбор текущей инструкции, но не препятствует дальнейшему разбору файла.
 
     .. method:: require(thing, name=None)
 
-        Try to parse `thing` and report an error if it cannot be done.
+        Пытается разобрать `thing` и сообщает об ошибке, если это сделать не удаётся.
 
-        If `thing` is a string, try to parse it using :func:`match`.
+        Если `thing` — строка, пытается разобрать её с помощью :func:`match`.
 
-        Otherwise, thing must be another method on this lexer object which is
-        called without arguments.
+        В противном случае `thing` должен быть другим методом этого объекта lexer, вызываемым без аргументов.
 
-        If `name` is not specified, the name of the method will be used in the
-        message (or `thing` if it's a string), otherwise `name` will be used.
+        Если `name` не указано, в сообщении используется имя метода (или `thing`, если это строка);
+        в противном случае используется `name`.
 
     .. method:: eol()
 
-        :return: True if the lexer is at the end of the line, else False.
+        :return: True, если лексер находится в конце строки, иначе False.
         :rtype: bool
 
     .. method:: expect_eol()
 
-        If not at the end of the line, raise an error.
+        Вызывает ошибку, если лексер находится не в конце строки.
 
     .. method:: expect_noblock(stmt)
 
-        Called to indicate this statement does not expect a block.
-        If a block is found, raise an error. `stmt` should be a string,
-        it will be added to the message with an error.
+        Вызывается для указания того, что эта инструкция не ожидает блок.
+        Если блок обнаружен, вызывает ошибку. `stmt` должен быть строкой,
+        которая будет добавлена к сообщению об ошибке.
 
     .. method:: expect_block(stmt)
 
-        Called to indicate that the statement requires that a non-empty
-        block is present. `stmt` should be a string, it will be added
-        to the message with an error.
+        Вызывается для указания того, что инструкция требует наличия непустого
+        блока. `stmt` должен быть строкой, которая будет добавлена к сообщению об ошибке.
 
     .. method:: has_block()
 
-        :return: True if the current line has a non-empty block, else False.
+        :return: True, если текущая строка содержит непустой блок, иначе False.
         :rtype: bool
 
     .. method:: match(re)
 
-        Match an arbitrary regexp string.
+        Сопоставляет строку с произвольным регулярным выражением.
 
-        All of the statements in the lexer that match things are implemented
-        in terms of this function. They first skip whitespace, then attempt
-        to match against the line. If the match succeeds, the matched text
-        is returned. Otherwise, None is returned, and the state of the lexer
-        is unchanged.
+        Все методы сопоставления в лексере реализованы через эту функцию. Сначала они пропускают
+        пробельные символы, затем пытаются сопоставить регулярное выражение со строкой.
+        Если сопоставление успешно, возвращается совпавший текст. В противном случае возвращается
+        None, а состояние лексера остаётся неизменным.
 
     .. method:: keyword(s)
 
-        Match `s` as a keyword.
+        Сопоставляет `s` как ключевое слово.
 
     .. method:: name()
 
-        Match a name. This does not match built-in keywords.
+        Сопоставляет имя идентификатора. Не сопоставляет встроенные ключевые слова.
 
     .. method:: word()
 
-        :return: The text of the matched word.
+        :return: Текст совпавшего слова.
         :rtype: str
 
-        Match any word, including keywords.
+        Сопоставляет любое слово, включая ключевые слова.
 
     .. method:: image_name_component()
 
-        Match an image name component. Unlike a word, an image name
-        component can begin with a number.
+        Сопоставляет компонент имени изображения. В отличие от обычного слова,
+        компонент имени изображения может начинаться с цифры.
 
     .. method:: string()
 
-        Match a Ren'Py string.
+        Сопоставляет строку Ren'Py в кавычках.
 
     .. method:: integer()
 
-        :return: String containing the found integer.
+        :return: Строка, содержащая найденное целое число.
         :rtype: str
 
-        Match an integer.
+        Сопоставляет целое число.
 
     .. method:: float()
 
-        :return: String containing the found floating point number.
+        :return: Строка, содержащая найденное число с плавающей запятой.
         :rtype: str
 
-        Match a floating point number.
+        Сопоставляет число с плавающей запятой.
 
     .. method:: label_name(declare=False)
 
-        Match a label name, either absolute or relative. If `declare`
-        is true, then the global label name is set. (Note that this does not
-        actually declare the label - the statement is required to do that
-        by returning it from the `label` function.)
+        Сопоставляет имя метки, как абсолютное, так и относительное. Если `declare`
+        равно True, устанавливается глобальное имя метки. (Обратите внимание, что это
+        не объявляет метку фактически — инструкция должна сделать это, вернув её из функции `label`.)
 
     .. method:: simple_expression()
 
-        Match a simple Python expression, returns it as a string.
-        This is often used when you expect a variable name.
-        It is not recommended to change the result. The correct action is
-        to evaluate the result in the future.
+        Сопоставляет простое выражение Python и возвращает его в виде строки.
+        Часто используется, когда ожидается имя переменной. Не рекомендуется изменять результат.
+        Правильное действие — вычислить результат в дальнейшем.
 
     .. method:: delimited_python(delim)
 
-        Match a Python expression that ends in a `delim`, for example ':'.
-        This is often used when you expect a condition until the delimiter.
-        It is not recommended to change the result. The correct action is
-        to evaluate the result in the future. This raises an error if
-        end of line is reached before the delimiter.
+        Сопоставляет выражение Python, заканчивающееся разделителем `delim`, например ':'.
+        Часто используется, когда ожидается условие перед двоеточием. Не рекомендуется изменять результат.
+        Правильное действие — вычислить результат в дальнейшем. Вызывает ошибку, если конец строки
+        достигнут до разделителя.
 
     .. method:: arguments()
 
-        This must be called before the parentheses with the arguments list,
-        if they are not specified returns None, otherwise
-        returns an object representing the arguments to a function
-        call. This object has an ``evaluate`` method on it that
-        takes an optional `scope` dictionary, and returns a tuple
-        in which the first component is a tuple of positional arguments,
-        and the second component is a dictionary of keyword arguments.
+        Должен вызываться перед круглыми скобками со списком аргументов. Если скобки не указаны,
+        возвращает None; в противном случае возвращает объект, представляющий аргументы вызова функции.
+        У этого объекта есть метод ``evaluate``, принимающий необязательный словарь `scope`
+        и возвращающий кортеж, первым элементом которого является кортеж позиционных аргументов,
+        а вторым — словарь именованных аргументов.
 
     .. method:: rest()
 
-        Skip whitespace, then return the rest of the line.
+        Пропускает пробелы и возвращает оставшуюся часть строки.
 
     .. method:: checkpoint()
 
-        Return an opaque object representing the current state of the lexer.
+        Возвращает непрозрачный объект, представляющий текущее состояние лексера.
 
     .. method:: revert(o)
 
-        When `o` is the object returned from checkpoint(), reverts the state
-        of the lexer to what it was when checkpoint() was called. (This is
-        used for backtracking.)
+        Если `o` — объект, возвращённый из checkpoint(), возвращает состояние лексера
+        к тому, каким оно было при вызове checkpoint(). (Используется для поиска с возвратом / backtracking.)
 
     .. method:: subblock_lexer()
 
-        :return: A Lexer for the block associated with the current line.
+        :return: Объект Lexer для блока, связанного с текущей строкой.
 
     .. method:: advance()
 
-        In a subblock lexer, advance to the next line. This must be called
-        before the first line, so the first line can be parsed. Return True
-        if we've successfully advanced to a line in the block, or False
-        if we have advanced beyond all lines in the block.
+        В лексере подблока переходит к следующей строке. Этот метод необходимо вызвать перед
+        первой строкой, чтобы её можно было разобрать. Возвращает True, если успешно выполнен переход
+        к строке в блоке, или False, если пройдены все строки блока.
 
     .. method:: renpy_statement()
 
-        When called, this parses the current line as a Ren'Py script statement,
-        generating an error if this is not possible. This method returns
-        an opaque object that can be returned from the `next` function passed to
-        :func:`renpy.register_statement`, or passed
-        to :func:`renpy.jump` or :func:`renpy.call`. This object should
-        not be stored except as part of the parse result of the statement.
+        При вызове разбирает текущую строку как инструкцию скрипта Ren'Py, генерируя ошибку,
+        если это невозможно. Возвращает непрозрачный объект, который может быть возвращён функцией `next`,
+        переданной в :func:`renpy.register_statement`, либо передан в :func:`renpy.jump` или :func:`renpy.call`.
+        Этот объект не следует сохранять, кроме как в качестве части результата разбора инструкции.
 
-        When the statement returned from this completes, control is
-        transferred to the statement after the creator-defined statement.
-        (Which might be the statement created using post_execute).
+        Когда инструкция, возвращённая этим методом, завершается, управление передаётся инструкции,
+        следующей за пользовательской инструкцией (которая может быть инструкцией, созданной с помощью post_execute).
 
     .. method:: renpy_block(empty=False)
 
-        Parse all of the remaining lines in the current block
-        as Ren'Py script, and return a SubParse corresponding to the
-        first statement in the block. The block is chained together such
-        that all statements in the block are run, and then control is
-        transferred to the statement after this creator-defined statement.
+        Разбирает все оставшиеся строки текущего блока как скрипт Ren'Py и возвращает SubParse,
+        соответствующий первой инструкции в блоке. Блок связывается в цепочку таким образом,
+        что выполняются все инструкции в блоке, а затем управление передаётся инструкции,
+        следующей за данной пользовательской инструкцией.
 
-        Note that this parses the current block. In the more likely
-        case that you'd like to parse the subblock of the current
-        statement, the correct way to do that is::
+        Обратите внимание, что этот метод разбирает текущий блок. В более типичном случае,
+        когда требуется разобрать подблок текущей инструкции, правильным способом является::
 
             def mystatement_parse(l):
 
@@ -347,19 +326,18 @@ A custom statement's parse function takes an instance of a Lexer object.
                 return { "child" : child }
 
         `empty`
-            If True, allows an empty block to be parsed. (An empty block
-            is equivalent to a block with a single ``pass`` statement.)
+            Если True, разрешает разбор пустого блока. (Пустой блок эквивалентен блоку с единственной
+            инструкцией ``pass``.)
 
-            If False, an empty block triggers an error.
+            Если False, пустой блок вызывает ошибку.
 
     .. method:: catch_error()
 
-        This is a context decorator, used in conjunction with the with
-        statement, that catches and reports lexer errors inside its
-        context block, then continues after the block.
+        Контекстный декоратор, используемый в сочетании с инструкцией with, который перехватывает
+        и выводит ошибки лексера внутри своего контекстного блока, после чего продолжает выполнение
+        после блока.
 
-        Here's an example of how it can be used to report multiple errors
-        in a single subblock. ::
+        Вот пример того, как его можно использовать для вывода нескольких ошибок в одном подблоке::
 
             def mystatement_parse(l):
 
@@ -378,14 +356,14 @@ A custom statement's parse function takes an instance of a Lexer object.
 
                 return { "strings" : strings }
 
-A function allows you to lex arbitrary strings:
+Следующая функция позволяет выполнять лексический анализ произвольных строк:
 
 .. include:: inc/lexer
 
 
-Lint Utility Functions
-~~~~~~~~~~~~~~~~~~~~~~
+Вспомогательные функции линтинга
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These functions are useful when writing lint functions.
+Эти функции полезны при написании функций lint.
 
 .. include:: inc/lint

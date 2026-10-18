@@ -1,8 +1,8 @@
 .. _changelog-6:
 
-==============================
-Changelog (Ren'Py 6.11 - 6.99)
-==============================
+======================================
+История изменений (Ren'Py 6.11 - 6.99)
+======================================
 
 .. _renpy-6.99.14.3:
 
@@ -303,7 +303,7 @@ support for this out of the box yet. Please see the :doc:`multiple`
 section of the documentation for the styles you'll need to define.
 
 GUI Preferences
-----------------
+---------------
 
 Ren'Py supports a new GUI preference system that replaces the old style preference
 system, as it allows preferences to apply to variables in the new GUI that can
@@ -936,7 +936,7 @@ Ren'Py 6.99.11
 ==============
 
 New In-Game GUI
-----------------
+---------------
 
 Ren'Py ships with a new default GUI. This system, used in-game to customize
 the main menu, game menu, and in-game screens, replaces the old themes
@@ -1616,7 +1616,7 @@ The following bugs have been fixed:
 
 
 Ren'Py 6.99.6
-==============
+=============
 
 HighDPI/Retina
 --------------

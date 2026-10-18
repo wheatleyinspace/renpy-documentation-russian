@@ -1,92 +1,62 @@
-==================================
-Lifecycle of a Running Ren'Py Game
-==================================
+=====================================
+Жизненный цикл запущенной игры Ren'Py
+=====================================
 
-When running a Ren'Py game, be it from the executable or from the launcher, it follows a series
-of steps up until the point where it is closed. This page exposes the various phases of this
-lifecycle, and various related statements.
+При запуске игры Ren'Py — будь то из исполняемого файла или из лаунчера — движок выполняет последовательность этапов вплоть до момента закрытия программы. На этой странице описаны различные фазы этого жизненного цикла и связанные с ними инструкции.
 
-Boot Time
-=========
+Этап загрузки (Boot Time)
+=========================
 
-There are a lot of things happening before the game window appears. This is the boot time. The
-only thing that's possibly visible at that point is the :ref:`presplash <presplash>`.
+До появления окна игры происходит множество подготовительных процессов. Это этап загрузки (boot time). Единственное, что может отображаться в этот момент — это :ref:`презаставка (presplash) <presplash>`.
 
 .. _early-phase:
 
-Script Parsing Phase
---------------------
+Фаза синтаксического анализа скрипта
+------------------------------------
 
-To read the game's code, Ren'Py reads each of the game's ``.rpy`` (and ``_ren.py``) files one by
-one. That's the "parsing" phase, or "early" phase. The order that files are read in is:
+Чтобы прочитать код игры, Ren'Py последовательно считывает каждый из файлов ``.rpy`` (и ``_ren.py``). Это фаза «синтаксического анализа» (parsing), или ранняя фаза («early»). Файлы считываются в следующем порядке:
 
-1. Files inside :file:`renpy/common` are loaded using the full path, in unicode order. This is only for use by
-   Ren'Py.
+1. Файлы внутри :file:`renpy/common` загружаются по полному пути в порядке кодовых точек Юникода. Они предназначены только для внутреннего использования Ren'Py.
 
-2. Only if :file:`game/libs/libs.txt` exists, files in :file:`game/libs` have the first directory removed, if any and
-   then are loaded in unicode order. In this order, :file:`game/libs/plants/aloe.rpy` will load before :file:`game/libs/animals/zebra.rpy`.
+2. Только если существует файл :file:`game/libs/libs.txt`, файлы в :file:`game/libs` считываются с отсечением имени первого подкаталога (если он есть) и загружаются в алфавитном порядке Юникода. В таком порядке :file:`game/libs/plants/aloe.rpy` загрузится раньше, чем :file:`game/libs/animals/zebra.rpy`.
 
-5. Files in :file:`game` are loaded using the full path, in unicode order. (In this order,
-   :file:`game/animals/zebra.rpy` will load before :file:`game/plants/aloe.rpy`.)
+5. Файлы в :file:`game` загружаются по полному пути в порядке кодовых точек Юникода. (В таком порядке :file:`game/animals/zebra.rpy` загрузится раньше, чем :file:`game/plants/aloe.rpy`.)
 
-6. Only if :file:`game/mods/mods.txt` exists, :file:`game/mods` have the first directory removed, if any and
-   then are loaded in unicode order. In this order, :file:`game/mods/plants/aloe.rpy` will load before :file:`game/mods/animals/zebra.rpy`.
+6. Только если существует файл :file:`game/mods/mods.txt`, файлы в :file:`game/mods` считываются с отсечением имени первого подкаталога (если он есть) и загружаются в порядке Юникода. В таком порядке :file:`game/mods/plants/aloe.rpy` загрузится раньше, чем :file:`game/mods/animals/zebra.rpy`.
 
-The first creator-written code being executed is what's written in ``python early`` blocks. These
-are executed after the file they're in has been read and parsed, but before the next file gets
-read. This is why statements which modify how parsing works, like :doc:`cds`,
-:ref:`creator-defined-sl` or new custom :ref:`warpers`, must be written in ``python early``
-blocks.
+Первый пользовательский код, который выполняется — это код, написанный в блоках ``python early``. Они выполняются сразу после того, как содержащий их файл был прочитан и проанализирован, но до чтения следующего файла. Именно поэтому инструкции, изменяющие процесс синтаксического анализа (такие как :doc:`cds`, :ref:`пользовательские инструкции экранного языка <creator-defined-sl>` или новые функции изменения темпа :ref:`warpers`), должны быть написаны в блоках ``python early``.
 
-The ``init python early`` syntax is sometimes encountered, but it's redundant and doesn't change
-anything in how the code gets executed compared to ``python early``.
+Иногда встречается синтаксис ``init python early``, однако он избыточен и никак не меняет порядок выполнения кода по сравнению с ``python early``.
 
 .. _init-phase:
 
-Init Phase
-----------
+Фаза инициализации (Init Phase)
+-------------------------------
 
-After parsing/early phase, the "init" phase starts. Several statements are executed at that time,
-including the :ref:`init-python-statement`, the :ref:`define-statement`, the
-:ref:`transform-statement`, the :ref:`image-statement`, the :ref:`screen-statement`, and the
-:doc:`style <style>` statement.
+После завершения фазы синтаксического анализа начинается фаза «инициализации» (init). В это время выполняется ряд инструкций, включая :ref:`инструкцию init python <init-python-statement>`, :ref:`инструкцию define <define-statement>`, :ref:`инструкцию transform <transform-statement>`, :ref:`инструкцию image <image-statement>`, :ref:`инструкцию screen <screen-statement>` и инструкцию :doc:`style <style>`.
 
-The init phase is divided in successive epochs, or init priorities.
-Contrary to what the term may imply, epochs of lower priority are executed before
-epochs of higher priority. It is suggested that games use init priorities of -99 to 99.
-Libraries and mods can use from -999 to -100 and 100 to 999. Init priorities outside of the
-range -999 to 999 are reserved for Ren'Py's internal use.
+Фаза инициализации разделена на последовательные эпохи, или приоритеты инициализации (init priorities). Вопреки кажущемуся значению термина, эпохи с меньшим значением приоритета выполняются раньше эпох с большим приоритетом. Рекомендуется, чтобы в играх использовались приоритеты инициализации от -99 до 99. Библиотеки и модификации могут использовать диапазоны от -999 до -100 и от 100 до 999. Приоритеты инициализации вне диапазона от -999 до 999 зарезервированы для внутреннего использования Ren'Py.
 
 .. image define default transform (init) screen (testcase) (translation) style
 
-By default, these statements are executed at init offset 0. However, they can be offset using
-the :ref:`init-offset-statement` or by other means. The :ref:`image-statement` is an exception to
-both of these rules, as it executes at an init priority of 500 by default, and the init offset
-statement adds or substracts from this 500, rather than replacing it.
+По умолчанию эти инструкции выполняются со смещением приоритета (init offset), равным 0. Однако их можно сместить с помощью :ref:`инструкции init offset <init-offset-statement>` или другими способами. :ref:`Инструкция image <image-statement>` является исключением из обоих этих правил: по умолчанию она выполняется с приоритетом инициализации 500, а инструкция init offset прибавляет к этому значению 500 или вычитает из него, а не заменяет его.
 
-Automatic image definition from the :ref:`image-directory` occurs at init priority 0.
+Автоматическое определение изображений из каталога :ref:`image-directory` происходит с приоритетом инициализации 0.
 
-`Define statements <define-statement>` are executed at init time, and the variables set in
-define statements should not be changed, as Ren'Py considers those variables to be constants for
-the purpose of performance optimization.
+`Инструкции define <define-statement>` выполняются во время инициализации, и переменные, заданные в них, не должны изменяться во время игры, поскольку Ren'Py считает эти переменные константами в целях оптимизации производительности.
 
-Note that while the :ref:`default <default-statement>` statements are not executed at init time,
-the priority of the statements influences the order in which they will be executed, relative to
-one another.
+Обратите внимание: хотя инструкции :ref:`default <default-statement>` не выполняются на этапе инициализации, приоритет инструкций влияет на порядок, в котором они будут выполняться относительно друг друга.
 
 .. _init-offset-statement:
 
-Init Offset Statement
-^^^^^^^^^^^^^^^^^^^^^
+Инструкция init offset
+^^^^^^^^^^^^^^^^^^^^^^
 
-The ``init offset`` statement sets a priority offset for all statements
-that run at init time. It should be placed at the top of the file, and it applies to all following
-statements in the current block and child blocks, up to the next
-init priority statement. The statement::
+Инструкция ``init offset`` задаёт смещение приоритета для всех инструкций, выполняющихся на этапе инициализации. Её следует размещать в начале файла, и она применяется ко всем последующим инструкциям в текущем и дочерних блоках вплоть до следующей инструкции init offset. Инструкция::
 
     init offset = 42
 
-sets the priority offset to 42. In::
+устанавливает смещение приоритета равным 42. В примере::
 
     init offset = 2
     define foo = 2
@@ -96,71 +66,48 @@ sets the priority offset to 42. In::
 
     init offset = 0
 
-The first define statement is run at priority 2, which means it runs
-after the second define statement, and hence ``foo`` winds up with
-a value of 2.
+первая инструкция define выполняется с приоритетом 2, то есть после второй инструкции define, и в итоге переменная ``foo`` получает значение 2.
 
 
-Script Execution
-================
+Выполнение сценария (Script Execution)
+======================================
 
-This is when normal Ren'Py statements execute, and when the rules described in :doc:`label` apply.
+На этом этапе выполняются обычные инструкции Ren'Py и действуют правила, описанные на странице :doc:`label`.
 
-Variables that are changed during this phase are saved when the game is saved, and restored
-when the game is loaded. The game window is shown during the first interaction that occurs during
-this phase.
+Переменные, изменяемые во время этой фазы, сохраняются при сохранении игры и восстанавливаются при загрузке. Окно игры отображается во время первого взаимодействия с пользователем, происходящего на этой фазе.
 
-Config variables should not be changed once script execution begins, as Ren'Py can cache the values
-of config variables.
+Переменные конфигурации config не должны изменяться после начала выполнения скрипта, поскольку Ren'Py может кэшировать их значения.
 
-Before Splashscreen
--------------------
+Перед заставкой (Before Splashscreen)
+-------------------------------------
 
-The items in this section run at the start of Ren'Py, or after a return to the main menu. Notably, these
-still run even if the splashscreen is skipped.
+Действия из этого раздела выполняются при запуске Ren'Py или после возврата в главное меню. В частности, они выполняются даже в том случае, если показ заставки был пропущен.
 
-Before the splashscreen is shown, :ref:`default statements <default-statement>` are executed. Then,
-:var:`config.start_callbacks` are run.
+Перед показом заставки выполняются :ref:`инструкции default <default-statement>`. Затем вызываются функции обратного вызова :var:`config.start_callbacks`.
 
-Splashscreen
-------------
+Заставка (Splashscreen)
+-----------------------
 
-If it exists, the :ref:`splashscreen <adding-a-splashscreen>` label is executed until it returns.
+Если она определена, метка :ref:`splashscreen <adding-a-splashscreen>` выполняется до тех пор, пока из неё не произойдёт возврат.
 
-A splashscreen is only displayed once per time Ren'Py is run, and is skipped when
-script execution restarts.
+Заставка отображается только один раз за сеанс работы Ren'Py и пропускается при перезапуске выполнения скрипта.
 
-At the end of the splashscreen, even if it is skipped, Ren'Py executes ``scene black`` to clear out
-the splashscreen and provide a default black background.
+В конце заставки, даже если она была пропущена, Ren'Py выполняет инструкцию ``scene black``, чтобы скрыть всё содержимое заставки и обеспечить стандартный чёрный фон.
 
-Main Menu
----------
+Главное меню (Main Menu)
+------------------------
 
-If it exists, the ``before_main_menu`` label is executed. Then, once it returns, the
-:ref:`main_menu <main-menu-screen>` screen is shown, unless a ``main_menu`` label exists, in which
-case it is executed instead. See :ref:`special-labels` for more information.
+Если она существует, вызывается метка ``before_main_menu``. Затем, после возврата из неё, отображается экран :ref:`main_menu <main-menu-screen>`, если только не определена метка ``main_menu`` — в этом случае вместо экрана выполняется данная метка. Подробнее см. в разделе :ref:`Специальные метки <special-labels>`.
 
-The main menu itself is run in its own :ref:`context <context>`. Ren'Py can leave this
-context by calling the :class:`Start` action, which also jumps to a label or to the ``start`` label
-if none is specified. Returning from the ``main_menu`` label also enters the in-game phase at the
-``start`` label, while loading a game enters the in-game phase at the spot where the game was saved.
+Само главное меню выполняется в собственном :ref:`контексте <context>`. Ren'Py может выйти из этого контекста при вызове действия :class:`Start`, которое также совершает переход к заданной метке (или к метке ``start``, если метка не указана). Возврат из метки ``main_menu`` также переводит игру во внутриигровую фазу на метку ``start``, а загрузка сохранения переводит игру во внутриигровую фазу в то место, где игра была сохранена.
 
-In-Game Phase
--------------
+Внутриигровая фаза (In-Game Phase)
+----------------------------------
 
-This is the phase in which an actual playthrough of the game occurs, and this is
-the mode in which players generally spend most of their time. This phase continues
-until the game quits, or the game restarts and the player returns to the main menu.
+Это фаза, в которой происходит непосредственное прохождение игры, и режим, в котором игроки проводят большую часть времени. Эта фаза продолжается до тех пор, пока игра не будет закрыта, либо пока игра не будет перезапущена и игрок не вернётся в главное меню.
 
-During the in-game phase, the :class:`ShowMenu` action can be used to display a
-screen in a new context.
+Во внутриигровой фазе действие :class:`ShowMenu` может использоваться для отображения экрана в новом контексте.
 
-The In-game phase continues until either the player quits or restarts the game
-to return to the main menu. The game may be restarted by returning when no
-call is on the stack, as explained in :doc:`label`. The game may
-also be restarted by the :class:`MainMenu` action or the :func:`renpy.full_restart`
-function.
+Внутриигровая фаза продолжается до выхода из игры или перезапуска с возвратом в главное меню. Перезапустить игру можно возвратом по инструкции return при пустом стеке вызовов, как описано в главе :doc:`label`. Игра также может быть перезапущена с помощью действия :class:`MainMenu` или функции :func:`renpy.full_restart`.
 
-When the game restarts, all non-persistent data is reset to what it was at the
-end of the script init phase, and then the script execution phase begins
-again, skipping the splashscreen.
+При перезапуске игры все непостоянные данные сбрасываются до состояния, в котором они находились в конце фазы инициализации скрипта, после чего фаза выполнения сценария начинается заново с пропуском заставки.

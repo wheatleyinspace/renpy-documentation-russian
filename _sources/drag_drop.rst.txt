@@ -1,60 +1,51 @@
 .. _drag-and-drop:
 
+=============
 Drag and Drop
 =============
 
-Ren'Py includes drag and drop displayables that allow things to be
-moved around the screen with the mouse. Some of the uses of dragging
-are:
+В Ren'Py есть система перетаскиваемых отображаемых объектов (drag and drop), позволяющая
+перемещать элементы по экрану с помощью мыши или сенсорного ввода. Некоторые из применений:
 
-* Allowing windows to be repositioned by the user, storing the window
-  positions.
-* Card games that require cards to be dragged around the screen. (For
-  example, solitaire.)
-* Inventory systems.
-* Drag-to-reorder systems.
+* Свободное перемещение окон интерфейса пользователем с сохранением их позиций.
+* Карточные игры, требующие перемещения карт по столу (например, пасьянс).
+* Системы инвентаря (перетаскивание предметов в ячейки).
+* Сортировка списков и элементов перетаскиванием.
 
-The drag and drop displayables make it possible to implement these and
-other uses of drag and drop. There are two classes involved here. The
-Drag class represents either something that can be dragged around the
-screen, something that can have a draggable dropped onto it, or
-something that can do both. The DragGroup class represents a group of
-Drags – for a drag and drop to occur, both Drags must be part of the
-same drag group.
+Система состоит из двух основных классов: класс :class:`Drag` представляет собой элемент, который
+можно перетаскивать по экрану, область, на которую можно сбрасывать другие элементы, или и то, и другое
+одновременно. Класс :class:`DragGroup` представляет собой группу объектов Drag — сброс (drop) одного
+объекта на другой возможен только тогда, когда оба принадлежат одной группе перетаскивания.
 
-The drag and drop system can be used either through the :doc:`Screen
-Language <screens>` or directly as displayables. It makes sense to use
-the screen language when you don't need to refer to the Drags that you
-create after they've been created. This might be the case if the
-draggable represents a window that the user places on the screen. If
-you need to refer to the drags after they've been created, then it's
-often better to create Drags directly, and add them to a DragGroup.
+Систему drag and drop можно использовать как через :doc:`экранный язык <screens>`, так и программно
+в виде объектов Python. Экранный язык удобен, когда после создания объекта Drag к нему не требуется
+обращаться из кода (например, свободно перемещаемое окно диалога). Если же требуется программное
+взаимодействие (перемещение элементов кодом, привязка, опрос состояния), лучше создавать объекты Drag
+явно и добавлять их в DragGroup.
 
-Dropping
---------
+Сброс элементов (Dropping)
+--------------------------
 
-There are two ways Ren'Py can process a drop:
+Ren'Py поддерживает два способа определения цели для сброса элемента:
 
-* If `mouse_drop` is true, the drag will be dropped onto the droppable
-  that is directly below the mouse cursor.
-* If `mouse_drop` is false, the default, the drop will occur onto
-  the droppable that most fully overlaps with the drag.
+* Если свойство `mouse_drop` равно True, элемент сбрасывается на тот объект-приёмник, который
+  находится непосредственно под курсором мыши.
+* Если `mouse_drop` равно False (по умолчанию), элемент сбрасывается на тот объект-приёмник,
+  с которым он имеет наибольшую площадь геометрического перекрытия.
 
-Unlike when starting a drag, where `focus_mask` is used, dropping considers
-the entire rectangular areas of the draggable and droppable, including any
-transparent pixels. You may need to design your drag and drop displayables
-to take this into account, by being generally rectangular in shape.
+В отличие от начала перетаскивания, где учитывается свойство `focus_mask`, при определении сброса
+учитываются полные прямоугольные границы объектов (включая прозрачные пиксели). Это следует учитывать
+при дизайне графики элементов.
 
-Displayables
-------------
+Отображаемые объекты
+--------------------
 
 .. include:: inc/drag_drop
 
-Examples
---------
+Примеры
+-------
 
-An example of a say screen that allows the user to choose the location
-of the window by dragging it around the screen.::
+Пример экрана say, позволяющего игроку свободно перемещать окно диалога по экрану::
 
     screen say(who, what):
 
@@ -66,7 +57,7 @@ of the window by dragging it around the screen.::
             xalign 0.5
 
             window id "window":
-                # Ensure that the window is smaller than the screen.
+                # Окно должно быть меньше размера экрана.
                 xmaximum 600
 
                 has vbox
@@ -76,9 +67,8 @@ of the window by dragging it around the screen.::
 
                 text what id "what"
 
-Here's a more complicated example, one that shows how dragging can be
-used to influence gameplay. It shows how dragging can be used to
-send a character to a location::
+Более сложный пример, показывающий влияние перетаскивания на игровой процесс — отправка детектива
+в город на карте::
 
     init python:
 
@@ -94,64 +84,54 @@ send a character to a location::
 
     screen send_detective_screen:
 
-        # A map as background.
+        # Карта на фоне.
         add "europe.jpg"
 
-        # A drag group ensures that the detectives and the cities can be
-        # dragged to each other.
+        # DragGroup гарантирует, что детективов можно сбрасывать на города.
         draggroup:
 
-            # Our detectives.
+            # Наши детективы.
             drag:
-                drag_name "Ivy"
+                drag_name "Айви"
                 droppable False
                 dragged detective_dragged
                 xpos 100 ypos 100
 
                 add "ivy.png"
             drag:
-                drag_name "Zack"
+                drag_name "Зак"
                 droppable False
                 dragged detective_dragged
                 xpos 150 ypos 100
 
                 add "zack.png"
 
-            # The cities they can go to.
+            # Города назначения.
             drag:
-                drag_name "London"
+                drag_name "Лондон"
                 draggable False
                 xpos 450 ypos 140
 
                 add "london.png"
 
             drag:
-                drag_name "Paris"
+                drag_name "Париж"
                 draggable False
                 xpos 500 ypos 280
 
                 add "paris.png"
 
     label send_detective:
-        "We need to investigate! Who should we send, and where should they go?"
+        "Нужно провести расследование! Кого и куда мы отправим?"
 
         call screen send_detective_screen
 
-        "Okay, we'll send [detective] to [city]."
+        "Отлично, отправляем [detective] в [city]."
 
-
-More complicated systems take significant programming skill to get
-right.
-
-..
-    The `Ren'Py cardgame framework <http://www.renpy.org/wiki/renpy/Frameworks#Cardgame>`_
-    is both an example of how to use drag and drop in a complex
-    system, and useful for making card games in its own right.
 
 .. _as-example:
 
-The ``as`` clause can be used to bind a drag to variable, which can then be
-used to call methods on the drag. ::
+Клауза ``as`` позволяет связать объект drag с переменной для вызова его методов (например, snap)::
 
     screen snap():
 
@@ -165,5 +145,5 @@ used to call methods on the drag. ::
                 xysize (100, 100)
 
                 vbox:
-                    textbutton "London" action Function(carmen.snap, 450, 140, 1.0)
-                    textbutton "Paris" action Function(carmen.snap, 500, 280, 1.0)
+                    textbutton "Лондон" action Function(carmen.snap, 450, 140, 1.0)
+                    textbutton "Париж" action Function(carmen.snap, 500, 280, 1.0)

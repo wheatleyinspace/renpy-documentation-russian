@@ -1,30 +1,28 @@
-=====================
-Statement Equivalents
-=====================
+================================
+Эквиваленты инструкций на Python
+================================
 
-To allow Ren'Py to be scripted in Python, each Ren'Py statement has
-a Python equivalent. This usually consists of a Python function,
-but may also consist of a pattern of Python calls that perform an action
-equivalent to the statement.
+Чтобы Ren'Py можно было программировать на чистом Python, каждая инструкция Ren'Py имеет
+свой эквивалент на Python. Обычно это отдельная функция Python, но также может быть
+последовательность вызовов Python, выполняющих действие, эквивалентное данной инструкции.
 
-Note that using statement equivalents in lieu of the original statements
-usually removes any possible :ref:`lint` checks and prediction
-optimizations, making your game less easily checkable and possibly less
-fluid. It can also disable features in certain cases.
+Обратите внимание, что использование эквивалентов инструкций вместо исходных инструкций
+языка скрипта обычно отключает возможные проверки линтером (:ref:`lint`) и оптимизации
+предсказания (prediction), делая игру менее доступной для автоматической проверки и потенциально
+менее плавной. В некоторых случаях это может также отключать определённые возможности движка.
 
-Dialogue
-========
+Диалог
+======
 
 .. warning::
 
-    Several features, such as skipping already-seen dialogues, are not
-    available using the python version and only enabled when using the native
-    say statement.
+    Некоторые функции, такие как пропуск уже прочитанных диалогов, недоступны
+    при использовании версии на Python и работают только при использовании встроенной
+    инструкции say.
 
-The Ren'Py :ref:`say-statement` is equivalent to calling the character
-object (when any is present) as a function. Displaying narration (meaning when
-no character is supplied) can be done the same way, by using the ``narrator``
-character. ::
+Инструкция :ref:`say-statement` в Ren'Py эквивалентна вызову объекта персонажа
+(когда он указан) как функции. Вывод слов рассказчика (когда персонаж не указан)
+можно выполнять аналогичным образом с помощью персонажа ``narrator``. ::
 
     e "Hello, world."
     $ e("Hello, world.")
@@ -34,14 +32,13 @@ character. ::
 
 .. _say-proxy:
 
-Proxy functions
----------------
+Прокси-функции
+--------------
 
-This equivalence of characters and function objects works in the other
-direction as well. It is possible to declare a Python function, and
-then use that function in the place of a character object in a native say statement.
-For example, the following function uses a variable to choose between
-two characters. ::
+Эта эквивалентность между объектами персонажей и вызываемыми объектами функций работает
+и в обратную сторону. Можно объявить функцию Python, а затем использовать её на месте
+объекта персонажа во встроенной инструкции say.
+Например, следующая функция использует переменную для выбора между двумя персонажами. ::
 
     define lucy_normal = Character("Lucy")
     define lucy_evil = Character("Evil Lucy")
@@ -64,97 +61,99 @@ two characters. ::
 
         l "But sometimes, I get really mad!"
 
-A function used in this way should either ignore unknown keyword
-arguments, or pass them to a character function. Doing this will
-allow the game to continue working if future versions of Ren'Py add additional
-keyword arguments to character calls.
+Функция, используемая таким образом, должна либо игнорировать неизвестные именованные
+аргументы, либо передавать их функции персонажа. Это позволит игре продолжать нормально
+работать, если будущие версии Ren'Py добавят дополнительные именованные аргументы
+к вызовам персонажей.
 
-Note that unlike other possible arguments, ``interact=True`` will always be
-passed to the function - unless manually passing ``(interact=False)``. A
-:ref:`say-with-arguments` sees the arguments (including the supplementary
-`interact`) passed to the function. For example::
+Обратите внимание, что в отличие от других возможных аргументов, параметр ``interact=True``
+всегда передаётся функции, если только вручную не передан аргумент ``(interact=False)``.
+Инструкция :ref:`say-with-arguments` передаёт аргументы (включая дополнительный
+`interact`) функции. Например::
 
     e "Hello, world." (what_size=32)
 
-resolves to the following call::
+разворачивается в следующий вызов::
 
     e("Hello, world.", what_size=32, interact=True)
 
-Note that it's not required to pass ``interact=True`` when calling a Character
-object for it to work as intended. The following works just as well::
+При вызове объекта Character напрямую передавать ``interact=True`` не обязательно.
+Следующий вызов работает точно так же::
 
     $ e("Hello, world.", what_size=32)
 
-When e is a Character, this is further equivalent to::
+Когда e является Character, это также эквивалентно следующему::
 
     $ Character(kind=e, what_size=32)("Hello, world.")
 
-But it's possible to use :var:`config.say_arguments_callback` or
-have ``e`` wrap a character to do things differently.
+Однако можно использовать :var:`config.say_arguments_callback` или обернуть персонаж
+в функцию ``e`` для изменения поведения.
 
-There is one additional way of replacing the say statement using Python:
+Существует ещё один способ замены инструкции say на Python:
 
 .. include:: inc/se_say
 
-Dialogue Window Management
---------------------------
+Управление окном диалога
+------------------------
 
-:ref:`Window management <dialogue-window-management>` is performed by setting
-the :var:`_window` and :var:`_window_auto` variables, and by using the following
-two functions:
+:ref:`Управление окном <dialogue-window-management>` осуществляется установкой переменных
+:var:`_window` и :var:`_window_auto`, а также вызовом следующих двух функций:
 
 .. include:: inc/window
 
-Choice Menus
-============
+Меню выбора
+===========
 
-The :doc:`menu statement <menus>` has an equivalent Python function.
+Инструкция :doc:`menu <menus>` имеет эквивалентную функцию Python.
 
 .. include:: inc/se_menu
 
 
-Displaying Images
-=================
+Отображение изображений
+=======================
 
-The image, scene, show, and hide statements each have an equivalent
-Python function (see :doc:`displaying_images` for the original statements).
+Инструкции image, scene, show и hide имеют соответствующие эквиваленты
+в виде функций Python (исходные инструкции описаны в разделе :doc:`displaying_images`).
 
 .. include:: inc/se_images
 
-Transitions
-===========
+Переходы
+========
 
-The equivalent of the :ref:`with-statement` is the :func:`renpy.with_statement`
-function.
+Эквивалентом :ref:`инструкции with <with-statement>` является функция
+:func:`renpy.with_statement`.
 
 .. include:: inc/se_with
 
-Jump
-====
+Переход (Jump)
+==============
 
-The equivalent of the :ref:`jump-statement` is the :func:`renpy.jump` function.
+Эквивалентом :ref:`инструкции jump <jump-statement>` является функция
+:func:`renpy.jump`.
 
 .. include:: inc/se_jump
 
-Call
-====
+Вызов (Call)
+============
 
-The equivalent of the :ref:`call-statement` is the :func:`renpy.call` function.
+Эквивалентом :ref:`инструкции call <call-statement>` является функция
+:func:`renpy.call`.
 
 .. include:: inc/se_call
 
-Pause
-=====
+Пауза (Pause)
+=============
 
-The equivalent of the :ref:`pause-statement` is the :func:`renpy.pause` function.
+Эквивалентом :ref:`инструкции pause <pause-statement>` является функция
+:func:`renpy.pause`.
 
 .. include:: inc/se_pause
 
-Layeredimage
-============
+Послойные изображения (Layeredimage)
+====================================
 
-The :ref:`layeredimage-statement` statement has Python equivalents. The group
-statement does not: the name of the group is supplied to :class:`Attribute`,
-and the ``auto`` feature can be implemented using :func:`renpy.list_images`.
+Инструкция :ref:`layeredimage <layeredimage-statement>` имеет эквиваленты на Python.
+Инструкция group их не имеет: имя группы передаётся в :class:`Attribute`,
+а функционал ``auto`` может быть реализован с помощью :func:`renpy.list_images`.
 
 .. include:: inc/li

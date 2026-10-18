@@ -1,27 +1,29 @@
-======================
-Command Line Interface
-======================
+.. _cli:
 
-Ren'Py includes a command line interface (CLI) that can be used to automate
-some development tasks, allowing for continuous integration and for scripting
-releases. For most purposes, this isn't necessary - all these tasks can be
-done through the Ren'Py launcher.
+================================
+Интерфейс командной строки (CLI)
+================================
 
-The examples on this page assume you're running the CLI from the Ren'Py SDK
-directory (the directory that contains renpy.py, renpy.sh, and renpy.exe).
-Examples are provided for Linux/macOS, and Windows.
+Ren'Py включает в себя интерфейс командной строки (CLI), который можно использовать
+для автоматизации задач разработки, настройки систем непрерывной интеграции (CI)
+и скриптов публикации релизов. Для большинства повседневных задач использовать CLI
+не обязательно — все эти действия доступны через графический интерфейс лаунчера Ren'Py.
 
-The CLI isn't a stable interface - it may change between Ren'Py releases,
-as required. This page is current as of Ren'Py 8.5.3.
+Примеры на этой странице предполагают, что команды выполняются из корневого каталога SDK
+Ren'Py (содержащего файлы :file:`renpy.py`, :file:`renpy.sh` и :file:`renpy.exe`).
+Приведены примеры как для Linux/macOS, так и для Windows.
+
+CLI не является строго фиксированным API и может эволюционировать между версиями Ren'Py.
+Данная страница актуальна для Ren'Py 8.3+.
 
 
-Quick Tasks
-===========
+Быстрые задачи
+==============
 
-Use these quick workflows as copy-paste starting points. Replace paths/language codes as needed.
+Используйте эти готовые сценарии как шаблоны для копирования. Замените пути и коды языков на свои.
 
-Run project
------------
+Запуск проекта
+--------------
 
 .. tabs::
 
@@ -40,10 +42,10 @@ Run project
             .\lib\py3-windows-x86_64\python.exe renpy.py C:\path\to\project run
 
 
-Build distributions
--------------------
+Сборка дистрибутивов
+--------------------
 
-Build desktop distributions (Windows/macOS/Linux) from the launcher tool.
+Сборка настольных дистрибутивов игры (Windows, macOS, Linux) через утилиту лаунчера.
 
 .. tabs::
 
@@ -62,10 +64,10 @@ Build desktop distributions (Windows/macOS/Linux) from the launcher tool.
             .\lib\py3-windows-x86_64\python.exe renpy.py launcher distribute C:\path\to\project --destination C:\path\to\output
 
 
-Generate/update translations
-----------------------------
+Создание и обновление переводов
+-------------------------------
 
-Generate or update translation files, then export dialogue/strings for translators.
+Создание или обновление файлов перевода с последующим экспортом диалогов и строк для переводчиков.
 
 .. tabs::
 
@@ -86,15 +88,15 @@ Generate or update translation files, then export dialogue/strings for translato
             .\lib\py3-windows-x86_64\python.exe renpy.py C:\path\to\project dialogue french --strings
 
 
-Syntax
-======
+Синтаксис
+=========
 
 .. note::
 
-    Notation used on this page:
+    Обозначения, принятые на этой странице:
 
-    * ``<name>`` is a value you replace, such as a project path or language code.
-    * ``[item]`` is optional and does not need to be included.
+    * ``<name>`` — значение, которое вы подставляете сами (путь к проекту, код языка и т. д.).
+    * ``[item]`` — необязательный параметр, указывать который не обязательно.
 
 .. tabs::
 
@@ -112,80 +114,76 @@ Syntax
 
 .. describe:: <basedir>
 
-    :default: The directory containing the Ren'Py executable (the launcher)
+    :default: Каталог с исполняемым файлом Ren'Py (лаунчер)
 
-    In the description of the commands below, <basedir> is the path to the
-    base directory of the project.
+    В описании команд ниже <basedir> обозначает путь к базовому каталогу проекта (где расположена папка :file:`game/`).
 
 .. describe:: <command>
 
     :default: ``run``
 
-    Specifies the command to execute.
+    Задаёт выполняемую команду.
 
-Global options
---------------
 
-The following flags may be used with any command:
+Глобальные параметры
+--------------------
+
+Следующие флаги могут использоваться с любой командой:
 
 .. option:: --savedir <directory>
 
-    Specifies the directory where saves and persistent data are placed.
+    Задаёт каталог, в котором размещаются файлы сохранений и постоянные данные (:doc:`persistent`).
 
 .. option:: --trace <level>
 
-    Specifies the level of trace Ren'Py will log to trace.txt. (1=per-call, 2=per-line)
+    Задаёт уровень детализации трассировки, записываемой в файл :file:`trace.txt` (1 = для каждого вызова, 2 = для каждой строки).
 
 .. option:: --version
 
-    Displays the version of Ren'Py in use.
+    Выводит текущую версию используемого Ren'Py и завершает работу.
 
 .. option:: --compile
 
-    Forces all .rpy scripts to be recompiled before proceeding.
+    Принудительно перекомпилирует все скрипты :file:`.rpy` перед выполнением команды.
 
 .. option:: --compile-python
 
-    Forces all Python files to be recompiled, rather than read from
-    :file:`game/cache/bytecode-*.rpyb`.
+    Принудительно перекомпилирует весь код Python вместо чтения из байткода :file:`game/cache/bytecode-*.rpyb`.
 
 .. option:: --keep-orphan-rpyc
 
-    If compiling, prevents Ren'Py from deleting :file:`.rpyc` files that are not associated with
-    a :file:`.rpy` or :file:`_ren.py` file of the same name.
+    При компиляции предотвращает удаление файлов :file:`.rpyc`, для которых не найдено исходных файлов :file:`.rpy` или :file:`_ren.py` с тем же именем.
 
 .. option:: --errors-in-editor
 
-    Causes errors to open in a text editor.
+    Открывает сообщения об ошибках непосредственно в настроенном текстовом редакторе.
 
 .. option:: --safe-mode
 
-    Forces Ren'Py to start in safe mode, allowing the player to configure graphics.
+    Принудительно запускает Ren'Py в безопасном режиме (safe mode), позволяя настроить параметры графики.
 
 .. option:: --help, -h
 
-    Displays a help message showing commands and syntax, then exits. This returns
-    the most up-to-date command information.
+    Выводит справочное сообщение со списком команд и синтаксисом, после чего завершает работу. Возвращает наиболее актуальную информацию о доступных опциях.
 
-Ren'Py can dump information about the game to a JSON file.
-These options let you select the file, and choose what is dumped.
+Ren'Py умеет выгружать метаданные об игре в формат JSON.
+Следующие параметры позволяют выбрать целевой файл и содержимое дампа:
 
 .. option:: --json-dump <file>
 
-    Specifies the name of the JSON file.
+    Задаёт имя и путь к JSON-файлу дампа.
 
 .. option:: --json-dump-private
 
-    Includes private names in the dump. (Names beginning with an underscore `_`)
+    Включает в дамп закрытые имена (начинающиеся с символа подчёркивания ``_``).
 
 .. option:: --json-dump-common
 
-    Includes names defined in the common directory in the dump.
+    Включает в дамп имена, определённые в системном каталоге :file:`common/`.
 
 .. note::
 
-    The CLI may change between different releases. To see the latest commands
-    and flags, run:
+    Команды и флаги CLI могут обновляться в новых версиях. Чтобы увидеть актуальный список параметров, выполните:
 
     .. tabs::
 
@@ -201,7 +199,7 @@ These options let you select the file, and choose what is dumped.
 
                 .\lib\py3-windows-x86_64\python.exe renpy.py --help
 
-    To see the latest options for a particular command, run:
+    Чтобы просмотреть актуальные параметры конкретной команды:
 
     .. tabs::
 
@@ -218,15 +216,15 @@ These options let you select the file, and choose what is dumped.
                 .\lib\py3-windows-x86_64\python.exe renpy.py <basedir> <command> --help
 
 
-Core Workflow Commands
-======================
+Основные команды рабочего процесса
+==================================
 
 .. _cli-run:
 
-Run Project
------------
+Запуск проекта (Run)
+--------------------
 
-Runs the current project normally. This is the default command that is run if no command is given.
+Запускает проект в обычном режиме. Эта команда выполняется по умолчанию, если имя команды не указано.
 
 .. tabs::
 
@@ -244,30 +242,26 @@ Runs the current project normally. This is the default command that is run if no
 
 .. option:: --profile-display
 
-    Reports the amount of time it takes to draw the screen.
-
-    Equivalent to setting :var:`config.profile` to True.
+    Выводит отчёт о времени, затрачиваемом на отрисовку кадров на экране.
+    Эквивалентно установке :var:`config.profile` в True.
 
 .. option:: --debug-image-cache
 
-    Writes information about the :ref:`image cache <images>` to image_cache.txt.
-
-    Equivalent to setting :var:`config.debug_image_cache` to True.
+    Записывает диагностическую информацию о :ref:`кэше изображений <images>` в файл :file:`image_cache.txt`.
+    Эквивалентно установке :var:`config.debug_image_cache` в True.
 
 .. option:: --warp <filename:linenumber>
 
-    Tries to warp to just before the specified line. This takes as an argument a
-    ``filename:linenumber`` pair.
-
-    The :ref:`warp feature <warping_to_a_line>` requires :var:`config.developer` to be True to operate.
+    Пытается переместить выполнение непосредственно к указанной строке сценария. Принимает аргумент вида ``имя_файла:номер_строки``.
+    Для работы :ref:`варпинга к строке <warping_to_a_line>` требуется, чтобы переменная :var:`config.developer` была установлена в True.
 
 
 .. _cli-quit:
 
-Quit
-----
+Выход (Quit)
+------------
 
-Quits the game immediately.
+Немедленно завершает работу игры (полезно в связке с компиляцией или формированием дампов).
 
 .. tabs::
 
@@ -286,11 +280,11 @@ Quits the game immediately.
 
 .. _cli-compile:
 
-Compile
--------
+Компиляция (Compile)
+--------------------
 
-Compiles the game, creating .rpyc files from .rpy files. The
-equivalent of the "Force Recompile" button in the Ren'Py launcher.
+Компилирует скрипты игры, создавая файлы :file:`.rpyc` из исходников :file:`.rpy`.
+Эквивалентно нажатию кнопки «Принудительная перекомпиляция» (Force Recompile) в лаунчере Ren'Py.
 
 .. tabs::
 
@@ -308,16 +302,15 @@ equivalent of the "Force Recompile" button in the Ren'Py launcher.
 
 .. option:: --keep-orphan-rpyc
 
-    Prevents Ren'Py from deleting :file:`.rpyc` files that are not associated with
-    a :file:`.rpy` or :file:`_ren.py` file of the same name.
+    Предотвращает удаление файлов :file:`.rpyc`, для которых больше нет соответствующих исходных файлов :file:`.rpy` или :file:`_ren.py`.
 
 
 .. _cli-director:
 
-Interactive Director
---------------------
+Интерактивный режиссёр (Director)
+---------------------------------
 
-Starts the :doc:`director` and runs the game afterwards.
+Запускает :doc:`интерактивный режиссёр <director>` и затем начинает игру.
 
 .. tabs::
 
@@ -336,14 +329,13 @@ Starts the :doc:`director` and runs the game afterwards.
 
 .. _cli-rmpersistent:
 
-Remove Persistent Data
-----------------------
+Удаление постоянных данных (Remove Persistent Data)
+---------------------------------------------------
 
-Deletes :doc:`persistent` data. This can be handy since persistent data is
-found in multiple locations:
+Удаляет сохранённые :doc:`постоянные данные <persistent>` игры. Это полезно, поскольку данные persistent сохраняются в нескольких местах:
 
-- the game save folder
-- the location specified by :var:`config.save_directory`
+- в каталоге сохранений игры (:file:`game/saves/`)
+- в системном каталоге, определяемом переменной :var:`config.save_directory`
 
 .. tabs::
 
@@ -361,18 +353,18 @@ found in multiple locations:
 
 .. warning::
 
-    This will reset all game progress, including unlocks, read messages, and preferences.
+    Эта операция полностью сбрасывает весь игровой прогресс, включая открытые концовки, флаги прочитанного текста и настройки пользователя.
 
 
 .. _cli-update:
 
-Update Project
---------------
+Обновление проекта (Update Project)
+-----------------------------------
 
-Download and install updates to a Ren'Py game from a web host.
-For more information, see :doc:`updater`.
+Скачивает и устанавливает обновления игры Ren'Py с веб-сервера.
+Подробнее см. раздел :doc:`updater`.
 
-The parameters are identical to those used in :meth:`updater.update`.
+Параметры идентичны аргументам метода :meth:`updater.update`.
 
 .. tabs::
 
@@ -390,41 +382,38 @@ The parameters are identical to those used in :meth:`updater.update`.
 
 .. option:: <url>
 
-    Specifies the URL to the updates.json file.
+    Задаёт URL к файлу :file:`updates.json` на веб-сервере.
 
 .. option:: --base <directory>
 
-    Specifies the base directory of the game to update. Defaults to the current game.
+    Задаёт базовый каталог обновляемой игры. По умолчанию — текущая игра.
 
 .. option:: --force
 
-    Forces the update to run even if the version numbers are the same.
+    Принудительно выполняет обновление, даже если номера версий совпадают.
 
 .. option:: --key <key>
 
-    A file giving the public key to use of the update.
+    Файл с открытым ключом для криптографической проверки обновления.
 
 .. option:: --simulate <option>
 
-    A simulation mode to test update GUIs without actually performing an update.
-    One of ``available``, ``not_available``, or ``error``.
+    Режим симуляции для тестирования интерфейса обновления без реального скачивания файлов. Одно из значений: ``available``, ``not_available`` или ``error``.
 
 .. warning::
 
-    This will modify your game's files. Use with caution.
+    Команда изменяет файлы вашей игры. Используйте с осторожностью.
 
 
-Validation and Testing
-======================
+Проверка и тестирование
+=======================
 
 .. _cli-lint:
 
-Check Script (Lint)
--------------------
+Проверка скрипта (Lint)
+-----------------------
 
-This runs a :ref:`lint` report on the game. This checks the script for errors and
-prints script statistics. It's equivalent to the "Check Script (Lint)" button
-in the launcher.
+Запускает проверку игры :ref:`линтером <lint>`. Скрипт проверяется на наличие синтаксических и логических ошибок, после чего выводится статистика по объёму текста. Эквивалентно кнопке «Проверка скрипта (Lint)» в лаунчере.
 
 .. tabs::
 
@@ -442,44 +431,40 @@ in the launcher.
 
 .. option:: <filename>
 
-    If given, the lint report will be written to this file rather than
-    printed to standard output.
+    Если указано имя файла, отчёт линтера будет сохранён в этот файл вместо вывода в стандартный поток вывода (консоль).
 
 .. option:: --error-code
 
-    Exits with an error code of 1 if there was a lint error. This is useful for CI systems to detect when lint fails.
+    Завершает процесс с кодом ошибки 1 при обнаружении любых ошибок lint. Крайне полезно в скриптах CI для фиксации сбоя сборки.
 
 .. option:: --no-orphan-tl
 
-    Does not report orphan translations. Orphaned translations are
-    :ref:`Translation Statements <translation_statement>` that do not reference a string
-    in the primary language.
+    Не выводит предупреждения об потерянных переводах (orphan translations). Потерянными переводами считаются :ref:`операторы перевода <translation_statement>`, не ссылающиеся ни на одну строку в основном языке.
 
 .. option:: --reserved-parameters
 
-    Reports Ren'Py or python reserved names in renpy statement parameters.
-
-    In particular it looks for :doc:`label <label>`, :doc:`screen <screens>`, and :ref:`ATL <atl>` statements.
+    Проверяет параметры операторов Ren'Py на использование зарезервированных ключевых слов Python и Ren'Py.
+    В частности, проверяются операторы :doc:`label <label>`, :doc:`screen <screens>` и :ref:`ATL <atl>`.
 
 .. option:: --by-character
 
-    Reports the count of blocks, words, and characters for each character.
+    Выводит детальную статистику по количеству блоков, слов и символов текста для каждого персонажа отдельно.
 
 .. option:: --check-unclosed-tags
 
-    Reports unclosed text tags.
+    Проверяет наличие незакрытых текстовых тегов в строках диалога.
 
 .. option:: --all-problems
 
-    Reports all problems of a kind, not just the first ten issues.
+    Выводит полный список всех проблем каждого вида, а не только первые десять записей.
 
 
 .. _cli-test:
 
-Run Testcases
--------------
+Запуск автотестов (Run Testcases)
+---------------------------------
 
-This runs :doc:`automated tests <testcases>` on the game.
+Запускает :doc:`автоматизированные тесты <testcases>` для игры.
 
 .. tabs::
 
@@ -495,30 +480,25 @@ This runs :doc:`automated tests <testcases>` on the game.
 
             .\lib\py3-windows-x86_64\python.exe renpy.py <basedir> test [<filters>] [options...]
 
-See :ref:`Automated Testing <test-command-line>` for more information.
+Подробнее см. раздел :ref:`Автоматизированное тестирование <test-command-line>`.
 
-Build and Distribution
-======================
+
+Сборка и распространение
+========================
 
 .. note::
 
-    As part of the build process, Ren'Py will create .rpyc files that contain
-    information that load the game. A continuous integration system should
-    preserve these .rpyc files after a build, and supply them to the next
-    build, either directly or in the old-game directory. Failure to do so
-    may result in a game that can't load saves.
+    В процессе сборки Ren'Py создаёт файлы :file:`.rpyc`, содержащие метаданные для загрузки игры. Системы непрерывной интеграции (CI) должны сохранять эти файлы :file:`.rpyc` после сборки и передавать их в следующую сборку (напрямую или помещая в каталог :file:`old-game/`). Игнорирование этого правила может привести к тому, что новая сборка не сможет загрузить сохранения игроков из предыдущих версий.
 
 
 .. _cli-add-from:
 
-Add From To Calls
------------------
+Добавление меток from к вызовам call (Add From To Calls)
+--------------------------------------------------------
 
-Adds a ``from`` clause to each :ref:`call statement <call-statement>`
-that does not have one. Generally, this should be done before a release, to help
-Ren'Py locate the return point of calls in a modified game.
+Добавляет пункт ``from`` к каждому :ref:`оператору вызова call <call-statement>`, у которого он отсутствует. Как правило, эту процедуру рекомендуется выполнять перед публикацией релиза, чтобы Ren'Py мог однозначно находить точку возврата вызовов при последующих обновлениях игры.
 
-Implies :option:`--compile`.
+Подразумевает параметр :option:`--compile`.
 
 .. tabs::
 
@@ -536,15 +516,15 @@ Implies :option:`--compile`.
 
 .. warning::
 
-    This will modify your game's script files.
+    Команда перезаписывает и модифицирует файлы сценария вашей игры.
 
 
 .. _cli-distribute:
 
-Distribute
-----------
+Сборка пакетов (Distribute)
+---------------------------
 
-:doc:`Builds distributions <build>` of the game for Windows, macOS, and Linux.
+:doc:`Выполняет сборку дистрибутивов <build>` игры для платформ Windows, macOS и Linux.
 
 .. tabs::
 
@@ -562,47 +542,39 @@ Distribute
 
 .. option:: --destination <directory>
 
-    Specifies the directory to place the distributions in. The default is a directory
-    named "`name`-`version`-dists" in the current directory, taking information
-    from :var:`build.name` and :var:`build.version`.
+    Задаёт каталог для сохранения готовых архивов дистрибутива. По умолчанию архивы сохраняются в каталог вида «`name`-`version`-dists» внутри текущей папки (имена формируются на основе :var:`build.name` и :var:`build.version`).
 
 .. option:: --format <format>
 
-    Forces the format of the distribution to be this.
+    Принудительно задаёт формат упаковки дистрибутивов.
 
 .. option:: --macapp <app>
 
-    Specifies the path to a macapp that's used to sign mac
-    packages instead of the macapp that's included with Ren'Py.
+    Задаёт путь к шаблону macapp, используемому для подписи пакетов macOS, вместо встроенного в Ren'Py.
 
 .. option:: --no-archive
 
-    Does not add files to :ref:`archives`.
+    Отключает упаковку файлов в :ref:`архивы RPA <archives>`.
 
 .. option:: --no-update
 
-    Does not build update files which allow the :doc:`updater` to work.
+    Отключает генерацию файлов обновления, необходимых для работы модуля :doc:`updater`.
 
 .. option:: --package <package>
 
-    Specifies the name of the package to build, where package is a package
-    name like "pc", "mac", or "markets". This option can be given multiple
-    times to build multiple packages. The default is to build all packages.
+    Задаёт имя собираемого пакета (например, "pc", "mac" или "market"). Опцию можно указывать многократно для сборки нескольких конкретных пакетов. По умолчанию собираются все объявленные пакеты.
 
 .. option:: --packagedest <package>
 
-    Specify the output name for a package (without any
-    extensions). Requires that exactly one :option:`--package` is specified.
+    Задаёт выходное имя для пакета (без расширения). Требует явного указания ровно одного параметра :option:`--package`.
 
 
 .. _cli-android-build:
 
-Android Build
--------------
+Сборка для Android (Android Build)
+----------------------------------
 
-This builds a release of the game for :doc:`android`. It's assumed that the launcher
-has been used to install the Android SDK, generate keys, and configure the
-project.
+Собирает релиз игры для :doc:`android`. Предполагается, что через лаунчер был предварительно установлен Android SDK, сгенерированы ключи подписи и настроен проект.
 
 .. tabs::
 
@@ -620,36 +592,31 @@ project.
 
 .. option:: --destination <directory>
 
-    Specifies the directory to place the output in. The default is a directory
-    named "`name`-`version`-dists" in the current directory, taking information
-    from :var:`build.name` and :var:`build.version`.
+    Задаёт выходной каталог для сборки. По умолчанию используется папка «`name`-`version`-dists» в текущем каталоге на основе :var:`build.name` и :var:`build.version`.
 
 .. option:: --bundle
 
-    Produces a :file:`.aab` bundle if given. If not given, Ren'Py will
-    produce a :file:`.apk` file.
+    Формирует пакет формата :file:`.aab` (Android App Bundle). Если опция не указана, собирается стандартный файл :file:`.apk`.
 
 .. option:: --install
 
-    Installs the :file:`.apk` or :file:`.aab` file to a connected device.
+    Автоматически устанавливает собранный файл :file:`.apk` или :file:`.aab` на подключённое Android-устройство.
 
 .. option:: --launch
 
-    Launches the game on a connected device. This implies :option:`--install`.
+    Запускает игру на подключённом устройстве после сборки (подразумевает параметр :option:`--install`).
 
 .. option:: --package <package>
 
-    Specifies the package to build. Defaults to building the 'android' package.
+    Задаёт имя собираемого пакета. По умолчанию собирается пакет 'android'.
 
 
 .. _cli-ios-create:
 
-iOS Create
-----------
+Создание проекта iOS (iOS Create)
+---------------------------------
 
-Creates an Xcode project that can be used to build an :doc:`ios` version of
-the game. It's assumed that the launcher has been used to install iOS
-support once.
+Создаёт проект Xcode для последующей сборки игры под платформу :doc:`ios`. Предполагается, что поддержка iOS была предварительно установлена через лаунчер.
 
 .. tabs::
 
@@ -667,20 +634,19 @@ support once.
 
 .. describe:: <basedir>
 
-    Specifies the path to the Ren'Py project.
+    Путь к проекту игры Ren'Py.
 
 .. describe:: <destination>
 
-    Specifies the path to the iOS project that will be created.
+    Путь к создаваемому проекту iOS (папка проекта Xcode).
 
 
 .. _cli-ios-populate:
 
-iOS Populate
-------------
+Обновление проекта iOS (iOS Populate)
+-------------------------------------
 
-Copies the game into an Xcode project created by :ref:`ios_create <cli-ios-create>`. This
-is used to update a project created with the same version of Ren'Py.
+Копирует файлы игры в проект Xcode, созданный с помощью команды :ref:`ios_create <cli-ios-create>`. Используется для обновления данных игры в существующем проекте iOS, собранном на той же версии Ren'Py.
 
 .. tabs::
 
@@ -698,21 +664,19 @@ is used to update a project created with the same version of Ren'Py.
 
 .. describe:: <basedir>
 
-    Specifies the path to the Ren'Py project.
+    Путь к проекту игры Ren'Py.
 
 .. describe:: <destination>
 
-    Specifies the path to the iOS project that will be updated.
+    Путь к обновляемому проекту Xcode для iOS.
 
 
 .. _cli-web-build:
 
-Web Build
----------
+Сборка для Web (Web Build)
+--------------------------
 
-Builds a release of the game for web. It's assumed that the
-launcher has been used to install web support and that any configuration
-files (such as :file:`progressive_download.txt`) are in place.
+Выполняет веб-сборку игры (HTML5/WebAssembly). Предполагается, что поддержка веб-платформы была установлена через лаунчер, а необходимые конфигурационные файлы (например, :file:`progressive_download.txt`) уже настроены в проекте.
 
 .. tabs::
 
@@ -728,19 +692,17 @@ files (such as :file:`progressive_download.txt`) are in place.
 
             .\lib\py3-windows-x86_64\python.exe renpy.py launcher web_build <basedir> [options...]
 
-
-
 .. option:: --destination <directory>
 
-    Specifies the directory where the packaged files should be placed.
+    Каталог, в который будут сохранены упакованные веб-файлы.
 
 .. option:: --launch
 
-    Starts a webserver and launches the game after build.
+    Запускает локальный веб-сервер и открывает игру в браузере по завершении сборки.
 
 
-Translation and Localization
-============================
+Перевод и локализация
+=====================
 
 .. seealso::
 
@@ -749,12 +711,11 @@ Translation and Localization
 
 .. _cli-translate:
 
-Translate
----------
+Генерация переводов (Translate)
+-------------------------------
 
-Creates or updates translation files in ``tl/<language>`` for the project.
-It writes missing dialogue and string entries while leaving existing translated entries unchanged.
-Use :option:`--count` to report missing translations without writing files.
+Создаёт или обновляет файлы перевода в каталоге :file:`tl/<language>/` проекта. Записывает недостающие строки диалогов и текстовые переменные, оставляя уже переведённые фрагменты без изменений.
+Используйте флаг :option:`--count` для подсчёта непереведённых строк без изменения файлов на диске.
 
 .. tabs::
 
@@ -772,62 +733,59 @@ Use :option:`--count` to report missing translations without writing files.
 
 .. option:: <language>
 
-    Specifies the language to generate translations for.
+    Код языка, для которого генерируются файлы перевода.
 
 .. option:: --count
 
-    Prints a count of missing translations without generating files.
+    Выводит количество недостающих строк перевода без записи файлов на диск.
 
 .. option:: --rot13
 
-    Applies rot13 while generating translations.
+    Применяет алгоритм rot13 к генерируемым строкам перевода (для псевдолокализации).
 
 .. option:: --piglatin
 
-    Applies pig latin while generating translations. Overridden by :option:`--rot13`.
+    Преобразует строки по правилам поросячьей латыни (pig latin). Переопределяется флагом :option:`--rot13`.
 
 .. option:: --empty
 
-    Produces empty strings while generating translations. Overridden by :option:`--rot13` and :option:`--piglatin`.
+    Создаёт пустые строки для перевода. Переопределяется флагами :option:`--rot13` и :option:`--piglatin`.
 
 .. option:: --min-priority <int>
 
-    Translates strings with priority greater than this value.
+    Генерирует перевод только для строк с приоритетом выше указанного значения.
 
 .. option:: --max-priority <int>
 
-    :default: 499 if :var:`config.translate_launcher` is True, otherwise 299.
+    :default: 499, если :var:`config.translate_launcher` равно True, иначе 299.
 
-    Translates strings with less than this priority.
+    Генерирует перевод для строк с приоритетом ниже указанного значения.
 
 .. option:: --strings-only
 
-    Only translates strings (not dialogue).
+    Генерирует перевод только для текстовых строк (strings), пропуская диалоги.
 
 .. option:: --common-only
 
-    Only translates strings from common code.
+    Генерирует перевод только для строк из системного каталога :file:`common/`.
 
 .. option:: --no-todo
 
-    Does not include the TODO flag at the top of generated translation files.
+    Не добавляет комментарии с меткой TODO в начало создаваемых файлов перевода.
 
 .. option:: --string <string>
 
-    Translates a specific string. This option can be given multiple
-    times to translate multiple strings.
+    Генерирует перевод только для конкретной указанной строки. Опцию можно использовать многократно.
 
 
 .. _cli-dialogue:
 
-Dialogue
------------
+Экспорт диалогов (Dialogue)
+---------------------------
 
-Exports dialogue (and optionally translatable strings) to :file:`dialogue.tab`
-by default, or :file:`dialogue.txt` when :option:`--text` is used.
+Экспортирует диалоги (а также опционально переводимые строки интерфейса) в файл :file:`dialogue.tab` (по умолчанию с разделителями-табуляциями) или в текстовый файл :file:`dialogue.txt`, если указан флаг :option:`--text`.
 
-If a language is provided, it outputs translated text when available. Otherwise, it outputs
-source text.
+Если указан аргумент языка, выводится переведённый текст (при его наличии), иначе экспортируется исходный оригинальный текст.
 
 .. tabs::
 
@@ -845,39 +803,36 @@ source text.
 
 .. note::
 
-    This is an export/reporting command. It does not create :file:`tl/<language>`
-    translation script files.
+    Это команда экспорта и отчётности. Она не создаёт рабочие файлы сценариев перевода в :file:`tl/<language>/`.
 
 .. describe:: <language>
 
-    Specifies the language to extract dialogue for.
+    Язык, для которого извлекается диалоговый текст.
 
 .. option:: --text
 
-    Outputs the dialogue as plain text. If not given, outputs a tab-delimited file.
+    Выводит диалоги в виде простого форматированного текста. Если не указано, формируется файл с разделителями-табуляциями (.tab).
 
 .. option:: --strings
 
-    Outputs all translatable strings, not just dialogue.
-
-    Most of these are defined with the :func:`_` and :func:`__` functions, as well as
-    :doc:`menu choices <menus>`.
+    Включает в экспорт все переводимые строки интерфейса, а не только фразы персонажей.
+    Большинство таких строк объявляются через функции :func:`_` и :func:`__`, а также в :doc:`меню выборов <menus>`.
 
 .. option:: --notags
 
-    Strips text tags from the dialogue.
+    Удаляет все текстовые теги форматирования из реплик.
 
 .. option:: --escape
 
-    Escapes quotes and other special characters.
+    Экранирует кавычки и специальные символы.
 
 
 .. _cli-extract-strings:
 
-Extract Strings
----------------
+Экспорт строк (Extract Strings)
+-------------------------------
 
-Exports existing translations from the game to a JSON file.
+Экспортирует существующие переводы из игры в файл JSON.
 
 .. tabs::
 
@@ -895,29 +850,29 @@ Exports existing translations from the game to a JSON file.
 
 .. option:: <language>
 
-    Specifies the language to extract translated strings from.
+    Язык, из которого извлекаются переведённые строки.
 
 .. option:: <destination>
 
-    Specifies the json file to store the translated strings into.
+    Путь к JSON-файлу, в который будут сохранены переведённые строки.
 
 .. option:: --merge
 
-    Merges the current contents of the file with new contents, preserving existing translations.
+    Объединяет извлекаемые данные с текущим содержимым JSON-файла, сохраняя существующие в нём переводы.
 
 .. option:: --force
 
-    Does not throw exceptions if the language does not exist.
+    Не возбуждает исключение, если указанный язык отсутствует в проекте.
 
 
 .. _cli-merge-strings:
 
-Merge Strings
--------------
+Импорт строк (Merge Strings)
+----------------------------
 
-Imports translations from JSON file back into the game.
+Импортирует переведённые строки из JSON-файла обратно в проект игры.
 
-Implies :option:`--compile`.
+Подразумевает параметр :option:`--compile`.
 
 .. tabs::
 
@@ -935,35 +890,33 @@ Implies :option:`--compile`.
 
 .. option:: <language>
 
-    Specifies the language to merge translated strings to.
+    Язык, в который внедряются переведённые строки.
 
 .. option:: <source>
 
-    Specifies the json file to take translated strings from.
+    JSON-файл, из которого загружаются переводы.
 
 .. option:: --reverse
 
-    Reverses the languages in the json file.
+    Инвертирует направление языков в файле JSON.
 
 .. option:: --replace
 
-    Replaces non-trivial translations. A trivial translation is
-    one that does not exist or if the translation is the same as the primary
-    language.
+    Заменяет нетривиальные переводы. Тривиальным считается перевод, который отсутствует или совпадает со строкой на языке оригинала.
 
 
-Launcher Commands
-=================
+Команды лаунчера
+================
 
-These commands are used to control the Ren'Py launcher from the command line.
+Эти команды управляют функциями лаунчера Ren'Py непосредственно из консоли.
 
 
 .. _cli-generate-gui:
 
-Generate GUI
-------------
+Генерация GUI (Generate GUI)
+----------------------------
 
-Generates a GUI for an existing Ren'Py game.
+Генерирует интерфейс GUI для существующей игры Ren'Py.
 
 .. tabs::
 
@@ -983,69 +936,69 @@ Generates a GUI for an existing Ren'Py game.
 
     :default: 1280
 
-    Specifies the width of the generated gui.
+    Ширина генерируемого окна интерфейса в пикселях.
 
 .. option:: --height <height>
 
     :default: 720
 
-    Specifies the height of the generated gui.
+    Высота генерируемого окна интерфейса в пикселях.
 
 .. option:: --accent <color>
 
     :default: #00B8C3
 
-    Specifies the accent color used throughout the gui.
+    Основной акцентный цвет, используемый в оформлении интерфейса.
 
 .. option:: --boring <color>
 
     :default: #000000
 
-    Specifies the boring color used for the gui background.
+    Фоновый (нейтральный) цвет интерфейса.
 
 .. option:: --light
 
-    Considers this a light theme.
+    Указывает, что создаётся светлая тема оформления.
 
 .. option:: --template <directory>
 
     :default: "gui"
 
-    Specifies the template directory containing source code.
+    Каталог шаблона оформления, содержащий исходные файлы интерфейса.
 
 .. option:: --language <language>
 
     :default: None
 
-    Specifies the language to translate strings and comments to.
+    Язык для генерации переводов строк и комментариев в файлах GUI.
 
 .. option:: --start
 
-    Starts a new project, replacing images and code.
+    Инициализирует новый проект, перезаписывая код и графику интерфейса.
 
 .. option:: --replace-images
 
-    Overwrites existing images.
+    Перезаписывает существующие файлы изображений интерфейса.
 
 .. option:: --replace-code
 
-    Overwrites existing gui.rpy file.
+    Полностью перезаписывает существующий файл :file:`gui.rpy`.
 
 .. option:: --update-code
 
-    Updates existing gui.rpy file.
+    Обновляет существующий файл :file:`gui.rpy` без полной перезаписи.
 
 .. option:: --minimal
 
-    Only updates option.rpy and translations.
+    Обновляет только файл :file:`options.rpy` и переводы.
 
 
 .. _cli-gui-images:
 
-GUI Images
-----------
+Графика интерфейса (GUI Images)
+-------------------------------
 
-Generates images (e.g. for buttons, bars, radio buttons, etc) based on :doc:`GUI variables <gui>`.
+Генерирует растровые изображения (для кнопок, полос прокрутки, переключателей и т. д.) на основе :doc:`переменных GUI <gui>`.
 
 .. tabs::
 
@@ -1061,12 +1014,13 @@ Generates images (e.g. for buttons, bars, radio buttons, etc) based on :doc:`GUI
 
             .\lib\py3-windows-x86_64\python.exe renpy.py launcher gui_images <basedir> [options...]
 
+
 .. _cli-get-projects-directory:
 
-Get Projects Directory
-----------------------
+Получение каталога проектов (Get Projects Directory)
+----------------------------------------------------
 
-Prints the directory that the Ren'Py launcher uses to store projects.
+Выводит путь к каталогу проектов, используемому лаунчером Ren'Py.
 
 .. tabs::
 
@@ -1085,14 +1039,12 @@ Prints the directory that the Ren'Py launcher uses to store projects.
 
 .. _cli-set-projects-directory:
 
-Set Projects Directory
-----------------------
+Установка каталога проектов (Set Projects Directory)
+----------------------------------------------------
 
-Sets the directory that the Ren'Py launcher uses to store projects. It's
-intended for use on minimal systems where none of the options for selecting
-a projects directory are available.
+Задаёт путь к каталогу, в котором лаунчер Ren'Py ищет проекты игр. Предназначено для использования на минималистичных системах без GUI-диалогов выбора папок.
 
-This can only be done when the launcher is not running.
+Команда может выполняться только тогда, когда графический лаунчер не запущен.
 
 .. tabs::
 
@@ -1110,19 +1062,17 @@ This can only be done when the launcher is not running.
 
 .. describe:: <projects>
 
-    Specifies the path to the projects directory.
+    Путь к каталогу проектов.
 
 
 .. _cli-set-project:
 
-Set Project
------------
+Выбор проекта (Set Project)
+---------------------------
 
-Sets the current project to the given project. This will change the
-projects directory and currently selected project in the launcher
-to accomplish this goal.
+Делает указанный проект активным в лаунчере, переключая текущий проект и при необходимости каталог проектов.
 
-This can only be done when the launcher is not running.
+Команда может выполняться только тогда, когда графический лаунчер не запущен.
 
 .. tabs::
 
@@ -1140,15 +1090,15 @@ This can only be done when the launcher is not running.
 
 .. describe:: <project>
 
-    Specifies the full path to the project to select.
+    Полный путь к активируемому проекту.
 
 
 .. _cli-update-old-game:
 
-Update Old Game
----------------
+Обновление старой версии игры (Update Old Game)
+-----------------------------------------------
 
-Copies .rpyc files from :file:`<basedir>/game` to :file:`<basedir>/old-game`.
+Копирует скомпилированные файлы :file:`.rpyc` из каталога :file:`<basedir>/game` в каталог :file:`<basedir>/old-game`.
 
 .. tabs::
 
@@ -1169,84 +1119,76 @@ Copies .rpyc files from :file:`<basedir>/game` to :file:`<basedir>/old-game`.
     * :ref:`old-game`
 
 
-Custom Commands
-===============
+Пользовательские команды
+========================
 
-In addition to the commands defined above, it is possible to create commands
-for a particular project using :func:`renpy.arguments.register_command`.
+Помимо стандартных команд, разработчик может создавать собственные команды CLI для конкретного проекта с помощью функции :func:`renpy.arguments.register_command`.
 
-When running a command, the :doc:`game will first initialize <lifecycle>`, then
-run the command.
+Перед запуском пользовательской команды :doc:`игра проходит фазу инициализации <lifecycle>`, после чего управление передаётся функции команды.
 
 .. function:: renpy.arguments.register_command(name, function, uses_display=False)
 
-    Registers a command that can be invoked when Ren'Py is run on the command
-    line. When the command is run, `function` is called with no arguments.
+    Регистрирует команду, доступную для вызова при запуске Ren'Py из командной строки. При вызове команды вызывается переданная функция `function` без аргументов.
 
     .. describe:: name
 
         :type: str
 
-        Specifies the name of the command in the interface.
+        Имя команды для вызова из командной строки.
 
     .. describe:: function
 
         :type: function
 
-        Specifies the function that is called when the command is run. `function` is
-        called with no arguments.
+        Функция Python, вызываемая при запуске команды (вызывается без позиционных аргументов).
 
-        If `function` needs to take additional command-line arguments, it should
-        instantiate a :class:`renpy.arguments.ArgumentParser`, and then call :func:`parse_args`
-        on it. Otherwise, it should call :func:`renpy.arguments.takes_no_arguments`.
+        Если функция должна принимать дополнительные аргументы командной строки, она должна создать экземпляр :class:`renpy.arguments.ArgumentParser` и вызвать на нём метод :func:`parse_args`. В противном случае следует вызвать :func:`renpy.arguments.takes_no_arguments`.
 
-        If `function` returns True, Ren'Py startup proceeds normally. Otherwise,
-        Ren'Py will terminate when ``function()`` returns.
+        Если функция возвращает True, стандартный запуск Ren'Py продолжается в обычном режиме. Если функция возвращает False (или None), Ren'Py немедленно завершает работу после возврата из ``function()``.
 
         .. seealso::
 
-            For more information about command line parsing, look at the
-            `ArgumentParser documentation <https://docs.python.org/3/library/argparse.html>`_.
+            Подробнее о разборе аргументов командной строки см. в
+            `документации ArgumentParser <https://docs.python.org/3/library/argparse.html>`_.
 
     .. describe:: uses_display
 
         :type: bool
 
-        If True, Ren'Py will initialize the display. If False, Ren'Py will
-        use dummy video and audio drivers.
+        Если True, Ren'Py инициализирует графическую подсистему и дисплей. Если False, используются фиктивные (dummy) видео- и аудиодрайверы без открытия графического окна.
 
 
-Example
--------
+Пример
+------
 
 .. code-block:: renpy
 
     init python:
 
         def compute_area_command():
-            ap = renpy.arguments.ArgumentParser(description='Compute the area of various shapes.')
-            ap.add_argument("dimensions", nargs="*", type=float, help="The dimension of the shape.")
-            ap.add_argument("--square", action="store_true", help="If given, compute the area as a square.")
-            ap.add_argument("--rectangle", action="store_true", help="If given, compute the area as a rectangle.")
-            ap.add_argument("--circle", action="store_true", help="If given, compute the area as a circle.")
+            ap = renpy.arguments.ArgumentParser(description='Вычисление площади различных геометрических фигур.')
+            ap.add_argument("dimensions", nargs="*", type=float, help="Размеры фигуры.")
+            ap.add_argument("--square", action="store_true", help="Вычислить площадь квадрата.")
+            ap.add_argument("--rectangle", action="store_true", help="Вычислить площадь прямоугольника.")
+            ap.add_argument("--circle", action="store_true", help="Вычислить площадь круга.")
 
             args = ap.parse_args()
 
             if args.square:
-                print(f"Square: {args.dimensions[0] ** 2}")
+                print(f"Квадрат: {args.dimensions[0] ** 2}")
 
             elif args.rectangle:
-                print(f"Rectangle: {args.dimensions[0] * args.dimensions[1]}")
+                print(f"Прямоугольник: {args.dimensions[0] * args.dimensions[1]}")
 
             elif args.circle:
-                print(f"Circle: {3.14 * args.dimensions[0] ** 2}")
+                print(f"Круг: {3.14 * args.dimensions[0] ** 2}")
 
-            # Terminate and do not run Ren'Py normally
+            # Завершаем работу и не запускаем саму игру
             return False
 
         renpy.arguments.register_command("compute_area", compute_area_command)
 
-The command can then be called as follows:
+Зарегистрированную команду затем можно вызвать следующим образом:
 
 .. tabs::
 
@@ -1256,15 +1198,15 @@ The command can then be called as follows:
 
             > ./renpy.sh <basedir> compute_area 3 --square
 
-            Square: 9.0
+            Квадрат: 9.0
 
             > ./renpy.sh <basedir> compute_area 3 2 --rectangle
 
-            Rectangle: 6.0
+            Прямоугольник: 6.0
 
             > ./renpy.sh <basedir> compute_area 1 --circle
 
-            Circle: 3.14
+            Круг: 3.14
 
             > ./renpy.sh <basedir> compute_area --help
 
@@ -1274,14 +1216,14 @@ The command can then be called as follows:
 
             > .\lib\py3-windows-x86_64\python.exe renpy.py basedir compute_area 3 --square
 
-            Square: 9.0
+            Квадрат: 9.0
 
             > .\lib\py3-windows-x86_64\python.exe renpy.py basedir compute_area 3 2 --rectangle
 
-            Rectangle: 6.0
+            Прямоугольник: 6.0
 
             > .\lib\py3-windows-x86_64\python.exe renpy.py basedir compute_area 1 --circle
 
-            Circle: 3.14
+            Круг: 3.14
 
             > .\lib\py3-windows-x86_64\python.exe renpy.py basedir compute_area --help

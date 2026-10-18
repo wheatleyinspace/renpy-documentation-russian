@@ -1,54 +1,50 @@
-NVL-Mode Tutorial
-=================
+Руководство по режиму NVL
+=========================
 
-There are two main styles of presentation used for visual
-novels. ADV-style games present dialogue and narration one line at a
-time, generally in a window at the bottom of the screen. NVL-style
-games present multiple lines on the screen at a time, in a window that
-takes up the entire screen.
+В визуальных новеллах используются два основных стиля подачи текста: ADV и NVL.
+В играх стиля ADV диалоги и текст рассказчика выводятся по одной строке за раз,
+обычно в текстовом окне в нижней части экрана. В играх стиля NVL на экране
+отображается сразу несколько строк текста в окне, занимающем практически весь экран.
 
-In this tutorial, we will explain how to make an NVL-mode game using
-Ren'Py. This tutorial assumes that you are already familiar with the
-basics of Ren'Py, as explained in the :doc:`Quickstart manual<quickstart>`.
+В этом руководстве объясняется, как создать игру в режиме NVL с помощью Ren'Py.
+Предполагается, что вы уже знакомы с основами Ren'Py, изложенными в
+:doc:`кратком практическом руководстве <quickstart>`.
 
-Getting Started
----------------
+Начало работы
+-------------
 
-NVL-mode can be added to a Ren'Py script in two steps. The first is to
-declare the characters to use NVL-mode, and the second is to add ``nvl
-clear`` statements at the end of each page.
+Режим NVL добавляется в скрипт Ren'Py за два простых шага: объявить персонажей
+для использования режима NVL и добавить инструкции ``nvl clear`` в конце каждой страницы.
 
-When :ref:`warping to a line <warping_to_a_line>`, NVL dialogue and ``nvl clear``
-statements on the replayed path reconstruct the current page and dialogue
-history. NVL list and history length limits still apply.
+При :ref:`перемещении к строке <warping_to_a_line>` диалоги NVL и инструкции ``nvl clear``
+на воспроизведённом пути заново воссоздают текущую страницу и историю диалогов.
+Ограничения на длину списка NVL и истории по-прежнему действуют.
 
-Characters can be declared to use NVL-mode by adding a ``kind=nvl``
-parameter to each of the Character declarations. For example, if we
-use the character declarations from the Quickstart manual::
+Персонажи настраиваются на использование режима NVL добавлением параметра ``kind=nvl``
+к каждому объявлению Character. Например, если взять объявления персонажей из
+краткого практического руководства::
 
     define s = Character('Sylvie', color="#c8ffc8")
     define m = Character('Me', color="#c8c8ff")
 
-Changed to use NVL-mode, those declarations become::
+то для режима NVL эти объявления станут следующими::
 
     define s = Character('Sylvie', kind=nvl, color="#c8ffc8")
     define m = Character('Me', kind=nvl, color="#c8c8ff")
 
-An NVL-mode narrator can also be used by including the following
-definition::
+Рассказчика в режиме NVL можно добавить с помощью следующего определения::
 
     define narrator = nvl_narrator
 
-Note that we have also added an NVL-mode declaration of
-``narrator``. The ``narrator`` character is used to speak
-lines that do not have another character name associated with it.
+Обратите внимание, что мы также добавили объявление ``narrator`` для режима NVL.
+Персонаж ``narrator`` используется для вывода строк текста, с которыми не связано
+имя другого персонажа.
 
-If we ran the game like this, the first few lines would display
-normally, but after a while, lines would begin displaying below the
-bottom of the screen. To break the script into pages, include an ``nvl
-clear`` statement after each page.
+Если запустить игру в таком виде, первые несколько строк отобразятся нормально,
+но вскоре текст начнёт уходить за нижний край экрана. Чтобы разбить текст
+на страницы, добавьте инструкцию ``nvl clear`` после каждой страницы.
 
-The following is an example script with pagination::
+Ниже приведён пример скрипта с разделением на страницы::
 
     label start:
         "I'll ask her..."
@@ -65,15 +61,15 @@ The following is an example script with pagination::
 
         nvl clear
 
-While nvl-mode games generally have more text per paragraph, this
-example demonstrates a basic NVL-mode script. (Suitable for use in a
-kinetic novel that does not have transitions.)
+Хотя в играх режима NVL на страницу обычно приходится гораздо больше текста,
+этот пример демонстрирует базовую структуру скрипта NVL (подходящую для кинетической
+новеллы без переходов).
 
 .. _nvl-monologue-mode:
 
-:ref:`Monologue mode <monologue-mode>` works with NVL-mode as well.
-Including the ``{clear}`` text tag on a line by itself is the equivalent
-of an ``nvl clear`` statement without leaving monologue mode. For example::
+:ref:`Режим монолога <monologue-mode>` также работает с режимом NVL. Добавление
+текстового тега ``{clear}`` на отдельной строке эквивалентно инструкции
+``nvl clear`` без выхода из режима монолога. Например::
 
     label start:
         s """
@@ -88,26 +84,23 @@ of an ``nvl clear`` statement without leaving monologue mode. For example::
 
 .. _nvl-mode-menu:
 
-NVL-mode Menus
---------------
+Меню в режиме NVL
+-----------------
 
-By default, menus are displayed in ADV-mode, taking up the full
-screen. There is also an alternate NVL-mode menu presentation, which
-displays the menus immediately after the current page of NVL-mode
-text.
+По умолчанию меню отображаются в режиме ADV на весь экран. Также доступно альтернативное
+представление меню в режиме NVL, отображающее варианты выбора непосредственно после
+текущей страницы текста NVL.
 
-To access this alternate menu presentation, write::
+Чтобы включить это альтернативное представление меню, напишите::
 
     define menu = nvl_menu
 
-The menu will disappear after the choice has been made, so it usually
-makes sense to follow menus with an "nvl clear" or some sort of
-indication as to the choice.
+Меню исчезнет после того, как выбор будет сделан, поэтому обычно имеет смысл ставить
+после меню инструкцию ``nvl clear`` или реплику, комментирующую сделанный выбор.
 
-:ref:`Menu arguments <menu-arguments>` can also be used to access
-a NVL-mode menu. This is done by providing a true `nvl` argument
-that is set to True. This is useful when mixing NVL-mode and ADV-mode
-menus in a single game. ::
+:ref:`Аргументы меню <menu-arguments>` также могут использоваться для вызова меню
+в режиме NVL. Для этого передайте именованный аргумент `nvl=True`. Это удобно при совмещении
+меню режимов NVL и ADV в одной игре. ::
 
     menu (nvl=True):
         "I prefer NVL-mode.":
@@ -117,25 +110,25 @@ menus in a single game. ::
             pass
 
 
-Showing and Hiding the NVL-mode Window
---------------------------------------
+Показ и скрытие окна режима NVL
+-------------------------------
 
-The NVL-mode window can be controlled with the standard ``window show``
-and ``window hide`` statements. To select the default transitions to be
-used for showing and hiding the window, add the following to your game::
+Окном режима NVL можно управлять с помощью стандартных инструкций ``window show``
+и ``window hide``. Чтобы выбрать переходы по умолчанию, используемые для показа
+и скрытия окна, добавьте в игру следующий код::
 
     init python:
         config.window_hide_transition = dissolve
         config.window_show_transition = dissolve
 
-The default :var:`config.empty_window` should select appropriate window
-automatically, but setting :var:`config.empty_window` to ``nvl_show_core``
-will force the NVL-mode window to be displayed during a transition.::
+По умолчанию :var:`config.empty_window` автоматически выбирает подходящее окно,
+но установка :var:`config.empty_window` в ``nvl_show_core`` принудительно отобразит
+окно NVL во время перехода.::
 
     init python:
         config.empty_window = nvl_show_core
 
-An example of using the window commands to show and hide the window is::
+Пример использования команд window для показа и скрытия окна::
 
     label meadow:
 
@@ -162,103 +155,92 @@ An example of using the window commands to show and hide the window is::
         m "Ummm... will you..."
         m "Will you be my artist for a visual novel?"
 
-There are also explicit ``nvl show`` and ``nvl hide`` commands that show
-hide the NVL-mode window. These take an optional transition, and can be
-used in games that use a mix of NVL-mode and ADV-mode windows.
+Также существуют явные команды ``nvl show`` и ``nvl hide``, которые показывают
+и скрывают окно режима NVL. Они принимают необязательный переход и могут использоваться
+в играх, сочетающих окна режимов NVL и ADV.
 
-Customizing Characters
-----------------------
+Настройка внешнего вида персонажей
+----------------------------------
 
-NVL-mode characters can be customized to have several looks, hopefully allowing
-you to pick the one that is most appropriate to the game you are creating.
+Персонажей режима NVL можно настроить несколькими способами в соответствии со стилем вашей игры:
 
-1. The default look has a character's name to the left, and
-   dialogue indented to the right of the name. The color of the name is
-   controlled by the ''color'' parameter. ::
+1. Внешний вид по умолчанию: имя персонажа слева, а диалог с отступом справа от имени.
+   Цвет имени управляется параметром ``color``. ::
 
     define s = Character('Sylvie', kind=nvl, color="#c8ffc8")
 
-2. A second look has the character's name embedded in with the
-   text. Dialogue spoken by the character is enclosed in quotes. Note
-   that here, the character's name is placed in the ''what_prefix''
-   parameter, along with the open quote. (The close quote is placed in
-   the ''what_suffix'' parameter.) ::
+2. Второй вариант: имя персонажа встроено в текст реплики. Реплика персонажа
+   заключена в кавычки. Обратите внимание, что здесь имя персонажа помещено в параметр
+   ``what_prefix`` вместе с открывающей кавычкой (а закрывающая кавычка помещена в параметр
+   ``what_suffix``). ::
 
     define s = Character(None, kind=nvl, what_prefix="Sylvie: \"",
                          what_suffix="\"")
 
-3. A third look dispenses with the character name entirely, while
-   putting the dialogue in quotes. ::
+3. Третий вариант: имя персонажа не отображается вовсе, а диалог берётся в кавычки. ::
 
     define s = Character(None, kind=nvl, what_prefix="\"", what_suffix="\"")
 
-4. Since the third look might make it hard to distinguish who's
-   speaking, we can tint the dialogue using the ''what_color''
-   parameter. ::
+4. Поскольку в третьем варианте может быть трудно различить говорящего, реплику можно
+   окрасить с помощью параметра ``what_color``. ::
 
     define s = Character(None, kind=nvl, what_prefix="\"", what_suffix="\"",
                          what_color="#c8ffc8")
 
-5. Of course, a completely uncustomized NVL-mode character can be
-   used, if you want to take total control of what is shown. (This is
-   often used for the narrator.) ::
+5. Разумеется, можно использовать базового нестилизованного персонажа режима NVL, если
+   вы хотите полностью контролировать отображение (часто используется для рассказчика). ::
 
     define s = Character(None, kind=nvl)
 
 
-Config Variables
-----------------
+Переменные конфигурации
+-----------------------
 
-The following config variables control nvl-related functionality.
+Следующие переменные конфигурации управляют функционалом режима NVL:
 
 .. var:: config.nvl_layer = "screens"
 
-    The layer the nvl screens are shown on.
+    Слой, на котором отображаются экраны NVL.
 
 .. var:: config.nvl_list_length = None
 
-    If not None, the maximum length of the list of NVL dialogue.
-    This can be set (often in conjunction with forcing the dialogue to
-    have a fixed height) in order to emulate an infinite scrolling
-    NVL window.
+    Если не None, максимальная длина списка диалогов NVL.
+    Может быть задана (часто в сочетании с фиксированной высотой блока диалога)
+    для эмуляции бесконечной прокрутки окна NVL.
 
 .. var:: config.nvl_page_ctc = None
 
-    If not None, this is the click-to-continue indicator that is used for NVL mode
-    characters that are at the end of a page. (That is, immediately
-    followed by an nvl clear statement.) This replaces the ctc parameter
-    of :func:`Character`.
+    Если не None, индикатор CTC (клик для продолжения), используемый для персонажей
+    режима NVL в конце страницы (то есть перед инструкцией nvl clear).
+    Заменяет параметр ctc функции :func:`Character`.
 
 .. var:: config.nvl_page_ctc_position = "nestled"
 
-    If not None, this is the click-to-continue indicator position that is used for NVL mode
-    characters that are at the end of a page. (That is, immediately
-    followed by an nvl clear statement.) This replaces the ctc_position parameter
-    of :func:`Character`.
+    Если не None, позиция индикатора CTC, используемого для персонажей режима NVL
+    в конце страницы (то есть перед инструкцией nvl clear).
+    Заменяет параметр ctc_position функции :func:`Character`.
 
 .. var:: config.nvl_paged_rollback = False
 
-    If true, NVL-mode rollback will occur a full page at a time.
+    Если True, откат в режиме NVL будет происходить сразу на целую страницу за раз.
 
-Python Functions
-----------------
+Функции Python
+--------------
 
 .. include:: inc/nvl
 
 
-Paged Rollback
---------------
+Постраничный откат
+------------------
 
-Paged rollback causes Ren'Py to rollback one NVL-mode page at a time,
-rather than one block of text at a time.  It can be enabled by
-including the following in your script. ::
+Постраничный откат заставляет Ren'Py откатывать сразу страницу режима NVL целиком,
+а не по одной реплике. Его можно включить, добавив в скрипт следующий код::
 
     init python:
         config.nvl_paged_rollback = True
 
 
-Script of The Question (NVL-mode Edition)
------------------------------------------
+Скрипт «The Question» (версия в режиме NVL)
+-------------------------------------------
 
-You can view the full script of the NVL-mode edition of ''The Question''
-:doc:`here <thequestion_nvl>`.
+Полный скрипт версии «The Question» для режима NVL можно посмотреть :doc:`здесь <thequestion_nvl>`.

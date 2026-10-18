@@ -1,82 +1,76 @@
 .. _sprites:
 
-Sprites
+=======
+Спрайты
 =======
 
-To support the display of a large number of images at once, Ren'Py supports
-a sprite system. This system allows one to create sprites, where each sprite
-contains a displayable. The sprites can then have their location on the
-screen and vertical ordering changed.
+Для эффективного одновременного отображения большого количества графических объектов Ren'Py
+предоставляет спрайтовую систему. Эта система позволяет создавать спрайты, каждый из которых
+содержит отображаемый объект. Спрайты могут свободно перемещаться по экрану и изменять свой
+порядок наложения по вертикали.
 
-If one ignores performance, the sprite system is conceptually similar
-to a :func:`Fixed` wrapping :func:`Transform`\s. Sprites are much
-faster than transforms, but also less flexible. The big performance
-improvement of sprites is that each Displayable is rendered only once
-per frame, even if that Displayable is used by many sprites. The limitation
-is that Sprites only allow one to change their xoffset and yoffset, rather
-than the many properties that a Transform has.
+С концептуальной точки зрения (если не учитывать оптимизацию) система спрайтов напоминает
+контейнер :func:`Fixed`, содержащий множество объектов :func:`Transform`. Однако спрайты работают
+значительно быстрее трансформаций, хотя и менее гибки. Колоссальный прирост производительности
+достигается за счёт того, что каждый отображаемый объект рендерится только один раз за кадр,
+даже если он используется сотнями спрайтов. Ограничение заключается в том, что у спрайтов можно
+изменять только смещения xoffset и yoffset, а не весь богатый набор свойств трансформаций.
 
-To use the sprite system, create a SpriteManager object, and then call
-its create method to create new particles. As necessary, update the
-xoffset, yoffset, and zorder fields of each sprite to move it around
-the screen. By supplying `update` and `event` arguments to
-SpriteManager, you can have the sprites change over time, and react to
-user input.
+Чтобы использовать систему спрайтов, создайте объект SpriteManager и вызывайте его метод create
+для порождения частиц. При необходимости обновляйте поля xoffset, yoffset и zorder каждого спрайта
+для его перемещения по экрану. Передавая функции обратного вызова в аргументы `update` и `event`
+класса SpriteManager, вы можете программировать поведение спрайтов во времени и их реакцию
+на действия пользователя.
 
-Sprite Classes
---------------
+Классы спрайтов
+---------------
 
 .. include:: inc/sprites
 .. include:: inc/sprites_extra
 
-Sprite Examples
----------------
+Примеры использования спрайтов
+------------------------------
 
-The SnowBlossom class is an easy-to use way of placing falling things
-on the screen.
-
-::
+Класс SnowBlossom предоставляет простой и удобный способ создания падающих элементов (снега,
+лепестков сакуры и т. п.) на экране::
 
     image snow = SnowBlossom("snow.png", count=100)
 
 
-This example shows how a SpriteManager can be used to create complex
-behaviors. In this case, it shows 400 particles, and has them avoid
-the mouse.
-
-::
+В следующем примере показано, как с помощью SpriteManager можно создавать сложное интерактивное
+поведение. На экране отображаются 400 частиц, которые разбегаются в стороны от курсора мыши::
 
     init python:
         import math
 
         def repulsor_update(st):
 
-            # If we don't know where the mouse is, give up.
+            # Если позиция мыши неизвестна, выходим.
             if repulsor_pos is None:
                 return .01
 
             px, py = repulsor_pos
 
-            # For each sprite...
+            # Для каждого спрайта...
             for i in repulsor_sprites:
 
-                # Compute the vector between it and the mouse.
+                # Вычисляем вектор между ним и курсором.
                 vx = i.x - px
                 vy = i.y - py
 
-                # Get the vector length, normalize the vector.
+                # Получаем длину вектора и нормализуем его.
                 vl = math.hypot(vx, vy)
                 if vl >= 150:
                     continue
 
-                # Compute the distance to move.
+                # Вычисляем величину сдвига.
                 distance = 3.0 * (150 - vl) / 150
 
-                # Move
+                # Перемещаем спрайт
                 i.x += distance * vx / vl
                 i.y += distance * vy / vl
 
-                # Ensure we stay on the screen.
+                # Удерживаем спрайт в пределах экрана.
                 if i.x < 2:
                     i.x = 2
 
@@ -91,7 +85,7 @@ the mouse.
 
             return .01
 
-        # On an event, record the mouse position.
+        # По событию ввода сохраняем координаты курсора.
         def repulsor_event(ev, x, y, st):
             store.repulsor_pos = (x, y)
 
@@ -99,19 +93,19 @@ the mouse.
     label repulsor_demo:
 
         python:
-            # Create a sprite manager.
+            # Создаём менеджер спрайтов.
             repulsor = SpriteManager(update=repulsor_update, event=repulsor_event)
             repulsor_sprites = [ ]
             repulsor_pos = None
 
-            # Ensure we only have one smile displayable.
+            # Создаём один общий отображаемый объект.
             smile = Image("smile.png")
 
-            # Add 400 sprites.
+            # Добавляем 400 спрайтов.
             for i in range(400):
                 repulsor_sprites.append(repulsor.create(smile))
 
-            # Position the 400 sprites.
+            # Позиционируем 400 спрайтов случайным образом.
             for i in repulsor_sprites:
                 i.x = renpy.random.randint(2, 798)
                 i.y = renpy.random.randint(2, 598)
@@ -119,14 +113,14 @@ the mouse.
             del smile
             del i
 
-        # Add the repulsor to the screen.
+        # Отображаем менеджер спрайтов на экране.
         show expression repulsor as repulsor
 
         "..."
 
         hide repulsor
 
-        # Clean up.
+        # Очистка переменных.
         python:
             del repulsor
             del repulsor_sprites
