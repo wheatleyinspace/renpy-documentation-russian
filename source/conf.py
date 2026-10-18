@@ -193,7 +193,7 @@ html_context = {
     "display_github": True,
     "github_user": "wheatleyinspace",
     "github_repo": "renpy-documentation-russian",
-    "github_version": "gh-pages/", 
+    "github_version": "main/source/", 
 }
 
 # If true, links to the reST sources are added to the pages.
