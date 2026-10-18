@@ -2,20 +2,17 @@
 
 .. function:: renpy.start_predict_shader(*shaders)
     
-    Causes Ren'Py to predict the specified combination of shaders during every
-    interaction until it is removed by :func:`renpy.stop_predict_shader`.
+    Заставляет Ren'Py предсказывать указанную комбинацию шейдеров во время каждого
+    взаимодействия до тех пор, пока она не будет отменена вызовом :func:`renpy.stop_predict_shader`.
     
-    This accepts shader part names as separate arguments, or one iterable of
-    shader part names.
+    Функция принимает имена частей шейдера в виде отдельных позиционных аргументов либо
+    одного итерируемого объекта с именами частей.
     
-    Prediction will occur during normal gameplay. To wait for prediction to
-    complete, use the `predict` argument to :func:`renpy.pause`.
+    Предсказание выполняется в фоне во время обычного игрового процесса. Чтобы принудительно
+    дождаться завершения предсказания, используйте аргумент `predict` функции :func:`renpy.pause`.
 
 .. function:: renpy.stop_predict_shader(*shaders)
     
-    Causes Ren'Py to stop predicting the specified combination of shaders during
-    every interaction.
+    Останавливает предсказание указанной комбинации шейдеров во время каждого взаимодействия.
     
-    Shader parts can be supplied as described in
-    :func:`renpy.start_predict_shader`.
-
+    Имена частей шейдера передаются аналогично описанию в :func:`renpy.start_predict_shader`.

@@ -2,42 +2,41 @@
 
 .. function:: renpy.filename_line_override(filename: str, line: int)
     
-    Temporarily overrides the filename and line number. This is a context manager,
-    use it like::
+    Временно переопределяет имя файла и номер строки. Является контекстным менеджером,
+    используется следующим образом::
     
         with renpy.filename_line_override("myfile.rpy", 42):
             # ...
 
 .. function:: renpy.get_filename_line()
     
-    Returns a pair giving the filename and line number of the current
-    statement.
+    Возвращает пару (имя файла, номер строки) текущего оператора.
 
 .. function:: renpy.is_warping()
     
-    Returns True while Ren'Py is reconstructing the state preceding a warp
-    target. A custom say callable with a ``warp`` attribute set to True can
-    use this to update dialogue state without interacting with the player.
+    Возвращает True, пока Ren'Py восстанавливает состояние, предшествующее точке
+    перехода по строке (warp). Пользовательский вызываемый объект персонажа say со
+    свойством ``warp``, равным True, может использовать это для обновления состояния
+    диалога без взаимодействия с игроком.
 
 .. function:: renpy.log(msg)
     
-    If :var:`config.log` is not set, this does nothing. Otherwise, it opens
-    the logfile (if not already open), formats the message to :var:`config.log_width`
-    columns, and prints it to the logfile.
+    Если :var:`config.log` не задан, функция ничего не делает. В противном случае
+    она открывает файл журнала (если он еще не открыт), форматирует сообщение
+    по ширине :var:`config.log_width` столбцов и записывает его в файл лога.
 
 .. function:: renpy.unwatch(expr)
     
-    Stops watching the given Python expression.
+    Прекращает отслеживание указанного выражения Python.
 
 .. function:: renpy.warp_to_line(warp_spec)
     
-    This takes as an argument a filename:linenumber pair, and tries to warp to
-    the statement before that line number.
+    Принимает в качестве аргумента пару `имя_файла:номер_строки` и пытается
+    переместиться (warp) к оператору перед указанным номером строки.
     
-    This works samely as the `--warp` command.
+    Работает аналогично параметру командной строки `--warp`.
 
 .. function:: renpy.watch(expr)
     
-    This watches the given Python expression, by displaying it in the
-    upper-right corner of the screen.
-
+    Отслеживает указанное выражение Python, отображая его значение в правом верхнем
+    углу экрана.

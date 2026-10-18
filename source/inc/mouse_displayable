@@ -2,20 +2,16 @@
 
 .. class:: MouseDisplayable(cursor, x=0, y=0)
     
-    A displayable that wraps a mouse cursor displayable, and causes
-    it to move across the screen when the player moves their mouse.
+    Отображаемый объект, оборачивающий дочерний объект и перемещающий его по экрану
+    вслед за движениями мыши пользователя.
     
     `cursor`
-        A displayable that is used to draw the mouse. If this is None,
-        the hardware cursor is used.
+        Отображаемый объект, используемый для отрисовки курсора. Если None, используется аппаратный курсор.
     
     `x`, `y`
-        The coordinates of the hotspot, relative to the upper left
-        corner of the mouse, in virtual pixels.
+        Координаты активной точки нажатия (hotspot) относительно левого верхнего угла курсора в виртуальных пикселях.
 
     .. method:: add(name, cursor, x=0, y=0)
         
-        This adds a second cursor, that is used when the `name`
-        mouse is displayed. This returns the MouseDisplayable,
-        so that calls to this method can be chained.
-    
+        Добавляет именованный вариант курсора, используемый при вызове курсора с именем `name`.
+        Возвращает сам объект MouseDisplayable для выстраивания цепочек вызовов.

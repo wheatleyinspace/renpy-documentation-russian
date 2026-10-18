@@ -2,112 +2,103 @@
 
 .. function:: updater.Update(*args, **kwargs)
     
-    An action that calls :func:`updater.update`. All arguments are
-    stored and passed to that function.
+    Действие (action), вызывающее :func:`updater.update`. Все переданные аргументы
+    сохраняются и передаются этой функции.
 
 .. function:: updater.UpdateVersion(url, check_interval=21600, simulate=None, **kwargs)
     
-    This function contacts the server at `url`, and determines if there is
-    a newer version of software available at that url. If there is, this
-    function returns the new version. Otherwise, it returns None.
+    Обращается к серверу по адресу `url` и определяет, доступна ли более новая версия
+    программы. Если новая версия есть, возвращает её номер. В противном случае возвращает None.
     
-    Since contacting the server can take some time, this function launches
-    a thread in the background, and immediately returns the version from
-    the last time the server was contacted, or None if the server has never
-    been contacted. The background thread will restart the current interaction
-    once the server has been contacted, which will cause screens that call
-    this function to update.
+    Поскольку обращение к серверу может занять время, функция запускает фоновый поток
+    и немедленно возвращает версию из предыдущего сеанса связи с сервером (или None,
+    если обращение к серверу ещё ни разу не выполнялось). Фоновый поток перезапустит текущее
+    взаимодействие после получения ответа сервера, что вызовет обновление экранов,
+    использующих эту функцию.
     
-    Each url will be contacted at most once per Ren'Py session, and not
-    more than once every `check_interval` seconds. When the server is not
-    contacted, cached data will be returned.
+    Каждый URL опрашивается не более одного раза за сеанс Ren'Py и не чаще одного раза
+    в каждые `check_interval` секунд. Когда обращение к серверу не выполняется,
+    возвращаются кэшированные данные.
     
-    Additional keyword arguments (including `simulate`) are passed to the
-    update mechanism as if they were given to :func:`updater.update`.
+    Дополнительные именованные аргументы (включая `simulate`) передаются механизму
+    обновления так же, как если бы они были переданы в :func:`updater.update`.
 
 .. function:: updater.can_update(base=None)
     
-    Returns true if it's possible that an update can succeed. Returns false
-    if updating is totally impossible. (For example, if the update directory
-    was deleted.)
+    Возвращает True, если процесс обновления в принципе возможен. Возвращает False,
+    если обновление заведомо невозможно (например, если каталог обновлений был удалён).
     
-    
-    Note that this does not determine if an update is actually available.
-    To do that, use :func:`updater.UpdateVersion`.
+    Обратите внимание: эта функция не определяет, доступна ли новая версия.
+    Для проверки доступности используйте :func:`updater.UpdateVersion`.
 
 .. function:: updater.get_installed_packages(base=None)
     
-    Returns a list of installed DLC package names.
+    Возвращает список имён установленных DLC-пакетов.
     
     `base`
-        The base directory to update. Defaults to the current project's
-        base directory.
+        Базовый каталог для обновления. По умолчанию используется базовый каталог
+        текущего проекта.
 
 .. function:: updater.update(url, base=None, force=False, public_key=None, simulate=None, add=[], restart=True, confirm=True, patch=True, prefer_rpu=True, allow_empty=False, done_pause=True, allow_cancel=True, screen='updater')
     
-    Updates this Ren'Py game to the latest version.
+    Обновляет эту игру Ren'Py до последней версии.
     
     `url`
-        The URL to the updates.json file.
+        URL-адрес файла updates.json.
     
     `base`
-        The base directory that will be updated. Defaults to the base
-        of the current game. (This can usually be ignored.)
+        Базовый каталог, который будет обновлён. По умолчанию используется базовый каталог
+        текущей игры (обычно этот параметр можно не указывать).
     
     `force`
-        Force the update to occur even if the version numbers are
-        the same. (Used for testing.)
+        Принудительно выполнить обновление, даже если номера версий совпадают
+        (используется для тестирования).
     
     `public_key`
-        The path to a PEM file containing a public key that the
-        update signature is checked against. (This can usually be ignored.)
+        Путь к файлу в формате PEM, содержащему открытый ключ, с помощью которого
+        проверяется цифровая подпись обновления (обычно можно не указывать).
     
     `simulate`
-        This is used to test update guis without actually performing
-        an update. This can be:
+        Используется для тестирования интерфейса обновления без реального скачивания файлов:
     
-        * None to perform an update.
-        * "available" to test the case where an update is available.
-        * "not_available" to test the case where no update is available.
-        * "error" to test an update error.
+        * None — выполнить реальное обновление.
+        * "available" — симулировать наличие доступного обновления.
+        * "not_available" — симулировать отсутствие обновлений.
+        * "error" — симулировать ошибку обновления.
     
     `add`
-        A list of packages to add during this update. This is only necessary
-        for dlc.
+        Список пакетов для добавления во время этого обновления (необходимо только для DLC).
     
     `restart`
-        If true, the game will be re-run when the update completes. If
-        "utter", :func:`renpy.utter_restart` will be called instead. If False,
-        the update will simply end.
+        Если True, игра перезапустится после завершения обновления. Если передана строка
+        "utter", вместо этого будет вызвана функция :func:`renpy.utter_restart`. Если False,
+        процесс обновления просто завершится без перезапуска.
     
     `confirm`
-        Should Ren'Py prompt the user to confirm the update? If False, the
-        update will proceed without confirmation.
+        Запрашивать ли у пользователя подтверждение на установку обновления? Если False,
+        обновление начнётся без подтверждения.
     
     `patch`
-        If true, Ren'Py will attempt to patch the game, downloading only
-        changed data. If false, Ren'Py will download a complete copy of
-        the game, and update from that. This is set to false automatically
-        when the url does not begin with "http:".
+        Если True, Ren'Py попытается применить дифференциальный патч к игре, скачивая
+        только изменившиеся фрагменты данных. Если False, будет загружена полная копия
+        игры. Автоматически устанавливается в False, если URL не начинается с «http:».
     
-        This is ignored if the RPU update format is being used.
+        Этот параметр игнорируется при использовании современного формата обновлений RPU.
     
     `prefer_rpu`
-        No longer used, but kept for backwards compatibility.
+        Больше не используется, сохранён для обратной совместимости.
     
     `allow_empty`
-        If True, Ren'Py will allow the update to proceed even if the
-        base directory does not contain update information. (`add` must
-        be provided in this case.)
+        Если True, Ren'Py разрешит продолжить обновление, даже если в базовом каталоге
+        отсутствует информация об обновлениях (в этом случае параметр `add` обязателен).
     
     `done_pause`
-        If true, the game will pause after the update is complete. If false,
-        it will immediately proceed (either to a restart, or a return).
+        Если True, игра сделает паузу после завершения обновления. Если False,
+        сразу перейдёт к следующему шагу (перезапуску или возврату).
     
     `allow_cancel`
-        If true, the user will be allowed to cancel the update. If false,
-        the user will not be allowed to cancel the update.
+        Если True, пользователю будет разрешено отменить обновление. Если False,
+        кнопка отмены обновления будет недоступна.
     
     `screen`
-        The name of the screen to use.
-
+        Имя экрана обновления, который будет отображаться.

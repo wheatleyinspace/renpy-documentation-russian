@@ -1,3 +1,3 @@
 :orphan:
 
-This page has been moved to :ref:`Python Transforms <transforms-python>`.
+Эта страница была перемещена в :ref:`Трансформации Python <transforms-python>`.

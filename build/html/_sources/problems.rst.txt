@@ -1,29 +1,30 @@
-Dealing with Problems
-=====================
+Устранение неполадок
+====================
 
 .. include:: display_problems.rst
 
 
-Windows Encoding Problems
--------------------------
+Проблемы с кодировками путей в Windows
+--------------------------------------
 
-Ren'Py will fail to start on Windows if it's placed in a directory with a
-full path that isn't representable in the current system language. For example,
-if Ren'Py is in the directory::
+Ren'Py не сможет запуститься в Windows, если он расположен в каталоге, полный путь
+к которому не может быть представлен в текущей кодовой странице операционной системы.
+Например, если Ren'Py находится в каталоге::
 
   C:\ビジュアルノベル\renpy-6.16.0-sdk\
 
-and the system is set to use the English language, Ren'Py will be unable to
-start. To fix this problem, start the control panel, select "Region and Language
-Options", "Advanced", and change the Language for non-Unicode programs.
+а в системе установлен английский язык без поддержки Юникода по умолчанию, Ren'Py
+не сможет запуститься. Чтобы решить эту проблему, откройте «Панель управления»,
+выберите «Региональные стандарты», затем «Дополнительно» и измените язык программ,
+не поддерживающих Юникод (или переместите Ren'Py в путь, содержащий только стандартные символы).
 
 
-64-Bit Linux Problems
-----------------------
+Проблемы с 64-битными версиями Linux
+------------------------------------
 
-Ren'Py 6.14.x and 6.15.0-3 were compiled incorrectly, and will often
-fail to operate on 64-bit Linux computers. The best way to work around
-this is to download Ren'Py 6.15.4 or later, and use it to run the game::
+Сборки Ren'Py версий 6.14.x и 6.15.0–3 имели ошибку компиляции и часто отказывались
+работать на 64-битных системах Linux. Лучший способ обойти эту проблему — скачать
+Ren'Py 6.15.4 или более поздней версии и использовать его для запуска игры::
 
 
   /path/to/renpy-6.15.4/renpy.sh /path/to/game-with-problems

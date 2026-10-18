@@ -2,44 +2,36 @@
 
 .. function:: renpy.register_shader(name, **kwargs)
     
-    This registers a shader part. This takes `name`, and then
-    keyword arguments.
+    Регистрирует фрагмент шейдера (shader part). Принимает `name` и именованные аргументы.
     
     `name`
-        A string giving the name of the shader part. Names starting with an
-        underscore or "renpy." are reserved for Ren'Py.
+        Строка, задающая имя фрагмента шейдера. Имена, начинающиеся со знака подчёркивания или префикса
+        "renpy.", зарезервированы для Ren'Py.
     
     `glsl`
-        The GLSL dialect this shader part is written in: 300 for GLSL ES 3.00
-        or 100 for GLSL ES 1.00.
+        Диалект языка GLSL, на котором написан фрагмент: 300 для GLSL ES 3.00 или 100 для GLSL ES 1.00.
     
-        This defaults to None, meaning the part follows
-        :var:`config.glsl_version`: 300 for new games and 100 for games that
-        declare compatibility with Ren'Py 8.5 or earlier.
+        По умолчанию None — используется значение переменной :var:`config.glsl_version`: 300 для новых проектов
+        и 100 для проектов с совместимостью с Ren'Py 8.5 или более ранними версиями.
     
-        Ren'Py translates between the two dialects as needed, so a ``glsl=300``
-        part still runs on a device that only provides GLSL ES 1.00 unless it
-        uses a feature not present in the older version.
+        Ren'Py автоматически транслирует код между диалектами, поэтому часть с ``glsl=300`` будет работать
+        и на устройствах с GLSL ES 1.00, если в ней не используются отсутствующие возможности.
     
-        A part that doesn't declare a dialect, and would be treated as GLSL ES
-        3.00, is checked for constructs that only exist in GLSL ES 1.00 - such
-        as ``gl_FragColor``, ``texture2D``, ``attribute``, and ``varying``.
-        Finding one is an error, since it means the part was written for the
-        older dialect but did not declare as much.
+        Если диалект не указан и фрагмент трактуется как GLSL ES 3.00, производится проверка на конструкции,
+        существующие только в GLSL ES 1.00 (такие как ``gl_FragColor``, ``texture2D``, ``attribute``
+        и ``varying``). Обнаружение таких конструкций вызовет ошибку.
     
-        Layout qualifiers are reserved for declaring additional fragment outputs
-        once multiple render targets are supported: location 0 is Ren'Py's
-        ``fragment_color``, and outputs declared by a shader part will start at 1.
-        A plain ``out`` will continue to mean a value passed from the vertex shader
-        to the fragment shader.
+        Квалификаторы layout зарезервированы для объявления дополнительных выводов фрагментного шейдера
+        при будущей поддержке multiple render targets: location 0 соответствует стандартному
+        ``fragment_color`` Ren'Py, а дополнительные выводы начинаются с 1. Обычное ключевое слово
+        ``out`` передаёт значение из вершинного шейдера во фрагментный.
     
     `variables`
-        The variables used by the shader part. These should be listed one per
-        line, a storage class followed by a type, name, and semicolon.
+        Переменные, используемые фрагментом шейдера, по одной на строку: класс хранения, тип, имя
+        и точка с запятой.
     
-        With ``glsl=300``, the storage class is ``uniform``, ``in`` for a
-        value that comes from the mesh, or ``out`` for a value the vertex
-        shader passes to the fragment shader::
+        В ``glsl=300`` классами хранения являются ``uniform``, ``in`` для значений из сетки
+        или ``out`` для значений, передаваемых из вершинного шейдера во фрагментный::
     
             variables='''
             uniform sampler2D tex0;
@@ -47,7 +39,7 @@
             out vec2 v_tex_coord;
             '''
     
-        With ``glsl=100``, it is ``uniform``, ``attribute``, or ``varying``::
+        В ``glsl=100`` используются ``uniform``, ``attribute`` или ``varying``::
     
             variables='''
             uniform sampler2D tex0;
@@ -56,15 +48,11 @@
             '''
     
     `vertex_functions`
-        If given, a string containing functions that will be included in the
-        vertex shader.
+        Строка, содержащая функции, включаемые в вершинный шейдер.
     
     `fragment_functions`
-        If given, a string containing functions that will be included in the
-        fragment shader.
+        Строка, содержащая функции, включаемые во фрагментный шейдер.
     
-    Other keyword arguments should start with ``vertex_`` or ``fragment_``,
-    and end with an integer priority. So "fragment_200" or "vertex_300". These
-    give text that's placed in the appropriate shader at the given priority,
-    with lower priority numbers inserted before higher priority numbers.
-
+    Другие именованные аргументы должны начинаться с ``vertex_`` или ``fragment_`` и оканчиваться
+    целочисленным приоритетом (например, "fragment_200" или "vertex_300"). Они содержат код,
+    вставляемый в соответствующий шейдер с указанным приоритетом (меньшие номера вставляются перед большими).

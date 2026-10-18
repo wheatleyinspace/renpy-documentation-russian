@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Developer Tools &mdash; Ren&#39;Py Documentation</title>
+  <title>Инструменты разработчика &mdash; Ren&#39;Py Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6eda34c5" />
@@ -14,7 +14,7 @@
       <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
 
   
-    <link rel="canonical" href="https://www.renpy.org/doc/html/developer_tools.html" />
+    <link rel="canonical" href="https://wheatleyinspace.github.io/renpy-documentation-russian/developer_tools.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=00c7e44b"></script>
@@ -26,8 +26,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="Interactive Director" href="director.html" />
-    <link rel="prev" title="Launcher" href="launcher.html" /> 
+    <link rel="next" title="Интерактивный режиссёр (Interactive Director)" href="director.html" />
+    <link rel="prev" title="Лаунчер" href="launcher.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,7 +52,7 @@
               <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">Руководство по настройке GUI</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
 <ul>
@@ -73,49 +73,56 @@
 <li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Аудио</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Аудиофильтры</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Видео</a></li>
 <li class="toctree-l1"><a class="reference internal" href="voice.html">Озвучка</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Текст</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translation.html">Перевод</a></li>
 <li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Трансформации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Свойства трансформаций</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Переходы (Transitions)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Многослойные картинки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D-сцена</a></li>
 <li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Стили</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Свойства стилей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Экраны и язык экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Действия, значения и функции экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Специальные имена экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Оптимизация языка экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Конфигурационные переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Переменные настроек</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Переменные хранилища</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Пользовательские курсоры мыши</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Текстовые шейдеры</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Developer Tools</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lint">Lint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shift-o-console">Shift+O Console</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shift-e-editor-support">Shift+E Editor Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shift-d-developer-menu">Shift+D Developer Menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#shift-r-reloading">Shift+R Reloading</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Лаунчер</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Инструменты разработчика</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lint">Инструмент Lint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shift-o">Консоль Shift+O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shift-e">Поддержка редактора Shift+E</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shift-d">Меню разработчика Shift+D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shift-r">Перезагрузка Shift+R</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#renpy.get_autoreload"><code class="docutils literal notranslate"><span class="pre">renpy.get_autoreload()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#renpy.reload_script"><code class="docutils literal notranslate"><span class="pre">renpy.reload_script()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#renpy.set_autoreload"><code class="docutils literal notranslate"><span class="pre">renpy.set_autoreload()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#shift-i-style-inspecting">Shift+I Style Inspecting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#fast-skipping">&gt; Fast Skipping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#warping-to-a-line">Warping to a Line</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#debug-functions">Debug Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#shift-i">Инспектор стилей Shift+I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fast-skipping">Быстрый пропуск (Fast Skipping)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#warping">Переход к строке (Warping)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Функции отладки</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#renpy.filename_line_override"><code class="docutils literal notranslate"><span class="pre">renpy.filename_line_override()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#renpy.get_filename_line"><code class="docutils literal notranslate"><span class="pre">renpy.get_filename_line()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#renpy.is_warping"><code class="docutils literal notranslate"><span class="pre">renpy.is_warping()</span></code></a></li>
@@ -125,90 +132,90 @@
 <li class="toctree-l3"><a class="reference internal" href="#renpy.watch"><code class="docutils literal notranslate"><span class="pre">renpy.watch()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#launcher-customization">Launcher Customization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launcher-customization">Настройка лаунчера</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Интерактивный режиссёр (Interactive Director)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Автоматизированное тестирование</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
-<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">Руководство по режиму NVL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Текстовые облачка (Speech Bubbles)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Ввод текста</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Боковые изображения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Галерея изображений, музыкальная комната и повтор сцен (Replay)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Спрайты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Настройка привязок клавиш</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Достижения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">История диалогов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Диалог нескольких персонажей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Заставка (Splashscreen) и предзаставка (Presplash)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Жизненный цикл запущенной игры Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
-<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Эквиваленты инструкций на Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Сохранение, загрузка и откат</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Постоянные данные</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Продвинутый GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
-<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
-<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Экраны и Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Пользовательские отображаемые объекты (CDD)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Пользовательские инструкции (CDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Пользовательские текстовые теги</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Коллбэки персонажей (Character Callbacks)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">Доступ к файлам</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Класс Color</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Матрицы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Модельный рендеринг</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Прочие функции и переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">Файлы _ren.py — Ren'Py внутри Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
-<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">Сетевые запросы HTTPS/HTTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Снимки экрана</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Буфер обмена</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">Возраст пользователя</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Сборка дистрибутивов</a></li>
 <li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Веб / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS / Chromebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">Внутриигровые покупки (In-App Purchasing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">Обновление по HTTPS/HTTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Загрузчик больших игр на мобильных платформах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Жесты</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Безопасность</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Устранение неполадок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Переменные окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Голосовое сопровождение интерфейса (Self-Voicing)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Шаблоны проектов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Интерфейс командной строки (CLI)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Интеграция с текстовым редактором</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Скины</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Перевод Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">История изменений (Changelog Ren'Py 7+)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">История изменений (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Несовместимые изменения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Лицензия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Авторы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Спонсоры разработки Ren'Py</a></li>
 </ul>
 
         </div>
@@ -225,9 +232,9 @@
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Developer Tools</li>
+      <li class="breadcrumb-item active">Инструменты разработчика</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/developer_tools.rst" class="fa fa-github"> Редактировать на GitHub</a>
+              <a href="https://github.com/wheatleyinspace/renpy-documentation-russian/blob/.developer_tools.rst" class="fa fa-github"> Редактировать на GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -235,205 +242,180 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="developer-tools">
-<h1>Developer Tools<a class="headerlink" href="#developer-tools" title="Ссылка на этот заголовок"></a></h1>
-<p>Ren'Py includes a number of features to make a developer's life easier. Many of
-them need the variable <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> to be set to True to operate.</p>
+  <section id="id1">
+<h1>Инструменты разработчика<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<p>Ren'Py включает множество функций, облегчающих жизнь разработчика. Для работы многих
+из них необходимо, чтобы переменная <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> имела значение True.</p>
 <section id="lint">
-<span id="id1"></span><h2>Lint<a class="headerlink" href="#lint" title="Ссылка на этот заголовок"></a></h2>
-<p>The Lint tool (available from the launcher) checks the game for potential errors
-or misoptimizations, and advises the developing team about how to best improve it.
-Since some of these errors will only affect users on other platforms, it’s
-recommended to understand and fix all errors, even if the problem can't be
-triggered locally.</p>
-<p>Lint also includes useful infos and stats about the game.</p>
-<p>Note that using Lint is not a substitute for thorough testing.</p>
+<span id="id2"></span><h2>Инструмент Lint<a class="headerlink" href="#lint" title="Ссылка на этот заголовок"></a></h2>
+<p>Инструмент Lint (доступный из лаунчера) проверяет игру на наличие потенциальных ошибок
+или неоптимальных решений и дает рекомендации разработчикам по их исправлению.
+Поскольку некоторые из этих проблем могут проявляться только на определенных платформах,
+настоятельно рекомендуется понимать и исправлять все найденные предупреждения, даже
+если локально ошибка не воспроизводится.</p>
+<p>Lint также выводит полезную информацию и статистику о проекте.</p>
+<p>Обратите внимание, что использование Lint не заменяет полноценного тестирования игры.</p>
 </section>
-<section id="shift-o-console">
-<span id="console"></span><h2>Shift+O Console<a class="headerlink" href="#shift-o-console" title="Ссылка на этот заголовок"></a></h2>
-<p>The debug console makes it possible to interactively run Ren'Py script and
-Python statements, and immediately see the results. The console is available in
-developer mode or when <a class="reference internal" href="config.html#var-config.console"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.console</span></code></a> is True, and can be accessed by
-pressing Shift+O.</p>
-<p>The console can be used to:</p>
+<section id="shift-o">
+<span id="console"></span><h2>Консоль Shift+O<a class="headerlink" href="#shift-o" title="Ссылка на этот заголовок"></a></h2>
+<p>Консоль отладки позволяет интерактивно выполнять операторы сценария Ren'Py и выражения
+Python, сразу видя результаты. Консоль доступна в режиме разработчика или когда переменная
+<a class="reference internal" href="config.html#var-config.console"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.console</span></code></a> установлена в True; ее можно открыть нажатием клавиш Shift+O.</p>
+<p>Консоль можно использовать для:</p>
 <ul class="simple">
-<li><p>Jump to a label.</p></li>
-<li><p>Interactively try out Ren'Py script statements.</p></li>
-<li><p>Evaluate a Python expression or statement to see the result.</p></li>
-<li><p>Trace Python expressions as the game progresses.</p></li>
+<li><p>Перехода к метке (label).</p></li>
+<li><p>Интерактивной проверки операторов сценария Ren'Py.</p></li>
+<li><p>Вычисления выражений и выполнения инструкций Python с просмотром результатов.</p></li>
+<li><p>Отслеживания изменений выражений Python по ходу игры.</p></li>
 </ul>
 <p>commands:</p>
 <ul class="simple">
-<li><p>clear: clear the console history</p></li>
-<li><p>escape: Enables escaping of unicode symbols in unicode strings.</p></li>
-<li><p>exit: exit the console</p></li>
-<li><p>help: show this help</p></li>
-<li><p>help &lt;expr&gt;: show signature and documentation of &lt;expr&gt;</p></li>
-<li><p>jump &lt;label&gt;: jumps to label</p></li>
-<li><p>load &lt;slot&gt;: loads the game from slot</p></li>
-<li><p>long: Print the full representation of objects on the console.</p></li>
-<li><p>reload: reloads the game, refreshing the scripts</p></li>
-<li><p>save &lt;slot&gt;: saves the game in slot</p></li>
-<li><p>short: Shorten the representation of objects on the console (default).</p></li>
-<li><p>stack: print the return stack</p></li>
-<li><p>unescape: Disables escaping of unicode symbols in unicode strings and print it as is (default).</p></li>
-<li><p>unwatch &lt;expression&gt;: stop watching an expression</p></li>
-<li><p>unwatchall: stop watching all expressions</p></li>
-<li><p>watch &lt;expression&gt;: watch a python expression</p></li>
-<li><p>watch short: makes the representation of traced expressions short (default)</p></li>
-<li><p>watch long: makes the representation of traced expressions as is</p></li>
-<li><p>&lt;renpy script statement&gt;: run the statement</p></li>
-<li><p>&lt;python expression or statement&gt;: run the expression or statement</p></li>
+<li><p>clear: очистить историю консоли</p></li>
+<li><p>escape: включает экранирование символов Юникода в строках Юникода.</p></li>
+<li><p>exit: выйти из консоли</p></li>
+<li><p>help: показать эту справку</p></li>
+<li><p>help &lt;expr&gt;: показать сигнатуру и документацию для &lt;expr&gt;</p></li>
+<li><p>jump &lt;label&gt;: перейти к метке label</p></li>
+<li><p>load &lt;slot&gt;: загрузить игру из слота slot</p></li>
+<li><p>long: выводить полное строковое представление объектов в консоль.</p></li>
+<li><p>reload: перезагрузить игру и обновить сценарии</p></li>
+<li><p>save &lt;slot&gt;: сохранить игру в слот slot</p></li>
+<li><p>short: сокращать строковое представление объектов в консоли (по умолчанию).</p></li>
+<li><p>stack: вывести стек возврата</p></li>
+<li><p>unescape: отключает экранирование символов Юникода в строках Юникода и выводит их как есть (по умолчанию).</p></li>
+<li><p>unwatch &lt;expression&gt;: прекратить отслеживание выражения</p></li>
+<li><p>unwatchall: прекратить отслеживание всех выражений</p></li>
+<li><p>watch &lt;expression&gt;: отслеживать выражение Python</p></li>
+<li><p>watch short: сокращенное отображение отслеживаемых выражений (по умолчанию)</p></li>
+<li><p>watch long: полное отображение отслеживаемых выражений как есть</p></li>
+<li><p>&lt;renpy script statement&gt;: выполнить оператор скрипта Ren'Py</p></li>
+<li><p>&lt;python expression or statement&gt;: вычислить выражение или выполнить оператор Python</p></li>
 </ul>
 </section>
-<section id="shift-e-editor-support">
-<h2>Shift+E Editor Support<a class="headerlink" href="#shift-e-editor-support" title="Ссылка на этот заголовок"></a></h2>
-<p>Shift+E opens the default text editor, as set in the launcher and customizable
-using <a class="reference internal" href="editor.html"><span class="doc">Text Editor Integration</span></a>, to open the script file in and line number at which the
-current statement is written.</p>
+<section id="shift-e">
+<h2>Поддержка редактора Shift+E<a class="headerlink" href="#shift-e" title="Ссылка на этот заголовок"></a></h2>
+<p>Сочетание клавиш Shift+E открывает текстовый редактор по умолчанию (выбранный в лаунчере
+и настраиваемый согласно <a class="reference internal" href="editor.html"><span class="doc">Интеграция с текстовым редактором</span></a>), открывая файл сценария на номере строки, где
+написан текущий выполняемый оператор.</p>
 </section>
-<section id="shift-d-developer-menu">
-<h2>Shift+D Developer Menu<a class="headerlink" href="#shift-d-developer-menu" title="Ссылка на этот заголовок"></a></h2>
-<p>When <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> is true, hitting Shift+D will display a developer
-menu that provides easy access to some of the features given below.</p>
+<section id="shift-d">
+<h2>Меню разработчика Shift+D<a class="headerlink" href="#shift-d" title="Ссылка на этот заголовок"></a></h2>
+<p>Когда переменная <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> равна True, нажатие клавиш Shift+D открывает
+меню разработчика, обеспечивающее быстрый доступ ко многим сервисным функциям.</p>
 </section>
-<section id="shift-r-reloading">
-<h2>Shift+R Reloading<a class="headerlink" href="#shift-r-reloading" title="Ссылка на этот заголовок"></a></h2>
-<p>When <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> is True, hitting Shift+R will save the current
-game, reload the game script, and reload the game. This will often place you at
-the last unchanged statement encountered before Shift+R was pressed.</p>
-<p>After the first reload, the game will be in autoreload mode, and any changes
-to files accessed since the last reload will cause the game to be reloaded
-again.</p>
-<p>This allows the developer to make script changes with an external editor, and
-not have to exit and restart Ren'Py to see the effect of the changes.</p>
-<p>Note that game state, which includes variable values and scene lists, is
-preserved across the reload. This means that if one of those statements is
-changed, it is necessary to rollback and re-execute the statement to see its
-new effect.</p>
-<p>Shift+R reloading does not work in a replay.</p>
-<p>The following functions implement the same behavior in pure python. Note that
-they are only meant to be used in developer mode.</p>
+<section id="shift-r">
+<h2>Перезагрузка Shift+R<a class="headerlink" href="#shift-r" title="Ссылка на этот заголовок"></a></h2>
+<p>Когда переменная <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> равна True, нажатие клавиш Shift+R сохраняет
+текущее состояние игры, перезагружает скрипты и заново загружает игру. Обычно это возвращает
+игру к последнему неизмененному оператору, встреченному до нажатия Shift+R.</p>
+<p>После первой перезагрузки игра переходит в режим автоматической перезагрузки (autoreload):
+любые изменения файлов, к которым обращалась игра с момента прошлой перезагрузки, вызовут
+автоматическую перезагрузку игры.</p>
+<p>Это позволяет вносить изменения в сценарий во внешнем текстовом редакторе без необходимости
+закрывать и перезапускать Ren'Py вручную.</p>
+<p>Обратите внимание, что состояние игры (включая значения переменных и списки показанных сцен)
+сохраняется при перезагрузке. Это означает, что если изменен оператор, меняющий переменные,
+необходимо откатиться назад (rollback) и заново выполнить этот оператор.</p>
+<p>Перезагрузка по Shift+R не работает во время повтора сцен (replay).</p>
+<p>Следующие функции реализуют аналогичное поведение на чистом Python (предназначены только
+для режима разработки):</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.get_autoreload">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_autoreload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_autoreload" title="Ссылка на это определение"></a></dt>
-<dd><p>Gets the autoreload flag.</p>
+<dd><p>Возвращает значение флага автоматической перезагрузки.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.reload_script">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">reload_script</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.reload_script" title="Ссылка на это определение"></a></dt>
-<dd><p>Causes Ren'Py to save the game, reload the script, and then load the
-save.</p>
-<p>This should only be called during development. It works on Windows, macOS,
-and Linux, but may not work on other platforms.</p>
+<dd><p>Заставляет Ren'Py сохранить текущую игру, перезагрузить сценарий и затем
+загрузить сохранение.</p>
+<p>Функцию следует вызывать только в процессе разработки. Она работает на Windows,
+macOS и Linux, но может не поддерживаться на других платформах.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.set_autoreload">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">set_autoreload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autoreload</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.set_autoreload" title="Ссылка на это определение"></a></dt>
-<dd><p>Sets the autoreload flag, which determines if the game will be
-automatically reloaded after file changes. Autoreload will not be
-fully enabled until the game is reloaded with <a class="reference internal" href="#renpy.reload_script" title="renpy.reload_script"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.reload_script()</span></code></a>.</p>
+<dd><p>Устанавливает флаг автоперезагрузки, определяющий, будет ли игра автоматически
+перезагружаться при изменении файлов проекта. Автоперезагрузка не вступит в
+силу окончательно, пока игра не будет перезагружена с помощью <a class="reference internal" href="#renpy.reload_script" title="renpy.reload_script"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.reload_script()</span></code></a>.</p>
 </dd></dl>
 
 </section>
-<section id="shift-i-style-inspecting">
-<span id="style-inspector"></span><h2>Shift+I Style Inspecting<a class="headerlink" href="#shift-i-style-inspecting" title="Ссылка на этот заголовок"></a></h2>
-<p>When <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> is true, pressing Shift+I will cause style
-inspection to occur. This will display a list of displayables underneath the
-mouse, in the order they are drawn to the screen (that is, the last displayable
-is the one on top of the others). For each displayable, it will display the
-type, the style used, and the size it is being rendered at.</p>
-<p>Clicking on the style name will display the styles the displayable inherits
-from, and the properties each style contributes to the final displayable.</p>
+<section id="shift-i">
+<span id="style-inspector"></span><h2>Инспектор стилей Shift+I<a class="headerlink" href="#shift-i" title="Ссылка на этот заголовок"></a></h2>
+<p>Когда <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> равно True, нажатие клавиш Shift+I запускает инспектор стилей.
+Под курсором мыши отображается список отображаемых объектов в порядке их отрисовки (самый
+верхний объект — в конце списка). Для каждого объекта выводится его тип, используемый стиль
+и размеры отрисовки.</p>
+<p>Клик по имени стиля отображает стили, от которых данный стиль наследуется, а также свойства,
+которые каждый стиль привносит в итоговый отображаемый объект.</p>
 </section>
 <section id="fast-skipping">
-<h2>&gt; Fast Skipping<a class="headerlink" href="#fast-skipping" title="Ссылка на этот заголовок"></a></h2>
-<p>When <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> or <a class="reference internal" href="config.html#var-config.fast_skipping"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.fast_skipping</span></code></a> is True, pressing
-the <cite>fast_skip</cite> key (by default, &quot;&gt;&quot;) causes the game to immediately skip to
-the next important interaction.  For this purpose, an important interaction is
-one that is not caused by a say statement, transition, or pause command.
-Usually, this means skipping to the next menu, but it will also stop when
-user-defined forms of interaction occur.</p>
+<h2>Быстрый пропуск (Fast Skipping)<a class="headerlink" href="#fast-skipping" title="Ссылка на этот заголовок"></a></h2>
+<p>Когда переменная <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> или <a class="reference internal" href="config.html#var-config.fast_skipping"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.fast_skipping</span></code></a> равна True,
+нажатие клавиши быстрого пропуска (по умолчанию <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>) заставляет игру мгновенно
+перемотать сценарий до следующего важного взаимодействия. Важным взаимодействием считается
+событие, не являющееся оператором say, переходом или командой pause (обычно это следующее
+меню выбора или пользовательский интерактивный экран).</p>
 </section>
-<section id="warping-to-a-line">
-<span id="id2"></span><h2>Warping to a Line<a class="headerlink" href="#warping-to-a-line" title="Ссылка на этот заголовок"></a></h2>
-<p>Ren'Py supports warping to a line in the script, without the developer to play
-through the entire game to get there. While this warping technique has a number
-of warnings associated with it, it still may be useful in providing a live
-preview.</p>
-<p>To invoke warping, run Ren'Py with the <code class="docutils literal notranslate"><span class="pre">--warp</span></code> command-line argument followed
-by a filename:line combination, to specify where you would like to warp to. For
-example:</p>
+<section id="warping">
+<span id="warping-to-a-line"></span><h2>Переход к строке (Warping)<a class="headerlink" href="#warping" title="Ссылка на этот заголовок"></a></h2>
+<p>Ren'Py поддерживает переход к заданной строке сценария без необходимости вручную проходить
+всю игру от начала. Хотя этот метод имеет ряд ограничений и нюансов, он очень удобен для
+быстрого предварительного просмотра разрабатываемой сцены.</p>
+<p>Для вызова перемещения запустите Ren'Py с параметром командной строки <code class="docutils literal notranslate"><span class="pre">--warp</span></code>, указав
+комбинацию <cite>имя_файла:строка</cite>. Например:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="n">renpy</span><span class="o">.</span><span class="n">exe</span> <span class="n">my_project</span> <span class="o">--</span><span class="k">warp</span> <span class="n">script</span><span class="o">.</span><span class="k">rpy</span><span class="p">:</span><span class="mi">458</span>
 </pre></div>
 </div>
-<p>(Where <cite>my_project</cite> is the full path to the base directory of your project.)</p>
-<p>When warping is invoked, Ren'Py picks the statement closest to, but before or
-at, the given line, and works backwards to infer a path leading to it. Up to
-<code class="docutils literal notranslate"><span class="pre">config.warp_limit</span></code> statements from the end of that path are considered.
-Ren'Py executes warp-compatible statements, such as scene, show, and hide,
-along the path. Finally, it transfers control to the target statement.</p>
-<p>Dialogue by ADV, NVL, and bubble characters is also replayed to reconstruct
-state, without waiting for input:</p>
+<p>(где <cite>my_project</cite> — полный путь к базовому каталогу проекта).</p>
+<p>При запуске перемещения Ren'Py находит оператор, ближайший к указанной строке (на ней или
+перед ней), и строит обратный маршрут от начала игры. Анализируется до <code class="docutils literal notranslate"><span class="pre">config.warp_limit</span></code>
+операторов от конца этого пути. Ren'Py выполняет совместимые операторы (такие как scene,
+show и hide) по пути следования, после чего передает управление целевому оператору.</p>
+<p>Диалоги персонажей ADV, NVL и речевых пузырей (bubble) также воспроизводятся для
+восстановления контекста без ожидания клика пользователя:</p>
 <ul class="simple">
-<li><p>ADV dialogue adds completed lines to the history.</p></li>
-<li><p>NVL dialogue adds completed lines to the history and NVL list. <code class="docutils literal notranslate"><span class="pre">nvl</span> <span class="pre">clear</span></code>
-and a character's <code class="docutils literal notranslate"><span class="pre">clear=True</span></code> setting clear the NVL list without clearing
-history.</p></li>
-<li><p>Bubble dialogue adds completed lines to the history, reconstructs retained
-bubbles, and updates bubble layout properties. Bubbles are cleared according
-to the bubble database and <a class="reference internal" href="bubble.html#var-bubble.clear_retain_statements"><code class="xref std std-var docutils literal notranslate"><span class="pre">bubble.clear_retain_statements</span></code></a>, including
-at skipped menus and <code class="docutils literal notranslate"><span class="pre">call</span> <span class="pre">screen</span></code> statements. Those statements are not
-otherwise executed.</p></li>
+<li><p>Диалоги ADV добавляют завершенные строки в историю диалогов.</p></li>
+<li><p>Диалоги NVL добавляют строки в историю и в список NVL. Команда <code class="docutils literal notranslate"><span class="pre">nvl</span> <span class="pre">clear</span></code> и параметр
+персонажа <code class="docutils literal notranslate"><span class="pre">clear=True</span></code> очищают список NVL без очистки истории.</p></li>
+<li><p>Диалоги речевых пузырей добавляют строки в историю, восстанавливают сохраненные пузыри
+и обновляют параметры компоновки. Пузыри очищаются согласно базе данных пузырей и
+переменной <a class="reference internal" href="bubble.html#var-bubble.clear_retain_statements"><code class="xref std std-var docutils literal notranslate"><span class="pre">bubble.clear_retain_statements</span></code></a>, включая пропущенные меню и операторы
+<code class="docutils literal notranslate"><span class="pre">call</span> <span class="pre">screen</span></code> (сами эти операторы при этом не выполняются).</p></li>
 </ul>
-<p>History and NVL list length limits still apply. Reconstructed history entries
-do not represent rollback checkpoints. The target statement is not replayed:
-it executes normally after <code class="docutils literal notranslate"><span class="pre">after_warp</span></code>.</p>
-<p>Characters support replay by default; <code class="docutils literal notranslate"><span class="pre">Character(...,</span> <span class="pre">warp=False)</span></code> disables
-it for a particular character. Other say callables are skipped unless their
-<code class="docutils literal notranslate"><span class="pre">warp</span></code> attribute is True. An opted-in callable is called normally and can
-use <a class="reference internal" href="#renpy.is_warping" title="renpy.is_warping"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.is_warping()</span></code></a> to avoid interactions and other side effects.
-Built-in characters suppress interaction callbacks, voice hooks, and say
-transitions during replay, but text filters, substitutions, dynamic names,
-history callbacks, and character preparation/completion hooks still run.
-Opting in does not make arbitrary application code safe to replay.</p>
-<p>If a replayed say statement raises an ordinary exception, Ren'Py logs it,
-ignores that statement, and continues warping. This includes failures while
-resolving the sayer or evaluating arguments and substitutions. Quit, restart,
-and other engine control-flow exceptions are not ignored. Temporary replay
-state is restored, but arbitrary side effects performed before an exception
-cannot be undone.</p>
-<p>There are a number of fairly major caveats to the warp feature. The first is
-that it only examines a single path, which means that while the path may be
-representative of some route of execution, it's possible that there may be a
-bug along some other route. In general, the path doesn't consider game logic,
-so it's also possible to have a path that isn't actually reachable. (This is
-only really a problem on control-heavy games, especially those that use a lot of
-Python.)</p>
-<p>The biggest problem, though, is that Python is not executed before the
-statement that is warped to. This means that all variables will be
-uninitialized, which can lead to crashes when they are used. To overcome this,
-one can define a label <code class="docutils literal notranslate"><span class="pre">after_warp</span></code>, which is called after a warp but before
-the warped-to statement executes. This label can set up variables in the
-program, and then return to the preview. This setup occurs after dialogue
-reconstruction, so it cannot repair preceding lines that failed to replay.
-Initialized defaults remain available during replay.</p>
-<p>Translations are used when replaying a complete dialogue translation block.
-If the target or the warp limit cuts through a multi-statement translation
-block, warp replays the available source-language prefix: there is no general
-mapping from part of a source block to part of its translation. As with route
-selection, this remains best-effort rather than a full playthrough.</p>
-<p>The warp feature requires <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> to be True to operate.</p>
+<p>Ограничения на длину истории и списка NVL сохраняют силу. Восстановленные записи истории
+не создают контрольных точек отката. Сам целевой оператор не симулируется: он выполняется
+в штатном режиме после вызова метки <code class="docutils literal notranslate"><span class="pre">after_warp</span></code>.</p>
+<p>Персонажи поддерживают повтор диалогов при warp по умолчанию; параметр <code class="docutils literal notranslate"><span class="pre">Character(...,</span> <span class="pre">warp=False)</span></code>
+отключает его для конкретного персонажа. Другие вызываемые объекты say пропускаются, если
+только их атрибут <code class="docutils literal notranslate"><span class="pre">warp</span></code> не равен True. Разрешенный объект вызывается стандартно и может
+проверять <a class="reference internal" href="#renpy.is_warping" title="renpy.is_warping"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.is_warping()</span></code></a> для предотвращения нежелательных интерактивных побочных
+эффектов. Встроенные персонажи подавляют колбэки взаимодействия, хуки голоса и переходы
+say во время симуляции, но текстовые фильтры, подстановки, динамические имена и хуки
+подготовки персонажей продолжают работать.</p>
+<p>Если реплика при warp вызывает обычное исключение, Ren'Py записывает его в лог, игнорирует
+этот оператор и продолжает перемещение. Исключения управления потоком движка (Quit, restart)
+не игнорируются.</p>
+<p>Ограничения функции warp: анализируется только один путь исполнения, игра не вычисляет
+сложную логику условий перехода между ветками.</p>
+<p>Главная особенность: произвольный код Python перед целевым оператором не выполняется,
+поэтому переменные могут остаться неинициализированными. Чтобы обойти это, можно объявить
+метку <code class="docutils literal notranslate"><span class="pre">after_warp</span></code>, которая вызывается после завершения симуляции, но до выполнения целевого
+оператора. В ней можно инициализировать необходимые переменные проекта и затем вернуться
+по return. Переменные <code class="docutils literal notranslate"><span class="pre">default</span></code> остаются доступными во время работы warp.</p>
+<p>Переводы используются при полном воспроизведении блоков перевода.</p>
+<p>Для работы механизма перемещения по строкам переменная <a class="reference internal" href="config.html#var-config.developer"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.developer</span></code></a> должна быть равна True.</p>
 </section>
-<section id="debug-functions">
-<h2>Debug Functions<a class="headerlink" href="#debug-functions" title="Ссылка на этот заголовок"></a></h2>
+<section id="id3">
+<h2>Функции отладки<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.filename_line_override">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">filename_line_override</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.filename_line_override" title="Ссылка на это определение"></a></dt>
-<dd><p>Temporarily overrides the filename and line number. This is a context manager,
-use it like:</p>
+<dd><p>Временно переопределяет имя файла и номер строки. Является контекстным менеджером,
+используется следующим образом:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">renpy</span><span class="o">.</span><span class="n">filename_line_override</span><span class="p">(</span><span class="s2">&quot;myfile.rpy&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">):</span>
     <span class="c1"># ...</span>
 </pre></div>
@@ -443,52 +425,52 @@ use it like:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.get_filename_line">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_filename_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.get_filename_line" title="Ссылка на это определение"></a></dt>
-<dd><p>Returns a pair giving the filename and line number of the current
-statement.</p>
+<dd><p>Возвращает пару (имя файла, номер строки) текущего оператора.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.is_warping">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">is_warping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.is_warping" title="Ссылка на это определение"></a></dt>
-<dd><p>Returns True while Ren'Py is reconstructing the state preceding a warp
-target. A custom say callable with a <code class="docutils literal notranslate"><span class="pre">warp</span></code> attribute set to True can
-use this to update dialogue state without interacting with the player.</p>
+<dd><p>Возвращает True, пока Ren'Py восстанавливает состояние, предшествующее точке
+перехода по строке (warp). Пользовательский вызываемый объект персонажа say со
+свойством <code class="docutils literal notranslate"><span class="pre">warp</span></code>, равным True, может использовать это для обновления состояния
+диалога без взаимодействия с игроком.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.log">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.log" title="Ссылка на это определение"></a></dt>
-<dd><p>If <a class="reference internal" href="config.html#var-config.log"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.log</span></code></a> is not set, this does nothing. Otherwise, it opens
-the logfile (if not already open), formats the message to <a class="reference internal" href="config.html#var-config.log_width"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.log_width</span></code></a>
-columns, and prints it to the logfile.</p>
+<dd><p>Если <a class="reference internal" href="config.html#var-config.log"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.log</span></code></a> не задан, функция ничего не делает. В противном случае
+она открывает файл журнала (если он еще не открыт), форматирует сообщение
+по ширине <a class="reference internal" href="config.html#var-config.log_width"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.log_width</span></code></a> столбцов и записывает его в файл лога.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.unwatch">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">unwatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.unwatch" title="Ссылка на это определение"></a></dt>
-<dd><p>Stops watching the given Python expression.</p>
+<dd><p>Прекращает отслеживание указанного выражения Python.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.warp_to_line">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">warp_to_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">warp_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.warp_to_line" title="Ссылка на это определение"></a></dt>
-<dd><p>This takes as an argument a filename:linenumber pair, and tries to warp to
-the statement before that line number.</p>
-<p>This works samely as the <cite>--warp</cite> command.</p>
+<dd><p>Принимает в качестве аргумента пару <cite>имя_файла:номер_строки</cite> и пытается
+переместиться (warp) к оператору перед указанным номером строки.</p>
+<p>Работает аналогично параметру командной строки <cite>--warp</cite>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.watch">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">watch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.watch" title="Ссылка на это определение"></a></dt>
-<dd><p>This watches the given Python expression, by displaying it in the
-upper-right corner of the screen.</p>
+<dd><p>Отслеживает указанное выражение Python, отображая его значение в правом верхнем
+углу экрана.</p>
 </dd></dl>
 
 </section>
 <section id="launcher-customization">
-<span id="id3"></span><h2>Launcher Customization<a class="headerlink" href="#launcher-customization" title="Ссылка на этот заголовок"></a></h2>
-<p>It's possible to customize the Ren'Py launcher to select the files and directories
-that are available to click on. To do this, create project.json with the lines below:</p>
+<span id="id4"></span><h2>Настройка лаунчера<a class="headerlink" href="#launcher-customization" title="Ссылка на этот заголовок"></a></h2>
+<p>Лаунчер Ren'Py можно настроить для отображения нужных файлов и папок проекта. Для этого
+создайте файл <cite>project.json</cite> следующего содержания:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;renpy_launcher&quot;</span><span class="p">:</span>
     <span class="p">{</span>
@@ -511,8 +493,8 @@ that are available to click on. To do this, create project.json with the lines b
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If the file already exists, you'll want to edit in the renpy_launcher key and the lines below it.
-You can then edit the dictionaries to change the available files and directories.</p>
+<p>Если файл уже существует, добавьте ключ <cite>renpy_launcher</cite> и вложенные структуры. Вы можете
+редактировать словари для изменения доступных папок и файлов.</p>
 </section>
 </section>
 
@@ -520,8 +502,8 @@ You can then edit the dictionaries to change the available files and directories
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
-        <a href="launcher.html" class="btn btn-neutral float-left" title="Launcher" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
-        <a href="director.html" class="btn btn-neutral float-right" title="Interactive Director" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="launcher.html" class="btn btn-neutral float-left" title="Лаунчер" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="director.html" class="btn btn-neutral float-right" title="Интерактивный режиссёр (Interactive Director)" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

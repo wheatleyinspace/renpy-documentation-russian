@@ -1,16 +1,16 @@
-=======
-Credits
-=======
+.. _credits:
 
-This credits file is, of necessity, incomplete. It doesn't include the
-many people who have tested Ren'Py and contributed bug reports, or
-those who have suggested improvements.
+======
+Авторы
+======
 
-Even among those who have contributed code, documentation, or
-translations, it only goes back for a few years, and might be
-missing some names in my logs. If this applies to you, please
-accept my apologies and email pytom at bishoujo.us so I can fix
-the omission in future versions.
+Этот список авторов и участников разработки по объективным причинам неполон. В него не включены
+многие люди, тестировавшие Ren'Py, сообщавшие об ошибках или предлагавшие улучшения.
+
+Даже среди тех, кто вносил вклад в исходный код, документацию или переводы, список охватывает
+лишь последние несколько лет и может не содержать некоторых имён из журналов изменений.
+Если ваше имя было пропущено, примите наши извинения и напишите на адрес pytom@bishoujo.us,
+чтобы это упущение было исправлено в следующих версиях.
 
 * Abdul
 * Absinthe

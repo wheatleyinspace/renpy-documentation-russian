@@ -2,34 +2,30 @@
 
 .. class:: im.MatrixColor(im, matrix, **properties)
     
-    An image operator that uses `matrix` to linearly transform the
-    image manipulator `im`.
+    Манипулятор изображений, использующий матрицу `matrix` для линейного преобразования
+    цветов изображения `im`.
     
-    `Matrix` should be a list, tuple, or :func:`im.matrix` that is 20
-    or 25 elements long. If the object has 25 elements, then elements
-    past the 20th are ignored.
+    `matrix` должна быть списком, кортежем или объектом :func:`im.matrix` длиной 20 или 25
+    элементов. Если передано 25 элементов, значения после 20-го игнорируются.
     
-    When the four components of the source color are R, G, B, and A,
-    which range from 0.0 to 1.0; the four components of the transformed
-    color are R', G', B', and A', with the same range; and the elements
-    of the matrix are named::
+    Если четыре цветовые компоненты исходного цвета равны R, G, B и A в диапазоне от 0.0 до 1.0;
+    четыре компоненты преобразованного цвета равны R', G', B' и A' в том же диапазоне;
+    а элементы матрицы обозначены как::
     
         [ a, b, c, d, e,
           f, g, h, i, j,
           k, l, m, n, o,
           p, q, r, s, t ]
     
-    the transformed colors can be computed with the formula::
+    то компоненты преобразованного цвета вычисляются по формулам::
     
         R' = (a * R) + (b * G) + (c * B) + (d * A) + e
         G' = (f * R) + (g * G) + (h * B) + (i * A) + j
         B' = (k * R) + (l * G) + (m * B) + (n * A) + o
         A' = (p * R) + (q * G) + (r * B) + (s * A) + t
     
-    The components of the transformed color are clamped to the
-    range [0.0, 1.0].
+    Значения результирующих компонент цвета ограничиваются диапазоном [0.0, 1.0].
     
     .. deprecated:: 7.4.0
-        Use ``Transform(im, matrixcolor=matrix, **properties)``.
-        See :func:`Transform` and :tpref:`matrixcolor`.
-
+        Используйте ``Transform(im, matrixcolor=matrix, **properties)``.
+        См. :func:`Transform` и свойство :tpref:`matrixcolor`.

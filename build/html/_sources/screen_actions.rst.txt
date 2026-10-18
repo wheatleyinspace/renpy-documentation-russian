@@ -1,46 +1,43 @@
-=====================================
-Screen Actions, Values, and Functions
-=====================================
+====================================
+Действия, значения и функции экранов
+====================================
 
-Ren'Py ships with a number of actions, values, and functions intended
-for use with screens and the screen language.
+Ren'Py поставляется с множеством действий (actions), значений (values) и функций,
+предназначенных для использования с экранами и языком экранов.
 
-Actions
-=======
+Действия (Actions)
+==================
 
-Actions are invoked when a button (including imagebuttons,
-textbuttons, and hotspots) is activated, hovered, or
-unhovered. Actions may determine when a button is selected or
-insensitive.
+Действия вызываются при активации кнопки (включая imagebutton, textbutton и hotspot),
+при наведении курсора на нее (hovered) или при уходе курсора с нее (unhovered). Действия
+также могут определять, когда кнопка является выбранной (selected) или нечувствительной (insensitive).
 
-Along with these actions, an action may be a function that does not
-take any arguments. The function is called when the action is
-invoked. If the action returns a value, then the value is returned
-from an interaction.
+Наряду с этими предопределенными классами действий, действием может выступать любая
+функция без аргументов. Функция вызывается при срабатывании действия. Если функция
+возвращает значение, отличное от None, это значение возвращается из взаимодействия (interaction).
 
-A list of actions can usually be provided in lieu of a single action,
-in which case the actions in the list are run in order. A list of
-actions is sensitive if all of the actions are sensitive, and selected
-if any of them are ; that unless :func:`SensitiveIf` or :func:`SelectedIf`,
-respectively, is part of the list.
+Вместо одного действия обычно можно передать список действий: в этом случае действия
+в списке выполняются по порядку. Список действий считается чувствительным к нажатию,
+если все действия в нем чувствительны, и выбранным, если хотя бы одно из них выбрано,
+если только в списке не используются :func:`SensitiveIf` или :func:`SelectedIf` соответственно.
 
-Control Actions
----------------
+Действия управления
+-------------------
 
-These are actions that manage screens, interaction results, and control flow.
+Эти действия управляют экранами, результатами взаимодействий и потоком выполнения.
 
 .. include:: inc/control_action
 
 .. _data-actions:
 
-Data Actions
-------------
+Действия с данными
+------------------
 
-A number of these actions, encompassing the most usual cases, follow a simple
-pattern shown in the following table:
+Большинство этих действий, охватывающих самые распространенные сценарии использования,
+следуют простой схеме, представленной в следующей таблице:
 
 +----------------+---------------------------+---------------------------------+--------------------------------+------------------------+-----------------------+
-| Managers       |                                                                          Accessors                                                            |
+| Менеджеры      |                                                          Методы доступа (Accessors)                                                           |
 +                +---------------------------+---------------------------------+--------------------------------+------------------------+-----------------------+
 |                | Variable                  | ScreenVariable                  | LocalVariable                  | Field                  | Dict                  |
 +================+===========================+=================================+================================+========================+=======================+
@@ -53,237 +50,226 @@ pattern shown in the following table:
 | Increment      | :func:`IncrementVariable` | :func:`IncrementScreenVariable` | :func:`IncrementLocalVariable` | :func:`IncrementField` | :func:`IncrementDict` |
 +----------------+---------------------------+---------------------------------+--------------------------------+------------------------+-----------------------+
 
-The accessors determine the target whose value will change, and the manager determines what the new value
-will be. Their behavior is relatively simple to grasp:
+Методы доступа определяют цель, значение которой будет изменено, а менеджер определяет,
+каким станет новое значение. Принцип их работы прост и логичен:
 
-- The :abbr:`-Variable (SetVariable, ToggleVariable, CycleVariable, IncrementVariable)`
-  actions change the value of the global variable called `name`, found in the general
-  store. The `name` argument must be a string, and can be a simple name like "strength", or one with dots
-  separating the variable from fields, like "hero.strength" or "persistent.show_cutscenes".
-- The :abbr:`-ScreenVariable (SetScreenVariable, ToggleScreenVariable, CycleScreenVariable, IncrementScreenVariable)`
-  actions change the value of the variable called `name`, associated with the
-  current top-level screen. In a `use`\ d screen, this action sets the variable in the context of the
-  screen containing all the `use`\ d one(s).
-- The :abbr:`-LocalVariable (SetLocalVariable, ToggleLocalVariable, CycleLocalVariable, IncrementLocalVariable)`
-  actions change the value of the variable called `name`, taken locally to the
-  screen it's in. This action is only useful in a screen that has been `use`\ d by another screen (for more
-  information, see :ref:`sl-use`). In all other cases, the -ScreenVariable actions should be preferred,
-  as yielding better performance and allowing more of the screen to be cached. The -LocalVariable
-  actions must be created in the context that the variable is set in - it can't be passed in from somewhere
-  else.
-- The :abbr:`-Field (SetField, ToggleField, CycleField, IncrementField)`
-  actions change the value of the field called `field` of the object `object`.
-- The :abbr:`-Dict (SetDict, ToggleDict, CycleDict, IncrementDict)`
-  actions change the value of the key `key` in the dictionary `dict` : they change
-  ``dict[key]``. This also works with lists.
+- Действия :abbr:`-Variable (SetVariable, ToggleVariable, CycleVariable, IncrementVariable)`
+  изменяют значение глобальной переменной с именем `name`, находящейся в общем хранилище (store).
+  Аргумент `name` должен быть строкой и может быть как простым именем ("strength"),
+  так и составным с точками для доступа к полям ("hero.strength", "persistent.show_cutscenes").
+- Действия :abbr:`-ScreenVariable (SetScreenVariable, ToggleScreenVariable, CycleScreenVariable, IncrementScreenVariable)`
+  изменяют значение переменной с именем `name`, связанной с текущим экраном верхнего уровня.
+  Во вложенном (``use``) экране это действие задает переменную в контексте экрана, содержащего вложенные.
+- Действия :abbr:`-LocalVariable (SetLocalVariable, ToggleLocalVariable, CycleLocalVariable, IncrementLocalVariable)`
+  изменяют значение переменной с именем `name` локально в том экране, где они находятся.
+  Это действие полезно только в экранах, включенных другим экраном через ``use`` (см. :ref:`sl-use`).
+  Во всех остальных случаях следует отдавать предпочтение действиям -ScreenVariable,
+  так как они обеспечивают лучшую производительность и позволяют кэшировать большую часть экрана.
+  Действия -LocalVariable должны создаваться в том же контексте, где переменная задана —
+  их нельзя передавать извне.
+- Действия :abbr:`-Field (SetField, ToggleField, CycleField, IncrementField)`
+  изменяют значение поля `field` объекта `object`.
+- Действия :abbr:`-Dict (SetDict, ToggleDict, CycleDict, IncrementDict)`
+  изменяют значение по ключу `key` в словаре `dict`: они выполняют операцию ``dict[key] = ...``.
+  Это также работает со списками.
 
-* The :abbr:`Set- (SetVariable, SetScreenVariable, SetLocalVariable, SetField, SetDict)`
-  actions simply set the value of the target to the passed `value`. Note that this has nothing
-  to do with ``set``, which is a builtin type in Python. ``target = value``
-* The :abbr:`Toggle- (ToggleVariable, ToggleScreenVariable, ToggleLocalVariable, ToggleField, ToggleDict)`
-  actions invert the boolean value of their target, between `true_value` (if given and not
-  None) and `false_value` (same). When `true_value` and `false_value` are both None, ``target = not target``
-* The :abbr:`Cycle- (CycleVariable, CycleScreenVariable, CycleLocalVariable, CycleField, CycleDict)`
-  actions cycle through the provided `values`, which must be a non-empty sequence (a list,
-  tuple or range). If the target's value is not in the sequence at the time the action runs, it is set to
-  the first value in the sequence. The `loop` parameter (defaulting to True) determines what happens when
-  the `values` run out : if True it's started from the beginning, if False it raises an exception. The
-  `reverse` parameter (defaulting to False) reverses the passed `values` sequence.
-* The :abbr:`Increment- (IncrementVariable, IncrementScreenVariable, IncrementLocalVariable, IncrementField, IncrementDict)`
-  actions add `amount` to their target, which defaults to 1 but may be of any type
-  compatible with the target. ``target = target + amount``
+* Действия :abbr:`Set- (SetVariable, SetScreenVariable, SetLocalVariable, SetField, SetDict)`
+  просто присваивают цели переданное значение `value`: ``target = value``. (Не путайте с типом данных ``set`` в Python).
+* Действия :abbr:`Toggle- (ToggleVariable, ToggleScreenVariable, ToggleLocalVariable, ToggleField, ToggleDict)`
+  инвертируют логическое (булево) значение цели между `true_value` (если задано) и `false_value` (если задано).
+  Когда оба равны None: ``target = not target``.
+* Действия :abbr:`Cycle- (CycleVariable, CycleScreenVariable, CycleLocalVariable, CycleField, CycleDict)`
+  циклически переключают значения из переданной последовательности `values` (список, кортеж или range).
+  Если текущее значение цели отсутствует в последовательности при вызове, устанавливается первое значение из нее.
+  Параметр `loop` (по умолчанию True) определяет поведение при достижении конца: при True цикл начинается заново,
+  при False вызывается исключение. Параметр `reverse` (по умолчанию False) обращает порядок обхода.
+* Действия :abbr:`Increment- (IncrementVariable, IncrementScreenVariable, IncrementLocalVariable, IncrementField, IncrementDict)`
+  прибавляют `amount` к цели (по умолчанию 1, либо любой совместимый с целью тип): ``target = target + amount``.
 
 .. include:: inc/generated_data_action
 
-The following data actions do not follow the pattern above. Some of them are related to Python's ``set`` type,
-not to be confused with the Set- actions above.
+Следующие действия с данными не укладываются в приведенную схему. Некоторые из них связаны
+с типом данных ``set`` в Python (не путать с действиями Set- выше).
 
 .. include:: inc/data_action
 
-Menu Actions
-------------
+Действия меню
+-------------
 
-These actions invoke menus, or are primarily useful while in the main
-or game menus.
+Эти действия вызывают меню или используются главным образом внутри главного или игрового меню.
 
 .. include:: inc/menu_action
 
 .. _file-actions:
 
-File Actions
-------------
+Файловые действия
+-----------------
 
-These actions handle saving, loading, and deleting of files. Many of these
-take the `name` and `page` arguments.
+Эти действия управляют сохранением, загрузкой и удалением файлов. Многие из них принимают
+аргументы `name` и `page`.
 
 `name`
-    The name of the file to save to. This can be a string or an integer. It's
-    combined with the page to create the filename.
+    Имя файла для сохранения: строка или целое число. Объединяется со страницей для создания имени файла.
 
 `page`
-    The page that this action acts on. This is one of "auto",
-    "quick", or a positive integer. If None, the page is determined
-    automatically, based on a persistent page number.
+    Страница, на которой выполняется действие: "auto", "quick" или положительное целое число.
+    Если None, страница определяется автоматически на основе сохраненного номера страницы.
 
-These are converted to a slot name using :var:`config.file_slotname_callback`,
-if it's set.
+Эти значения преобразуются в имя слота с помощью :var:`config.file_slotname_callback`, если она задана.
 
 .. include:: inc/file_action
 
-Sync Actions
-------------
+Действия синхронизации
+----------------------
 
 .. include:: inc/sync
 
 
 .. _audio-actions:
 
-Audio Actions
--------------
+Аудио-действия
+--------------
 
-The concept of channels and how they work, as well as most information
-about audio in Ren'Py, is explained at :doc:`audio`.
+Концепция каналов и принципы их работы, а также общая информация об аудио в Ren'Py,
+подробно описаны в разделе :doc:`audio`.
 
 .. include:: inc/audio_action
 
 
-Focus Actions
--------------
+Действия фокуса
+---------------
 
 .. include:: inc/focus_action
 
-Other Actions
--------------
+Другие действия
+---------------
 
-These are other actions, not found anywhere else.
+Другие полезные действия, не вошедшие в остальные категории.
 
 .. include:: inc/other_action
 
-Additional actions are available in other pages of this documentation, such
-as :class:`Language`, :class:`Replay` and :class:`EndReplay`,
-:class:`gui.SetPreference` and :class:`gui.TogglePreference`,
-:class:`StylePreference`, and the :ref:`voice actions <voice-actions>`.
+Дополнительные действия описаны на других страницах документации: например, :class:`Language`,
+:class:`Replay` и :class:`EndReplay`, :class:`gui.SetPreference` и :class:`gui.TogglePreference`,
+:class:`StylePreference` и :ref:`голосовые действия <voice-actions>`.
 
-Other actions can be created using the :class:`Action` class.
+Другие действия можно создавать с помощью наследования от класса :class:`Action`.
 
 
 .. _bar-values:
 
-Bar Values
-==========
+Значения полос (Bar Values)
+===========================
 
-Bar values are used with bars, to set the bar value, and to allow the bar
-to adjust an underlying property. To create a new bar value, subclass
-the :class:`BarValue` class. All classes that have the `step` keyword also accept
-the `force_step` keyword whose behavior is described in :func:`ui.adjustment`.
+Значения полос используются с полосами (bar), чтобы задавать текущее значение и позволять
+полосе изменять связанное свойство. Для создания нового значения полосы создайте подкласс
+:class:`BarValue`. Все классы, поддерживающие ключевое слово `step`, также принимают
+параметр `force_step`, поведение которого описано в :func:`ui.adjustment`.
 
 .. include:: inc/value
 
 
 .. _input-values:
 
-Input Values
-============
+Значения ввода (Input Values)
+=============================
 
-Input values are used with text inputs, to set the default text, to accept
-changed text, to respond to the enter key, and to determine if the text is
-editable by default. To create a new input value, subclass the :class:`InputValue`
-class.
+Значения ввода используются с полями ввода текста для задания текста по умолчанию,
+приема измененного текста, реакции на клавишу Enter и определения того, активно ли поле
+для редактирования по умолчанию. Для создания нового значения ввода создайте подкласс
+класса :class:`InputValue`.
 
-Ren'Py-defined input values inherit from InputValue, which means that
-all values also include Enable(), Disable(), and Toggle() methods that return
-actions that enable, disable, and toggle editing, respectively. See also
-the :func:`DisableAllInputValues` action.
+Определенные в Ren'Py значения ввода наследуются от InputValue, что означает, что все они
+включают методы Enable(), Disable() и Toggle(), возвращающие действия для включения,
+отключения и переключения режима редактирования соответственно. См. также действие
+:func:`DisableAllInputValues`.
 
 .. include:: inc/input_value
 
 
-Functions and Classes
-=====================
+Функции и классы
+================
 
-These functions and classes are useful in association with screens.
+Эти функции и классы полезны при работе с экранами.
 
-Preferences
------------
+Настройки (Preferences)
+-----------------------
 
-While all preferences can be defined based on the Actions and Values
-given above, it requires some knowledge of Ren'Py to figure out the
-correct one to use. The preferences constructor makes this easy,
-by creation an action or value, as appropriate, based on the
-names used in the default preferences screen.
+Хотя все настройки можно определить на основе действий и значений полос, приведенных выше,
+это требует глубокого знания Ren'Py. Конструктор Preference упрощает задачу, создавая
+подходящее действие или значение автоматически на основе имен, используемых в стандартном
+экране настроек.
 
 .. include:: inc/preference_action
 
 .. include:: inc/preference_functions
 
-Gamepad
+Геймпад
 -------
 
-These functions and actions work with the gamepad.
+Эти функции и действия предназначены для работы с геймпадом.
 
 .. include:: inc/gamepad
 
-File Functions
---------------
+Файловые функции
+----------------
 
-These functions return useful information about files. They use the
-same default page as the file actions.
+Эти функции возвращают полезную информацию о файлах сохранений. Они используют ту же
+страницу по умолчанию, что и файловые действия.
 
 .. include:: inc/file_action_function
 
-Side Image Functions
---------------------
+Функции боковых изображений (Side Image)
+----------------------------------------
 
-This function returns the side image to use.
+Эта функция возвращает используемое боковое изображение персонажа.
 
 .. include:: inc/side_image_function
 
-Other Functions
----------------
+Другие функции
+--------------
 
 .. include:: inc/other_screen_function
 
 .. _tooltips:
 
-Tooltips
---------
+Всплывающие подсказки (Tooltips)
+--------------------------------
 
-Tooltips can now be accessed by the :scpref:`tooltip` property available on all
-displayables, and the GetTooltip function. The GetTooltip function
-returns the value of the tooltip property when the displayable
-gains focus.
+К всплывающим подсказкам теперь можно обращаться через свойство :scpref:`tooltip`,
+доступное для всех отображаемых объектов, и функцию GetTooltip. Функция GetTooltip
+возвращает значение свойства tooltip при получении объектом фокуса.
 
-As a reminder, values passed to the :scpref:`tooltip` property must support
-equality.
+Напоминаем, что значения, передаваемые свойству :scpref:`tooltip`, должны поддерживать
+сравнение на равенство.
 
-Here's an example::
+Пример::
 
     screen tooltip_example():
         vbox:
-            textbutton "North":
+            textbutton "Север":
                 action Return("n")
-                tooltip "To meet a polar bear."
+                tooltip "Повстречать белого медведя."
 
-            textbutton "South":
+            textbutton "Юг":
                 action Return("s")
-                tooltip "All the way to the tropics."
+                tooltip "Прямиком в тропики."
 
-            textbutton "East":
+            textbutton "Восток":
                 action Return("e")
-                tooltip "So we can embrace the dawn."
+                tooltip "Встретить рассвет."
 
-            textbutton "West":
+            textbutton "Запад":
                 action Return("w")
-                tooltip "Where to go to see the best sunsets."
+                tooltip "Любоваться лучшими закатами."
 
             $ tooltip = GetTooltip()
 
             if tooltip:
                 text "[tooltip]"
 
-The :ref:`sl-nearrect` displayable can be used to display "popup-style" tooltips,
-and has support for a special "tooltip" focus name, that is set to the location
-of the last focus that set a tooltip::
+Отображаемый объект :ref:`sl-nearrect` можно использовать для вывода всплывающих подсказок
+в стиле всплывающих окон. Он поддерживает специальное имя фокуса "tooltip", указывающее
+на координаты последнего объекта в фокусе, установившего подсказку::
 
     screen tooltip_example2():
         frame:
@@ -293,23 +279,23 @@ of the last focus that set a tooltip::
 
             has vbox
 
-            textbutton "North":
+            textbutton "Север":
                 action Return("n")
-                tooltip "To meet a polar bear."
+                tooltip "Повстречать белого медведя."
 
-            textbutton "South":
+            textbutton "Юг":
                 action Return("s")
-                tooltip "All the way to the tropics."
+                tooltip "Прямиком в тропики."
 
-            textbutton "East":
+            textbutton "Восток":
                 action Return("e")
-                tooltip "So we can embrace the dawn."
+                tooltip "Встретить рассвет."
 
-            textbutton "West":
+            textbutton "Запад":
                 action Return("w")
-                tooltip "Where to go to see the best sunsets."
+                tooltip "Любоваться лучшими закатами."
 
-        # This has to be the last thing shown in the screen.
+        # Этот блок должен быть последним на экране.
 
         $ tooltip = GetTooltip()
 
@@ -326,47 +312,44 @@ of the last focus that set a tooltip::
 
 .. include:: inc/get_tooltip
 
-Legacy
-^^^^^^
+Устаревший вариант
+^^^^^^^^^^^^^^^^^^
 
-.. warning:: This has been obsoleted by the above, but you might see it in older projects.
+.. warning:: Этот вариант устарел и заменен описанным выше, однако может встречаться в старых проектах.
 
-The tooltip class changes the screen when a button is hovered.
+Класс Tooltip обновляет экран при наведении курсора на кнопку.
 
 .. include:: inc/tooltips
 
-When using a tooltip with a screen, the usual behavior is to create a
-tooltip object in a default statement. The value of the tooltip and
-the action method can then be used within the screen. The order of
-use within a screen doesn't matter – it's possible to use the value
-before an action is used.
+При использовании tooltip на экране обычно создается объект tooltip в операторе default.
+Затем поле value и метод Action можно использовать внутри экрана. Порядок их размещения
+на экране не имеет значения: к value можно обращаться до вызова Action.
 
-Tooltips can take on any value. While in the example below we use the
-text statement to display a string on the screen, it's also possible
-to use the add statement to add a displayable. More complex behavior
-is also possible.
+Подсказки могут принимать любое значение. В приведенном ниже примере оператор text
+выводит строку на экран, однако можно также использовать оператор add для отображения
+любого графического объекта.
 
 ::
 
     screen tooltip_test:
 
-        default tt = Tooltip("No button selected.")
+        default tt = Tooltip("Ни одна кнопка не выбрана.")
 
         frame:
             xfill True
 
             has vbox
 
-            textbutton "One.":
+            textbutton "Один.":
                 action Return(1)
-                hovered tt.Action("The loneliest number.")
+                hovered tt.Action("Самое одинокое число.")
 
-            textbutton "Two.":
+            textbutton "Два.":
                 action Return(2)
-                hovered tt.Action("Is what it takes.")
+                hovered tt.Action("Пара для диалога.")
 
-            textbutton "Three.":
+            textbutton "Три.":
                 action Return(3)
-                hovered tt.Action("A crowd.")
+                hovered tt.Action("Уже компания.")
 
             text tt.value

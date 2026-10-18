@@ -2,159 +2,143 @@
 
 .. function:: FileAction(name, page=None, **kwargs)
     
-    "Does the right thing" with the file. This means loading it if the
-    load screen is showing (current screen is named "load"), and saving
-    otherwise.
+    Выполняет действие по умолчанию с файлом: загружает файл, если в данный момент
+    открыт экран загрузки (имя текущего экрана — "load"), и сохраняет в противном случае.
     
     `name`
-        The name of the slot to save to or load from. If None, an unused slot
-        (a large number based on the current time) will be used.
+        Имя слота для сохранения или загрузки. Если None, будет использован неиспользуемый
+        слот (большое число на основе текущего времени).
     
     `page`
-        The page that the file will be saved to or loaded from. If None, the
-        current page is used.
+        Страница, на которую сохраняется или с которой загружается файл. Если None,
+        используется текущая страница.
     
-    Other keyword arguments are passed to FileLoad or FileSave.
+    Остальные именованные аргументы передаются в FileLoad или FileSave.
 
 .. function:: FileDelete(name, confirm=True, page=None, slot=False)
     
-    Deletes the file.
+    Удаляет файл.
     
     `name`
-        The name of the slot to delete.
+        Имя удаляемого слота.
     
     `confirm`
-        If true and not at the main menu, prompt for confirmation before loading the file.
+        Если True и игрок находится не в главном меню, запрашивает подтверждение перед удалением файла.
     
     `page`
-        The page that the file will be loaded from. If None, the
-        current page is used.
+        Страница, с которой удаляется файл. Если None, используется текущая страница.
     
     `slot`
-        If True, `name` is taken to be a slot name, and `page` is ignored.
+        Если True, `name` считается полным именем слота, а параметр `page` игнорируется.
 
 .. function:: FileLoad(name, confirm=True, page=None, newest=True, cycle=False, slot=False)
     
-    Loads the file.
+    Загружает файл.
     
     `name`
-        The name of the slot to load from. If None, an unused slot will be
-        used, and hence the file will not be loadable.
+        Имя слота для загрузки. Если None, используется неиспользуемый слот, и файл
+        будет невозможно загрузить.
     
     `confirm`
-        If true and not at the main menu, prompt for confirmation before loading the file.
+        Если True и игра находится не в главном меню, запрашивает подтверждение перед загрузкой.
     
     `page`
-        The page that the file will be loaded from. If None, the
-        current page is used.
+        Страница, с которой загружается файл. Если None, используется текущая страница.
     
     `newest`
-        If true, the button is selected if this is the newest file.
+        Если True, кнопка помечается как выбранная (selected), если этот файл является самым новым.
     
     `cycle`
-        Ignored.
+        Игнорируется.
     
     `slot`
-        If True, `name` is taken to be a slot name, and `page` is ignored.
+        Если True, `name` считается именем слота, а `page` игнорируется.
 
 .. function:: FilePage(page)
     
-    Sets the file page to `page`, which should be one of "auto", "quick",
-    or an integer.
+    Устанавливает страницу файлов в `page`, значение которой должно быть "auto", "quick"
+    или целым числом.
 
 .. function:: FilePageNext(max=None, wrap=False, auto=True, quick=True)
     
-    Goes to the next file page.
+    Переходит к следующей странице файлов.
     
     `max`
-        If set, this should be an integer that gives the number of
-        the maximum file page we can go to.
+        Если задано, целое число, определяющее максимальный номер страницы, на которую
+        можно перейти.
     
     `wrap`
-        If true, we can go to the first page when on the
-        last file page if `max` is set.
+        Если True, переход с последней страницы возвращает на первую (при заданном `max`).
     
     `auto`
-        If true and wrap is set, this can bring the player to
-        the page of automatic saves.
+        Если True и включен wrap, может перевести игрока на страницу автоматических сохранений.
     
     `quick`
-        If true and wrap is set, this can bring the player to
-        the page of automatic saves.
+        Если True и включен wrap, может перевести игрока на страницу быстрых сохранений.
 
 .. function:: FilePagePrevious(max=None, wrap=False, auto=True, quick=True)
     
-    Goes to the previous file page, if possible.
+    Переходит к предыдущей странице файлов, если возможно.
     
     `max`
-        If set, this should be an integer that gives the number of
-        the maximum file page we can go to. This is required to enable
-        wrap.
+        Если задано, максимальный номер страницы. Требуется для включения зацикливания (wrap).
     
     `wrap`
-        If true, we can go to the last page when on the first file page if max is set.
+        Если True, переход с первой страницы ведет на последнюю (при заданном `max`).
     
     `auto`
-        If true, this can bring the player to
-        the page of automatic saves.
+        Если True, может перевести игрока на страницу автоматических сохранений.
     
     `quick`
-        If true, this can bring the player to
-        the page of automatic saves.
+        Если True, может перевести игрока на страницу быстрых сохранений.
 
 .. function:: FileSave(name, confirm=True, newest=True, page=None, cycle=False, slot=False, action=None)
     
-    Saves the file.
+    Сохраняет игру в файл.
     
-    The button with this slot is selected if it's marked as the
-    newest save file.
+    Кнопка с этим слотом помечается как выбранная, если слот содержит самое свежее сохранение.
     
     `name`
-        The name of the slot to save to. If None, an unused slot
-        (a large number based on the current time) will be used.
+        Имя слота для сохранения. Если None, используется неиспользуемый слот
+        (число на основе текущего времени).
     
     `confirm`
-        If true, then we will prompt before overwriting a file.
+        Если True, перед перезаписью существующего файла запрашивается подтверждение.
     
     `newest`
-        Ignored.
+        Игнорируется.
     
     `page`
-        The name of the page that the slot is on. If None, the current
-        page is used.
+        Имя страницы, на которой находится слот. Если None, используется текущая страница.
     
     `cycle`
-        If true, then saves on the supplied page will be cycled before
-        being shown to the user. :var:`config.quicksave_slots` slots are
-        used in the cycle.
+        Если True, сохранения на указанной странице циклически сменяются перед отображением
+        пользователю. В цикле используется количество слотов :var:`config.quicksave_slots`.
     
     `slot`
-        If True, `name` is taken to be a slot name, and `page` is ignored.
+        Если True, `name` считается именем слота, а `page` игнорируется.
     
     `action`
-        An action that is run after the save is complete. This is only run
-        if the save is successful.
+        Действие, выполняемое после успешного завершения сохранения.
 
 .. function:: FileTakeScreenshot()
     
-    Take a screenshot to be used when the game is saved. This can
-    be used to ensure that the screenshot is accurate, by taking
-    a picture of the screen before a file save screen is shown.
+    Делает снимок экрана для использования при сохранении игры. Позволяет гарантировать
+    актуальность скриншота, делая снимок экрана до открытия экрана сохранения.
 
 .. function:: QuickLoad(confirm=True)
     
-    Performs a quick load.
+    Выполняет быструю загрузку (quick load).
     
     `confirm`
-        If true and not at the main menu, prompt for confirmation before loading the file.
+        Если True и игра находится не в главном меню, запрашивает подтверждение перед загрузкой.
 
-.. function:: QuickSave(message='Quick save complete.', newest=False)
+.. function:: QuickSave(message='Быстрое сохранение завершено.', newest=False)
     
-    Performs a quick save.
+    Выполняет быстрое сохранение (quick save).
     
     `message`
-        A message to display to the user when the quick save finishes.
+        Сообщение, отображаемое пользователю после завершения быстрого сохранения.
     
     `newest`
-        Set to true to mark the quicksave as the newest save.
-
+        Если True, помечает быстрое сохранение как самое новое сохранение.

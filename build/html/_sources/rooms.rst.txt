@@ -1,83 +1,77 @@
-=============================================
-Image Gallery, Music Room, and Replay Actions
-=============================================
+===============================================================
+Галерея изображений, музыкальная комната и повтор сцен (Replay)
+===============================================================
 
 .. _image-gallery:
 
-Image Gallery
--------------
+Галерея изображений
+-------------------
 
-A image gallery is a screen that allows the player to unlock images,
-and then view those images. The screen has one or more buttons associated
-with it, and each button has one or more associated images. Buttons and
-images also have conditions that determine if they have unlocked.
+Галерея изображений — это экран, позволяющий игроку разблокировать изображения
+и затем просматривать их. Экран содержит одну или несколько кнопок, и с каждой
+кнопкой связано одно или несколько изображений. С кнопками и изображениями также
+связаны условия, определяющие факт их разблокировки.
 
-Image galleries are managed by instances of the Gallery class. A
-single instance of the gallery class may be shared between multiple
-image gallery screens.
+Галереи изображений управляются экземплярами класса Gallery. Один экземпляр класса
+Gallery может совместно использоваться несколькими экранами галерей.
 
-A gallery has one or more buttons associated with it, a button has one
-or more images associated with it, and each image has one or more displayables
-associated with it. Conditions can be assigned to buttons and images. A button
-is unlocked when all of the conditions associated with it are satisfied and
-at least one image associated with that button is unlocked. An image is unlocked
-when all associated conditions are satisfied.
+У галереи есть одна или несколько кнопок, у кнопки — одно или несколько изображений,
+а у каждого изображения — один или несколько отображаемых объектов. Кнопкам и изображениям
+можно назначать условия. Кнопка считается разблокированной, если все связанные с ней условия
+выполнены и хотя бы одно изображение этой кнопки разблокировано. Изображение считается
+разблокированным, если выполнены все связанные с ним условия.
 
-Creating an image gallery consists of the following four steps.
+Создание галереи изображений состоит из следующих четырёх шагов:
 
-1. Create an instance of Gallery.
+1. Создать экземпляр класса Gallery.
 
-2. Add buttons and images to that gallery, along with conditions that
-   determine if the buttons and images they belong to are unlocked. This
-   is also a multi-step process.
+2. Добавить кнопки и изображения в эту галерею вместе с условиями, определяющими,
+   разблокированы ли эти кнопки и изображения. Это также многоэтапный процесс:
 
-   1. Declare a new button by calling :meth:`Gallery.button`.
+   1. Объявить новую кнопку вызовом :meth:`Gallery.button`.
 
-   2. Optionally, add one or more unlock conditions to the button by
-      calling :meth:`Gallery.unlock` or :meth:`Gallery.condition`.
+   2. При необходимости добавить одно или несколько условий разблокировки к кнопке
+      вызовом :meth:`Gallery.unlock` или :meth:`Gallery.condition`.
 
-   3. Declare an image by calling :meth:`Gallery.image` with one or more
-      displayables as arguments. Or call the convenience method
-      :meth:`Gallery.unlock_image` instead.
+   3. Объявить изображение вызовом :meth:`Gallery.image` с одним или несколькими
+      отображаемыми объектами в качестве аргументов. Или воспользоваться вспомогательным
+      методом :meth:`Gallery.unlock_image`.
 
-   4. Optionally, call :meth:`Gallery.transform` to associate
-      transforms with the displayables.
+   4. При необходимости вызвать :meth:`Gallery.transform` для связывания трансформаций
+      с отображаемыми объектами.
 
-   5. Optionally, add one or more unlock conditions to the image by
-      calling :meth:`Gallery.unlock`, :meth:`Gallery.condition`,
-      or :meth:`Gallery.allprior`.
+   5. При необходимости добавить одно или несколько условий разблокировки к изображению
+      вызовом :meth:`Gallery.unlock`, :meth:`Gallery.condition` или :meth:`Gallery.allprior`.
 
-   Additional images can be added to a button by repeating steps 3-5,
-   while additional buttons can be added to the gallery by repeating
-   all five steps.
+   Дополнительные изображения добавляются к кнопке повторением шагов 3–5, а новые кнопки
+   добавляются в галерею повторением всех пяти шагов.
 
-3. Create an image gallery screen. The screen should display a background,
-   and should contain navigation that allows the user to show other
-   image galleries, or to return to the main or extras menu.
+3. Создать экран галереи изображений. Экран должен отображать фон и навигацию, позволяющую
+   переходить к другим галереям или возвращаться в главное меню либо меню бонусов.
 
-4. Add a way to display the image gallery screen to the main or extras menu.
+4. Добавить кнопку вызова экрана галереи изображений в главное меню или меню бонусов.
 
-Here's an example::
+Пример::
 
     init python:
 
-        # Step 1. Create the gallery object.
+        # Шаг 1. Создание объекта галереи.
         g = Gallery()
 
-        # Step 2. Add buttons and images to the gallery.
+        # Шаг 2. Добавление кнопок и изображений в галерею.
 
-        # A button with an image that is always unlocked.
+        # Кнопка с изображением, которое всегда разблокировано.
         g.button("title")
         g.image("title")
 
-        # A button that contains an image that automatically unlocks.
+        # Кнопка, содержащая изображение, которое разблокируется автоматически.
         g.button("dawn")
         g.image("dawn1")
         g.unlock("dawn1")
 
-        # This button has multiple images associated with it. We use unlock_image
-        # so we don't have to call both .image and .unlock. We also apply a
-        # transform to the first image.
+        # С этой кнопкой связано несколько изображений. Мы используем unlock_image,
+        # чтобы не вызывать отдельно .image и .unlock. Также применяем
+        # трансформацию к первому изображению.
         g.button("dark")
         g.unlock_image("bigbeach1")
         g.transform(slowpan)
@@ -85,8 +79,8 @@ Here's an example::
         g.unlock_image("beach2")
         g.unlock_image("beach3")
 
-        # This button has a condition associated with it, allowing the game
-        # to choose which images unlock.
+        # С этой кнопкой связано условие, позволяющее игре определять,
+        # какие изображения разблокированы.
         g.button("end1")
         g.condition("persistent.unlock_1")
         g.image("transfer")
@@ -101,8 +95,8 @@ Here's an example::
         g.image("beach1 nomoon")
         g.image("bad_ending")
 
-        # The last image in this button has an condition associated with it,
-        # so it will only unlock if the user gets both endings.
+        # С последним изображением в этой кнопке связано условие: оно разблокируется,
+        # только если игрок получил обе концовки.
         g.button("end3")
         g.condition("persistent.unlock_3")
         g.image("littlemary2")
@@ -120,9 +114,8 @@ Here's an example::
         g.image("good_ending")
         g.condition("persistent.unlock_3 and persistent.unlock_4")
 
-        # The final two buttons contain images that show multiple pictures
-        # at the same time. This can be used to compose character art onto
-        # a background.
+        # Последние две кнопки содержат изображения, состоящие из нескольких картинок одновременно.
+        # Это можно использовать для наложения спрайта персонажа на фон.
         g.button("dawn mary")
         g.unlock_image("dawn1", "mary dawn wistful")
         g.unlock_image("dawn1", "mary dawn smiling")
@@ -133,25 +126,25 @@ Here's an example::
         g.unlock_image("beach2", "mary dark smiling")
         g.unlock_image("beach2", "mary dark vhappy")
 
-        # The transition used when switching images.
+        # Переход при переключении изображений.
         g.transition = dissolve
 
-    # Step 3. The gallery screen we use.
+    # Шаг 3. Экран галереи.
     screen gallery:
 
-        # Ensure this replaces the main menu.
+        # Гарантируем замену главного меню.
         tag menu
 
-        # The background.
+        # Фон.
         add "beach2"
 
-        # A grid of buttons.
+        # Сетка кнопок.
         grid 3 3:
 
             xfill True
             yfill True
 
-            # Call make_button to show a particular button.
+            # Вызываем make_button для отображения конкретной кнопки.
             add g.make_button("dark", "gal-dark.png", xalign=0.5, yalign=0.5)
             add g.make_button("dawn", "gal-dawn.png", xalign=0.5, yalign=0.5)
             add g.make_button("end1", "gal-end1.png", xalign=0.5, yalign=0.5)
@@ -165,65 +158,59 @@ Here's an example::
             add g.make_button("title", "title.png", xalign=0.5, yalign=0.5)
 
 
-        # The screen is responsible for returning to the main menu. It could also
-        # navigate to other gallery screens.
+        # Экран отвечает за возврат в главное меню или переход к другим экранам галереи.
         textbutton "Return" action Return() xalign 0.5 yalign 0.5
 
-Step 4 will vary based on how your game is structured, but one way of
-accomplishing it is to add the following line::
+Шаг 4 зависит от структуры вашей игры, но одним из способов его реализации
+является добавление следующей строки в экран главного меню (main_menu)::
 
         textbutton "Gallery" action ShowMenu("gallery")
-
-to the main menu screen.
 
 .. include:: inc/gallery
 
 
 .. _music-room:
 
-Music Room
-----------
+Музыкальная комната
+-------------------
 
-A music room is a screen that allows the user to select and play music
-tracks from the game. These tracks may start off locked when the user
-first begins playing a particular game, and will be unlocked as the
-user listens to the music while playing the game.
+Музыкальная комната — это экран, позволяющий пользователю выбирать и слушать
+музыкальные композиции из игры. В начале игры треки могут быть заблокированы
+и будут разблокироваться по мере того, как игрок слушает их во время прохождения.
 
-A music room is managed by an instance of the MusicRoom class. There
-can be more than one MusicRoom instance in a game, allowing a game to
-have multiple music rooms. Creating a music room consists of the
-following four steps:
+Музыкальная комната управляется экземпляром класса MusicRoom. В игре может быть
+несколько экземпляров MusicRoom, что позволяет создавать раздельные музыкальные комнаты.
+Создание музыкальной комнаты состоит из следующих четырёх шагов:
 
-1. Create an instance of MusicRoom. The MusicRoom constructor takes
-   parameters to control the channel on which music is played back,
-   and how long it takes to fade music out and back in.
+1. Создать экземпляр MusicRoom. Конструктор MusicRoom принимает параметры для управления
+   каналом воспроизведения музыки, а также временем плавного затухания и нарастания громкости.
 
-2. Add music files to the instance.
+2. Добавить музыкальные файлы в экземпляр.
 
-3. Create a screen that uses the MusicRoom instance to create actions
-   for buttons, imagebuttons, or hotspots. These actions can pick a
-   track, the next or previous track, or stop and start the music.
+3. Создать экран, использующий экземпляр MusicRoom для генерации экранных действий кнопок,
+   imagebutton или hotspot. Эти действия могут выбирать конкретный трек, переходить
+   к следующему или предыдущему треку, а также запускать и останавливать музыку.
 
-   Note that the actions used are members of a MusicRoom instance,
-   so if the MusicRoom instance is named ``mr``, then
-   ``mr.Play("track1.ogg")`` is how you'd use the play action.
+   Обратите внимание, что используемые действия являются методами экземпляра MusicRoom,
+   поэтому если экземпляр назван ``mr``, действие воспроизведения вызывается как
+   ``mr.Play("track1.ogg")``.
 
-4. Add the music room screen to the main menu, or an extras menu.
+4. Добавить переход к экрану музыкальной комнаты в главное меню или меню бонусов.
 
-Here's an example::
+Пример::
 
     init python:
 
-        # Step 1. Create a MusicRoom instance.
+        # Шаг 1. Создание экземпляра MusicRoom.
         mr = MusicRoom(fadeout=1.0)
 
-        # Step 2. Add music files.
+        # Шаг 2. Добавление музыкальных файлов.
         mr.add("track1.ogg", always_unlocked=True)
         mr.add("track2.ogg")
         mr.add("track3.ogg")
 
 
-    # Step 3. Create the music room screen.
+    # Шаг 3. Создание экрана музыкальной комнаты.
     screen music_room:
 
         tag menu
@@ -231,77 +218,70 @@ Here's an example::
         frame:
             has vbox
 
-            # The buttons that play each track.
+            # Кнопки запуска каждого трека.
             textbutton "Track 1" action mr.Play("track1.ogg")
             textbutton "Track 2" action mr.Play("track2.ogg")
             textbutton "Track 3" action mr.Play("track3.ogg")
 
             null height 20
 
-            # Buttons that let us advance tracks.
+            # Кнопки переключения треков.
             textbutton "Next" action mr.Next()
             textbutton "Previous" action mr.Previous()
 
             null height 20
 
-            # The button that lets the user exit the music room.
+            # Кнопка выхода из музыкальной комнаты.
             textbutton "Main Menu" action ShowMenu("main_menu")
 
-        # Start the music playing on entry to the music room.
+        # Запуск музыки при входе в музыкальную комнату.
         on "replace" action mr.Play()
 
-        # Restore the main menu music upon leaving.
+        # Восстановление музыки главного меню при выходе.
         on "replaced" action Play("music", "track1.ogg")
 
-Step 4 will vary based on how your game is structured, but one way of
-accomplishing it is to add the following line::
+Шаг 4 зависит от структуры вашей игры, но одним из способов является добавление
+следующей строки в экран главного меню::
 
         textbutton "Music Room" action ShowMenu("music_room")
 
-to the main menu screen.
-
-Using the :func:`Preferences` function, especially
-``Preferences("music volume")``, it's possible to include a volume
-slider on the music screen.
+С помощью функции :func:`Preferences`, в частности ``Preferences("music volume")``,
+на экран музыки можно добавить ползунок регулировки громкости.
 
 .. include:: inc/music_room
 
 
 .. _replay:
 
-Replay
-------
+Повтор сцен (Replay)
+--------------------
 
-Ren'Py also includes the ability to replay a sequence from inside the
-main or game menu. This can be used to create a "sequence gallery", or
-memory gallery that allows the player to repeat important sequence.
-After the sequence finishes, Ren'Py returns to where the replay was launched.
+Ren'Py также поддерживает воспроизведение сюжетных сцен непосредственно из главного
+или внутриигрового меню. Это можно использовать для создания галереи сцен или галереи
+воспоминаний, позволяющей игроку заново пережить важные моменты истории.
+После окончания сцены Ren'Py возвращает управление туда, откуда был запущен повтор.
 
-Sequence replay is also possible using the :func:`Start` action. The
-difference between the two modes are:
+Повтор сцен также возможен с помощью действия :func:`Start`. Различия между двумя режимами:
 
-* A replay can be launched from any screen while Start can only be
-  used in the main menu or screens shown by the main menu.
+* Повтор сцены (Replay) можно запустить с любого экрана, тогда как Start можно использовать
+  только в главном меню или на экранах, показанных главным меню.
 
-* When a replay finishes, control returns to the point where the
-  replay was invoked. That point can be inside the main or game
-  menu, for example. If a game is in progress when replay is called,
-  game state is preserved.
+* По завершении повтора управление возвращается в точку вызова повтора (например, в главное
+  меню или игровое меню). Если при вызове повтора шла игра, состояние игры полностью сохраняется.
 
-* Saving is disabled while in replay mode. Reloading, which requires
-  saving, is also disabled.
+* Сохранение игры отключено во время режима повтора сцены. Перезагрузка (которая требует
+  сохранения) также отключена.
 
-* While in replay mode, a call to :func:`renpy.end_replay` will end
-  the replay. In normal mode, end_replay does nothing.
+* В режиме повтора сцены вызов :func:`renpy.end_replay` завершает повтор. В обычном режиме
+  игры end_replay ничего не делает.
 
-To take advantage of the replay mode, a sequence should begin with a label,
-and end with a call to :func:`renpy.end_replay`. The sequence should make
-no assumption as to the state of the layers or variables, which can be
-very different in normal and replay mode (except those set through the
-`scope` parameter when entering replay). When a replay begins, the label
-is invoked from a black screen.
+Чтобы воспользоваться режимом повтора сцены, последовательность должна начинаться с метки
+и завершаться вызовом :func:`renpy.end_replay`. Последовательность не должна делать предположений
+относительно состояния слоёв или переменных, которые могут сильно отличаться в обычном режиме
+и режиме повтора (за исключением переменных, переданных через параметр `scope` при входе в повтор).
+Когда повтор начинается, метка вызывается на фоне чёрного экрана.
 
-For example::
+Например::
 
         "And finally, I met the wizard himself."
 
@@ -323,26 +303,23 @@ For example::
 
         "Mage" "Something like that, anyway."
 
-With the sequence defined like that, the replay can be invoked with the
-Replay action::
+С последовательностью, определённой таким образом, повтор сцены можно запустить с помощью действия Replay::
 
     textbutton "The meaning of life" action Replay("meaning_of_life")
 
-There is one store variable used by replay mode:
+В режиме повтора сцены используется одна переменная хранилища:
 
 .. var:: _in_replay
 
-    When in replay mode, this is sent to the label at which replay
-    mode was started - the label that was called, not the one the
-    call originated from. Outside of replay mode, this is None.
+    В режиме повтора содержит метку, с которой был начат повтор сцены — метку,
+    которая была вызвана, а не ту, откуда произошёл вызов. Вне режима повтора равна None.
 
-In addition, :var:`config.enter_replay_transition` and
-:var:`config.exit_replay_transition` are used when entering and exiting
-replay mode, respectively. :var:`config.replay_scope` adds variables
-to the cleaned store when entering a replay, and by default sets
-:var:`_game_menu_screen` to cause right-clicking in a replay to
-default to showing the preferences screen.
+Кроме того, :var:`config.enter_replay_transition` и :var:`config.exit_replay_transition`
+используются при входе в режим повтора сцены и выходе из него соответственно.
+:var:`config.replay_scope` добавляет переменные в очищенное хранилище при входе в повтор
+и по умолчанию устанавливает :var:`_game_menu_screen`, чтобы правый клик мыши во время
+повтора по умолчанию открывал экран настроек.
 
-The following variables and actions are used in replay mode:
+В режиме повтора сцены используются следующие переменные и действия:
 
 .. include:: inc/replay

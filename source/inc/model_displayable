@@ -2,91 +2,72 @@
 
 .. class:: Model(size=None, **properties)
     
-    This is a displayable that causes Ren'Py to create a 2D or 3D model
-    for use with the model-based renderer, that will be drawn in a single
-    operation with the shaders given here, or selected by an enclosing
-    Transform or Displayable.
+    Отображаемый объект, создающий 2D или 3D-модель для визуализации в модельном рендерере Ren'Py,
+    отрисовываемый за одну операцию отрисовки с указанными шейдерами или шейдерами, заданными
+    внешней трансформацией или отображаемым объектом.
     
     `size`
-        If not None, this should be a width, height tuple, that's used to
-        give the size of the Model. If not given, the model is the size
-        of the area provided to it. The fit parameter to a texture takes
-        precedence.
+        Если не None, кортеж (width, height), задающий размер Model. Если не указан, размер модели
+        соответствует выделенной области. Параметр fit текстуры имеет приоритет.
     
-    If no mesh method is called, a mesh that sets a_position and a_tex_coord
-    to match the way Ren'Py loads textures is created if at least one texture
-    is supplied. Otherwise, a mesh that only sets a_position is used.
+    Если метод сетки mesh не вызван явно, создаётся стандартная сетка с атрибутами a_position
+    и a_tex_coord (если добавлена хотя бы одна текстура) или сетка только с a_position.
     
-    All methods on this calls return the displayable the method is called
-    on, making it possible to chain calls.
+    Все методы этого класса возвращают сам объект, позволяя выстраивать цепочки вызовов (fluent interface).
 
     .. method:: child(displayable, fit=False)
         
-        This is the same as the texture method, except that the `focus`
-        and `main` parameters are set to true.
+        Аналогичен методу texture, но параметры `focus` и `main` принудительно установлены в True.
     
     .. method:: grid_mesh(width, height)
         
-        Creates a mesh that consists of a width x height grid of evenly
-        spaced points, connecting each point to the closest points
-        vertically and horizontally, and dividing each rectangle in
-        the grid so created into triangles.
+        Создаёт полигональную сетку из сетки равномерно распределённых точек размером width x height,
+        соединяя соседние точки по вертикали и горизонтали и разделяя прямоугольники сетки на треугольники.
         
         `width`, `height`
-            The number of points in the horizontal vertical directions,
-            a integer that is at least 2.
+            Количество точек по горизонтали и вертикали (целые числа не менее 2).
     
     .. method:: property(name, value)
         
-        Sets the value of a gl property.
+        Устанавливает значение GL-свойства.
         
         `name`
-            A string giving the name of the GL property, including the "gl\_"
-            prefix.
+            Строка с именем GL-свойства (включая префикс "gl\_").
         
         `value`
-            The value of the gl property.
+            Значение GL-свойства.
     
     .. method:: shader(shader)
         
-        Adds a shader to this model.
+        Добавляет шейдер к этой модели.
         
         `shader`
-            A string given the name of a shader to use with this model.
+            Строка с именем используемого шейдера.
     
     .. method:: texture(displayable, focus=False, main=False, fit=False, texture_wrap=None)
         
-        Add a texture to this model, by rendering the given displayable.
-        The first texture added will be ``tex0``, the second ``tex1``, a
-        and so on.
+        Добавляет текстуру к модели путём рендеринга переданного отображаемого объекта.
+        Первая добавленная текстура будет доступна как ``tex0``, вторая — ``tex1`` и так далее.
         
         `focus`
-            If true, focus events are passed to the displayable. It's
-            assumed that coordinate relative to the model map 1:1 with
-            coordinates relative to the displayable.
+            Если True, события фокуса передаются отображаемому объекту.
         
         `main`
-            If true, this is marked as a main child of this displayable,
-            which allows it to be inspected using the displayable
-            inspector.
+            Если True, объект помечается как основной дочерний элемент для инспектора отображаемых объектов.
         
         `fit`
-            If true, the Model is given the size of the displayable.
-            This may only be true for one texture.
+            Если True, модель принимает размер отображаемого объекта (может быть True только для одной текстуры).
         
         `texture_wrap`
-            If not None, this is the :ref:`gl_texture wrap GL property <gl-properties>` that will be applied
-            to this texture.
+            Если не None, :ref:`GL-свойство gl_texture_wrap <gl-properties>`, применяемое к текстуре.
     
     .. method:: uniform(name, value)
         
-        Sets the value of a uniform that is passed to the shaders.
+        Устанавливает значение uniform-переменной, передаваемой в шейдеры.
         
         `name`
-            A string giving the name of the uniform to set, including the
-            "u\_" prefix.
+            Имя uniform-переменной (включая префикс "u\_").
         
         `value`
-            The value of the uniform. Either a float, a 2, 3, or 4 element
-            tuple of floats, or a Matrix.
-    
+            Значение uniform-переменной (число с плавающей запятой, кортеж из 2, 3 или 4 вещественных чисел
+            или объект Matrix).

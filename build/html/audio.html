@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; Ren&#39;Py Documentation</title>
+  <title>Аудио &mdash; Ren&#39;Py Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6eda34c5" />
@@ -14,7 +14,7 @@
       <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
 
   
-    <link rel="canonical" href="https://www.renpy.org/doc/html/audio.html" />
+    <link rel="canonical" href="https://wheatleyinspace.github.io/renpy-documentation-russian/audio.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=00c7e44b"></script>
@@ -26,7 +26,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="audio_filters.html" />
+    <link rel="next" title="Аудиофильтры" href="audio_filters.html" />
     <link rel="prev" title="Условные инструкции" href="conditional.html" /> 
 </head>
 
@@ -52,10 +52,10 @@
               <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">Руководство по настройке GUI</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="language_basics.html">Основы языка</a></li>
 <li class="toctree-l1"><a class="reference internal" href="label.html">Метки и управление выполнением</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dialogue.html">Диалог и повествование</a></li>
@@ -73,116 +73,164 @@
 <li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Аудио</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#audio-namespace">Каталог аудио и пространство имен</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#play">Оператор play</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stop">Оператор stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#queue">Оператор queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#partial-playback">Частичное воспроизведение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sync-start">Синхронизация начальной позиции</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#volume">Громкость</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#silence">Воспроизведение тишины</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#actions">Действия (Actions)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">Функции</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#AudioData"><code class="docutils literal notranslate"><span class="pre">AudioData</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.mark_audio_seen"><code class="docutils literal notranslate"><span class="pre">renpy.mark_audio_seen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.mark_audio_unseen"><code class="docutils literal notranslate"><span class="pre">renpy.mark_audio_unseen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.play"><code class="docutils literal notranslate"><span class="pre">renpy.play()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.seen_audio"><code class="docutils literal notranslate"><span class="pre">renpy.seen_audio()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.channel_defined"><code class="docutils literal notranslate"><span class="pre">renpy.music.channel_defined()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.get_all_mixers"><code class="docutils literal notranslate"><span class="pre">renpy.music.get_all_mixers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.get_duration"><code class="docutils literal notranslate"><span class="pre">renpy.music.get_duration()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.get_loop"><code class="docutils literal notranslate"><span class="pre">renpy.music.get_loop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.get_pause"><code class="docutils literal notranslate"><span class="pre">renpy.music.get_pause()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.get_playing"><code class="docutils literal notranslate"><span class="pre">renpy.music.get_playing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.get_pos"><code class="docutils literal notranslate"><span class="pre">renpy.music.get_pos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.get_state"><code class="docutils literal notranslate"><span class="pre">renpy.music.get_state()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.is_playing"><code class="docutils literal notranslate"><span class="pre">renpy.music.is_playing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.play"><code class="docutils literal notranslate"><span class="pre">renpy.music.play()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.pump"><code class="docutils literal notranslate"><span class="pre">renpy.music.pump()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.queue"><code class="docutils literal notranslate"><span class="pre">renpy.music.queue()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.register_channel"><code class="docutils literal notranslate"><span class="pre">renpy.music.register_channel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.seek"><code class="docutils literal notranslate"><span class="pre">renpy.music.seek()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.set_audio_filter"><code class="docutils literal notranslate"><span class="pre">renpy.music.set_audio_filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.set_mixer"><code class="docutils literal notranslate"><span class="pre">renpy.music.set_mixer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.set_pan"><code class="docutils literal notranslate"><span class="pre">renpy.music.set_pan()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.set_pause"><code class="docutils literal notranslate"><span class="pre">renpy.music.set_pause()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.set_queue_empty_callback"><code class="docutils literal notranslate"><span class="pre">renpy.music.set_queue_empty_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.set_volume"><code class="docutils literal notranslate"><span class="pre">renpy.music.set_volume()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#renpy.music.stop"><code class="docutils literal notranslate"><span class="pre">renpy.music.stop()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">Функции звука</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Аудиофильтры</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Видео</a></li>
 <li class="toctree-l1"><a class="reference internal" href="voice.html">Озвучка</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Текст</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translation.html">Перевод</a></li>
 <li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Трансформации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Свойства трансформаций</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Переходы (Transitions)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Многослойные картинки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D-сцена</a></li>
 <li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Стили</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Свойства стилей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Экраны и язык экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Действия, значения и функции экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Специальные имена экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Оптимизация языка экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Конфигурационные переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Переменные настроек</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Переменные хранилища</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Пользовательские курсоры мыши</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Текстовые шейдеры</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Лаунчер</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Инструменты разработчика</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Интерактивный режиссёр (Interactive Director)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Автоматизированное тестирование</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
-<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">Руководство по режиму NVL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Текстовые облачка (Speech Bubbles)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Ввод текста</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Боковые изображения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Галерея изображений, музыкальная комната и повтор сцен (Replay)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Спрайты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Настройка привязок клавиш</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Достижения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">История диалогов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Диалог нескольких персонажей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Заставка (Splashscreen) и предзаставка (Presplash)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Жизненный цикл запущенной игры Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
-<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Эквиваленты инструкций на Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Сохранение, загрузка и откат</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Постоянные данные</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Продвинутый GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
-<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
-<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Экраны и Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Пользовательские отображаемые объекты (CDD)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Пользовательские инструкции (CDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Пользовательские текстовые теги</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Коллбэки персонажей (Character Callbacks)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">Доступ к файлам</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Класс Color</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Матрицы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Модельный рендеринг</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Прочие функции и переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">Файлы _ren.py — Ren'Py внутри Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
-<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">Сетевые запросы HTTPS/HTTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Снимки экрана</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Буфер обмена</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">Возраст пользователя</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Сборка дистрибутивов</a></li>
 <li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Веб / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS / Chromebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">Внутриигровые покупки (In-App Purchasing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">Обновление по HTTPS/HTTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Загрузчик больших игр на мобильных платформах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Жесты</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Безопасность</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Устранение неполадок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Переменные окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Голосовое сопровождение интерфейса (Self-Voicing)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Шаблоны проектов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Интерфейс командной строки (CLI)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Интеграция с текстовым редактором</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Скины</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Перевод Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">История изменений (Changelog Ren'Py 7+)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">История изменений (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Несовместимые изменения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Лицензия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Авторы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Спонсоры разработки Ren'Py</a></li>
 </ul>
 
         </div>
@@ -199,9 +247,9 @@
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="breadcrumb-item active">Аудио</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/audio.rst" class="fa fa-github"> Редактировать на GitHub</a>
+              <a href="https://github.com/wheatleyinspace/renpy-documentation-russian/blob/.audio.rst" class="fa fa-github"> Редактировать на GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -209,13 +257,610 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
+  <section id="audio">
+<span id="id1"></span><h1>Аудио<a class="headerlink" href="#audio" title="Ссылка на этот заголовок"></a></h1>
+<p>Ren'Py поддерживает фоновое воспроизведение музыки и звуковых эффектов с
+использованием следующих форматов аудиофайлов:</p>
+<ul class="simple">
+<li><p>Opus</p></li>
+<li><p>Ogg Vorbis</p></li>
+<li><p>MP3</p></li>
+<li><p>MP2</p></li>
+<li><p>FLAC</p></li>
+<li><p>WAV (только несжатый 16-битный PCM со знаком)</p></li>
+</ul>
+<p>В веб-браузере Ren'Py проверяет список поддерживаемых аудиоформатов и переключается
+на более быстрый режим воспроизведения без задержек, если браузер поддерживает все форматы
+из списка. Если игра использует только MP3 и подтормаживает в Safari, измените переменную
+<a class="reference internal" href="config.html#var-config.webaudio_required_types"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.webaudio_required_types</span></code></a>.</p>
+<p>Ren'Py поддерживает произвольное количество аудиоканалов. По умолчанию определены два
+стандартных канала:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">music</span></code> — канал для воспроизведения музыки.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sound</span></code> — канал для звуковых эффектов.</p></li>
+</ul>
+<p>Обычные каналы поддерживают воспроизведение и очередь аудиофайлов, но проигрывают только
+один файл одновременно. Новые обычные каналы можно регистрировать с помощью функции
+<a class="reference internal" href="#renpy.music.register_channel" title="renpy.music.register_channel"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.music.register_channel()</span></code></a>.</p>
+<p>Настройки громкости музыки («Music Volume»), громкости звука («Sound Volume») и громкости
+голоса («Voice Volume») в игровом меню настроек используются для регулировки индивидуальной
+громкости этих каналов. Подробнее см. раздел <a class="reference internal" href="#volume"><span class="std std-ref">Громкость</span></a>.</p>
+<p>Помимо обычных каналов, существуют два специальных канала:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">audio</span></code> — поддерживает одновременное воспроизведение нескольких аудиофайлов, но не поддерживает постановку в очередь и остановку воспроизведения.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">voice</span></code> — используется голосовой подсистемой Ren'Py. Ren'Py автоматически запускает и останавливает голосовые файлы при речи персонажей и может корректировать громкость голосового канала.</p></li>
+</ul>
+<p>Воспроизведение звуков также можно настроить при наведении или нажатии на кнопки,
+пункты меню или imagemap. См. <a class="reference internal" href="style_properties.html#button-style-properties"><span class="std std-ref">Свойства стиля кнопок</span></a>.
+Две конфигурационные переменные, <a class="reference internal" href="config.html#var-config.main_menu_music"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.main_menu_music</span></code></a> и <a class="reference internal" href="config.html#var-config.game_menu_music"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.game_menu_music</span></code></a>,
+позволяют задать музыку для главного и игрового меню соответственно.</p>
+<p>В игре стандартный способ управления музыкой и звуком — использование трех операторов
+воспроизведения аудио. Файлы аудио можно указывать как в виде прямых строк с именами,
+так и в виде определенных имен внутри пространства имен audio.</p>
+<section id="audio-namespace">
+<span id="id2"></span><h2>Каталог аудио и пространство имен<a class="headerlink" href="#audio-namespace" title="Ссылка на этот заголовок"></a></h2>
+<p>При поиске аудиофайла, используемого операторами или функциями аудио, поиск начинается
+внутри каталога <code class="docutils literal notranslate"><span class="pre">game</span></code>. Если указанный файл там не найден, Ren'Py также проверяет
+каталог <code class="docutils literal notranslate"><span class="pre">game/audio</span></code>. Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">music</span> <span class="s2">&quot;opening.ogg&quot;</span>
+</pre></div>
+</div>
+<p>сначала выполнит поиск <code class="file docutils literal notranslate"><span class="pre">game/opening.ogg</span></code>. Если он не найден, Ren'Py будет искать
+<code class="file docutils literal notranslate"><span class="pre">game/audio/opening.ogg</span></code>. Это правило распространяется и на вложенные папки.
+Следующий оператор:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">music</span> <span class="s2">&quot;my_music/opening.ogg&quot;</span>
+</pre></div>
+</div>
+<p>сначала проверит <code class="file docutils literal notranslate"><span class="pre">game/my_music/opening.ogg</span></code>, а затем <code class="file docutils literal notranslate"><span class="pre">game/audio/my_music/opening.ogg</span></code>.</p>
+<p>Файлы, находящиеся в каталоге <code class="docutils literal notranslate"><span class="pre">game/audio</span></code> <strong>и его подкаталогах</strong>, имеющие поддерживаемое
+расширение (в настоящее время: .wav, .mp2, .mp3, .ogg и .opus), автоматически добавляются
+Ren'Py в пространство имен audio. Это означает, что файл <code class="file docutils literal notranslate"><span class="pre">game/audio/Town_theme.ogg</span></code>
+можно воспроизвести командой:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">music</span> <span class="n">town_theme</span>
+</pre></div>
+</div>
+<p>Список каталогов для поиска файлов можно изменить с помощью переменной <a class="reference internal" href="config.html#var-config.audio_directories"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.audio_directories</span></code></a>.</p>
+<p>Доступное имя переменной формируется отсечением расширения и приведением оставшейся части
+имени к нижнему регистру. Это работает только для имен файлов, которые могут служить
+корректными идентификаторами переменных в Python (например, имена <code class="file docutils literal notranslate"><span class="pre">my</span> <span class="pre">song.mp3</span></code>,
+<code class="file docutils literal notranslate"><span class="pre">8track.opus</span></code> или <code class="file docutils literal notranslate"><span class="pre">this-is-a-song.ogg</span></code> не подойдут). Кроме того, если два или
+более файлов получают одинаковое имя, будет зарегистрирован только первый из них (по алфавитному порядку пути).</p>
+<p>Если файл не попадает в пространство имен audio автоматически из-за неподдерживаемого имени
+или нахождения в другой папке, его можно добавить вручную оператором define:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">audio</span><span class="o">.</span><span class="n">sunflower</span> <span class="o">=</span> <span class="s2">&quot;my_music/sun-flower-slow-jam.ogg&quot;</span>
+</pre></div>
+</div>
+<p>и затем использовать:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">music</span> <span class="n">sunflower</span>
+</pre></div>
+</div>
+<p>Операторы <code class="docutils literal notranslate"><span class="pre">play</span></code> и <code class="docutils literal notranslate"><span class="pre">queue</span></code> всегда вычисляют свои аргументы в пространстве имен audio.
+Функции этого не делают, поэтому в них необходимо передавать <code class="docutils literal notranslate"><span class="pre">audio.sunflower</span></code> вместо <code class="docutils literal notranslate"><span class="pre">sunflower</span></code>.</p>
+</section>
+<section id="play">
+<span id="play-statement"></span><h2>Оператор play<a class="headerlink" href="#play" title="Ссылка на этот заголовок"></a></h2>
+<p>Оператор <code class="docutils literal notranslate"><span class="pre">play</span></code> — наиболее распространенный способ воспроизведения звука и музыки.
+Если на обычном канале в этот момент уже играет файл, он прерывается и заменяется новым.</p>
+<p>После ключевого слова <code class="docutils literal notranslate"><span class="pre">play</span></code> указывается имя канала (обычно &quot;sound&quot;, &quot;music&quot;, &quot;voice&quot; или &quot;audio&quot;),
+за которым следует аудиофайл или список файлов. При передаче списка элементы воспроизводятся
+последовательно один за другим.</p>
+<p>Клаузы <code class="docutils literal notranslate"><span class="pre">fadein</span></code> и <code class="docutils literal notranslate"><span class="pre">fadeout</span></code> необязательны. Fadeout задает время затухания текущей музыки
+в секундах, а fadein — время плавного нарастания громкости новой музыки. Если fadeout не указан,
+используется <a class="reference internal" href="config.html#var-config.fadeout_audio"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.fadeout_audio</span></code></a>.</p>
+<p>Клаузы <code class="docutils literal notranslate"><span class="pre">loop</span></code> и <code class="docutils literal notranslate"><span class="pre">noloop</span></code> также необязательны. Клауза loop заставляет аудио зацикливаться,
+а noloop — воспроизводиться однократно. Если ни одна из них не указана, используется поведение
+канала по умолчанию:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">music</span> <span class="s2">&quot;mozart.ogg&quot;</span>
+<span class="k">play</span> <span class="k">sound</span> <span class="s2">&quot;woof.mp3&quot;</span>
+<span class="k">play</span> <span class="n">myChannel</span> <span class="s2">&quot;punch.wav&quot;</span> <span class="c1"># канал &#39;myChannel&#39; должен быть зарегистрирован с помощью renpy.music.register_channel().</span>
+
+<span class="s2">&quot;Можно также воспроизводить список звуков или музыки.&quot;</span>
+<span class="k">play</span> <span class="k">music</span> <span class="p">[</span> <span class="s2">&quot;a.ogg&quot;</span><span class="p">,</span> <span class="s2">&quot;b.ogg&quot;</span> <span class="p">]</span> <span class="n">fadeout</span> <span class="mf">1.0</span> <span class="n">fadein</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+<p>Клауза <code class="docutils literal notranslate"><span class="pre">if_changed</span></code> предотвращает перезапуск трека, если в данный момент он уже играет на канале:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">label</span> <span class="n">market_side</span><span class="p">:</span>
+    <span class="k">play</span> <span class="k">music</span> <span class="n">market</span>
+    <span class="s2">&quot;Мы входим на рынок.&quot;</span>
+    <span class="k">jump</span> <span class="n">market_main</span>
+
+<span class="k">label</span> <span class="n">market_main</span><span class="p">:</span>
+    <span class="k">play</span> <span class="k">music</span> <span class="n">market</span> <span class="n">if_changed</span>
+    <span class="s2">&quot;Возможно, мы только что вошли на рынок, а возможно, уже были здесь.&quot;</span>
+    <span class="s2">&quot;Если мы уже были здесь, музыка не остановилась и не началась сначала, а просто продолжилась.&quot;</span>
+    <span class="k">jump</span> <span class="n">market_main</span>
+</pre></div>
+</div>
+<p>Клауза <code class="docutils literal notranslate"><span class="pre">volume</span></code> задает относительную громкость трека от 0.0 до 1.0, позволяя регулировать
+громкость дорожки при каждом вызове:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">sound</span> <span class="s2">&quot;woof.mp3&quot;</span> <span class="n">volume</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+<p>На канале <code class="docutils literal notranslate"><span class="pre">audio</span></code> несколько операторов play воспроизводят звуки одновременно:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="n">audio</span> <span class="s2">&quot;sfx1.opus&quot;</span>
+<span class="k">play</span> <span class="n">audio</span> <span class="s2">&quot;sfx2.opus&quot;</span>
+</pre></div>
+</div>
+<p>Вместо строки здесь можно использовать имя переменной. Если переменная существует в
+<a class="reference internal" href="#audio-namespace"><span class="std std-ref">пространстве имен audio</span></a>, она используется в приоритетном порядке:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">music</span> <span class="n">illurock</span>
+</pre></div>
+</div>
+<p id="synchro-start">Ren'Py поддерживает функцию одновременного запуска воспроизведения на нескольких каналах.
+По умолчанию она включена для зацикленных каналов (таких как music), но может быть включена
+параметром <cite>synchro_start</cite> в <a class="reference internal" href="#renpy.music.register_channel" title="renpy.music.register_channel"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.music.register_channel()</span></code></a> или <a class="reference internal" href="#renpy.music.play" title="renpy.music.play"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.music.play()</span></code></a>.</p>
+<p>При включенном синхронном старте и одновременном выполнении нескольких операторов play звук
+на каналах запустится строго синхронно:</p>
+<ul class="simple">
+<li><p>Когда файлы на всех каналах будут полностью загружены и аудиосэмплы станут доступны.</p></li>
+<li><p>Когда на всех каналах завершится плавное затухание прежнего звука (fadeout).</p></li>
+</ul>
+<p>Новое аудио начнет воспроизведение, когда оба условия будут выполнены.</p>
+<p>Синхронный старт применяется в момент начала воспроизведения канала. Файлы из очереди,
+стоящие за текущим треком, запускаются сразу после его окончания без ожидания синхронизации с другими каналами.</p>
+</section>
+<section id="stop">
+<h2>Оператор stop<a class="headerlink" href="#stop" title="Ссылка на этот заголовок"></a></h2>
+<p>Оператор <code class="docutils literal notranslate"><span class="pre">stop</span></code> начинает с ключевого слова <code class="docutils literal notranslate"><span class="pre">stop</span></code>, за которым следует имя канала, звук
+на котором требуется остановить. Может содержать необязательную клаузу <code class="docutils literal notranslate"><span class="pre">fadeout</span></code>. Если
+fadeout не указан, используется <a class="reference internal" href="config.html#var-config.fadeout_audio"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.fadeout_audio</span></code></a>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">stop</span> <span class="k">sound</span>
+<span class="k">stop</span> <span class="k">music</span> <span class="n">fadeout</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+</section>
+<section id="queue">
+<h2>Оператор queue<a class="headerlink" href="#queue" title="Ссылка на этот заголовок"></a></h2>
+<p>Оператор <code class="docutils literal notranslate"><span class="pre">queue</span></code> используется для постановки аудиофайлов в очередь. Они будут воспроизведены,
+когда канал закончит воспроизведение текущего файла.</p>
+<p>Оператор начинается с ключевого слова <code class="docutils literal notranslate"><span class="pre">queue</span></code>, за которым следует имя канала. Может
+принимать клаузы <code class="docutils literal notranslate"><span class="pre">fadein</span></code>, <code class="docutils literal notranslate"><span class="pre">loop</span></code> и <code class="docutils literal notranslate"><span class="pre">noloop</span></code>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">queue</span> <span class="k">sound</span> <span class="s2">&quot;woof.mp3&quot;</span>
+<span class="k">queue</span> <span class="k">music</span> <span class="p">[</span> <span class="s2">&quot;a.ogg&quot;</span><span class="p">,</span> <span class="s2">&quot;b.ogg&quot;</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>Также поддерживается клауза <code class="docutils literal notranslate"><span class="pre">volume</span></code>:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">sound</span> <span class="s2">&quot;woof.mp3&quot;</span> <span class="n">volume</span> <span class="mf">0.25</span>
+<span class="k">queue</span> <span class="k">sound</span> <span class="s2">&quot;woof.mp3&quot;</span> <span class="n">volume</span> <span class="mf">0.5</span>
+<span class="k">queue</span> <span class="k">sound</span> <span class="s2">&quot;woof.mp3&quot;</span> <span class="n">volume</span> <span class="mf">0.75</span>
+<span class="k">queue</span> <span class="k">sound</span> <span class="s2">&quot;woof.mp3&quot;</span> <span class="n">volume</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+<p>Если подряд выполняется несколько операторов queue без взаимодействия между ними, все
+файлы добавляются в очередь. После взаимодействия первый оператор queue очищает очередь,
+если она не была предварительно очищена оператором play или stop.</p>
+<p>Здесь также можно использовать переменные пространства имен audio:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">audio</span><span class="o">.</span><span class="n">woof</span> <span class="o">=</span> <span class="s2">&quot;woof.mp3&quot;</span>
+
+<span class="c1"># ...</span>
+
+<span class="k">play</span> <span class="k">sound</span> <span class="n">woof</span>
+</pre></div>
+</div>
+<p>Преимущество использования этих операторов заключается в том, что игра проверяется на
+наличие отсутствующих звуковых файлов при запуске lint. Функции Python, описанные ниже,
+позволяют управлять звуком программно и дают доступ к расширенным возможностям.</p>
+</section>
+<section id="partial-playback">
+<span id="id3"></span><h2>Частичное воспроизведение<a class="headerlink" href="#partial-playback" title="Ссылка на этот заголовок"></a></h2>
+<p>Ren'Py поддерживает частичное воспроизведение аудиофайлов. Для этого перед именем файла
+в угловых скобках указываются параметры воспроизведения в виде пар имя-значение через пробел.</p>
+<p>Значения интерпретируются в секундах от начала файла:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">from</span></code></dt><dd><p>Позиция в файле, с которой начинается первое воспроизведение (по умолчанию 0.0 секунды).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">to</span></code></dt><dd><p>Позиция в файле, на которой воспроизведение заканчивается (по умолчанию конец файла).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">loop</span></code></dt><dd><p>Позиция в файле, с которой начинаются второе и последующие зацикленные воспроизведения
+(по умолчанию время, заданное параметром <code class="docutils literal notranslate"><span class="pre">from</span></code>, либо начало файла).</p>
+</dd>
+</dl>
+<p>Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">music</span> <span class="s2">&quot;&lt;from 5 to 15.5&gt;waves.opus&quot;</span>
+</pre></div>
+</div>
+<p>воспроизведет 10.5 секунд файла waves.opus, начиная с 5-й секунды. Оператор:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">music</span> <span class="s2">&quot;&lt;loop 6.333&gt;song.opus&quot;</span>
+</pre></div>
+</div>
+<p>проиграет song.opus целиком один раз, после чего при зацикливании вернется к отметке
+6.333 секунды и будет повторять от нее до конца.</p>
+</section>
+<section id="sync-start">
+<span id="id4"></span><h2>Синхронизация начальной позиции<a class="headerlink" href="#sync-start" title="Ссылка на этот заголовок"></a></h2>
+<p>Начальную позицию воспроизведения трека можно синхронизировать с другим каналом, на котором
+уже играет трек, с помощью синтаксиса вида <code class="docutils literal notranslate"><span class="pre">&quot;&lt;sync</span> <span class="pre">имя_канала&gt;track.opus&quot;</span></code>, где имя_канала —
+имя целевого канала (&quot;music&quot;, &quot;sound&quot; или любой другой зарегистрированный канал).</p>
+<p>Это полезно для синхронизации многодорожечных зацикленных треков:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="n">music_2</span> <span class="p">[</span> <span class="s2">&quot;&lt;sync music_1&gt;layer_2.opus&quot;</span><span class="p">,</span> <span class="s2">&quot;layer_2.opus&quot;</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>проиграет <code class="file docutils literal notranslate"><span class="pre">layer_2.opus</span></code> со временем начала, синхронизированным с текущим треком на
+канале music_1 в первой итерации, а затем продолжит играть файл целиком при повторении.</p>
+</section>
+<section id="volume">
+<span id="id5"></span><h2>Громкость<a class="headerlink" href="#volume" title="Ссылка на этот заголовок"></a></h2>
+<p>Итоговая громкость воспроизведения трека складывается из нескольких множителей:</p>
+<ul class="simple">
+<li><p>громкость главного микшера (&quot;main&quot;)</p></li>
+<li><p>громкость микшера, к которому привязан канал</p></li>
+<li><p>громкость самого канала</p></li>
+<li><p>относительная громкость самого трека</p></li>
+<li><p>относительная громкость, ассоциированная с именем файла</p></li>
+</ul>
+<p>Все эти параметры выражаются значениями от 0 до 1, и их перемножение дает итоговую амплитуду.</p>
+<p>Например, если главный микшер установлен на 80% (0.8), микшер канала на 100% (1.0),
+громкость канала на 50% (0.5), относительная громкость трека на 25% (0.25), а громкость
+в имени файла на 50% (0.5), итоговая громкость составит 0.8 * 1.0 * 0.5 * 0.25 * 0.5 = 0.05 (5%).</p>
+<p>Обратите внимание: хотя программно все эти величины являются амплитудами, в меню настроек
+микшеры отображаются в логарифмической шкале децибел (дБ).</p>
+<p>Громкость микшеров настраивается с помощью <a class="reference internal" href="preferences.html#preferences.set_mixer" title="preferences.set_mixer"><code class="xref py py-func docutils literal notranslate"><span class="pre">preferences.set_mixer()</span></code></a>, действия
+<code class="xref py py-func docutils literal notranslate"><span class="pre">SetMixer()</span></code> или действия <a class="reference internal" href="screen_actions.html#Preference" title="Preference"><code class="xref py py-func docutils literal notranslate"><span class="pre">Preference()</span></code></a> с ключом <code class="docutils literal notranslate"><span class="pre">&quot;mixer</span> <span class="pre">&lt;mixer&gt;</span> <span class="pre">volume&quot;</span></code>.
+Каналы &quot;audio&quot; и &quot;sound&quot; относятся к микшеру &quot;sfx&quot;, &quot;music&quot; — к микшеру &quot;music&quot;,
+а &quot;voice&quot; — к микшеру &quot;voice&quot;. Каждый канал дополнительно подчиняется главному микшеру &quot;main&quot;.</p>
+<p>Громкость канала задается функцией <a class="reference internal" href="#renpy.music.set_volume" title="renpy.music.set_volume"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.music.set_volume()</span></code></a>.</p>
+<p>Относительная громкость дорожки задается клаузой <code class="docutils literal notranslate"><span class="pre">volume</span></code> <a class="reference internal" href="#play-statement"><span class="std std-ref">оператора play</span></a>.</p>
+<p>Относительная громкость файла задается в угловых скобках, например: <code class="docutils literal notranslate"><span class="pre">&quot;&lt;volume</span> <span class="pre">0.5&gt;track.opus&quot;</span></code>.</p>
+<p>Кроме того, микшер может быть заглушен флагом mute (снижает громкость до 0). Для этого служат
+действия <code class="xref py py-func docutils literal notranslate"><span class="pre">SetMute()</span></code> или <code class="xref py py-func docutils literal notranslate"><span class="pre">ToggleMute()</span></code>, действие <a class="reference internal" href="screen_actions.html#Preference" title="Preference"><code class="xref py py-func docutils literal notranslate"><span class="pre">Preference()</span></code></a> с ключом
+<code class="docutils literal notranslate"><span class="pre">&quot;mixer</span> <span class="pre">&lt;mixer&gt;</span> <span class="pre">mute&quot;</span></code> или функция <a class="reference internal" href="preferences.html#preferences.set_mute" title="preferences.set_mute"><code class="xref py py-func docutils literal notranslate"><span class="pre">preferences.set_mute()</span></code></a>.</p>
+</section>
+<section id="silence">
+<span id="id6"></span><h2>Воспроизведение тишины<a class="headerlink" href="#silence" title="Ссылка на этот заголовок"></a></h2>
+<p>Задать воспроизведение паузы (тишины) заданной длительности можно указанием имени файла
+вида <code class="docutils literal notranslate"><span class="pre">&quot;&lt;silence</span> <span class="pre">3.0&gt;&quot;</span></code> (где 3.0 — длительность тишины в секундах). Это полезно для создания
+задержки перед звуком:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="n">audio</span> <span class="p">[</span> <span class="s2">&quot;&lt;silence .5&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;boom.opus&quot;</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>воспроизведет полсекунды тишины, после чего проиграет звук взрыва.</p>
+</section>
+<section id="actions">
+<h2>Действия (Actions)<a class="headerlink" href="#actions" title="Ссылка на этот заголовок"></a></h2>
+<p>См. раздел <a class="reference internal" href="screen_actions.html#audio-actions"><span class="std std-ref">Аудио-действия</span></a>.</p>
+</section>
+<section id="id7">
+<h2>Функции<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="AudioData">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">AudioData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#AudioData" title="Ссылка на это определение"></a></dt>
+<dd><p>Этот класс оборачивает объект байтов (bytes), содержащий аудио- или видеоданные,
+для передачи в систему воспроизведения звука и видео. Данные должны быть
+представлены в одном из поддерживаемых Ren'Py форматов (например, заголовок
+RIFF WAV, а не просто сырые сэмплы).</p>
+<p>Несмотря на название, этот класс может использоваться как для видео, так и для аудио.</p>
+<dl>
+<dt><cite>data</cite></dt><dd><p>Объект bytes, содержащий данные аудиофайла.</p>
+</dd>
+<dt><cite>filename</cite></dt><dd><p>Синтетическое имя файла, ассоциированное с этими данными. Оно используется
+для определения формата <cite>data</cite> и выводится в сообщениях об ошибках.</p>
+<p>Если имя начинается с угловой скобки, оно может задавать свойства аудио,
+такие как время начала (from) и окончания (to).</p>
+</dd>
+</dl>
+<p>После создания объект можно использовать везде, где разрешено указывать имя аудиофайла.
+Например:</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">audio</span><span class="o">.</span><span class="n">easteregg</span> <span class="o">=</span> <span class="n">AudioData</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="s1">&#39;sample.wav&#39;</span><span class="p">)</span>
+<span class="k">play</span> <span class="k">sound</span> <span class="n">easteregg</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.mark_audio_seen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">mark_audio_seen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.mark_audio_seen" title="Ссылка на это определение"></a></dt>
+<dd><p>Помечает указанный аудиофайл как уже прослушанный на системе текущего
+пользователя.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.mark_audio_unseen">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">mark_audio_unseen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.mark_audio_unseen" title="Ссылка на это определение"></a></dt>
+<dd><p>Помечает указанный аудиофайл как ещё не прослушанный на системе текущего
+пользователя.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.play">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">play</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.play" title="Ссылка на это определение"></a></dt>
+<dd><p>Воспроизводит звуковой эффект. Если <cite>channel</cite> равен None, используется канал
+по умолчанию <a class="reference internal" href="config.html#var-config.play_channel"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.play_channel</span></code></a>. Эта функция применяется для
+воспроизведения звуков, определённых в стилях (<a class="reference internal" href="style_properties.html#style-property-hover_sound"><code class="xref std std-propref docutils literal notranslate"><span class="pre">hover_sound</span></code></a>
+и <a class="reference internal" href="style_properties.html#style-property-activate_sound"><code class="xref std std-propref docutils literal notranslate"><span class="pre">activate_sound</span></code></a>).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.seen_audio">
+<span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">seen_audio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.seen_audio" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает True, если указанный аудиофайл проигрывался хотя бы один раз
+на системе текущего пользователя.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.channel_defined">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">channel_defined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.channel_defined" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает True, если аудиоканал существует, и False в противном случае.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.get_all_mixers">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">get_all_mixers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.get_all_mixers" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает список всех используемых микшеров.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.get_duration">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">get_duration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.get_duration" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает общую длительность аудио- или видеофайла на канале <cite>channel</cite>
+в секундах. Возвращает 0.0, если файл не воспроизводится или его длительность
+неизвестна. Некоторые форматы (в частности, MP3) могут не содержать данных
+о точной длительности в доступном для Ren'Py виде.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.get_loop">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">get_loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.get_loop" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает список имён файлов, зацикленных на канале <cite>channel</cite>, или None,
+если зацикливание не установлено. Если зацикленный трек находится в очереди,
+но ещё не начал воспроизводиться, возвращается трек из очереди, а не текущий.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.get_pause">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">get_pause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.get_pause" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает статус паузы для канала <cite>channel</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.get_playing">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">get_playing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.get_playing" title="Ссылка на это определение"></a></dt>
+<dd><p>Если на указанном канале играет трек, возвращает имя воспроизводимого файла.
+В противном случае возвращает None.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.get_pos">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">get_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.get_pos" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает текущую позицию воспроизведения аудио- или видеофайла на канале
+<cite>channel</cite> в секундах. Возвращает None, если воспроизведение не ведётся.</p>
+<p>Поскольку функция может вернуть None до фактического старта воспроизведения
+или при заглушённом канале, вызывающий код всегда должен обрабатывать
+значение None.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.get_state">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.get_state" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает состояние жизненного цикла канала: одну из строк <code class="docutils literal notranslate"><span class="pre">idle</span></code>,
+<code class="docutils literal notranslate"><span class="pre">playing</span></code>, <code class="docutils literal notranslate"><span class="pre">paused</span></code> или <code class="docutils literal notranslate"><span class="pre">ended</span></code>. Состояние <code class="docutils literal notranslate"><span class="pre">ended</span></code> означает
+естественное достижение конца файла (EOF), при этом декодер может
+оставаться загруженным для возможной перемотки.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.is_playing">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">is_playing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.is_playing" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает True, если канал в данный момент воспроизводит звук, и False,
+если звук не воспроизводится или звуковая подсистема недоступна.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.play">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">play</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filenames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fadeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synchro_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fadein</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">if_changed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_volume</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.play" title="Ссылка на это определение"></a></dt>
+<dd><p>Останавливает воспроизведение на указанном канале, очищает очередь треков
+и начинает воспроизведение указанного файла или списка файлов.</p>
+<dl class="simple">
+<dt><cite>filenames</cite></dt><dd><p>Одиночный файл или список файлов для воспроизведения.</p>
+</dd>
+<dt><cite>channel</cite></dt><dd><p>Канал для воспроизведения звука.</p>
+</dd>
+<dt><cite>loop</cite></dt><dd><p>Если True, треки зацикливаются, пока являются последними в очереди.
+Если False, треки проигрываются только один раз.
+Если None, используется значение по умолчанию для данного канала.</p>
+</dd>
+<dt><cite>fadeout</cite></dt><dd><p>Время плавного затухания предыдущего трека в секундах. Если None,
+значение берётся из <a class="reference internal" href="config.html#var-config.fadeout_audio"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.fadeout_audio</span></code></a>. Игнорируется,
+если канал стоит на паузе.</p>
+</dd>
+<dt><cite>synchro_start</cite></dt><dd><p>Если True, все каналы с этим флагом начнут воспроизведение строго
+одновременно. Это может вызвать микропаузу перед стартом для
+синхронизации буферов. Удобно при одновременном запуске нескольких
+синхронных дорожек (инструментов). Если None, значение берётся из канала.</p>
+</dd>
+<dt><cite>fadein</cite></dt><dd><p>Время плавного нарастания громкости нового трека в секундах (только
+для первого цикла).</p>
+</dd>
+<dt><cite>tight</cite></dt><dd><p>Если True, затухание распространяется на следующий трек в очереди. Если
+None, считается True при <cite>loop=True</cite> и False в противном случае.</p>
+</dd>
+<dt><cite>if_changed</cite></dt><dd><p>Если True и данный трек уже играет на канале, он не будет прерываться
+и перезапускаться с затуханием, а продолжит играть без перерыва.</p>
+</dd>
+<dt><cite>relative_volume</cite></dt><dd><p>Громкость относительно текущей громкости канала (число от 0.0 до 1.0,
+по умолчанию 1.0).</p>
+</dd>
+</dl>
+<p>Эта функция сбрасывает флаг паузы для канала <cite>channel</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.pump">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">pump</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.pump" title="Ссылка на это определение"></a></dt>
+<dd><p>Принудительно обновляет («прокачивает») аудиосистему. Обычно эффекты
+инструкций <code class="docutils literal notranslate"><span class="pre">play</span></code>, <code class="docutils literal notranslate"><span class="pre">queue</span></code> и <code class="docutils literal notranslate"><span class="pre">stop</span></code> вступают в силу при начале
+следующего взаимодействия. Иногда инструкции могут взаимно отменять друг друга
+(например, play и сразу stop приведут к тому, что трек даже не начнёт играть).</p>
+<p>Если вызвать эту функцию между play и stop, трек начнёт воспроизводиться
+до возврата из функции, что позволит применить к нему последующий fadeout.</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">play</span> <span class="k">music</span> <span class="s2">&quot;mytrack.opus&quot;</span>
+<span class="k">$</span> <span class="n">renpy</span><span class="o">.</span><span class="k">music</span><span class="o">.</span><span class="n">pump</span><span class="p">()</span>
+<span class="k">stop</span> <span class="k">music</span> <span class="n">fadeout</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.queue">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">queue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filenames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clear_queue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fadein</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_volume</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.queue" title="Ссылка на это определение"></a></dt>
+<dd><p>Ставит указанные файлы в очередь на воспроизведение на заданном канале.</p>
+<dl class="simple">
+<dt><cite>filenames</cite></dt><dd><p>Одиночный файл или список файлов.</p>
+</dd>
+<dt><cite>channel</cite></dt><dd><p>Канал для воспроизведения.</p>
+</dd>
+<dt><cite>loop</cite></dt><dd><p>Если True, треки зацикливаются. Если False, проигрываются один раз.
+Если None, берётся значение по умолчанию для канала.</p>
+</dd>
+<dt><cite>clear_queue</cite></dt><dd><p>Если True, очередь очищается, и новые файлы начнут играть сразу по
+окончании текущего трека. Если False, файлы добавляются в конец очереди.
+В обоих случаях, если на канале ничего не играет, файлы стартуют немедленно.</p>
+</dd>
+<dt><cite>fadein</cite></dt><dd><p>Длительность нарастания громкости в секундах (только для первого цикла).</p>
+</dd>
+<dt><cite>tight</cite></dt><dd><p>Если True, затухание переходит на следующий трек в очереди.</p>
+</dd>
+<dt><cite>relative_volume</cite></dt><dd><p>Относительная громкость воспроизводимого файла.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.register_channel">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">register_channel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mixer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_on_mute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_queue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">movie</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">framedrop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.register_channel" title="Ссылка на это определение"></a></dt>
+<dd><p>Регистрирует новый аудиоканал с именем <cite>name</cite>. После регистрации звук
+на этом канале можно воспроизводить через инструкции play и queue.</p>
+<dl class="simple">
+<dt><cite>name</cite></dt><dd><p>Имя канала. Не должно содержать пробелов и должно быть допустимым
+идентификатором Python для поддержки в синтаксисе инструкции play.</p>
+</dd>
+<dt><cite>mixer</cite></dt><dd><p>Имя микшера, управляющего каналом. По умолчанию Ren'Py поддерживает
+микшеры &quot;music&quot;, &quot;sfx&quot; и &quot;voice&quot;. Использование нового имени автоматически
+создаст новый микшер, но для вывода регулятора игроку потребуется настроить
+экран preferences.</p>
+</dd>
+<dt><cite>loop</cite></dt><dd><p>Если True или None, звуки на канале зацикливаются по умолчанию. Если False,
+звуки не зацикливаются.</p>
+</dd>
+<dt><cite>stop_on_mute</cite></dt><dd><p>Если True, воспроизведение останавливается при заглушении канала.</p>
+</dd>
+<dt><cite>tight</cite></dt><dd><p>Если True, звуки зацикливаются даже во время затухания (актуально для
+бесшовной музыки и звуковых эффектов).</p>
+</dd>
+<dt><cite>file_prefix</cite></dt><dd><p>Префикс, автоматически добавляемый перед именами файлов на этом канале.</p>
+</dd>
+<dt><cite>file_suffix</cite></dt><dd><p>Суффикс (например, расширение), добавляемый в конец имён файлов на этом канале.</p>
+</dd>
+<dt><cite>buffer_queue</cite></dt><dd><p>Следует ли буферизировать первую секунду трека в очереди (True для аудио,
+False для воспроизведения видео).</p>
+</dd>
+<dt><cite>movie</cite></dt><dd><p>Если True, канал настраивается для воспроизведения видеодорожек.</p>
+</dd>
+<dt><cite>framedrop</cite></dt><dd><p>Управляет поведением видео при отставании: если True, кадры пропускаются
+для синхронизации со звуком; если False, кадры выводятся с задержкой.</p>
+</dd>
+<dt><cite>synchro_start</cite></dt><dd><p>Участвует ли канал в синхронном старте (synchro_start).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.seek">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">seek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.seek" title="Ссылка на это определение"></a></dt>
+<dd><p>Перематывает медиафайл на канале <cite>channel</cite> на позицию <cite>position</cite> секунд.
+В отличие от перезапуска через <code class="docutils literal notranslate"><span class="pre">&lt;from</span> <span class="pre">...&gt;</span></code>, это сохраняет активный декодер
+и очередь треков. Если ничего не играет, функция не оказывает эффекта.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.set_audio_filter">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">set_audio_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">audio_filter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.016</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.set_audio_filter" title="Ссылка на это определение"></a></dt>
+<dd><p>Устанавливает аудиофильтр для канала.</p>
+<dl class="simple">
+<dt><cite>audio_filter</cite></dt><dd><p>Объект <a class="reference internal" href="audio_filters.html"><span class="doc">аудиофильтра</span></a> или их список, либо None
+для удаления фильтра.</p>
+</dd>
+<dt><cite>replace</cite></dt><dd><p>Если True, фильтр применяется немедленно ко всем играющим и стоящим в
+очереди звукам. Если False, фильтр применится при следующем запуске звука.</p>
+</dd>
+<dt><cite>duration</cite></dt><dd><p>Время перехода на новый фильтр в секундах (предотвращает щелчки звука).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.set_mixer">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">set_mixer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mixer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.set_mixer" title="Ссылка на это определение"></a></dt>
+<dd><p>Связывает канал с указанным микшером. По умолчанию существуют микшеры 'sfx'
+и 'music'. Вызывать эту функцию следует только в блоке init.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.set_pan">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">set_pan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.set_pan" title="Ссылка на это определение"></a></dt>
+<dd><p>Настраивает панораму (стереобаланс) канала.</p>
+<dl class="simple">
+<dt><cite>pan</cite></dt><dd><p>Число от -1 (только левый канал) до 1 (только правый канал). Значение 0
+соответствует центру.</p>
+</dd>
+<dt><cite>delay</cite></dt><dd><p>Время плавного перехода панорамы в секундах.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.set_pause">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">set_pause</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.set_pause" title="Ссылка на это определение"></a></dt>
+<dd><p>Устанавливает паузу на канале. Если True, канал ставится на паузу, если False —
+воспроизведение продолжается.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.set_queue_empty_callback">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">set_queue_empty_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.set_queue_empty_callback" title="Ссылка на это определение"></a></dt>
+<dd><p>Задаёт функцию обратного вызова (колбэк), вызываемую при опустошении очереди
+треков на канале. Вызывается без параметров и может добавить новые треки через
+<cite>renpy.music.queue</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.set_volume">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">set_volume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">volume</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.set_volume" title="Ссылка на это определение"></a></dt>
+<dd><p>Задаёт громкость канала как долю от громкости управляющего микшера.</p>
+<dl class="simple">
+<dt><cite>volume</cite></dt><dd><p>Число от 0.0 до 1.0.</p>
+</dd>
+<dt><cite>delay</cite></dt><dd><p>Время плавного перехода к новой громкости в секундах. Это значение
+сохраняется в файл сохранения и участвует в механизме отката.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="renpy.music.stop">
+<span class="sig-prename descclassname"><span class="pre">renpy.music.</span></span><span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'music'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fadeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.music.stop" title="Ссылка на это определение"></a></dt>
+<dd><p>Останавливает воспроизведение и очищает очередь канала.</p>
+<dl class="simple">
+<dt><cite>channel</cite></dt><dd><p>Канал для остановки.</p>
+</dd>
+<dt><cite>fadeout</cite></dt><dd><p>Время затухания в секундах. Если None, берётся из <a class="reference internal" href="config.html#var-config.fadeout_audio"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.fadeout_audio</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="id8">
+<h2>Функции звука<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<p>Большинство функций <code class="docutils literal notranslate"><span class="pre">renpy.music</span></code> имеют псевдонимы в модуле <code class="docutils literal notranslate"><span class="pre">renpy.sound</span></code>. Они идентичны,
+за тем исключением, что по умолчанию используют канал sound вместо music и по умолчанию не зацикливаются.</p>
+</section>
+</section>
+
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
         <a href="conditional.html" class="btn btn-neutral float-left" title="Условные инструкции" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
-        <a href="audio_filters.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="audio_filters.html" class="btn btn-neutral float-right" title="Аудиофильтры" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

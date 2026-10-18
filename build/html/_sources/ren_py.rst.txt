@@ -1,66 +1,65 @@
-=================================
-\_ren.py Files - Ren'Py in Python
-=================================
+=====================================
+Файлы \_ren.py — Ren'Py внутри Python
+=====================================
 
-In more complicated games, it's possible to have files that consist of mostly
-Python, with a small number of Ren'Py statements, like ``init python:``, to
-introduce the Python code to Ren'Py. Ren'Py has an alternative way to write
-these Python-heavy files. Files with a name ending in ``_ren.py`` can be
-written in Python syntax, which is then transformed to Ren'Py script and
-processed.
+В более сложных проектах часто встречаются файлы, состоящие преимущественно
+из кода Python с небольшим количеством инструкций Ren'Py (таких как ``init python:``),
+подключающих этот код к движку. В Ren'Py есть альтернативный способ написания
+таких файлов с преобладанием Python. Файлы с именем, оканчивающимся на ``_ren.py``,
+могут быть написаны на чистом синтаксисе Python, после чего они автоматически
+преобразуются в сценарий Ren'Py и компилируются движком.
 
-There are two main reasons to take advantage of this:
+Использование такого формата даёт два главных преимущества:
 
-* Using the \_ren.py syntax removes an extra layer of indentation that
-  needs to be placed before every line of Python.
-* Editors can open \_ren.py files using tools that are specialized for
-  Python, allowing the editor to perform code analysis and refactoring
-  operations that aren't available for Python-in-Ren'Py.
+* Использование синтаксиса \_ren.py избавляет от необходимости добавлять лишний
+  уровень отступа перед каждой строкой кода Python.
+* Редакторы кода могут открывать файлы \_ren.py с помощью инструментов,
+  специализированных для чистого Python, обеспечивая расширенный статический анализ,
+  подсказки типов и рефакторинг, недоступные для блоков Python внутри Ren'Py.
 
-Ren'Py in Python files have names that end with \_ren.py, for example,
-``actions_ren.py``. These files are processed in the same unicode order
-that .rpy files are processed, so ``actions_ren.py`` is processed at the
-same place that ``actions.rpy`` would have been. It's an error to have
-both a \_ren.py and a .rpy file with the same root - for example,
-``actions.rpy`` and ``actions_ren.py`` conflict, and will cause an
-error if both exist in the same directory.
+Файлы Ren'Py внутри Python имеют имена, оканчивающиеся на \_ren.py, например
+``actions_ren.py``. Эти файлы обрабатываются в том же алфавитном порядке Юникода,
+что и файлы .rpy, поэтому ``actions_ren.py`` выполнится ровно в том же месте,
+где выполнился бы файл ``actions.rpy``. Наличие одновременно файла \_ren.py и .rpy
+с одинаковым базовым именем является ошибкой — например, ``actions.rpy`` и
+``actions_ren.py`` конфликтуют между собой и вызовут сбой, если окажутся в одном каталоге.
 
-Syntax and Transformation
--------------------------
+Синтаксис и преобразование
+--------------------------
 
-Ren'Py in Python files contain three types of sections.
+Файлы Ren'Py внутри Python состоят из секций трёх типов:
 
-* A single ignored section starts the file. This can be used for Python
-  imports and other constructs that will help the editors and other tools,
-  but aren't part of the game and will not be executed by Ren'Py.
+* Одиночная игнорируемая секция в самом начале файла. Она может использоваться для
+  импортов Python и других конструкций, необходимых редакторам кода и линтерам,
+  но не являющихся частью игры и не выполняемых Ren'Py.
 
-* One or more Ren'Py sections, which contain Ren'Py script. Ren'Py script
-  is generally used to introduce Python sections, and also sets the indentation
-  of that Python.
+* Одна или несколько секций Ren'Py, содержащих сценарий Ren'Py. Сценарий Ren'Py
+  обычно используется для открытия секций Python, а также задаёт базовый отступ
+  для этого Python-кода.
 
-  A Ren'Py section is introduced with ``"""renpy`` on a line by itself,
-  and is terminated with ``"""`` on a line by itself. Both the start and
-  the end need to be placed at the start of a line, without any indentation
-  before it. If either is indented, the file will not be processed correctly.
+  Секция Ren'Py открывается строкой ``"""renpy`` на отдельной строке и закрывается
+  строкой ``"""`` также на отдельной строке. Как начало, так и конец секции должны
+  располагаться в самом начале строки без каких-либо отступов. Если перед ними
+  будет пробел или отступ, файл не будет обработан корректно.
 
-* One or more Python sections. Python sections occur after Ren'Py sections,
-  and are indented to the indentation level of the last non-whitespace, non-comment
-  line in the Ren'Py section. If that line ends with a colon (:), the Python is
-  indented by 4 more spaces.
+* Одна или несколько секций Python. Секции Python располагаются после секций Ren'Py
+  и выравниваются по уровню отступа последней непустой строки (не являющейся комментарием)
+  в секции Ren'Py. Если эта строка заканчивается двоеточием (:), код Python сдвигается
+  вправо ещё на 4 пробела.
 
-This transformation is used to create the equivalent of a .rpy file in memory,
-and this file is compiled in the usual way. Notably, Ren'Py in Python runs in the
-Ren'Py store (rather than in an isolated module), and the Python code is subject
-to the transformations that enable rollback and save/load to work - see
-:doc:`python` and :ref:`rollback`.
+Это преобразование создаёт в оперативной памяти эквивалент файла .rpy, который
+затем компилируется стандартным образом. Код Python в файлах \_ren.py выполняется
+в стандартном хранилище (store) Ren'Py (а не в изолированном модуле), и на него
+распространяются все трансформации, обеспечивающие работу отката (rollback) и
+сохранения/загрузки — см. :doc:`python` и :ref:`rollback`.
 
-Example
--------
+Пример
+------
 
-Here's an example of a \_ren.py file::
+Вот пример файла \_ren.py::
 
-    # This is not included in the game. It's here so that an editor knows
-    # the type of strength.
+    # Этот блок не включается в игру. Он нужен для того, чтобы редактор кода
+    # знал тип переменной strength.
     strength = 100
 
     """renpy
@@ -69,7 +68,7 @@ Here's an example of a \_ren.py file::
 
     class BoostStrength(Action):
         """
-        Boosts the strength of the player by 10.
+        Увеличивает силу игрока на 10.
         """
 
         def __call__(self):
@@ -77,13 +76,13 @@ Here's an example of a \_ren.py file::
             strength += 10
             renpy.restart_interaction()
 
-This file is transformed into (with some blank lines removed)::
+Этот файл преобразуется в следующий сценарий Ren'Py (с удалением некоторых пустых строк)::
 
     init python:
 
         class BoostStrength(Action):
             """
-            Boosts the strength of the player by 10.
+            Увеличивает силу игрока на 10.
             """
 
             def __call__(self):

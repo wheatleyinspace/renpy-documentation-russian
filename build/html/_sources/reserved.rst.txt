@@ -1,30 +1,31 @@
 :orphan:
 
-Reserved Names
-==============
+Зарезервированные имена
+=======================
 
-Ren'Py reserves filenames that are do not begin with a letter or number,
-and filenames that begin with "00". Very specifically, filenames that start
-with "00" and "\_" are used by Ren'Py internally.
+Ren'Py резервирует имена файлов, не начинающиеся с буквы или цифры, а также
+имена файлов, начинающиеся с «00». В частности, имена файлов, начинающиеся
+с «00» и «\_», используются внутри Ren'Py для системных целей.
 
-Ren'Py reserves all names beginning with a single underscore (\_). Do not
-use names beginning with an underscore, as that may cause your game to break
-in future versions of Ren'Py.
+Ren'Py резервирует все имена идентификаторов, начинающиеся с одного символа подчёркивания (\_).
+Не используйте имена, начинающиеся с подчёркивания, так как это может привести
+к сбоям в работе вашей игры в будущих версиях Ren'Py.
 
-In addition, Python has rules for what names are valid. Valid names are composed of the following characters:
+Кроме того, в Python действуют правила для допустимых имён идентификаторов.
+Допустимые имена состоят из следующих символов:
 
-* uppercase and lowercase letters (A-Z and a-z),
-* the underscore (_),
-* digits (0 through 9), which cannot appear as the first character, and
-* non-ASCII characters. Valid names may only contain “letter-like” and “digit-like” characters; see `Non-ASCII characters in names <https://docs.python.org/3/reference/lexical_analysis.html#lexical-names-nonascii>`_ for details.
+* заглавных и строчных букв (A–Z и a–z);
+* символа подчёркивания (_);
+* цифр (от 0 до 9), которые не могут быть первым символом имени;
+* символов, не входящих в ASCII. Допустимые имена могут содержать только «буквоподобные» и «цифроподобные» символы; подробности см. в разделе `Non-ASCII characters in names <https://docs.python.org/3/reference/lexical_analysis.html#lexical-names-nonascii>`_.
 
-The following is a list of names that are used by Python. Re-using these
-names can lead to obscure problems.
+Ниже приведён список имён, используемых Python. Повторное использование этих
+имён может привести к трудноуловимым ошибкам.
 
 .. include:: inc/reserved_builtins
 
-The following are reserved names imported from the Python
-`typing <https://docs.python.org/3/library/typing.html>`_  module into all Ren'Py stores.
+Следующие зарезервированные имена импортируются из стандартного модуля Python
+`typing <https://docs.python.org/3/library/typing.html>`_ во все хранилища Ren'Py:
 
 * Any
 * Callable
@@ -35,8 +36,8 @@ The following are reserved names imported from the Python
 * overload
 * override
 
-The following is a list of names that are used by Ren'Py. While in some
-cases it makes sense to redefine these names, one should be aware that doing
-so can cause obscure problems.
+Ниже приведён список имён, используемых Ren'Py. Хотя в некоторых случаях
+переопределение этих имён имеет смысл, следует учитывать, что это может
+вызвать непредвиденные проблемы в работе движка.
 
 .. include:: inc/reserved_renpy

@@ -2,53 +2,41 @@
 
 .. function:: SnowBlossom(d, count=10, border=50, xspeed=(20, 50), yspeed=(100, 200), start=0, fast=False, horizontal=False, distribution: Union[Callable[[float, float], float], str] = 'linear', animation=False)
     
-    The snowblossom effect moves multiple instances of a sprite up,
-    down, left or right on the screen. When a sprite leaves the screen, it
-    is returned to the start.
+    Эффект снегопада (snowblossom) перемещает множество экземпляров спрайта вверх, вниз,
+    влево или вправо по экрану. Когда спрайт покидает экран, он возвращается в исходную точку.
     
     `d`
-        The displayable to use for the sprites.
+        Отображаемый объект, используемый для спрайтов.
     
     `border`
-        The size of the border of the screen. The sprite is considered to be
-        on the screen until it clears the border, ensuring that sprites do
-        not disappear abruptly.
+        Ширина границы за пределами экрана. Спрайт считается находящимся на экране, пока не выйдет
+        за эту границу, что гарантирует плавное исчезновение без резких скачков.
     
     `xspeed`, `yspeed`
-        The speed at which the sprites move, in the horizontal and vertical
-        directions, respectively. These can be a single number or a tuple of
-        two numbers. In the latter case, each particle is assigned a random
-        speed between the two numbers. The speeds can be positive or negative,
-        as long as the second number in a tuple is larger than the first.
+        Скорость движения спрайтов по горизонтали и вертикали. Может быть числом или кортежем из двух чисел
+        (в этом случае каждой частице назначается случайная скорость в заданном диапазоне). Скорости могут быть
+        положительными или отрицательными (второе число кортежа должно быть больше первого).
     
     `start`
-        The delay, in seconds, before each particle is added. This can be
-        allows the particles to start at the top of the screen, while not
-        looking like a "wave" effect.
+        Задержка в секундах перед добавлением каждой частицы, предотвращающая эффект появления частиц
+        «одной сплошной волной».
     
     `fast`
-        If true, particles start in the center of the screen, rather than
-        only at the edges. This applies whenever the effect is initialized,
-        even when the animation timebase is already running. Replacement
-        particles still start at the edges.
+        Если True, частицы изначально распределяются по всему экрану, а не появляются только на краях.
+        Новые появляющиеся частицы по-прежнему начинают движение от границы экрана.
     
     `horizontal`
-        If true, particles appear on the left or right side of the screen,
-        rather than the top or bottom.
+        Если True, частицы появляются на левой или правой границе экрана, а не сверху или снизу.
     
     `distribution`
-        A function or the name of a built-in distribution function to determine the starting position of a particle.
+        Функция или имя встроенного закона распределения для начальных координат частиц:
     
-        If a string, must be one of the following:
-        - `linear`: Value has an equal chance of being anywhere along an axis.
-        - `gaussian`: Value is more likely to be near the middle and less likely to be near the edges.
-        - `arcsine`: Value is more likely to be near the edges and less likely to be near the middle.
+        - `linear`: равномерная вероятность появления в любой точке оси.
+        - `gaussian`: нормальное распределение (выше вероятность появления ближе к центру).
+        - `arcsine`: выше вероятность появления ближе к краям экрана.
     
-        If a function, it must take two floats as arguments and return a float.
-    
-        Default is `linear`.
+        Если передана функция, она должна принимать два вещественных числа и возвращать float.
+        По умолчанию `linear`.
     
     `animation`
-            If True, then this SnowBlossom uses the animation timebase.
-            This prevents it from resetting when shown twice.
-
+        Если True, используется временная шкала анимации, предотвращающая сброс времени при повторном показе.

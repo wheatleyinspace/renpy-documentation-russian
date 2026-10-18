@@ -1,60 +1,62 @@
-Dealing With Display Problems
------------------------------
+Решение проблем с отображением графики
+--------------------------------------
 
-On Startup
-^^^^^^^^^^
+При запуске
+^^^^^^^^^^^
 
-Ren'Py requires that your computer has functioning graphics acceleration
-hardware, such as a GPU or a CPU with integrated graphics. Ren'Py will
-automatically choose between the following renderers, in order.
+Для работы Ren'Py требуется наличие исправного аппаратного графического ускорителя,
+такого как дискретная видеокарта (GPU) или процессор с интегрированной графикой.
+Ren'Py автоматически выбирает между следующими рендерерами в указанном порядке:
 
-These are the classic renderers that were used from Ren'Py 6.13 to Ren'Py
-7.4. These may not be available in 7.4 and later games that require
-model-based rendering, and were removed entirely in Ren'Py 8.4.
+Классические рендереры, использовавшиеся с Ren'Py 6.13 до 7.4. Они могут быть
+недоступны в играх версий 7.4 и новее, использующих рендеринг на основе моделей,
+и были полностью удалены в Ren'Py 8.4:
 
-1. gl: OpenGL 2.0 or greater.
-2. angle: Windows, DirectX 9 or DirectX 11.
+1. gl: OpenGL 2.0 или выше.
+2. angle: Windows, DirectX 9 или DirectX 11.
 3. gles: OpenGL ES 3.0.
 
-These are model-based renderers present in Ren'Py 7.4 and later.
+Рендереры на основе 3D-моделей, доступные в Ren'Py 7.4 и новее:
 
-4. gl2: OpenGL 3.3, falling back to OpenGL 2.0.
-5. angle2: Windows, DirectX 11 at feature level 10_0 or greater.
+4. gl2: OpenGL 3.3 с откатом (fallback) до OpenGL 2.0.
+5. angle2: Windows, DirectX 11 с уровнем возможностей (feature level) 10_0 или выше.
 6. gles2: OpenGL ES 3.0.
 
-Older versions of Ren'Py supported a software renderer, but this has
-been removed.
+В более старых версиях Ren'Py поддерживался программный рендерер (software renderer),
+однако он был полностью удалён.
 
-A small fraction of systems may experience problems when running
-hardware accelerated Ren'Py games.  These problems are often due to
-buggy graphics drivers, and so your first step to fixing them should
-be to check for an update to your graphics card drivers.
+На некоторых компьютерах могут возникать сбои при запуске игр Ren'Py с аппаратным
+ускорением. Чаще всего эти проблемы вызваны ошибками в графических драйверах, поэтому
+первым шагом к их устранению должна стать проверка наличия обновлений драйверов
+вашей видеокарты.
 
-If upgrading your video drivers does not fix the problem, you should
-consider switching video renderers, using the following steps.
+Если обновление видеодрайверов не решает проблему, попробуйте переключить графический
+рендерер, выполнив следующие действия:
 
-1. Hold down Shift while starting Ren'Py, or press Shift+G once Ren'Py has started.
-2. From the "Graphics Acceleration" menu that appears, choose the renderer to use.
-3. Choose "Quit", then restart Ren'Py.
+1. Удерживайте клавишу Shift при запуске Ren'Py или нажмите Shift+G после запуска игры.
+2. В появившемся меню «Graphics Acceleration» (Аппаратное ускорение) выберите нужный рендерер.
+3. Выберите «Quit» (Выход) и перезапустите Ren'Py.
 
-We suggest trying the GL and ANGLE renderers. The GLES renderers may not function
-on desktop hardware.
+Рекомендуется попробовать рендереры GL и ANGLE. Рендереры GLES могут не поддерживаться
+на настольных компьютерах.
 
-On Suspend/Resume
-^^^^^^^^^^^^^^^^^
+При переходе в спящий режим и выходе из него
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We have had reports of systems that lose textures when a computer is suspended
-and resumed. This is likely a problem with the computer or its device drivers,
-but it is possible to force Ren'Py to reload the textures by resizing the
-window, or pressing the F key to toggle fullscreen mode.
+Поступали сообщения о системах, теряющих текстуры при переходе компьютера в спящий
+режим и выходе из него. Обычно это проблема драйверов видеокарты или операционной системы,
+однако можно принудительно заставить Ren'Py перезагрузить текстуры, изменив размер окна
+или нажав клавишу F для переключения полноэкранного режима.
 
-Flickering Variable Refresh Rate Displays
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Мерцание экранов с переменной частотой обновления (VRR)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-On some systems with variable refresh rate displays (such as G-Sync or FreeSync displays), visible flickering may occur
-when the display's refresh rate changes. This is a property of the display. By default, when the screen is static,
-Ren'Py will slow the framrate to 5 FPS to reduce power consumption.
+На некоторых мониторах с переменной частотой обновления (например, дисплеях с поддержкой
+G-Sync или FreeSync) может наблюдаться видимое мерцание подсветки при изменении частоты
+обновления экрана. Это особенность самих дисплеев. По умолчанию, когда изображение на экране
+статично, Ren'Py снижает частоту кадров до 5 FPS для экономии электроэнергии.
 
-To disable this power-saving feature, press shift+G when the game is running, navigate to the "Powersave" section,
-and choose "Disable." You can then choose "Return" and resume the game - despite the warning about changes taking effect
-the next time the program is run, this change will take effect immediately.
+Чтобы отключить эту функцию энергосбережения, нажмите Shift+G во время работы игры,
+перейдите в раздел «Powersave» и выберите «Disable». Затем нажмите «Return» и продолжите
+игру — вопреки предупреждению о том, что настройки вступят в силу при следующем запуске,
+это изменение начнёт действовать немедленно.

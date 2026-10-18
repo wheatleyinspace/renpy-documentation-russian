@@ -1,59 +1,54 @@
+.. _matrixcolor:
+
+===========
 Matrixcolor
 ===========
 
-Ren'Py supports recoloring images using the :tpref:`matrixcolor` transform
-property. This property can take either a :class:`Matrix` or a ColorMatrix
-object.
+Ren'Py поддерживает перекрашивание изображений с помощью свойства трансформации :tpref:`matrixcolor`.
+Это свойство может принимать объект :class:`Matrix` или ColorMatrix.
 
-Premultiplied Alpha Color
--------------------------
+Цвета с предварительно умноженной альфой (Premultiplied Alpha)
+--------------------------------------------------------------
 
-When an image is loaded, Ren'Py decompresses the image, and then copies it
-to the GPU of your computer or mobile device. As part of the copying, each
-of the four color channels (red, green, blue, and alpha - with alpha representing
-opacity) is scaled to a number between 0.0 and 1.0.
-In this system, 1.0 represents the full level of a color or fully opaque, while
-0.0 represents the absence of the color or the pixel being fully transparent.
+При загрузке изображения Ren'Py распаковывает его и копирует в память графического процессора (GPU)
+компьютера или мобильного устройства. При этом каждый из четырёх цветовых каналов (красный, зелёный,
+синий и альфа — определяющий непрозрачность) масштабируется в число от 0.0 до 1.0. В этой системе
+1.0 представляет полную интенсивность цвета или полную непрозрачность, а 0.0 — отсутствие цвета
+или полную прозрачность пикселя.
 
-Ren'Py doesn't stop there, though. Once the values have been scaled, the red,
-green, and blue channels are multiplied by the alpha channel. This means that
-an opaque white pixel will have the value (1.0, 1.0, 1.0, 1.0), a 50% transparent
-red pixel will have the value (0.5, 0.0, 0.0, 0.5), and a transparent pixel
-will have the value (0.0, 0.0, 0.0, 0.0).
+Но Ren'Py идёт дальше: после масштабирования значений красный, зелёный и синий каналы умножаются
+на альфа-канал. Это означает, что непрозрачный белый пиксель будет иметь значение (1.0, 1.0, 1.0, 1.0),
+полупрозрачный (на 50%) красный пиксель — (0.5, 0.0, 0.0, 0.5), а полностью прозрачный пиксель —
+(0.0, 0.0, 0.0, 0.0).
 
-Premultiplied alpha allows Ren'Py to scale images
-up and down without causing dark artifacts that come from representing
-colors more directly. Scaling images is similar to averaging two pixels
-together. Without premultiplied alpha, we might have a solid white pixel
-and a transparent pixel - (1.0, 1.0, 1.0, 1.0) and (0.0, 0.0, 0.0, 0.0),
-respectively. Average those together gets (0.5, 0.5, 0.5, 0.5), representing
-50% opaque gray in the straight alpha system. 
+Предварительно умноженная альфа (premultiplied alpha) позволяет Ren'Py масштабировать изображения
+без появления тёмных артефактов на полупрозрачных краях, свойственных прямой альфе (straight alpha).
+Масштабирование изображений аналогично усреднению соседних пикселей. Без предварительного умножения
+смешивание сплошного белого пикселя (1.0, 1.0, 1.0, 1.0) и прозрачного пикселя (0.0, 0.0, 0.0, 0.0)
+дало бы (0.5, 0.5, 0.5, 0.5), что в обычной системе прямой альфы означает 50% полупрозрачный серый цвет
+(появление тёмной каймы).
 
-However, since a fully transparent pixel doesn't really have
-any color, it shouldn't affect the resulting color, either - only the resulting
-transparency. In the premultiplied alpha system, the starting values are the same,
-and so is the result - except now, (0.5, 0.5, 0.5, 0.5) has been pre-defined to
-be 50% opaque white. By storing colors in this way, Ren'Py can draw them to the
-screen correctly, and not get weird artifacts when scaling.
+Однако полностью прозрачный пиксель не имеет собственного цвета и не должен влиять на результирующий
+цвет, влияя только на прозрачность. В системе premultiplied alpha исходные значения те же,
+и результат (0.5, 0.5, 0.5, 0.5) заранее интерпретируется как 50% полупрозрачный белый цвет.
+Хранение цветов в таком формате позволяет Ren'Py правильно отрисовывать графику на экране
+без артефактов фильтрации.
 
-Using a Matrix to Change Colors
--------------------------------
+Использование матрицы для изменения цветов
+------------------------------------------
 
-The :class:`Matrix` objects used to change colors can consist of 16
-numbers, which can in turn be arranged into a 4x4 grid. Here's a
-way of doing this that assigns a letter to each number::
+Объекты :class:`Matrix`, используемые для изменения цветов, состоят из 16 чисел, организованных
+в сетку 4x4. Ниже показан пример назначения букв каждому элементу::
 
     define mymatrix = Matrix([ a, b, c, d,
                                e, f, g, h,
                                i, j, k, l,
                                m, n, o, p, ])
 
-While they're represented as letters here, realize these are really numbers, either given
-directly or computed.
+Хотя здесь они обозначены буквами, на практике это вещественные числа, заданные явно или рассчитанные.
 
-These values are applied to the red (R), green (G), blue (B), and alpha (A)
-channels of the original color to make a new color, (R', G', B', A'). The
-formulas to do this are:
+Эти коэффициенты применяются к красному (R), зелёному (G), синему (B) и альфа (A) каналам
+исходного цвета для получения нового цвета (R', G', B', A') по следующим формулам:
 
 .. code-block:: none
 
@@ -62,35 +57,29 @@ formulas to do this are:
     B' = R * i + G * j + B * k + A * l
     A' = R * m + G * n + B * o + A * p
 
-While this might seem complex, there's a pretty simple structure to it -
-the first row creates the new red channel, the second the new green channel
-and so on. So if we wanted to make a matrix that swapped red and green for
-some reason, we'd write::
+Хотя формула выглядит объёмной, её структура проста: первая строка формирует новый красный канал,
+вторая — зелёный, третья — синий, а четвёртая — альфа-канал. Например, матрица, меняющая местами
+красный и зелёный каналы, записывается так::
 
-    transform swap_red_and green:
+    transform swap_red_and_green:
         matrixcolor Matrix([ 0.0, 1.0, 0.0, 0.0,
                              1.0, 0.0, 0.0, 0.0,
                              0.0, 0.0, 1.0, 0.0,
                              0.0, 0.0, 0.0, 1.0, ])
 
-While this is a simple example, there is a lot of color theory that can be
-expressed in this way. Matrices can be combined by multiplying them
-together, and when that happens the matrices are combined right to left.
+Матрицы можно объединять с помощью операции умножения; при этом объединение происходит справа налево.
 
 .. _colormatrix:
 
 ColorMatrix
 -----------
 
-While Matrix objects are suitable for static color changes, they're not
-useful for animating color changes. It's also useful to have a way of
-taking common matrices and encapsulating them in a way that allows the
-matrix to be parameterized.
+Хотя объекты Matrix отлично подходят для статического изменения цвета, они неудобны для создания
+плавных цветовых анимаций. Кроме того, удобно инкапсулировать типичные матрицы в параметризуемые классы.
 
-The ColorMatrix is a base class that is extended by a number of
-Matrix-creating classes. Instances of ColorMatrix are called by Ren'Py,
-and return Matrixes. ColorMatrix is well integrated with ATL, allowing
-for matrixcolor animations. ::
+ColorMatrix — это базовый класс, расширяемый набором специализированных матричных классов. Экземпляры
+ColorMatrix вызываются движком Ren'Py и возвращают объекты Matrix. Класс ColorMatrix превосходно
+интегрирован с языком ATL, обеспечивая плавную интерполяцию свойства matrixcolor::
 
     transform red_blue_tint:
         matrixcolor TintMatrix("#f00")
@@ -98,38 +87,34 @@ for matrixcolor animations. ::
         linear 3.0 matrixcolor TintMatrix("#f00")
         repeat
 
-The ColorMatrix class can be subclassed, with the subclasses replacing its
-``__call__`` method. This method takes:
+От класса ColorMatrix можно наследоваться, переопределяя метод ``__call__``. Этот метод принимает:
 
-* An old object to interpolate off of. This object may be of any class,
-  and may be None if no old object exists.
-* A value between 0.0 and 1.0, representing the point to interpolate.
-  0.0 is entirely the old object, and 1.0 is entirely the new object.
+* Старый объект для интерполяции. Может быть объектом любого класса или None при отсутствии предшествующего объекта.
+* Число от 0.0 до 1.0, представляющее прогресс интерполяции (0.0 — полностью старый объект, 1.0 — полностью новый).
 
-And should return a :class:`Matrix`.
+И должен возвращать объект :class:`Matrix`.
 
-As an example of a ColorMatrix, here is the implementation of Ren'Py's
-TintMatrix class. ::
+В качестве примера ниже приведена встроенная реализация класса TintMatrix в Ren'Py::
 
     class TintMatrix(ColorMatrix):
         def __init__(self, color):
 
-            # Store the color given as a parameter.
+            # Сохраняем цвет, переданный в качестве параметра.
             self.color = Color(color)
 
         def __call__(self, other, done):
 
             if type(other) is not type(self):
 
-                # When not using an old color, we can take
-                # r, g, b, and a from self.color.
+                # Если старый цвет не используется, берём
+                # r, g, b и a из self.color.
                 r, g, b = self.color.rgb
                 a = self.color.alpha
 
             else:
 
-                # Otherwise, we have to extract from self.color
-                # and other.color, and interpolate the results.
+                # Иначе извлекаем компоненты из обоих объектов
+                # и интерполируем результат.
                 oldr, oldg, oldb = other.color.rgb
                 olda = other.color.alpha
                 r, g, b = self.color.rgb
@@ -140,43 +125,41 @@ TintMatrix class. ::
                 b = oldb + (b - oldb) * done
                 a = olda + (a - olda) * done
 
-            # To properly handle premultiplied alpha, the color channels
-            # have to be multiplied by the alpha channel.
+            # Для корректной поддержки premultiplied alpha цветовые каналы
+            # умножаются на значение альфа-канала.
             r *= a
             g *= a
             b *= a
 
-            # Return a Matrix.
+            # Возвращаем объект Matrix.
             return Matrix([ r, 0, 0, 0,
                             0, g, 0, 0,
                             0, 0, b, 0,
                             0, 0, 0, a ])
 
 
-Structural Similarity
-^^^^^^^^^^^^^^^^^^^^^^
+Структурное сходство
+^^^^^^^^^^^^^^^^^^^^
 
-In ATL, interpolating a the :tpref:`matrixcolor` property requires the
-use of ColorMatrixes that have structural similarity. That means the same
-types of ColorMatrix, multiplied together in the same order.
+В языке ATL для плавной интерполяции свойства :tpref:`matrixcolor` требуется, чтобы матрицы ColorMatrix
+обладали структурным сходством. Это означает, что перемножаются одинаковые типы ColorMatrix в одинаковом
+порядке.
 
-As an example, the following will interpolate from normal to a desaturated
-blue tint, and then return to normal. ::
+Например, следующий код интерполирует изображение от обычного вида к обесцвеченному синему оттенку
+и обратно к норме::
 
     show eileen happy at center:
         matrixcolor TintMatrix("#ffffff") * SaturationMatrix(1.0)
         linear 2.0 matrixcolor TintMatrix("#ccccff") * SaturationMatrix(0.0)
         linear 2.0 matrixcolor TintMatrix("#ffffff") * SaturationMatrix(1.0)
 
-While the first setting of matrixcolor may seem unnecessary, it is required
-to provide a base for the first linear interpolation. If it wasn't present, that
-interpolation would be skipped.
+Хотя первая строка matrixcolor может показаться избыточной, она необходима для создания базовой точки
+отсчёта для первой линейной интерполяции. Без неё интерполяция была бы пропущена.
 
 
-Built-In ColorMatrix Subclasses
--------------------------------
+Встроенные подклассы ColorMatrix
+--------------------------------
 
-The following is the list of ColorMatrix subclasses that are built into
-Ren'Py.
+Ниже приведён список классов ColorMatrix, встроенных в Ren'Py.
 
 .. include:: inc/colormatrix

@@ -1,85 +1,87 @@
-Multiple Character Dialogue
-===========================
+.. _multiple-character-dialogue:
 
-Ren'Py supports displaying dialogue from multiple characters simultaneously.
-Multiple dialogue is invoked by giving the lines of dialogue the multiple
-argument. For example::
+Диалог нескольких персонажей
+============================
 
-    e "Ren'Py supports displaying multiple lines of dialogue simultaneously." (multiple=2)
-    l "About bloody time! I've been waiting for this for years." (multiple=2)
+Ren'Py поддерживает одновременное отображение диалога нескольких персонажей.
+Совместный диалог вызывается передачей репликам аргумента ``multiple``. Например::
 
-Multiple dialogue is invoked by passing a line of dialogue the `multiple` argument
-with the number of lines of dialogue to combine together. (So if we had ``multiple=3``,
-three blocks of dialogue would be combined.)
+    e "Ren'Py поддерживает одновременное отображение нескольких реплик диалога." (multiple=2)
+    l "Давно пора! Я ждала этого годами." (multiple=2)
 
-Multiple dialogue works by showing the say screen more than once, with
-different styles. Each say screen is responsible for showing dialogue from
-a single character.
+Совместный диалог вызывается передачей реплике диалога аргумента `multiple`
+с указанием количества объединяемых реплик. (Так, при ``multiple=3``
+будут объединены три блока диалога.)
 
-There are a few restrictions on multiple dialogue:
+Механизм совместного диалога основан на многократном отображении экрана say
+с различными стилями. Каждый экземпляр экрана say отвечает за отображение реплики
+одного персонажа.
 
-* When displaying multiple dialogue, text tags that cause the text to pause,
-  like {p} and {w}, will not function properly. This is because each screen is
-  only displayed once, and those tags require screens to be displayed multiple
-  times to function.
+Существует несколько ограничений для совместного диалога:
 
-* Auto-forward mode only works on the last block of text. While this should be
-  fine in most cases, it can lead to problems if the last block of text is
-  shorter than the rest, as auto-forward may engage early.
+* При отображении совместного диалога текстовые теги, вызывающие паузу в тексте
+  (например, {p} и {w}), не будут работать должным образом. Это связано с тем,
+  что каждый экран отображается только один раз, тогда как эти теги требуют
+  многократного отображения экрана для своей работы.
 
-* Extend will not work. (It will only apply to the last block of text.)
+* Режим авточтения работает только для последнего текстового блока. Хотя в
+  большинстве случаев этого достаточно, это может приводить к проблемам, если
+  последний блок текста короче остальных, так как авточтение может сработать раньше
+  времени.
 
-Styles
-------
+* Инструкция extend не работает. (Она применится только к последнему блоку текста.)
 
-Generally, the way multiple dialogue works is to display the say screen
-multiple times, with the styles of various displayables systematically
-renamed to reflect the block number and the number of blocks in total.
+Стили
+-----
 
-Specifically, multiple dialogue uses styles with names of the form
-block\ `n`\ _multiple\ `m`\ _\ `stylename`\ , where `n` is the number
-of the block (starting from 1, not 0), and `m` is the number of blocks
-of dialogue being displayed at once.
+В целом совместный диалог работает путём многократного отображения экрана say, при этом
+стили различных отображаемых объектов систематически переименовываются в соответствии
+с номером блока и общим количеством блоков.
 
-In our example above, the window corresponding to each block of dialogue
-are given the names:
+В частности, совместный диалог использует стили с именами вида
+block\ `n`\ _multiple\ `m`\ _\ `stylename`\ , где `n` — номер
+блока (начиная с 1, а не с 0), а `m` — общее количество одновременно отображаемых
+блоков диалога.
+
+В приведённом выше примере окнам, соответствующим каждому блоку диалога,
+присваиваются имена:
 
 * block1_multiple2_say_window
 * block2_multiple2_say_window
 
-This naming scheme is used for the dialogue, name, and namebox, as well
-as the window. It's designed so style inheritance is useful here. For
-the window styles we'll have:
+Эта схема именования используется для текста диалога, имени персонажа, рамки имени (namebox),
+а также для самого окна диалога (window). Она спроектирована так, чтобы можно было эффективно
+использовать наследование стилей. Для стилей окна мы получим:
 
 say_window
-    Used for the normal case of a single dialogue window, this can serve as
-    a base for all dialogue windows.
+    Используется в обычном случае одиночного диалогового окна и может служить
+    базовым стилем для всех окон диалога.
 
 multiple2_say_window
-    This can be used for properties common to the two dialogue windows,
-    like changing the background and reducing the margin and padding.
+    Может использоваться для общих свойств обоих диалоговых окон,
+    например изменения фона и уменьшения внешних (margin) и внутренних (padding) отступов.
 
 block1_multiple2_say_window
-    This could be used to position the first of the two dialogue windows,
-    such as using xalign 0.0 to put it on the left side.
+    Может использоваться для позиционирования первого из двух диалоговых окон,
+    например с помощью ``xalign 0.0`` для размещения его в левой части.
 
 block2_multiple2_say_window
-    Similarly, this can be used to position the second window, with
-    xalign 1.0 putting it on the right side.
+    Аналогично, может использоваться для позиционирования второго окна,
+    с помощью ``xalign 1.0`` для размещения его в правой части.
 
-The Multiple Say Screen
------------------------
+Экран multiple_say
+------------------
 
-For more control, there is the multiple\_say screen. When it exists, the
-multiple\_say screen is used in place of the normal say screen. It takes
-a third argument, `multiple`, which is a tuple. The first component of
-the tuple is the block number, and the second is the total number of
-screens.
+Для более тонкого управления существует экран ``multiple_say``. Если он определён,
+экран multiple\_say используется вместо стандартного экрана say. Он принимает
+третий аргумент, `multiple`, являющийся кортежем. Первый элемент кортежа — это номер
+блока, а второй — общее количество экранов.
 
 
-NVL-Mode
---------
+Режим NVL
+---------
 
-By default, NVL-Mode displays multiple text blocks one on top of another.
-This can be customized by changing the :ref:`nvl screen <nvl-screen>`, which is passed
-a list of objects with the multiple argument that can be reorganized and presented.
+По умолчанию в режиме NVL несколько блоков текста отображаются друг над другом.
+Это поведение можно настроить, изменив :ref:`экран nvl <nvl-screen>`, которому
+передаётся список объектов с аргументом multiple, которые можно переупорядочить
+и отобразить нужным образом.

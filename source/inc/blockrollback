@@ -2,80 +2,58 @@
 
 .. function:: renpy.block_rollback()
     
-    Prevents the game from rolling back to before the current
-    statement.
+    Предотвращает откат игры к состоянию до текущей инструкции.
 
 .. function:: renpy.fix_rollback()
     
-    Prevents the user from changing decisions made before the current
-    statement.
+    Предотвращает изменение пользователем решений, принятых до текущей инструкции.
 
 .. function:: renpy.in_fixed_rollback()
     
-    Returns true if rollback is currently occurring and the current
-    context is before an executed renpy.fix_rollback() statement.
+    Возвращает True, если в данный момент происходит откат и текущий контекст предшествует выполненной инструкции renpy.fix_rollback().
 
 .. function:: ui.ChoiceJump(label, value, location=None, block_all=None, sensitive=True, args=None, kwargs=None)
     
-    A menu choice action that returns `value`, while managing the button
-    state in a manner consistent with fixed rollback. (See block_all for
-    a description of the behavior.)
+    Действие выбора в меню, возвращающее `value` и управляющее состоянием кнопки в соответствии с фиксированным откатом. (Описание поведения см. в параметре block_all.)
     
     
     `label`
-        The label text of the button. For imagebuttons and hotspots this
-        can be anything. This label is used as a unique identifier of
-        the options within the current screen. Together with `location`
-        it is used to store whether this option has been chosen.
+        Текст метки кнопки. Для imagebutton и hotspot может быть любым. Эта метка используется как уникальный идентификатор варианта в пределах текущего экрана. Вместе с `location` используется для сохранения факта выбора этого варианта.
     
     `value`
-        The location to jump to.
+        Метка перехода (куда совершить переход).
     
     `location`
-        A unique location identifier for the current choices screen.
+        Уникальный идентификатор местоположения для текущего экрана выборов.
     
     `block_all`
-        If false, the button is given the selected role if it was
-        the chosen choice, and insensitive if it was not selected.
+        Если False, кнопке присваивается роль selected, если это был сделанный выбор, и insensitive, если выбор не был выбран.
     
-        If true, the button is always insensitive during fixed
-        rollback.
+        Если True, кнопка всегда нечувствительна (insensitive) во время фиксированного отката.
     
-        If None, the value is taken from the :var:`config.fix_rollback_without_choice`
-        variable.
+        Если None, значение берётся из переменной :var:`config.fix_rollback_without_choice`.
     
-        When true is given to all items in a screen, it will
-        become unclickable (rolling forward will still work).
+        Если значение True задано для всех элементов экрана, он станет некликабельным (откат вперёд по-прежнему будет работать).
 
 .. function:: ui.ChoiceReturn(label, value, location=None, block_all=None, sensitive=True, args=None, kwargs=None)
     
-    A menu choice action that returns `value`, while managing the button
-    state in a manner consistent with fixed rollback. (See block_all for
-    a description of the behavior.)
+    Действие выбора в меню, возвращающее `value` и управляющее состоянием кнопки в соответствии с фиксированным откатом. (Описание поведения см. в параметре block_all.)
     
     
     `label`
-        The label text of the button. For imagebuttons and hotspots this
-        can be anything. This label is used as a unique identifier of
-        the options within the current screen. Together with `location`
-        it is used to store whether this option has been chosen.
+        Текст метки кнопки. Для imagebutton и hotspot может быть любым. Эта метка используется как уникальный идентификатор варианта в пределах текущего экрана. Вместе с `location` используется для сохранения факта выбора этого варианта.
     
     `value`
-        The value this is returned when the choice is chosen.
+        Значение, возвращаемое при выборе этого варианта.
     
     `location`
-        A unique location identifier for the current choices screen.
+        Уникальный идентификатор местоположения для текущего экрана выборов.
     
     `block_all`
-        If false, the button is given the selected role if it was
-        the chosen choice, and insensitive if it was not selected.
+        Если False, кнопке присваивается роль selected, если это был сделанный выбор, и insensitive, если выбор не был выбран.
     
-        If true, the button is always insensitive during fixed
-        rollback.
+        Если True, кнопка всегда нечувствительна (insensitive) во время фиксированного отката.
     
-        If None, the value is taken from the :var:`config.fix_rollback_without_choice`
-        variable.
+        Если None, значение берётся из переменной :var:`config.fix_rollback_without_choice`.
     
-        When true is given to all items in a screen, it will
-        become unclickable (rolling forward will still work).
-
+        Если значение True задано для всех элементов экрана, он станет некликабельным (откат вперёд по-прежнему будет работать).

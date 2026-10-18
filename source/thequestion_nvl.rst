@@ -1,28 +1,28 @@
 :orphan:
 
-NVL-mode script for The Question
-================================
+Скрипт новеллы «The Question» в режиме NVL
+==========================================
 
-Take "The Question" from the Ren'Py distribution, and replace the contents
-of the ``script.rpy`` file with the following code.
+Возьмите проект «The Question» из дистрибутива Ren'Py и замените содержимое
+файла ``script.rpy`` следующим кодом.
 
 ::
 
-    # Declare characters used by this game.
+    # Объявление персонажей, используемых в этой игре.
     define s = Character(None, kind=nvl, what_prefix="\"", what_suffix="\"", what_color="#c8ffc8")
     define m = Character(None, kind=nvl, what_prefix="\"", what_suffix="\"", what_color="#c8c8ff")
     define narrator = Character(None, kind=nvl)
 
     define menu = nvl_menu
 
-    # This is a variable that is True if you've compared a VN to a book, and False
-    # otherwise.
+    # Переменная, принимающая значение True, если вы сравнили новеллу с книгой,
+    # и False в противном случае.
     default book = False
 
-    # The game starts here.
+    # Игра начинается здесь.
     label start:
 
-        # Start by playing some music.
+        # Начинаем с воспроизведения музыки.
         play music "illurock.opus"
 
         scene bg lecturehall

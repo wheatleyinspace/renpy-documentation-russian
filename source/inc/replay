@@ -2,34 +2,33 @@
 
 .. function:: EndReplay(confirm=True)
     
-    Ends the current replay.
+    Завершает текущий повтор (replay).
     
     `confirm`
-        If true, prompts the user for confirmation before ending the
-        replay.
+        Если True, запрашивает подтверждение пользователя перед завершением
+        повтора.
 
 .. function:: Replay(label, scope={}, locked=None)
     
-    An action that starts `label` as a replay.
+    Экранное действие, запускающее метку `label` в режиме повтора (replay).
     
     `scope`
-        A dictionary mapping variable name to value. These variables are set
-        when entering the replay.
+        Словарь, сопоставляющий имена переменных с их значениями. Эти переменные
+        устанавливаются при входе в режим повтора.
     
     `locked`
-        If true, this action is insensitive and will not do anything when triggered.
-        If false, it will behave normally. If None, it will be locked if the label
-        has not been seen in any playthrough.
+        Если True, это действие нечувствительно (кнопка заблокирована) и ничего не делает
+        при активации. Если False, ведёт себя обычным образом. Если None, действие
+        блокируется, если метка ещё не была просмотрена ни в одном из прохождений игры.
 
 .. function:: renpy.call_replay(label, scope={})
     
-    Calls a label as a memory.
+    Вызывает метку в качестве воспоминания / повтора сцены.
     
-    The `scope` argument is used to set the initial values of variables in the
-    memory context.
+    Аргумент `scope` используется для задания начальных значений переменных
+    в контексте повтора сцены.
 
 .. function:: renpy.end_replay()
     
-    If we're in a replay, ends the replay immediately. Otherwise, does
-    nothing.
-
+    Если игра находится в режиме повтора, немедленно завершает его. В противном
+    случае ничего не делает.

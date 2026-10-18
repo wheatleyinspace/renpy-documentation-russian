@@ -2,121 +2,113 @@
 
 .. function:: FileCurrentPage()
     
-    Returns the current file page as a string.
+    Возвращает текущую страницу файлов в виде строки.
 
 .. class:: FileCurrentScreenshot(empty=None, **properties)
     
-    A displayable that shows the screenshot that will be saved with the current
-    file, if a screenshot has been taken when entering a menu or with
+    Отображаемый объект, выводящий скриншот, который будет сохранен с текущим
+    файлом, если скриншот был сделан при входе в меню или с помощью
     :func:`FileTakeScreenshot`.
     
-    If there is no current screenshot, `empty` is shown in its place. (If `empty` is
-    None, it defaults to :func:`Null`.)
+    Если текущий скриншот отсутствует, вместо него отображается `empty` (если `empty`
+    равно None, по умолчанию используется :func:`Null`).
 
 .. function:: FileJson(name, key=None, empty=None, missing=None, page=None, slot=False)
     
-    Accesses the Json information associated with `name`.
+    Осуществляет доступ к информации JSON, связанной с файлом сохранения `name`.
     
-    This always returns `empty` if the slot is empty.
+    Если слот пуст, всегда возвращает `empty`.
     
-    If not, and if `key` is None, returns the entire dictionary containing the Json data.
+    Если слот не пуст, и `key` равен None, возвращает весь словарь с данными JSON.
     
-    Otherwise, this returns json[key] if `key` is defined on the json object of the save,
-    and `missing` if there is a save with the given name, but it does not contain `key`.
+    В противном случае возвращает `json[key]`, если `key` определен в объекте JSON сохранения,
+    и `missing`, если файл сохранения с данным именем существует, но не содержит ключа `key`.
     
-    Such Json data is added to a save slot by callbacks registered using
-    :var:`config.save_json_callbacks`.
+    Данные JSON добавляются к слоту сохранения функциями обратного вызова,
+    зарегистрированными в :var:`config.save_json_callbacks`.
     
-    By default, the following keys are defined:
+    По умолчанию определены следующие ключи:
     
     `_save_name`
-        The value of :var:`save_name` when the game was saved.
+        Значение переменной :var:`save_name` на момент сохранения игры.
     
     `_renpy_version`
-        The version of Ren'Py the save was created with.
+        Версия Ren'Py, в которой было создано сохранение.
     
     `_version`
-        The value of :var:`config.version` when the save was created.
+        Значение :var:`config.version` на момент создания сохранения.
     
     `_game_runtime`
-        The result of calling :func:`renpy.get_game_runtime`.
+        Результат вызова :func:`renpy.get_game_runtime`.
     
     `_ctime`
-        The time the save was created, in seconds since January 1, 1970, UTC.
+        Время создания сохранения (в секундах с 1 января 1970 года, UTC).
 
 .. function:: FileLoadable(name, page=None, slot=False)
     
-    This is a function that returns true
-    if the file is loadable, and false otherwise.
+    Функция, возвращающая True, если файл доступен для загрузки, и False в противном случае.
 
 .. function:: FileNewest(name, page=None, slot=False)
     
-    Returns True if this is the newest file slot, or False otherwise.
+    Возвращает True, если это самый новый слот сохранения, и False в противном случае.
 
 .. function:: FilePageName(auto='a', quick='q')
     
-    Returns the name of the current file page, as a string. If a normal
-    page, this returns the page number. Otherwise, it returns
-    `auto` or `quick`.
+    Возвращает имя текущей страницы файлов в виде строки. Для обычной страницы возвращает
+    номер страницы, для служебных — значение `auto` или `quick`.
 
 .. function:: FileSaveName(name, empty='', page=None, slot=False)
     
-    Return the save_name that was in effect when the file was saved,
-    or `empty` if the file does not exist.
+    Возвращает значение save_name, действовавшее в момент сохранения файла,
+    или `empty`, если файл не существует.
 
 .. function:: FileScreenshot(name, empty=None, page=None, slot=False)
     
-    Returns the screenshot associated with the given file. If the
-    file is not loadable, then `empty` is returned, unless it's None,
-    in which case, a Null displayable is created.
+    Возвращает скриншот, связанный с данным файлом. Если файл невозможно загрузить,
+    возвращается `empty` (если None, создается объект Null).
     
-    The return value is a displayable.
+    Возвращаемое значение является отображаемым объектом (Displayable).
 
 .. function:: FileSlotName(slot, slots_per_page, auto='a', quick='q', format='%s%d')
     
-    Returns the name of the numbered slot. This assumes that slots on
-    normal pages are numbered in a linear order starting with 1, and
-    that page numbers start with 1. When slot is 2, and slots_per_page
-    is 10, and the other variables are the defaults:
+    Возвращает имя пронумерованного слота. Предполагается, что слоты на обычных
+    страницах нумеруются линейно с 1, и нумерация страниц также начинается с 1.
+    Если `slot` равен 2, а `slots_per_page` равен 10:
     
-    * When the first page is showing, this returns "2".
-    * When the second page is showing, this returns "12".
-    * When the auto page is showing, this returns "a2".
-    * When the quicksave page is showing, this returns "q2".
+    * На первой странице возвращает "2".
+    * На второй странице возвращает "12".
+    * На странице автосохранений возвращает "a2".
+    * На странице быстрых сохранений возвращает "q2".
     
     `slot`
-        The number of the slot to access.
+        Номер слота.
     
     `slots_per_page`
-        The number of slots per page.
+        Количество слотов на странице.
     
     `auto`
-        A prefix to use for the auto page.
+        Префикс для страницы автосохранений.
     
     `quick`
-        A prefix to use for the quick page.
+        Префикс для страницы быстрых сохранений.
     
     `format`
-        The formatting code to use. This is given two arguments: A string
-        giving the page prefix, and an integer giving the slot number.
+        Строка форматирования. Принимает два аргумента: строку с префиксом страницы
+        и целое число с номером слота.
 
 .. function:: FileTime(name, format='%b %d, %H:%M', empty='', page=None, slot=False)
     
-    Returns the time the file was saved, formatted according
-    to the supplied `format`. If the file is not found, `empty` is
-    returned.
+    Возвращает время сохранения файла, отформатированное в соответствии с `format`.
+    Если файл не найден, возвращается `empty`.
     
-    The return value is a string.
+    Возвращаемое значение — строка.
 
 .. function:: FileUsedSlots(page=None, highest_first=True)
     
-    Returns a list of used numeric file slots on the page.
+    Возвращает список занятых числовых слотов на странице.
     
     `page`
-        The name of the page that will be scanned. If None, the current page
-        is used.
+        Имя сканируемой страницы. Если None, используется текущая страница.
     
     `highest_first`
-        If true, the highest-numbered file slot is listed first.
-        Otherwise, the lowest-numbered slot is listed first.
-
+        Если True, первыми идут слоты с наибольшими номерами. Иначе — с наименьшими.

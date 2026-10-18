@@ -2,95 +2,92 @@
 
 .. function:: renpy.get_at_list(name, layer=None)
     
-    Returns the list of transforms being applied to the image with tag `name`
-    on `layer`. Returns an empty list if no transforms are being applied, or
-    None if the image is not shown.
+    Возвращает список трансформаций, применяемых к изображению с тегом `name`
+    на слое `layer`. Возвращает пустой список, если трансформации не применяются,
+    или None, если изображение не отображается.
     
-    If `layer` is None, uses the default layer for the given tag.
+    Если `layer` равен None, используется слой по умолчанию для заданного тега.
 
 .. function:: renpy.hide(name, layer=None)
     
-    Hides an image from a layer. The Python equivalent of the hide statement.
+    Скрывает изображение со слоя. Эквивалент инструкции hide на Python.
     
     `name`
-        The name of the image to hide. Only the image tag is used, and
-        any image with the tag is hidden (the precise name does not matter).
+        Имя скрываемого изображения. Используется только тег изображения, и скрывается
+        любое изображение с этим тегом (точное имя атрибутов значения не имеет).
     
     `layer`
-        The layer on which this function operates. If None, uses the default
-        layer associated with the tag.
+        Слой, на котором выполняется функция. Если None, используется слой
+        по умолчанию, связанный с тегом.
 
 .. function:: renpy.image(name, d)
     
-    Defines an image. This function is the Python equivalent of the
-    image statement.
+    Определяет изображение. Эта функция является эквивалентом инструкции image на Python.
     
     `name`
-        The name of the image to display, a string.
+        Имя определяемого изображения (строка).
     
     `d`
-        The displayable to associate with that image name.
+        Отображаемый объект, связываемый с этим именем изображения.
     
-    This function may only be run from inside an init block. It is an
-    error to run this function once the game has started.
+    Эта функция может выполняться только внутри блока init. Вызов этой функции
+    после запуска игры приведёт к ошибке.
 
 .. function:: renpy.scene(layer=None, tag=None)
     
-    Removes all displayables from `layer`. This is equivalent to the scene
-    statement, when the scene statement is not given an image to show.
+    Удаляет все отображаемые объекты со слоя `layer`. Это эквивалентно инструкции scene,
+    когда инструкции scene не передано изображение для показа.
     
-    A full scene statement is equivalent to a call to renpy.scene followed by a
-    call to :func:`renpy.show`. For example::
+    Полная инструкция scene эквивалентна вызову renpy.scene с последующим вызовом
+    :func:`renpy.show`. Например::
     
         scene bg beach
     
-    is equivalent to::
+    эквивалентно::
     
         $ renpy.scene()
         $ renpy.show("bg beach")
     
     `tag`
-        If not None and `layer` is None, the default later for the tag is used.
-        Otherwise, `layer` defaults to "master".
+        Если не None и `layer` равен None, используется слой по умолчанию для тега.
+        В противном случае `layer` по умолчанию равен "master".
 
 .. function:: renpy.show(name, at_list=[], layer=None, what=None, zorder=0, tag=None, behind=[], atl=None, **kwargs)
     
-    Shows an image on a layer. This is the programmatic equivalent of the show
-    statement.
+    Отображает изображение на слое. Программный эквивалент инструкции show.
     
     `name`
-        The name of the image to show, a string.
+        Имя отображаемого изображения (строка).
     
     `at_list`
-        A list of transforms that are applied to the image.
-        The equivalent of the ``at`` property.
+        Список трансформаций, применяемых к изображению.
+        Эквивалент свойства ``at``.
     
     `layer`
-        A string, giving the name of the layer on which the image will be shown.
-        The equivalent of the ``onlayer`` property. If None, uses the default
-        layer associated with the tag.
+        Строка, задающая имя слоя, на котором будет показано изображение.
+        Эквивалент свойства ``onlayer``. Если None, используется слой
+        по умолчанию, связанный с тегом.
     
     `what`
-        If not None, this is a displayable that will be shown in lieu of
-        looking on the image. (This is the equivalent of the show expression
-        statement.) When a `what` parameter is given, `name` can be used to
-        associate a tag with the image.
+        Если не None, отображаемый объект, который будет показан вместо поиска изображения
+        по имени. (Эквивалент инструкции show expression.) При указании параметра `what`
+        параметр `name` можно использовать для связывания тега с изображением.
     
     `zorder`
-        An integer, the equivalent of the ``zorder`` property. If None, the
-        zorder is preserved if it exists, and is otherwise set to 0.
+        Целое число, эквивалент свойства ``zorder``. Если None, zorder сохраняется,
+        если он существовал, иначе устанавливается в 0.
     
     `tag`
-        A string, used to specify the image tag of the shown image. The
-        equivalent of the ``as`` property.
+        Строка, используемая для указания тега отображаемого изображения.
+        Эквивалент свойства ``as``.
     
     `behind`
-        A list of strings, giving image tags that this image is shown behind.
-        The equivalent of the ``behind`` property.
+        Список строк с тегами изображений, позади которых отображается данное изображение.
+        Эквивалент свойства ``behind``.
     
     `atl`
-        If not None, an ATL Transform that will be applied. This takes only the ATL itself,
-        it does not apply prior state.
+        Если не None, трансформация ATL, которая будет применена. Принимает только само ATL,
+        не применяя предшествующее состояние.
     
     ::
     
@@ -102,7 +99,7 @@
     
         show expression w as a
         $ renpy.show("a", what=w)
-        $ renpy.show("y", what=w, tag="a") # in this case, name is ignored
+        $ renpy.show("y", what=w, tag="a") # в этом случае name игнорируется
     
         show a at T, T2
         $ renpy.show("a", at_list=(T, T2))
@@ -112,12 +109,11 @@
 
 .. function:: renpy.show_layer_at(at_list, layer='master', reset=None, camera=False)
     
-    The Python equivalent of the ``show layer`` `layer` ``at`` `at_list`
-    statement. If `camera` is True, the equivalent of the ``camera`` statement.
+    Эквивалент инструкции ``show layer`` `layer` ``at`` `at_list` на Python.
+    Если `camera` равно True — эквивалент инструкции ``camera``.
     
     `reset`
-        If true, the transform state is reset to the start when it is shown.
-        If false, the transform state is persisted, allowing the new transform
-        to update that state.
-        If None, true for show layer and false for camera.
-
+        Если True, состояние трансформации сбрасывается к начальному при показе.
+        Если False, состояние трансформации сохраняется, позволяя новой трансформации
+        обновить это состояние.
+        Если None, считается True для show layer и False для camera.

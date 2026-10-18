@@ -2,6 +2,5 @@
 
 .. function:: renpy.retain_after_load()
     
-    Causes data modified between the current statement and the statement
-    containing the next checkpoint to be retained when a load occurs.
-
+    Указывает сохранять данные, изменённые между текущей инструкцией и инструкцией,
+    содержащей следующую контрольную точку (чекпоинт), при выполнении загрузки.

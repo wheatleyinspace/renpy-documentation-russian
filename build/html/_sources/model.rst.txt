@@ -1,209 +1,155 @@
 .. _model:
 
-Model-Based Rendering
-=====================
+===================
+Модельный рендеринг
+===================
 
-While Ren'Py is primarily used with two dimensional rectangular images that
-are common in visual novels, underneath the hood it has a model-based renderer
-intended to take advantage of features found in modern GPUs. This allows
-for a number of visual effects that would not otherwise be possible.
+Хотя Ren'Py традиционно используется для отображения двухмерных прямоугольных изображений,
+типичных для визуальных новелл, внутри движка работает модельный рендерер (Model-Based Renderer),
+созданный для полного использования возможностей современных графических процессоров (GPU).
+Это позволяет реализовывать множество визуальных эффектов, невозможных ранее.
 
-As a warning, this is one of the most advanced features available in Ren'Py.
-In many cases, it's not necessary to understand how model-based rendering
-works behind the scenes - features like :tpref:`matrixcolor` and Live2D support
-can be used without understanding how Model-Based rendering works, and more
-such features will be added to the understanding. This documentation is
-intended for very advanced creators, and for developers looking to add
-to Ren'Py itself.
+.. warning::
 
-Model-Based Rendering is one of the most advanced features in Ren'Py, and
-this documentation may be hard to understand without first looking at the
-OpenGL, OpenGL ES, GLSL, and GLSL ES manual. What's more, since there are
-portions of the models that are passed directly to your GPU drivers, which
-may accept erroneous inputs, it's important to check on multiple kinds of
-hardware.
+    Это одна из самых продвинутых систем в Ren'Py. Во многих случаях понимать внутреннее устройство
+    модельного рендерера не требуется: такие функции, как :tpref:`matrixcolor` и поддержка Live2D,
+    можно использовать без глубоких знаний графического конвейера. Данная документация предназначена
+    для опытных разработчиков и создателей расширений.
+
+Модельный рендеринг опирается на принципы OpenGL, OpenGL ES, GLSL и GLSL ES. Поскольку части шейдеров
+и геометрии передаются напрямую драйверам вашего GPU (которые могут вести себя по-разному), важно
+тестировать проект на различном оборудовании.
 
 
-Models, Renders, and Drawing Operations
----------------------------------------
+Модели, Render-объекты и операции отрисовки
+-------------------------------------------
 
-The fundamental thing that Ren'Py draws to the screen is a Model. A model
-consists of the following things:
+Базовым элементом, который Ren'Py выводит на экран, является Модель (Model). Модель состоит из:
 
-* A Mesh of one or more triangles. A triangle consists of
-  three vertices (corners), each of which contains a position in two or
-  three-dimensional space, and may contain additional information, most
-  commonly texture coordinates.
+* Полигональной сетки (Mesh) из одного или нескольких треугольников. Треугольник состоит из трёх
+  вершин, каждая из которых содержит позицию в 2D или 3D пространстве и может содержать дополнительные
+  атрибуты (чаще всего текстурные координаты).
 
-* Zero or more textures, with the precise number allowed being limited by the
-  GPUs your game can run on. All GPUs should support at least three textures
-  per model. A texture is a rectangle containing image data that's been loaded
-  on the GPU, either directly or using a render-to-texture operation.
+* Нуля или более текстур (точное количество ограничено GPU; все современные GPU поддерживают не менее
+  трёх текстур на модель). Текстура — это прямоугольная область памяти с изображением на GPU.
 
-* A list of shader part names. Ren'Py uses these shader parts to create shaders,
-  which are programs that are run on the GPU to render the model. Shader part
-  names can be prefixed with a "-" to prevent that shader part from being used.
+* Списка имён фрагментов шейдеров (shader parts). Ren'Py собирает из этих фрагментов итоговые шейдеры —
+  программы, выполняемые на GPU. Имена фрагментов могут иметь префикс "-", чтобы исключить данный фрагмент.
 
-* Uniform values. A uniform is additional data that is the same throughout the
-  model. For example, when a model represents a solid color, the color is a
-  uniform.
+* Значений uniform-переменных. Uniform — это константные данные, одинаковые для всей модели
+  (например, сплошной цвет).
 
-* GL properties. GL properties are flags that further control how things
-  are rendered, such as the minification/magnification modes and the
-  color mask.
+* GL-свойств (флаги режима фильтрации, маски цветов, функции смешивания).
 
-As Ren'Py usually draws more than one thing to the screen, it creates a
-tree of :class:`Render` objects. These Render objects may have Models or
-other Renders as children. (A Render object can also be turned into a Model.
-as described below.) A Render contains:
+Поскольку на экране отображается множество элементов, Ren'Py строит дерево объектов :class:`Render`.
+Эти объекты Render могут содержать в качестве дочерних элементов Модели или другие Render-объекты.
+Объект Render содержит:
 
-* A list of children, including a 2-dimensional offset that is applied to
-  each child.
+* Список дочерних элементов со смещением (offset) для каждого.
+* Матрицу :class:`Matrix`, описывающую трансформацию дочерних элементов в 3D пространстве.
+* Списки фрагментов шейдеров, uniform-переменных и GL-свойств.
+* Флаги обновления области отсечения (clipping polygon).
 
-* A :class:`Matrix` that describes how the children are transformed in
-  three-dimensional space.
-
-* Lists of shader part names, uniforms, and GL properties that are applied
-  to the Models when being drawn.
-
-* Flags that determine if the drawable-space clipping polygon should be
-  updated.
-
-Ren'Py draws the screen by performing a depth-first walk through the tree of
-Renders, until a Model is encountered. During this walk, Ren'Py updates a
-matrix transforming the location of the Model, a clipping polygon, and
-lists of shader parts, uniforms, and GL properties. When a Model is encountered
-as part of this walk, the appropriate shader program is activated on the GPU,
-all information is transferred, and a drawing operation occurs.
+Ren'Py отрисовывает экран путём обхода дерева Render-объектов в глубину до обнаружения Модели.
+В процессе обхода обновляются матрица трансформации, область отсечения и списки шейдеров.
+При достижении Модели на GPU активируется скомпилированная шейдерная программа, передаются все данные
+и выполняется аппаратная операция отрисовки (draw call).
 
 
-Where Models are Created
-------------------------
+Где создаются Модели
+--------------------
 
-Ren'Py creates Models automatically as part of its normal operation.
-The main reason to understand where models are created is that models
-correspond to drawing operations, and hence are the units that shaders
-are applied to.
+Ren'Py создаёт Модели автоматически в ходе стандартной работы. Понимание того, где создаются модели,
+важно потому, что именно к ним применяются шейдеры:
 
-Images and Image Manipulators
-    These create a model with a mesh containing two triangles that cover
-    the rectangle of the image. The mesh contains texture coordinates.
-    The model uses the "renpy.texture" shader.
+Изображения и графические манипуляторы
+    Создают модель с полигональной сеткой из двух треугольников, покрывающих прямоугольник изображения.
+    Сетка содержит текстурные координаты. Модель использует шейдер "renpy.texture".
 
 :func:`Solid`
-    The Solid displayable creates a mesh containing two triangles, and no
-    texture coordinates. The model uses the "renpy.solid" shader,
-    with the color placed in the ``u_renpy_solid_color`` uniform.
+    Создаёт сетку из двух треугольников без текстурных координат. Модель использует шейдер "renpy.solid",
+    а цвет передаётся через uniform-переменную ``u_renpy_solid_color``.
 
 :func:`Dissolve`, :func:`ImageDissolve`, :func:`AlphaDissolve`, :func:`Pixellate`, :func:`AlphaMask`, :func:`Flatten`
-    Each of these transforms and displayables creates a Model with a mesh,
-    shaders, and uniforms as is needed for its purposes.
+    Каждый из этих переходов и отображаемых объектов создаёт Модель с сеткой, шейдерами и uniforms,
+    необходимыми для выполнения эффекта.
 
 Live2D
-    Live2D displayables may created multiple Models when rendered, generally
-    one Model for each layer.
+    Отображаемые объекты Live2D при рендеринге создают несколько Моделей — обычно по одной на каждый слой/меш.
 
-:func:`Transform` and ATL
-    A Transform creates a model if :tpref:`mesh` is True, or if :tpref:`blur`
-    is being used. In this case, the children of the Transform are rendered
-    to textures, with the mesh of the first texture being used for the mesh
-    associated with the model.
-
-    Not every transform creates a Model. Some transforms will simply add
-    shaders and uniforms to a Render (such as transforms that use
-    :tpref:`blur` or :tpref:`alpha`). Other transforms simply affect
-    geometry.
+:func:`Transform` и ATL
+    Трансформация создаёт модель, если свойство :tpref:`mesh` равно True или используется :tpref:`blur`.
+    В этом случае дочерние элементы рендерятся в текстуры, а сетка первой текстуры используется
+    для модели. Не каждая трансформация создаёт модель: некоторые просто добавляют шейдеры и uniforms
+    к Render-объекту (например, :tpref:`alpha`), другие влияют только на геометрию.
 
 :class:`Render`
-    A Transform creates a model if its ``mesh`` attribute is True.
-    In this case, the children of the Render are rendered to
-    textures, with the mesh of the first texture being used for
-    the mesh associated with the model.
+    Объект Render создаёт модель, если его атрибут ``mesh`` равен True.
 
-It's expected that Ren'Py will add more ways of creating models in the
-future.
 
-Shader Program Generation
--------------------------
+Генерация шейдерных программ
+----------------------------
 
-Ren'Py generates a shader program by first assembling a list of shader part
-names. This list consists of "renpy.geometry", the list of shader parts
-taken from Renders, and the list of shader parts found in the Model being
-drawn.
+Ren'Py генерирует шейдерную программу, сначала собирая список имён фрагментов шейдеров:
+стандартный "renpy.geometry", фрагменты из объектов Render и фрагменты из самой выводимой Модели.
 
-The shader parts are then deduplicated. If a shader part begins with "-",
-it is removed from the list, as is the rest of that part without the
-leading "-". (So "-renpy.geometry" will cause itself and "renpy.geometry"
-to be removed.)
+Затем список дедуплицируется. Если фрагмент начинается с "-", он удаляется из списка вместе
+с соответствующим фрагментом без префикса "-" (так, "-renpy.geometry" удалит и себя, и "renpy.geometry").
 
-Ren'Py then takes the list of shader parts, and retrieves lists of variables,
-functions, vertex shader parts, and fragment shader parts. These are, in turn,
-used to generate the source code for shaders, with the parts of the vertex and
-fragment shaders being included in low-number to high-number priority order.
+Далее Ren'Py извлекает списки переменных, функций, фрагментов вершинного шейдера и фрагментов
+пиксельного (фрагментного) шейдера. Они собираются в исходный код шейдеров, при этом части шейдеров
+включаются в порядке возрастания целочисленного приоритета.
 
-This means that any variable created by one of the shaders will be accessible
-by every other fragment from any other shader in the list of shader parts.
-There is no scope like in Python functions to protect interference between
-shaders.
+Это означает, что любая переменная, созданная одним фрагментом шейдера, будет доступна всем последующим
+фрагментам. В GLSL нет изоляции областей видимости, как в функциях Python.
 
-Ren'Py keeps a cache of all combinations of shader parts that have ever been
-used in game/cache/shaders.txt, and loads them at startup. If major changes
-in shader use occur, this file should be edited or deleted so it can be
-re-created with valid data.
+Ren'Py кэширует скомпилированные комбинации шейдеров в файле game/cache/shaders.txt и загружает их
+при запуске.
 
-When :var:`config.predict_shaders` is true, shader combinations exposed by
-predicted displayables are compiled during expensive idle prediction.
+Когда :var:`config.predict_shaders` равно True, комбинации шейдеров компилируются во время фонового
+предсказания.
 
-Dynamic systems that know the shader combination they will use can register it
-with :func:`renpy.start_predict_shader`, and remove it with
-:func:`renpy.stop_predict_shader`.
+Динамические системы могут регистрировать ожидаемые комбинации шейдеров через
+:func:`renpy.start_predict_shader` и удалять через :func:`renpy.stop_predict_shader`.
 
 
 .. _custom-shaders:
 
-Creating a Custom Shader
--------------------------
+Создание пользовательских шейдеров
+----------------------------------
 
-New shader parts can be created by calling the renpy.register_shader
-function and supplying portions of GLSL shaders.
+Новые фрагменты шейдеров регистрируются с помощью функции renpy.register_shader с передачей кода GLSL.
 
-Generally, shader parts should be of the form "namespace.part", such as
-"mygame.recolor" or "mylibrary.warp". Names beginning with "renpy." or
-"live2d." are reserved for Ren'Py, as are names beginning with _.
+Имена фрагментов обычно имеют формат "пространство_имён.имя", например "mygame.recolor" или "mylibrary.warp".
+Имена, начинающиеся с "renpy.", "live2d." или "_", зарезервированы.
 
 .. include:: inc/register_shader
 
-Ren'Py supports only the following variable types:
+Ren'Py поддерживает следующие типы переменных в шейдерах:
 
-* float (a Python float)
-* vec2 (a tuple of 2 floats)
-* vec3 (a tuple of 3 floats)
-* vec4 (a tuple of 4 floats)
-* int (a Python integer)
-* ivec2 (a tuple of 2 integers)
-* ivec3 (a tuple of 3 integers)
-* ivec4 (a tuple of 4 integers)
-* bool (a Python boolean)
-* bvec2 (a tuple of 2 booleans)
-* bvec3 (a tuple of 3 booleans)
-* bvec4 (a tuple of 4 booleans)
-* type[n] (an array of [n] elements of [type] (any of the types above) (for instance, int[5] would be an array of 5 integers))
-* mat2 (a :class:`Matrix`)
-* mat3 (a :class:`Matrix`)
-* mat4 (a :class:`Matrix`)
-* sampler2D (a Displayabe, including strings that give Displayables, or a Render)
+* float (вещественное число Python)
+* vec2 (кортеж из 2 чисел)
+* vec3 (кортеж из 3 чисел)
+* vec4 (кортеж из 4 чисел)
+* int (целое число Python)
+* ivec2 (кортеж из 2 целых чисел)
+* ivec3 (кортеж из 3 целых чисел)
+* ivec4 (кортеж из 4 целых чисел)
+* bool (логическое значение)
+* bvec2 (кортеж из 2 bool)
+* bvec3 (кортеж из 3 bool)
+* bvec4 (кортеж из 4 bool)
+* type[n] (массив из [n] элементов любого типа выше, например int[5])
+* mat2, mat3, mat4 (объект :class:`Matrix`)
+* sampler2D (отображаемый объект, строка пути к изображению или Render)
 
-Uniform variables should begin with u\_, attributes with a\_, and varying
-variables with v\_. Names starting with u_renpy\_, a_renpy, and v_renpy
-are reserved, as are the standard variables given below.
+Имена uniform-переменных должны начинаться с префикса u\_, атрибутов — с a\_, а интерполируемых
+переменных (varying) — с v\_. Имена, начинающиеся с u_renpy\_, a_renpy и v_renpy, зарезервированы.
 
-As a general sketch for priority levels, priority 100 sets up geometry,
-priority 200 determines the initial fragment color (``fragment_color``, or
-``gl_FragColor`` when ``glsl=100`` is in use), and higher-numbered priorities
-can apply effects to alter that color.
+Приоритет 100 обычно настраивает геометрию, приоритет 200 вычисляет исходный цвет фрагмента
+(``fragment_color`` или ``gl_FragColor`` при ``glsl=100``), а более высокие приоритеты накладывают эффекты.
 
-Here's an example of a custom shader part that applies a gradient across
-each model it is used to render::
+Пример фрагмента шейдера, накладывающего горизонтальный градиент::
 
     init python:
 
@@ -220,7 +166,7 @@ each model it is used to render::
             fragment_color *= mix(u_gradient_left, u_gradient_right, gradient_done);
         """)
 
-The custom shader can then be applied using a transform::
+Шейдер можно применить через трансформацию::
 
     transform gradient:
         shader "example.gradient"
@@ -229,109 +175,79 @@ The custom shader can then be applied using a transform::
 
     show eileen happy at gradient
 
-As stated before, the ``gradient_done`` variable from the example.gradient shader
-will be accessible by any and all other shaders applied from the same list. This
-can be useful when having optional parts in a given shader system, but it can also
-lead to name collisions when using two independent shaders.
-
 .. _glsl-version:
 
-**GLSL Version.**
-Shader parts are written in one of two versions: GLSL ES 3.00 is described
-throughout this page.
+**Версии GLSL.**
+Фрагменты шейдеров пишутся на одном из двух диалектов: GLSL ES 3.00 (основной диалект, используемый
+в этой документации) или GLSL ES 1.00.
 
-In GLSL ES 3.00, variables are declared with ``uniform``, ``in`` for a value
-that comes from the mesh, and ``out`` for a value the vertex shader passes to
-the fragment shader. Textures are sampled with ``texture``, and a fragment
-shader writes its color to ``fragment_color``.
+В GLSL ES 3.00 переменные объявляются как ``uniform``, ``in`` для входных значений из сетки и ``out``
+для значений, передаваемых из вершинного шейдера во фрагментный. Выборка текстур производится
+функцией ``texture()``, а фрагментный шейдер записывает цвет в ``fragment_color``.
 
 .. var:: config.glsl_version = 300
 
-    The version used by shader parts that don't pass `glsl` to
-    :func:`renpy.register_shader`. This defaults to 300 in new games and to
-    100 in games that declare compatibility with Ren'Py 8.5 or earlier.
+    Версия по умолчанию для фрагментов шейдеров без явного указания `glsl`. По умолчанию 300
+    в новых проектах и 100 в проектах с совместимостью с Ren'Py 8.5 или ранее.
 
-A single part can override this by passing `glsl` to
-:func:`renpy.register_shader`.
+Ren'Py автоматически транслирует код между диалектами, поэтому фрагменты на разных версиях могут
+сочетаться в одном шейдере. GLSL ES 3.00 рекомендуется для всех новых шейдеров.
 
-Ren'Py translates between the two versions, so parts written in either can be
-combined in the same shader, and a variable declared by two parts in different
-versions is treated as the same variable. GLSL ES 3.00 is preferred and
-recommended for new shader parts.
+На мобильных платформах и Web Ren'Py компилирует шейдеры как GLSL ES 3.00. На настольных платформах
+используется GLSL 3.30 (или GLSL 1.20 при отсутствии поддержки OpenGL 3.3, например на macOS).
 
-Ren'Py emits shaders as GLSL ES 3.00 on mobile and the web, where an OpenGL ES
-3.0 context is required. On the desktop, it emits GLSL 3.30 where it can get an
-OpenGL 3.3 context and GLSL 1.20 where it can't (e.g. macOS).
+Переменные имеют точность highp (числа с плавающей запятой в диапазоне от 2\ :sup:`-62` до 2\ :sup:`62`,
+32-битные целые числа в GLSL ES 3.00).
 
-Ren'Py declares variables to have highp precision, which supports floating
-point numbers in the range 2\ :sup:`-62` to 2\ :sup:`62`. Non-zero floating
-point numbers should have a magnitude between 2\ :sup:`-62` and
-2\ :sup:`62`. Integers are 32 bits wide in GLSL ES 3.00, while GLSL 1.20 only
-promises 16 bits of integer precision. Actual hardware often supports a larger
-range, but this isn't guaranteed.
-
-There is a variable that can help in debugging custom shaders:
+Переменная для отладки шейдеров:
 
 .. var:: config.log_gl_shaders = False
 
-    If true, source code for the GLSL shader programs will be written to
-    log.txt on start.
-
+    Если True, исходный код шейдеров GLSL записывается в log.txt при запуске.
 
 .. _shader-local-variables:
 
-Shader Part Local Variables
----------------------------
+Локальные переменные фрагментов шейдера
+---------------------------------------
 
-Variables can be declared shader-local by using one of ``u__``, ``a__``,
-``v__``, or ``l__`` as a prefix. When this is done, the double underscores
-are filled in with the shader name with all dots replaced with underscores.
-For example, if the shader name is ``example.gradient``, the prefix
-``u__`` will be replaced with ``u_example_gradient_``.
+Переменные можно сделать локальными для конкретного фрагмента шейдера, используя префиксы
+``u__``, ``a__``, ``v__`` или ``l__``. Двойное подчёркивание автоматически заменяется на имя
+шейдера с заменой точек на подчёркивания. Например, для шейдера ``example.gradient`` префикс
+``u__`` станет ``u_example_gradient_``.
 
-The main use of this is with :doc:`text shaders <textshaders>`, where most
-uniforms are shader-local. Also, local variables inside the shader should
-be declared with ``l__``.
+Это активно используется в :doc:`текстовых шейдерах <textshaders>`, где большинство uniform-переменных
+являются локальными.
 
+Трансформации и модельный рендеринг
+-----------------------------------
 
-Transforms and Model-Based Rendering
-------------------------------------
-
-Model-Based rendering adds the following properties to ATL and :func:`Transform`:
+Модельный рендеринг добавляет следующие свойства в язык ATL и класс :func:`Transform`:
 
 .. transform-property:: mesh
 
-    :type: None or True or tuple
+    :type: None, True или кортеж
     :default: None
 
-    If not None, this Transform will be rendered as a model. This means:
+    Если не None, трансформация отрисовывается как модель:
 
-    * A mesh will be created. If this is a 2-component tuple, it's taken
-      as the number of points in the mesh, in the x and y directions. (Each
-      dimension must be at least 2.) If True, the mesh is taken from the
-      child.
-    * The child of this transform will be rendered to a texture.
-    * The renpy.texture shader will be added.
+    * Создаётся полигональная сетка. Если передан кортеж из 2 чисел, он задаёт количество точек
+      сетки по осям X и Y (каждое измерение не менее 2). Если True, сетка берётся из дочернего элемента.
+    * Дочерний элемент рендерится в текстуру.
+    * Добавляется шейдер renpy.texture.
 
-    By default, the texture used by the mesh will not be mipmapped. If
-    mipmaps are desired, :tpref:`gl_mipmap` should be set to True.
+    По умолчанию текстура не мипмаппируется. Чтобы включить мипмапы, установите :tpref:`gl_mipmap True`.
 
 .. transform-property:: mesh_pad
 
-    :type: None or tuple
+    :type: None или кортеж
     :default: None
 
-    If not None, this can either be a 2 or 4-component tuple. If mesh is
-    True and this is given, this applies padding to the size of the textures
-    applied to the textures used by the mesh. A 2-component tuple applies
-    padding to the right and bottom, while a 4-component tuple applies
-    padding to the left, top, right, and bottom.
+    Кортеж из 2 или 4 чисел. Задаёт внутренний отступ для текстур сетки (для кортежа из 2 чисел — справа
+    и снизу; из 4 чисел — слева, сверху, справа и снизу).
 
-    This can be used, in conjunction with the ``gl_pixel_perfect`` property,
-    to render text into a mesh. In Ren'Py, text is rendered at the screen
-    resolution, which might overflow the boundaries of the texture that
-    will be applied to the mesh. Adding a few pixels of padding makes the
-    texture bigger, which will display all pixels. For example::
+    Используется вместе со свойством ``gl_pixel_perfect`` для рендеринга текста в сетку. Текст рендерится
+    в разрешении экрана и может слегка выходить за границы исходной текстуры. Добавление нескольких
+    пикселей отступа предотвращает обрезание глифов::
 
         transform adjust_text:
             mesh True
@@ -339,45 +255,33 @@ Model-Based rendering adds the following properties to ATL and :func:`Transform`
             gl_pixel_perfect True
             shader "shaders.adjust_text"
 
-    will ensure that the texture passed to the shader contains all of the pixels
-    of the text.
-
 .. transform-property:: shader
 
-    :type: None or str or list of str
+    :type: None, str или список str
     :default: None
 
-    If not None, a shader part name or list of shader part names that will be
-    applied to this Render (if a Model is created) or the Models reached
-    through this Render.
+    Имя фрагмента шейдера или список имён фрагментов шейдеров, применяемых к данной Модели.
 
 .. transform-property:: blend
 
-    :type: None or str
+    :type: None или str
     :default: None
 
-    if not None, this should be a string. This string is looked up in
-    :var:`config.gl_blend_func` to get the value for the gl_blend_func
-    property. It's used to use alternate blend modes.
+    Режим наложения. Строка ищется в словаре :var:`config.gl_blend_func` для установки свойства
+    gl_blend_func. Стандартные режимы: "normal", "add", "multiply", "min" и "max".
 
-    The default blend modes this supports are "normal", "add", "multiply",
-    "min", and "max".
+Кроме того, все uniform-переменные, начинающиеся с u\_ (кроме u_renpy\_), доступны как свойства Transform.
+GL-свойства доступны как свойства Transform с префиксом gl\_ (например, gl_color_mask).
 
-
-In addition, uniforms that start with u\_ but not with u_renpy are made available
-as Transform properties. GL properties are made available as transform
-properties starting with gl\_. For example, the color_mask property is made
-available as gl_color_mask.
-
-Blend Functions
----------------
+Функции смешивания (Blend Functions)
+------------------------------------
 
 .. var:: config.gl_blend_func = { ... }
 
-    A dictionary used to map a blend mode name to a blend function. The
-    blend modes are supplied to the :ref:`gl_blend_func <gl-blend-func>` property, given below.
+    Словарь, сопоставляющий имя режима наложения (blend mode) с функцией смешивания. Режимы наложения
+    передаются в свойство :ref:`gl_blend_func <gl-blend-func>`.
 
-The default blend modes are::
+Режимы наложения по умолчанию::
 
     gl_blend_func["normal"] = (GL_FUNC_ADD, GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD, GL_ONE, GL_ONE_MINUS_SRC_ALPHA)
     gl_blend_func["add"] = (GL_FUNC_ADD, GL_ONE, GL_ONE, GL_FUNC_ADD, GL_ZERO, GL_ONE)
@@ -385,221 +289,173 @@ The default blend modes are::
     gl_blend_func["min"] = (GL_MIN, GL_ONE, GL_ONE, GL_MIN, GL_ONE, GL_ONE)
     gl_blend_func["max"] = (GL_MAX, GL_ONE, GL_ONE, GL_MAX, GL_ONE, GL_ONE)
 
-As Ren'Py uses premultiplied alpha, the results of some of these may be counterintuitive when a pixel
-is not opaque. In the GPU, the color (r, g, b, a) is represented as (r * a, g * a, b * a, a), and the blend function
-uses these premultiplied colors. This may be a different result that you get for these blend modes in a paint program,
-when what is drawn is not fully opaque.
+Поскольку Ren'Py использует предварительно умноженную альфу (premultiplied alpha), цвета пикселей
+в GPU представлены как (r * a, g * a, b * a, a). Функции смешивания оперируют этими значениями,
+что может давать результаты, визуально отличающиеся от стандартных режимов наложения в графических редакторах
+на полупрозрачных пикселях.
 
 .. _model-uniforms:
 
-Float, Sample, and Vector Uniforms
------------------------------------
+Скалярные, текстурные и векторные Uniform-переменные
+----------------------------------------------------
 
-The following uniforms are made available to all models.
+Следующие uniform-переменные доступны во всех моделях:
 
 ``vec2 u_model_size``
-    The width and height of the model, as supplied to Ren'Py. This
-    is only available for 2D models that supply a size, and is (0, 0)
-    for 3d models.
+    Ширина и высота модели в пикселях. Доступна для 2D-моделей; для 3D-моделей равна (0, 0).
 
 .. _u-lod-bias:
 
 ``float u_lod_bias``
-    The level of detail bias to apply to texture lookups. This may be
-    set in a Transform. The default value, taken from :var:`config.gl_lod_bias`
-    and defaulting to -0.5, biases Ren'Py to always pick the next bigger
-    level and scale it down.
+    Смещение уровня детализации (LOD bias) при выборке текстур. Значение по умолчанию берётся
+    из переменной :var:`config.gl_lod_bias` (-0.5), что заставляет Ren'Py выбирать более крупный
+    уровень мипмапа и масштабировать его вниз для максимальной чёткости.
 
 ``float u_time``
-    The time of the frame. The epoch is undefined, so it's best to treat
-    this as a number that increases by one second a second. The time is
-    modulo 86400, so it will reset to 0.0 once a day.
+    Время текущего кадра в секундах. Отсчёт циклически сбрасывается раз в сутки (по модулю 86400).
 
 ``vec4 u_random``
-    Four random numbers between 0.0 and 1.0 that are (with incredibly high
-    likelyhood) different from frame to frame.
+    Четыре псевдослучайных числа от 0.0 до 1.0, меняющихся от кадра к кадру.
 
 ``vec4 u_viewport``
-    This gives the current viewport being drawn into. u_viewport.xy is
-    are the coordinates of the bottom-left corner of the viewport, relative
-    to the bottom-left corner of the window. u_viewport.pq is the width
-    and height of the viewport.
+    Текущая область вывода (viewport). u_viewport.xy — координаты нижнего левого угла viewport
+    относительно окна, u_viewport.pq — ширина и высота.
 
 ``vec2 u_virtual_size``
-
-    This is the virtual size of the game (:var:`config.screen_width`, :var:`config.screen_height`).
-    This can be used to convert from gl_Position to virtual coordinates using:
+    Виртуальное разрешение игры (:var:`config.screen_width`, :var:`config.screen_height`).
+    Используется для пересчёта координат из gl_Position в виртуальные координаты:
 
     .. code-block:: glsl
 
-        v_position = u_virtual_size * vec2(gl_Position.x * .5 + .5, -gl_Position.y * .5 + .5)
+        v_position = u_virtual_size * vec2(gl_Position.x * .5 + .5, -gl_Position.y * .5 + .5);
 
 ``vec2 u_drawable_size``
-    The size of the drawable are of the windows, in pixels, at the resolution
-    the game is running at. For example, if a 1280x720 game is scaled up to
-    1980x1080, this will be (1920, 1080).
+    Фактический размер области отрисовки окна в физических пикселях (например, (1920, 1080)
+    при масштабировании окна игры 1280x720 на FullHD мониторе).
 
 ``sampler2D tex0``, ``sampler2D tex1``, ``sampler2D tex2``
-    If textures are available, the corresponding samplers are placed in
-    this variable.
+    Текстурные сэмплеры первой, второй и третьей текстур модели.
 
 ``vec2 res0``, ``vec2 res1``, ``vec2 res2``
-    If textures are available, the size of the textures are placed in these
-    variables. When the texture is loaded from disk, this is the size of the
-    image file. After a render to texture, it's the number of drawable pixels
-    the rendered texture covered.
+    Размеры соответствующих текстур в пикселях.
 
-If a sampler uniform is available, then suffixing it with ``__res`` will give a vec2
-containing the underlying texture size. For example, ``u_markup__res`` will give the size of the
-``u_markup`` texture.
+Если доступен текстурный сэмплер, суффикс ``__res`` возвращает вектор vec2 с его размером
+(например, ``u_markup__res``).
 
-If a vec4 uniform is available, then suffixing it with ``__premul`` will give a vec4
-containing the premultiplied color. For example, ``u_color__premul`` will give a vec4
-where the red, green, and blue channels are multiplied by the alpha channel.
+Если доступен вектор vec4, суффикс ``__premul`` возвращает цвет с предварительно умноженной альфой
+(например, ``u_color__premul`` умножает компоненты r, g и b на альфа-канал).
 
-Matrix Uniforms
-----------------
+Матричные Uniform-переменные
+----------------------------
 
-The following uniforms are made available to all models. This assumes that only one transform with the
-:tpref:`perspective` property is used to render a model. When multiple transforms with the :tpref:`perspective`
-are used, the innermost transformation with perspective set defines the world and view spaces.
+Следующие матрицы доступны во всех моделях (предполагается, что трансформация с :tpref:`perspective`
+одна; если их несколько, мировая система координат задаётся самой внутренней):
 
 ``mat4 u_projection``
-    This is a matrix that transforms coordinates from view space to the OpenGL viewport.
-    This is sent by Ren'Py, and is updated by transforms with the :tpref:`perspective` property
-    to encapsulate the effects of that property.
+    Матрица перехода из пространства вида (view space) в пространство отсечения OpenGL (clip space).
+    Обновляется свойствами перспективы :tpref:`perspective`.
 
 ``mat4 u_view``
-    This is a matrix that transforms vertex coordinates from the world space to the view space. This
-    defaults to the identity matrix, but can be set by transforms with the :tpref:`perspective` property,
-    in which case the effects of positioning, rotation, and scaling are encapsulated in this matrix.
+    Матрица перехода из мирового пространства (world space) в пространство вида (view space).
+    По умолчанию единичная матрица, формируется трансформациями с :tpref:`perspective`.
 
 ``mat4 u_model``
-    This is a matrix that transforms vertex coordinates from the model space to the world space.
+    Матрица перехода из локального пространства модели (model space) в мировое пространство (world space).
 
 ``mat4 u_projectionview``
-    This matrix contains ``u_projection * u_view``. It exists to minimize the number of uniforms that need
-    to be sent to the GPU, and the amount of work that needs to be done in the shader.
+    Произведение ``u_projection * u_view``. Служит для оптимизации вычислений на GPU.
 
 ``mat4 u_transform``
-    This is the same as ``u_projectionview * u_model``. It's the matrix that transforms vertex coordinates
-    directly to the OpenGL viewport. It exists to minimize the number of uniforms that need to be sent to the GPU,
-    the amount of work that needs to be done in the shader, and for compatibility with older versions of Ren'Py.
+    Произведение ``u_projectionview * u_model``. Преобразует координаты вершин из пространства модели
+    напрямую в пространство отсечения OpenGL.
 
-In addition to these methods, Ren'Py can synthesize matrices with certain functions applied when suffixes are
-appended to the matrix
+Суффиксы матриц:
 
 ``__inverse``
-    When appended to a matrix, this returns the inverse of the matrix. For example, ``u_projection__inverse``
-    is the inverse of the projection matrix.
+    Возвращает обратную матрицу (например, ``u_projection__inverse``).
 
 ``__transpose``
-    When appended to a matrix, this returns the transpose of the matrix. For example, ``u_view__transpose``
-    is the transpose of the view matrix.
+    Возвращает транспонированную матрицу (например, ``u_view__transpose``).
 
 ``__inverse_transpose``
-    When appended to a matrix, this returns the inverse of the transpose of the matrix. For example,
-    ``u_model__inverse_transpose`` is the inverse of the transpose of the model matrix. This is useful for
-    transforming normals.
+    Возвращает обратную транспонированную матрицу (например, ``u_model__inverse_transpose``).
+    Необходима для корректного преобразования нормалей при масштабировании.
 
-Attributes
-----------
+Атрибуты вершин
+---------------
 
-The following attribute is available to all models:
+Следующий атрибут доступен во всех моделях:
 
 ``vec4 a_position``
-    The position of the vertex being rendered. This is in virtual pixels, relative to the upper
-    left corner of the texture.
+    Координаты визуализируемой вершины в виртуальных пикселях относительно левого верхнего угла текстуры.
 
-If textures are available, so is the following attribute:
+При наличии текстур доступен:
 
 ``vec2 a_tex_coord``
-    The coordinate that this vertex projects to inside the textures.
+    Текстурные координаты вершины (UV).
 
-If normals are available, so is the following attribute:
+При наличии нормалей доступен:
 
 ``vec3 a_normal``
-    The normal of the vertex being rendered.
+    Вектор нормали вершины.
 
-If tangents are available, so are the following attributes:
+При наличии касательных доступны:
 
 ``vec3 a_tangent``
-    The tangent of the vertex being rendered.
+    Касательный вектор вершины (tangent).
 
 ``vec3 a_bitangent``
-    The bitangent of the vertex being rendered.
+    Биторганальный (бикасательный) вектор вершины (bitangent).
 
 .. _gl-properties:
 
-GL Properties
--------------
+GL-свойства
+-----------
 
-GL properties change the global state of OpenGL, or the Model-Based renderer.
-These properties can be used with a Transform, or with the :func:`Render.add_property`
-function.
+GL-свойства управляют глобальным состоянием OpenGL и модельного рендерера. Их можно задавать
+в трансформациях или через метод :func:`Render.add_property`.
 
 .. _gl-blend-func:
 
 ``gl_blend_func``
-    If present, this is expected to be a six-component tuple, which is
-    used to set the equation used to blend the pixel being drawn with the
-    pixel it is being drawn to, and the parameters to that equation.
-
-    Specifically, this should be (`rgb_equation`, `src_rgb`, `dst_rgb`,
-    `alpha_equation`, `src_alpha`, `dst_alpha`). These will be used to
-    call::
+    Кортеж из 6 элементов, задающий функции и коэффициенты смешивания пикселей:
+    (`rgb_equation`, `src_rgb`, `dst_rgb`, `alpha_equation`, `src_alpha`, `dst_alpha`).
+    Вызывает системные вызовы OpenGL::
 
         glBlendEquationSeparate(rgb_equation, alpha_equation)
         glBlendFuncSeparate(src_rgb, dst_rgb, src_alpha, dst_alpha)
 
-    Please see the OpenGL documentation for what these functions do.
-    OpenGL constants can be imported from renpy.uguu::
+    Константы OpenGL импортируются из модуля renpy.uguu::
 
         init python:
             from renpy.uguu import GL_ONE, GL_ONE_MINUS_SRC_ALPHA
 
-    The :tpref:`blend` transform property is generally an easy way to
-    use this.
+    Обычно удобнее использовать готовое свойство :tpref:`blend`.
 
 ``gl_color_mask``
-    This is expecting to be a 4-tuple of booleans, corresponding to the four
-    channels of a pixel (red, green, blue, and alpha). If a given channel is
-    True, the draw operation will write to that pixel. Otherwise, it will
-    not.
+    Кортеж из 4 логических значений (red, green, blue, alpha). Определяет, в какие каналы разрешена запись.
 
 ``gl_cull_face``
-    If not None, this enables face culling, which is the process of removing
-    triangles that are facing away from the camera. To do this, we need to
-    know which face is the front face, and which is the back face. The front face
-    is determined using the winding order of the vertices, which is one of "cw" (clockwise) or "ccw" (counter-clockwise).
-    The values are done in the Ren'Py coordinate system (with +Y down), which is the opposite of the OpenGL coordinate system.
+    Включает отсечение невидимых граней (face culling). Принимает порядок обхода вершин:
+    "cw" (по часовой стрелке) или "ccw" (против часовой стрелки) в системе координат Ren'Py
+    (ось +Y направлена вниз).
 
 ``gl_depth``
-    If True, this will clear the depth buffer, and then enable depth
-    rendering for this displayable and the children of this displayable.
+    Если True, очищает буфер глубины и включает тест глубины (Z-тест) для данного отображаемого
+    объекта и его дочерних элементов.
 
-    Note that drawing any pixel, even transparent pixels, will update
-    the depth buffer. As a result, using this with images that have
-    transparency may lead to unexpected problems. (As an alternative,
-    consider the ``zorder`` and ``behind`` clauses of the ``show`` statement.)
+    Обратите внимание: отрисовка любого пикселя (даже полностью прозрачного) обновляет буфер глубины.
+    Для изображений с прозрачностью используйте клаузы ``zorder`` и ``behind`` оператора ``show``.
 
 ``gl_pixel_perfect``
-    When True, Ren'Py will move the mesh such that the first vertex is aligned with
-    a pixel on the screen. This is mostly used in conjunction with text,
-    to ensure that the text remains sharp.
+    Если True, первая вершина сетки точно совмещается с физическим пикселем экрана. Используется
+    для сохранения максимальной резкости текста.
 
 ``gl_anisotropic``
-    If supplied, this determines if the textures applied to a mesh are
-    created with anisotropy. Anisotropy is a feature that causes multiple
-    texels (texture pixels) to be sampled when a texture is zoomed by a
-    different amount in X and Y.
-
-    This defaults to True. Ren'Py sets this to False for certain effects,
-    like the Pixellate transition.
+    Определяет, применяется ли анизотропная фильтрация к текстурам сетки. По умолчанию True.
 
 ``gl_texture_scaling``
-    When supplied, this determines how the textures applied to a mesh
-    are scaled. This expects one of the following string values:
+    Режим фильтрации текстур при масштабировании:
 
     - "nearest"
     - "linear"
@@ -608,65 +464,46 @@ function.
     - "nearest_mipmap_linear"
     - "linear_mipmap_linear"
 
-    This can also be customized for specific textures. `gl_texture_scaling_tex0` controls
-    the first texture, `gl_texture_scaling_tex1` the second, `gl_texture_scaling_tex2`, the third,
-    and `gl_texture_scaling_tex3` the fourth. While only these four are avalable through Transforms,
-    it's possible to supply "texture_scaling_tex4" or "texture_scaling_myuniform" to Render.add_property.
+    Можно настраивать для конкретных текстур: `gl_texture_scaling_tex0`, `gl_texture_scaling_tex1` и т. д.
 
 ``gl_texture_wrap``
-    When supplied, this determines how the textures applied to a mesh
-    are wrapped. This expects a 2-component tuple, where the first
-    component is used to set GL_TEXTURE_WRAP_S and the second component
-    is used to set GL_TEXTURE_WRAP_T, which conventionally are the X and Y
-    axes of the created texture.
-
-    The values should be OpenGL constants imported from renpy.uguu::
+    Кортеж из 2 элементов, задающий режим адресации текстуры по осям S и T (горизонтали и вертикали)::
 
         init python:
             from renpy.uguu import GL_CLAMP_TO_EDGE, GL_MIRRORED_REPEAT, GL_REPEAT
 
-    This can also be customized for specific textures. `gl_texture_wrap_tex0` controls
-    the first texture, `gl_texture_wrap_tex1` the second, `gl_texture_wrap_tex2`, the third,
-    and `gl_texture_wrap_tex3` the fourth. While only these four are avalable through Transforms,
-    it's possible to supply "texture_wrap_tex4" or "texture_wrap_myuniform" to Render.add_property.
+    Также настраивается индивидуально: `gl_texture_wrap_tex0` и т. д.
 
-
-The following properties only take effect when a texture is being created,
-by a Transform with :tpref:`mesh` set, or by :func:`Model`, where these
-can be supplied the property method.
+Следующие свойства действуют при создании текстуры в Transform с :tpref:`mesh` или в объекте :func:`Model`:
 
 ``gl_drawable_resolution``
-    If True or not set, the texture is rendered at the same resolution
-    as the window displaying the game. If False, it's rendered at the
-    virtual resolution of the displayable.
-
+    Если True, текстура отрисовывается в физическом разрешении экрана игры. Если False — в исходном
+    виртуальном разрешении отображаемого объекта.
 
 ``gl_mipmap``
-    If supplied, this determines if the textures supplied to a mesh are
-    created with mipmaps. This defaults to True.
+    Определяет, создаются ли мипмапы для текстур сетки. По умолчанию True.
 
-GLTFModel Displayable
------------------------
+Отображаемый объект GLTFModel
+-----------------------------
 
-The GLTFModel displayble allow you to load 3D models in the GLTF file format. This is what you should use
-if you have a 3D model you created in another program and want to display in Ren'Py.
+Отображаемый объект GLTFModel позволяет загружать трёхмерные модели в формате GLTF. Это основной
+способ использования сторонних 3D-моделей в Ren'Py.
 
 .. include:: inc/assimp
 
-Some things we noticed:
+Рекомендации:
 
-* Some models are very small, and need to be zoomed by 100x or 1000x to be useful.
-* The uniforms generating by each model can vary.
+* Некоторые модели имеют очень малый масштаб и требуют увеличения в 100 или 1000 раз через параметр `zoom`.
+* Набор uniform-переменных различается в зависимости от материалов модели.
 
-We recommend creating GLTF models with report=True, and then looking at log.txt to see
-the size and  what's available. It's then possible to scale the model and to
-create a suitable shader.
+Рекомендуется создавать GLTFModel с параметром `report=True` и просматривать файл log.txt для анализа
+доступных uniform-переменных и текстур.
 
-Limitations
+Ограничения
 ^^^^^^^^^^^
 
-GLTFModel currently does not include a default shader, so you must define and include a shader.
-Here is one possible shader that can be used with GLTFModel::
+GLTFModel не содержит шейдера по умолчанию, поэтому шейдер необходимо объявить и передать явно.
+Пример базового шейдера освещения для GLTFModel::
 
     init python:
 
@@ -686,7 +523,7 @@ Here is one possible shader that can be used with GLTFModel::
             v_tex_coord = a_tex_coord;
     """, fragment_201="""
 
-            // The direction of the light.
+            // Направление источника света.
             vec3 lightDir = normalize(vec3(0.0, -1000.0, 1000.0));
 
             vec3 normal = normalize(v_normal);
@@ -708,28 +545,20 @@ Here is one possible shader that can be used with GLTFModel::
             }
     """)
 
-This is a very simple shader that applies diffuse and specular lighting to the model based
-on a single light source, meant for experimentation until better shaders are created.
+GLTFModel ограниченно поддерживает прозрачные поверхности: хотя команда ``discard`` эмулирует
+прозрачность, порядок отрисовки треугольников может вызывать визуальные артефакты.
 
-GLTFModel does not support transparent surfaces well. While the discard command above emulates
-transparency, the ordering is a bit wrong and can lead to artifacts.
+Отображаемый объект Model
+-------------------------
 
-
-
-Model Displayable
------------------
-
-The Model displayable acts as a factory to created models for use with the
-model-based renderer. This is an older API you may wish to use when you want to create
-models in Python.
+Класс Model служит фабрикой создания программных моделей для модельного рендерера в Python.
 
 .. include:: inc/model_displayable
 
-Model Displayable Examples
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Примеры использования Model
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The Model displayable can be used in conjunction with an ATL transform and
-a built-in shader to create the Dissolve transform::
+Объект Model в сочетании с трансформацией ATL и встроенным шейдером позволяет воссоздать эффект Dissolve::
 
     transform dt(delay=1.0, new_widget=None, old_widget=None):
         delay delay
@@ -739,34 +568,27 @@ a built-in shader to create the Dissolve transform::
         u_renpy_dissolve 0.0
         linear delay u_renpy_dissolve 1.0
 
-Using the Model displayable as the child of a displayable is incompatible
-with :tpref:`mesh`, as the two both create models inside Ren'Py.
+Использование объекта Model в качестве дочернего элемента несовместимо со свойством :tpref:`mesh`,
+так как оба механизма создают внутренние модели в Ren'Py.
 
-Animated Shaders
-----------------
+Анимированные шейдеры
+---------------------
 
-When using shaders that depend on ``u_time`` to animate, one must be aware,
-that even though every shader on screen will run on every frame displayed,
-Ren'Py does not run on constant FPS, and will fall back to the minimum frame
-rate of 5 FPS if no displayables require to be redrawn.
+При создании шейдеров, зависящих от переменной времени ``u_time``, необходимо помнить: Ren'Py
+не обновляет экран с постоянной частотой кадров без необходимости и снижает частоту до 5 кадров/сек,
+если нет отображаемых объектов, требующих перерисовки.
 
-When using an animating shader in an ATL transform, this can cause that shader
-to "stutter" and only animate properly while some other object on screen
-animates as well, in case the transform you're using it in does not cause
-redraws otherwise. In this case, an empty ATL loop can be introduced to force
-redraws to happen::
+Чтобы анимированный шейдер работал плавно без задержек, добавьте пустой цикл ATL, форсирующий перерисовку::
 
     transform fancy_shader:
         shader 'my_fancy_shader'
         pause 0
         repeat
 
-``pause 0`` will cycle the frames as fast as possible. You can also set
-different values for ``pause`` to specify a minimum frame rate, like
-``pause 1.0/30``.
+Команда ``pause 0`` заставляет движок обновлять кадры с максимальной частотой экрана. Для ограничения
+частоты кадров можно указать фиксированное значение, например ``pause 1.0/30``.
 
+Фрагменты шейдеров
+------------------
 
-Shader Parts
-------------
-
-For a list of shader parts that Ren'Py uses, see the :doc:`shader_parts`.
+Список стандартных фрагментов шейдеров, встроенных в Ren'Py, представлен в разделе :doc:`shader_parts`.

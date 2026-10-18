@@ -1,41 +1,41 @@
 commands:
 
-* clear: clear the console history
+* clear: очистить историю консоли
 
-* escape: Enables escaping of unicode symbols in unicode strings.
+* escape: включает экранирование символов Юникода в строках Юникода.
 
-* exit: exit the console
+* exit: выйти из консоли
 
-* help: show this help
+* help: показать эту справку
 
-* help <expr>: show signature and documentation of <expr>
+* help <expr>: показать сигнатуру и документацию для <expr>
 
-* jump <label>: jumps to label
+* jump <label>: перейти к метке label
 
-* load <slot>: loads the game from slot
+* load <slot>: загрузить игру из слота slot
 
-* long: Print the full representation of objects on the console.
+* long: выводить полное строковое представление объектов в консоль.
 
-* reload: reloads the game, refreshing the scripts
+* reload: перезагрузить игру и обновить сценарии
 
-* save <slot>: saves the game in slot
+* save <slot>: сохранить игру в слот slot
 
-* short: Shorten the representation of objects on the console (default).
+* short: сокращать строковое представление объектов в консоли (по умолчанию).
 
-* stack: print the return stack
+* stack: вывести стек возврата
 
-* unescape: Disables escaping of unicode symbols in unicode strings and print it as is (default).
+* unescape: отключает экранирование символов Юникода в строках Юникода и выводит их как есть (по умолчанию).
 
-* unwatch <expression>: stop watching an expression
+* unwatch <expression>: прекратить отслеживание выражения
 
-* unwatchall: stop watching all expressions
+* unwatchall: прекратить отслеживание всех выражений
 
-* watch <expression>: watch a python expression
+* watch <expression>: отслеживать выражение Python
 
-* watch short: makes the representation of traced expressions short (default)
+* watch short: сокращенное отображение отслеживаемых выражений (по умолчанию)
 
-* watch long: makes the representation of traced expressions as is
+* watch long: полное отображение отслеживаемых выражений как есть
 
-* <renpy script statement>: run the statement
+* <renpy script statement>: выполнить оператор скрипта Ren'Py
 
-* <python expression or statement>: run the expression or statement
+* <python expression or statement>: вычислить выражение или выполнить оператор Python

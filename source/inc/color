@@ -2,190 +2,174 @@
 
 .. class:: Color(color=None, hls=None, hsv=None, rgb=None, alpha=1.0)
     
-    The Color class is used to represent and manipulate colors and convert
-    between various color spaces. It also represents opacity in the form
-    of an alpha.
+    Класс Color используется для представления цветов, манипуляций с ними и преобразования
+    между различными цветовыми пространствами. Он также представляет непрозрачность в виде альфа-канала.
     
-    When creating a Color, at most one of the `color`, `hls`, `hsv`, or
-    `rgb` arguments should be supplied. (If all are None, None is returned.)
+    При создании объекта Color следует указывать не более одного из аргументов `color`, `hls`,
+    `hsv` или `rgb`. (Если все они равны None, возвращается None.)
     
     `color`
-        The color, in one of the standard formats Ren'Py understands. These
-        are:
-    
-        * A Color object.
-        * An (r, g, b) or (r, g, b, a) tuple, in which all the numbers are
-          between 0 and 255.
-        * A string giving a hexadecimal color, in the form "#rgb", "#rgba",
-          "#rrggbb", or "#rrggbbaa".
+        Цвет в одном из стандартных форматов, распознаваемых Ren'Py:
+        
+        * Объект Color.
+        * Кортеж (r, g, b) или (r, g, b, a), в котором все числа лежат в диапазоне от 0 до 255.
+        * Строка с шестнадцатеричным кодом цвета вида "#rgb", "#rgba", "#rrggbb" или "#rrggbbaa".
     
     `hls`
-        A color in the hue-lightness-saturation color space. This should
-        be supplied a three-component tuple, where each component is between
-        0.0 and 1.0.
+        Цвет в цветовом пространстве тон-светлота-насыщенность (Hue, Lightness, Saturation).
+        Задаётся кортежем из трёх компонентов, каждый из которых лежит в диапазоне от 0.0 до 1.0.
     
     `hsv`
-        A color in the hue-saturation-value color space. This should
-        be supplied a three-component tuple, where each component is between
-        0.0 and 1.0.
+        Цвет в цветовом пространстве тон-насыщенность-значение (Hue, Saturation, Value).
+        Задаётся кортежем из трёх компонентов, каждый из которых лежит в диапазоне от 0.0 до 1.0.
     
     `rgb`
-        A color in the red-green-blue color space. This should
-        be supplied a three-component tuple, where each component is between
-        0.0 and 1.0.
+        Цвет в цветовом пространстве красный-зелёный-синий (Red, Green, Blue).
+        Задаётся кортежем из трёх компонентов, каждый из которых лежит в диапазоне от 0.0 до 1.0.
     
-    If the supplied color does not contain an alpha value, `alpha` is used.
-    `alpha` must be between 0.0 and 1.0.
+    Если переданный цвет не содержит значения альфа-канала, используется параметр `alpha`.
+    `alpha` должен быть в диапазоне от 0.0 до 1.0.
     
-    Color objects can be used as 4-component tuples, where the components
-    are (red, green, blue, and alpha). When used as a tuple, the value
-    of each component is between 0 and 255.
+    Объекты Color можно использовать как 4-компонентные кортежи (красный, зелёный, синий и альфа).
+    При использовании в качестве кортежа значение каждого компонента находится в диапазоне от 0 до 255.
     
-    Color objects support the +, -, and * operators, representing
-    component-wise addition, subtraction, and multiplication. Some uses
-    of these operators can cause the creation of colors with components
-    that are not in the supported range. Such colors should not be passed
-    to other parts of Ren'Py. (The normalize method can be called to return
-    a new color with the components limited to the proper range.)
+    Объекты Color поддерживают операторы +, - и \*, представляющие собой покомпонентное сложение,
+    вычитание и умножение. Некоторые операции могут приводить к получению компонентов, выходящих
+    за допустимые пределы. Такие цвета не следует передавать в другие подсистемы Ren'Py (метод
+    normalize позволяет получить новый цвет с нормализованными значениями компонентов).
     
-    A Color object has the following properties:
+    Объект Color имеет следующие свойства:
     
     .. attribute:: hls
     
-        Returns the color as a tuple of three floating point numbers giving
-        hue, lightness, and saturation. Each component ranges between 0.0 and 1.0.
+        Возвращает цвет в виде кортежа из трёх чисел с плавающей запятой: тон, светлота и насыщенность.
+        Каждый компонент лежит в диапазоне от 0.0 до 1.0.
     
     .. attribute:: hsv
     
-        Returns the color as a tuple of three floating point numbers giving
-        hue, saturation, and value. Each component ranges between 0.0 and 1.0.
+        Возвращает цвет в виде кортежа из трёх чисел с плавающей запятой: тон, насыщенность и значение.
+        Каждый компонент лежит в диапазоне от 0.0 до 1.0.
     
     .. attribute:: rgb
     
-        Returns the color as a tuple of three floating point numbers giving
-        the red, green, and blue components. Each component ranges between 0.0
-        and 1.0.
+        Возвращает цвет в виде кортежа из трёх чисел с плавающей запятой: красный, зелёный и синий.
+        Каждый компонент лежит в диапазоне от 0.0 до 1.0.
     
     .. attribute:: rgba
     
-        Returns the color as a tuple of four floating point numbers giving
-        the red, green, blue and alpha components as 0.0 to 1.0 values.
+        Возвращает цвет в виде кортежа из четырёх чисел с плавающей запятой: красный, зелёный, синий
+        и альфа со значениями от 0.0 до 1.0.
     
     .. attribute:: premultiplied
     
-        Returns the color as a tuple of four floating point numbers giving
-        the red, green, blue and alpha components as 0.0 to 1.0 values, with
-        the red, green, and blue components premultiplied by the alpha.
+        Возвращает цвет в виде кортежа из четырёх чисел с плавающей запятой со значениями от 0.0 до 1.0,
+        где компоненты red, green и blue предварительно умножены на альфа (premultiplied alpha).
     
     .. attribute:: alpha
     
-        Returns the alpha (opacity) of this Color as a number between 0.0 and
-        1.0, where 0.0 is transparent and 1.0 is opaque.
+        Возвращает альфа-канал (непрозрачность) цвета в виде числа от 0.0 (полностью прозрачный)
+        до 1.0 (полностью непрозрачный).
     
     .. attribute:: hexcode
     
-        Returns a string containing a hex color code of the form #rrggbbaa
-        or #rrggbb.
+        Возвращает строку с шестнадцатеричным кодом цвета вида #rrggbbaa или #rrggbb.
     
-    Color objects have the following methods. Since Colors are immutable,
-    these methods always return a new Color object.
+    Объекты Color имеют следующие методы. Поскольку объекты Color неизменяемы (immutable),
+    эти методы всегда возвращают новый объект Color.
 
     .. method:: interpolate(other: ColorLike, fraction: float) -> 'Color'
         
-        Interpolates between this Color and `other` in the RGB color
-        space, returning a new Color as the result. If `fraction` is 0.0, the
-        result is the same as this color, if 1.0, it is the same as `other`.
+        Выполняет интерполяцию между данным цветом и цветом `other` в цветовом пространстве RGB,
+        возвращая новый Color в качестве результата. Если `fraction` равно 0.0, возвращается
+        исходный цвет, если 1.0 — цвет `other`.
     
     .. method:: interpolate_hls(other: 'str | Color | tuple[float, float, float]', fraction: float) -> 'Color'
         
-        Interpolates between this Color and `other` in the HLS color
-        space, returning a new Color as the result. If `fraction` is 0.0, the
-        result is the same as this color, if 1.0, it is the same as `other`.
+        Выполняет интерполяцию между данным цветом и цветом `other` в цветовом пространстве HLS,
+        возвращая новый Color в качестве результата. Если `fraction` равно 0.0, возвращается
+        исходный цвет, если 1.0 — цвет `other`.
         
-        `other` may be a string, Color or an HLS tuple.
+        `other` может быть строкой, объектом Color или кортежем HLS.
     
     .. method:: interpolate_hsv(other: 'str | Color | tuple[float, float, float]', fraction: float) -> 'Color'
         
-        Interpolates between this Color and `other` in the HSV color
-        space, returning a new Color as the result. If `fraction` is 0.0, the
-        result is the same as this color, if 1.0, it is the same as `other`.
+        Выполняет интерполяцию между данным цветом и цветом `other` в цветовом пространстве HSV,
+        возвращая новый Color в качестве результата. Если `fraction` равно 0.0, возвращается
+        исходный цвет, если 1.0 — цвет `other`.
         
-        `other` may be a string, Color or an HSV tuple.
+        `other` может быть строкой, объектом Color или кортежем HSV.
     
     .. method:: multiply_hls_saturation(saturation: float) -> 'Color'
         
-        Multiplies this color's saturation by `saturation`, and returns
-        the result as a new Color. This is performed in the HLS color space.
+        Умножает насыщенность цвета на `saturation` и возвращает результат в виде нового
+        Color. Операция выполняется в цветовом пространстве HLS.
     
     .. method:: multiply_hsv_saturation(saturation: float) -> 'Color'
         
-        Multiplies this color's saturation by `saturation`, and returns
-        the result as a new Color. This is performed in the HSV color space.
+        Умножает насыщенность цвета на `saturation` и возвращает результат в виде нового
+        Color. Операция выполняется в цветовом пространстве HSV.
     
     .. method:: multiply_value(value: float) -> 'Color'
         
-        Multiples this color's value by `value` and returns the result as a
-        new Color. This is performed in the HSV color space.
+        Умножает значение цвета на `value` и возвращает результат в виде нового Color.
+        Операция выполняется в цветовом пространстве HSV.
     
     .. method:: normalize()
         
-        Returns a normalized version of this Color where all components fall
-        between 0 and 255.
+        Возвращает нормализованную версию этого цвета, где все компоненты приведены
+        к диапазону от 0 до 255.
     
     .. method:: opacity(opacity: float) -> 'Color'
         
-        Multiplies the alpha channel of this color by `opacity`, and returns
-        the new color.
+        Умножает альфа-канал цвета на `opacity` и возвращает новый Color.
     
     .. method:: replace_hls_saturation(saturation: float) -> 'Color'
         
-        Replaces this color's saturation with `saturation`, and returns
-        the result as a new Color. This is performed in the HLS color space.
+        Заменяет насыщенность цвета значением `saturation` и возвращает результат в виде
+        нового Color. Операция выполняется в цветовом пространстве HLS.
     
     .. method:: replace_hsv_saturation(saturation: float) -> 'Color'
         
-        Replace this color's saturation with `saturation`, and returns
-        the result as a new Color. This is performed in the HSV color space.
+        Заменяет насыщенность цвета значением `saturation` и возвращает результат в виде
+        нового Color. Операция выполняется в цветовом пространстве HSV.
     
     .. method:: replace_hue(hue: float) -> 'Color'
         
-        Replaces this color's hue with `hue`, which should be between 0.0 and
-        1.0. Returns the new Color.
+        Заменяет цветовой тон на значение `hue`, которое должно находиться в диапазоне от 0.0
+        до 1.0. Возвращает новый Color.
     
     .. method:: replace_lightness(lightness: float) -> 'Color'
         
-        Replaces this color's lightness with `lightness`, and returns
-        the result as a new Color. This is performed in the HLS color space.
+        Заменяет светлоту цвета значением `lightness` и возвращает результат в виде нового Color.
+        Операция выполняется в цветовом пространстве HLS.
     
     .. method:: replace_opacity(opacity: float) -> 'Color'
         
-        Replaces this color's alpha channel with `opacity`, and
-        returns the result as a new Color.
+        Заменяет альфа-канал цвета значением `opacity` и возвращает результат в виде нового Color.
     
     .. method:: replace_value(value: float) -> 'Color'
         
-        Replaces this color's value with `value` and returns the result as a
-        new Color. This is performed in the HSV color space.
+        Заменяет значение цвета на `value` и возвращает результат в виде нового Color.
+        Операция выполняется в цветовом пространстве HSV.
     
     .. method:: rotate_hue(rotation: float) -> 'Color'
         
-        Rotates this color's hue by `rotation`, and returns the new Color. `rotation`
-        is a fraction of a full rotation (between 0.0 and 1.0). Divide by 360.0 to
-        convert to degrees.
+        Смещает цветовой тон на величину `rotation` по кругу и возвращает новый Color.
+        `rotation` выражается долей полного оборота (от 0.0 до 1.0). Разделите на 360.0
+        для преобразования из градусов.
     
     .. method:: shade(fraction: float) -> 'Color'
         
-        Creates a shade of this color by mixing it with black. `fraction` is
-        the fraction of this color that is in the new color. If `fraction` is
-        1.0, the color is unchanged, if 0.0, black is returned.
+        Создаёт затемнённый оттенок (shade) цвета путём смешивания с чёрным цветом.
+        `fraction` задаёт долю исходного цвета в результирующем цвете. Если `fraction`
+        равно 1.0, цвет остаётся неизменным; если 0.0 — возвращается чёрный цвет.
         
-        The alpha channel is unchanged.
+        Альфа-канал остаётся без изменений.
     
     .. method:: tint(fraction: float) -> 'Color'
         
-        Creates a tint of this color by mixing it with white. `fraction` is
-        the fraction of this color that is in the new color. If `fraction` is
-        1.0, the color is unchanged, if 0.0, white is returned.
+        Создаёт осветлённый оттенок (tint) цвета путём смешивания с белым цветом.
+        `fraction` задаёт долю исходного цвета в результирующем цвете. Если `fraction`
+        равно 1.0, цвет остаётся неизменным; если 0.0 — возвращается белый цвет.
         
-        The alpha channel is unchanged.
-    
+        Альфа-канал остаётся без изменений.

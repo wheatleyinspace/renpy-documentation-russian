@@ -1,230 +1,211 @@
-======
-Styles
-======
+=====
+Стили
+=====
 
-Styles allow the look of :doc:`displayables` to be customized, by changing the
-value of style properties. For example, changing the :propref:`background`
-property to change the background of a window or button.
+Стили позволяют настраивать внешний вид :doc:`отображаемых объектов <displayables>`
+путем изменения значений свойств стиля. Например, изменяя свойство :propref:`background`,
+можно изменить фон окна диалога или кнопки.
 
-:doc:`Style properties <style_properties>` can be prefixed by identifiers
-specifying when the property is used. For example, a button's
-``hover_background`` property is used when it is focused, while its
-``idle_background`` property is used when it is not. (Setting the
-``background`` property sets both the ``idle_background`` and
-``hover_background``, among others.)
+Свойствам стилей (:doc:`style_properties`) могут предшествовать префиксы-идентификаторы,
+указывающие, в каком состоянии объекта применяется свойство. Например, свойство
+кнопки ``hover_background`` используется при наведении курсора (фокусе), тогда как
+``idle_background`` — в состоянии покоя. (Задание базового свойства ``background``
+одновременно устанавливает и ``idle_background``, и ``hover_background``, среди прочих).
 
-While Ren'Py has over 100 style properties, only a few of them are
-used in this section.
+Хотя Ren'Py поддерживает более 100 свойств стиля, в данном разделе рассматриваются
+лишь некоторые из них.
 
 
-Using Styles and Style Inheritance
-==================================
+Использование стилей и наследование
+===================================
 
-Each displayable has a style built into it. When the displayable is created,
-either directly or using the screen system, style properties can be supplied,
-which are used to update the look of the displayable. In the following example::
+Каждый отображаемый объект имеет встроенный в него стиль. При создании отображаемого
+объекта (напрямую в Python или через систему экранов) ему можно передать свойства стиля,
+изменяющие его вид. В следующем примере::
 
-    image big hello world = Text("Hello, World", size=40)
+    image big hello world = Text("Привет, мир", size=40)
 
-the :propref:`size` property is supplied to a Text displayable, allowing us to
-change its text size. This will customize the look of the text displayable by
-displaying the text 40 pixels high (though this also depends on the font).
+свойство :propref:`size` передается отображаемому объекту Text, позволяя задать размер
+текста. Это изменит вид объекта, отображая текст высотой в 40 пикселей (что также зависит
+от параметров шрифта).
 
-Similarly, when using Screen Language, each user interface statement takes
-relevant style properties::
+Аналогично в языке экранов (Screen Language) каждый оператор пользовательского интерфейса
+принимает соответствующие свойства стиля::
 
     screen big_hello_world:
-        text "Hello, World" size 40
+        text "Привет, мир" size 40
 
-Individual styles exist to gather properties so they can be applied to
-displayables together. For example, these two texts will appear the same::
+Отдельные стили существуют для группировки свойств, чтобы их можно было применять к
+отображаемым объектам совместно. Например, эти два текста будут выглядеть одинаково::
 
-    image big one = Text("Hello, World", size=40, color="#f00")
-    image big two = Text("Hello, World", style="big_red")
+    image big one = Text("Привет, мир", size=40, color="#f00")
+    image big two = Text("Привет, мир", style="big_red")
 
     style big_red:
         size 40
         color "#f00"
 
-Each style has a set of properties, and one parent. When a given style is applied
-to a given displayable, each style property (among those taken by the
-displayable) will be looked for among the style's properties. If it's not found,
-it is searched in the parent style, and then in the parent's parent, and so on.
+Каждый стиль содержит набор свойств и имеет одного родителя. Когда заданный стиль
+применяется к отображаемому объекту, каждое свойство стиля ищется среди свойств самого
+стиля. Если оно не найдено, поиск продолжается в родительском стиле, затем в родителе
+родителя и так далее по цепочке наследования.
 
-Each displayable takes a property named ``style``, which applies the said style
-to the displayable::
+Каждый отображаемый объект принимает свойство ``style``, применяющее указанный стиль к объекту::
 
-    image big hello world = Text("Hello World", style="big")
+    image big hello world = Text("Привет, мир", style="big")
 
     screen hello_world:
-        text "Hello, World" style "big"
+        text "Привет, мир" style "big"
 
-When no ``style`` property is given, a parent is chosen based on the kind of
-displayable that has been supplied. For example, buttons (including imagebuttons
-and textbuttons) default to the "button" style, grids to the "grid" style, and
-so on. The parent choice can be influenced by the
-:ref:`style_prefix <style-prefix>` property of user interface statements
-in the screen language.
+Если свойство ``style`` не указано, родитель выбирается автоматически на основе типа
+отображаемого объекта. Например, кнопки (включая imagebutton и textbutton) по умолчанию
+используют стиль "button", сетки — стиль "grid" и так далее. На выбор родителя также
+влияет свойство :ref:`style_prefix <style-prefix>` операторов в языке экранов.
 
-When a style is defined without a parent being specified, a default
-parent is chosen for the style. If the style contains an underscore (_)
-in its name, the parent is named by removing everything up to and
-including the first underscore. When a style that does not exist is used, and
-the style has an underscore in its name, Ren'Py will create it using the default
-parent. For example, a style named ``my_button`` will inherit from ``button``.
-This inheritance can be changed using the style statement or using methods of
-the :class:`Style` class. Otherwise, the style named "default" is used.
+Когда стиль определяется без явного указания родителя, родитель выбирается автоматически.
+Если имя стиля содержит символ подчеркивания (_), имя родителя формируется путем отсечения
+всего текста до первого подчеркивания включительно. При обращении к несуществующему стилю,
+имя которого содержит подчеркивание, Ren'Py автоматически создаст его с родителем по умолчанию.
+Например, стиль ``my_button`` унаследует свойства от стиля ``button``. Наследование можно
+изменить с помощью оператора style или методов класса :class:`Style`. В остальных случаях
+родителем выступает стиль "default".
 
-Style names beginning with an underscore are reserved for Ren'Py use.
+Имена стилей, начинающиеся с символа подчеркивания, зарезервированы для внутреннего
+использования движком Ren'Py.
 
-As Ren'Py builds styles on startup, named styles should not be changed
-after the :ref:`init-phase`.
+Поскольку Ren'Py строит дерево стилей при запуске игры, именованные стили не следует
+изменять после завершения :ref:`фазы инициализации <init-phase>`.
 
-During development, the :ref:`style-inspector` can be very useful to check what
-styles and style properties are being used by a displayable.
+Во время разработки очень полезен :ref:`инспектор стилей <style-inspector>` (Shift+I),
+позволяющий проверить, какие стили и свойства применяются к отображаемому объекту под курсором.
 
 
-Defining Styles: Style Statement
-================================
+Определение стилей: оператор style
+==================================
 
-The preferred way to define styles is through the style statement::
+Предпочтительным способом определения стилей является оператор ``style``::
 
     style my_text is text:
         size 40
         font "gentium.ttf"
 
-If a style does not exist, the style statement creates it. Otherwise,
-the existing style is modified by the style statement.
+Если стиль с таким именем еще не существует, оператор style создает его. В противном
+случае существующий стиль дополняется или изменяется.
 
 .. note::
 
-    Unlike other statements such as :ref:`screen <screen-statement>`,
-    :ref:`transform <transform-statement>` or :ref:`image <image-statement>`,
-    the style statement is not unique for a given name: several statements can
-    refer to the same style and alter it successively, sometimes in a
-    concurrent or contradictory way. In such cases, the init times at which the
-    different style statements occur greatly matter over the final result.
+    В отличие от операторов :ref:`screen <screen-statement>`, :ref:`transform <transform-statement>`
+    или :ref:`image <image-statement>`, оператор style не уникален для конкретного имени:
+    несколько операторов могут ссылаться на один и тот же стиль и модифицировать его
+    последовательно, иногда конкурирующим образом. В таких случаях порядок выполнения
+    на этапе инициализации имеет решающее значение для итогового результата.
 
-A style statement begins with the keyword ``style`` and the name of the
-style to define. This is followed on the first line by zero or more
-clauses, and an optional colon.
+Оператор style начинается с ключевого слова ``style`` и имени определяемого стиля.
+Далее на первой строке могут следовать клаузы и необязательное двоеточие.
 
-If the colon is present, a block must follow. Each line of the block should
-contain one ore more clauses. Otherwise, the statement is complete.
+Если двоеточие присутствует, за ним должен следовать блок с отступом, каждая строка
+которого содержит одну или несколько клауз.
 
-The style statement accepts the following clauses:
+Оператор style принимает следующие клаузы:
 
-`style-property` `simple-expression`
-    Assigns the value of the simple expression to the given style
-    property.
+`свойство-стиля` `простое-выражение`
+    Присваивает значение простого выражения указанному свойству стиля.
 
-``is`` `parent`
-    Sets or replaces the parent of this style. The parent must be a word giving
-    the name of a style.
+``is`` `родитель`
+    Устанавливает или заменяет родителя стиля. Родителем должно быть слово с именем стиля.
 
 ``clear``
-    Removes all properties of this style that were assigned before
-    this style statement was run. This does not prevent the style
-    from inheriting property values from its parents, and does not change its
-    parent. To clear the parent of a style, use ``is default`` instead.
+    Удаляет все свойства стиля, присвоенные до выполнения этого оператора. Это не
+    мешает стилю наследовать свойства от родителей и не изменяет родителя стиля. Чтобы
+    сбросить родителя стиля, используйте вместо этого конструкцию ``is default``.
 
-``take`` `style-name`
-    Clears all properties of this style that were assigned before
-    this style statement was run, and replaces them with the properties
-    of the named style. This does not change the parent of this style.
+``take`` `имя-стиля`
+    Очищает все ранее заданные свойства этого стиля и заменяет их свойствами указанного
+    стиля. Не изменяет родителя стиля.
 
-``variant`` `simple-expression`
-    Evaluates the simple expression, to yield a string or list of strings,
-    which are interpreted as :ref:`screen variants <screen-variants>`. If at
-    least one of the variants given is active, the style statement is run,
-    otherwise the rest of the block is ignored.
+``variant`` `простое-выражение`
+    Вычисляет выражение для получения строки или списка строк, интерпретируемых как
+    :ref:`варианты экранов <screen-variants>`. Если хотя бы один из вариантов активен,
+    оператор выполняется, иначе блок игнорируется.
 
-``properties`` `simple-expression`
-    Evaluates the simple expression to get a dictionary. The dictionary is
-    expected to map style properties to values, and the values are assigned
-    as if they were provided to the style statement.
+``properties`` `простое-выражение`
+    Вычисляет словарь, сопоставляющий свойства стилей значениям. Значения присваиваются
+    так, будто они были перечислены напрямую в операторе style.
 
-Examples of style statements are::
+Примеры операторов style::
 
-    # Creates a new style, inheriting from default.
+    # Создает новый стиль, наследуемый от default.
     style big_red:
         size 40
 
-    # Updates the style.
+    # Обновляет существующий стиль.
     style big_red color "#f00"
 
-    # Takes the properties of label_text from big_red, but only if we're
-    # on a touch system.
-
+    # Заимствует свойства big_red для label_text, но только на сенсорных устройствах.
     style label_text:
         variant "touch"
         take big_red
 
-    # Style a has all the properties of style c, except that when not present
-    # in c, the properties are taken from b or b's parents.
+    # Стиль a получает все свойства стиля c; отсутствующие в c свойства
+    # берутся из b или родителей b.
     style a is b:
         take c
 
-Style statements are always run at :ref:`init time <init-phase>`.
+Операторы style всегда выполняются во время :ref:`фазы инициализации <init-phase>`.
 
 
-Defining Styles: Python
-=======================
+Определение стилей в Python
+===========================
 
-Named styles exists as fields on the global ``style`` object. To create a new
-style, create an instance of the :class:`Style` class, and assign it to a field
-on the ``style`` object::
+Именованные стили доступны как атрибуты глобального объекта ``style``. Чтобы создать
+новый стиль, создайте экземпляр класса :class:`Style` и присвойте его полю объекта ``style``::
 
     init python:
         style.big_red = Style(style.default)
 
-Style properties can be set by assigning to properties-like fields of the Style
-objects. ::
+Свойства стиля можно задавать, присваивая значения полям объектов Style::
 
     init python:
         style.big_red.color = "#f00"
         style.big_red.size = 42
 
-However, the value of a style property cannot be accessed this way, it can only
-be written.
+Обратите внимание, что значения свойств стиля нельзя прочитать таким способом — в них
+можно только записывать.
 
 .. class:: Style(parent)
 
     `parent`
-        The styles parent. This can be another Style object, or a string.
+        Родительский стиль. Может быть другим объектом Style или строкой с именем стиля.
 
     .. method:: clear()
 
-        This removes all style properties from this object. Values will be
-        inherited from this object's parent.
+        Удаляет все свойства стиля из этого объекта. Значения будут наследоваться
+        от родителя этого объекта.
 
-        The equivalent of the ``clear`` clause in a style statement.
+        Эквивалент клаузы ``clear`` в операторе style.
 
     .. method:: set_parent(parent)
 
-        Sets the parent of this style object to `parent`, which can be another
-        Style object or a string.
+        Устанавливает родителя стиля в `parent` (объект Style или строку с именем).
 
-        The equivalent of the ``is`` clause in a style statement.
+        Эквивалент клаузы ``is`` в операторе style.
 
     .. method:: take(other)
 
-        This takes all style properties from `other`, which can be another
-        Style object or a string.
+        Заимствует все свойства стиля из `other` (объект Style или строку).
 
-        The equivalent of the ``take`` clause in a style statement.
+        Эквивалент клаузы ``take`` в операторе style.
 
 
 .. _indexed-styles:
 
-Indexed Styles
---------------
+Индексированные стили
+---------------------
 
-Indexed styles are lightweight styles that can be used to customize the look
-of a displayable based on the data supplied to that displayable. An index
-style is created by indexing an existing Style object with a string or integer.
-If the indexed style does not exist, indexing creates it as a child of the
-original Style object. ::
+Индексированные стили — это легковесные стили, используемые для настройки вида отображаемого
+объекта на основе переданных ему данных. Индексированный стиль создается путем индексации
+существующего объекта Style строкой или целым числом. Если индексированный стиль еще не
+существует, индексация автоматически создает его как дочерний элемент исходного объекта Style. ::
 
     init python:
         style.button["Foo"].background = "#f00"
@@ -240,67 +221,59 @@ original Style object. ::
 
 .. _style-preferences:
 
-Style Preferences
------------------
+Настройки стилей
+----------------
 
 .. note::
 
-    :ref:`gui-preferences` may often provide a better way of accomplishing
-    the same thing, as a gui preference can change a variable used in multiple
-    styles.
+    :ref:`gui-preferences` часто предоставляют более удобный способ решения аналогичных задач,
+    так как настройка GUI может менять переменную, используемую во множестве стилей одновременно.
 
-It's often desirable to allow the user to customize aspects of the user
-interface that are best expressed as styles. For example, a creator may want
-to give players the ability to adjust the look, color and size
-of the text. Style preferences allow for this customization.
+Часто желательно предоставить пользователю возможность настраивать аспекты интерфейса,
+выраженные в виде стилей (например, размер текста, цвет шрифта или обводку). Для этого
+служат настройки стилей (style preferences).
 
-A style preference is a preference controlling one or more style properties.
-A style preference has a name and one or more alternatives. At any given time,
-one of the available alternatives is selected, and saved in the persistent data.
-It defaults to the first registered alternative.
+Настройка стиля управляет одним или несколькими свойствами стиля. Она имеет имя и один
+или несколько вариантов (альтернатив). В любой момент времени выбран один из вариантов,
+который сохраняется в постоянных данных (persistent data). По умолчанию выбирается первый
+зарегистрированный вариант.
 
-An alternative contains one or more associations of style, property, and value
-for that property. It represents a promise that when the alternative gets
-selected, that property on that style will be assigned that value. This occurs
-when Ren'Py first initializes, and then whenever a new alternative is selected.
+Вариант содержит одну или несколько привязок стиля, свойства и его значения. При выборе
+этого варианта (а также при первом запуске игры) указанным свойствам стилей присваиваются
+соответствующие значения.
 
-One should ensure that every alternative for a given style preference updates
-the same set of styles and properties. Otherwise, the result will not be
-deterministic as going from one alternative to another and going back to the
-first one will leave some properties set as they are in the second alternative.
+Следует следить за тем, чтобы все варианты одной настройки стиля изменяли один и тот же
+набор стилей и свойств во избежание недетерминированного поведения.
 
-Here's an example of registering a style property that allows the user to
-choose between large, simple text, and smaller outlined text.
-
-::
+Пример регистрации настройки стиля, позволяющей пользователю выбирать между крупным простым
+текстом и меньшим текстом с контуром::
 
     init python:
-        # The "decorated" alternative of the "text" preference will set the size to 22 on the "say_dialogue" style.
+        # Вариант "decorated" настройки "text" устанавливает размер 22 для стиля "say_dialogue".
         renpy.register_style_preference("text", "decorated", style.say_dialogue, "size", 22)
         renpy.register_style_preference("text", "decorated", style.say_dialogue, "outlines", [ (1, "#000", 0, 0) ])
 
         renpy.register_style_preference("text", "large", style.say_dialogue, "size", 24)
         renpy.register_style_preference("text", "large", style.say_dialogue, "outlines", [ ])
 
-        # The "decorated" alternative will be the default one for the "text" preference since it was registered first.
+        # Вариант "decorated" будет вариантом по умолчанию, так как он был зарегистрирован первым.
 
-The following allows the user to select these alternatives using buttons::
+Переключение вариантов с помощью кнопок::
 
-    textbutton "Decorated" action StylePreference("text", "decorated")
-    textbutton "Large" action StylePreference("text", "large")
+    textbutton "С оформлением" action StylePreference("text", "decorated")
+    textbutton "Крупный" action StylePreference("text", "large")
 
 .. include:: inc/style_preferences
 
-Other Style Functions
+Другие функции стилей
 ---------------------
 
 .. function:: style.rebuild()
 
-    This causes named styles to be rebuilt, allowing styles to be
-    changed after the init phase has finished.
+    Заставляет Ren'Py перестроить именованные стили, позволяя вносить изменения в стили
+    после завершения фазы инициализации.
 
     .. warning::
 
-        Named styles are not saved as part of the per-game data. This
-        means that changes to them will not be persisted through a save
-        and load cycle.
+        Именованные стили не сохраняются в файлах сохранений игры. Это означает, что
+        изменения, внесенные в них, не переживут цикл сохранения и загрузки.

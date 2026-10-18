@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HTTPS/HTTP Fetch &mdash; Ren&#39;Py Documentation</title>
+  <title>Сетевые запросы HTTPS/HTTP &mdash; Ren&#39;Py Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6eda34c5" />
@@ -14,7 +14,7 @@
       <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
 
   
-    <link rel="canonical" href="https://www.renpy.org/doc/html/fetch.html" />
+    <link rel="canonical" href="https://wheatleyinspace.github.io/renpy-documentation-russian/fetch.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=00c7e44b"></script>
@@ -26,7 +26,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="Screenshots" href="screenshot.html" />
+    <link rel="next" title="Снимки экрана" href="screenshot.html" />
     <link rel="prev" title="pygame" href="pygame.html" /> 
 </head>
 
@@ -52,7 +52,7 @@
               <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">Руководство по настройке GUI</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
 <ul>
@@ -73,121 +73,128 @@
 <li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Аудио</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Аудиофильтры</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Видео</a></li>
 <li class="toctree-l1"><a class="reference internal" href="voice.html">Озвучка</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Текст</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translation.html">Перевод</a></li>
 <li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Трансформации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Свойства трансформаций</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Переходы (Transitions)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Многослойные картинки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D-сцена</a></li>
 <li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Стили</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Свойства стилей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Экраны и язык экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Действия, значения и функции экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Специальные имена экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Оптимизация языка экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Конфигурационные переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Переменные настроек</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Переменные хранилища</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Пользовательские курсоры мыши</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Текстовые шейдеры</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Лаунчер</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Инструменты разработчика</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Интерактивный режиссёр (Interactive Director)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Автоматизированное тестирование</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
-<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">Руководство по режиму NVL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Текстовые облачка (Speech Bubbles)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Ввод текста</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Боковые изображения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Галерея изображений, музыкальная комната и повтор сцен (Replay)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Спрайты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Настройка привязок клавиш</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Достижения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">История диалогов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Диалог нескольких персонажей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Заставка (Splashscreen) и предзаставка (Presplash)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Жизненный цикл запущенной игры Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
-<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Эквиваленты инструкций на Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Сохранение, загрузка и откат</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Постоянные данные</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Продвинутый GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
-<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
-<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Экраны и Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Пользовательские отображаемые объекты (CDD)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Пользовательские инструкции (CDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Пользовательские текстовые теги</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Коллбэки персонажей (Character Callbacks)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">Доступ к файлам</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Класс Color</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Матрицы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Модельный рендеринг</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Прочие функции и переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">Файлы _ren.py — Ren'Py внутри Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">HTTPS/HTTP Fetch</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Сетевые запросы HTTPS/HTTP</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#renpy.fetch"><code class="docutils literal notranslate"><span class="pre">renpy.fetch()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#renpy.get_fetch_progress"><code class="docutils literal notranslate"><span class="pre">renpy.get_fetch_progress()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#requests">Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requests">Библиотека Requests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
-<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Снимки экрана</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Буфер обмена</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">Возраст пользователя</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Сборка дистрибутивов</a></li>
 <li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Веб / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS / Chromebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
-<li class="toctree-l1"><a class="reference internal" href="downloader.html">Downloader for Large Games on Mobile</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">Внутриигровые покупки (In-App Purchasing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">Обновление по HTTPS/HTTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader.html">Загрузчик больших игр на мобильных платформах</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Жесты</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Безопасность</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Устранение неполадок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Переменные окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Голосовое сопровождение интерфейса (Self-Voicing)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Шаблоны проектов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Интерфейс командной строки (CLI)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Интеграция с текстовым редактором</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Скины</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Перевод Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">История изменений (Changelog Ren'Py 7+)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">История изменений (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Несовместимые изменения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Лицензия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Авторы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Спонсоры разработки Ren'Py</a></li>
 </ul>
 
         </div>
@@ -204,9 +211,9 @@
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">HTTPS/HTTP Fetch</li>
+      <li class="breadcrumb-item active">Сетевые запросы HTTPS/HTTP</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/fetch.rst" class="fa fa-github"> Редактировать на GitHub</a>
+              <a href="https://github.com/wheatleyinspace/renpy-documentation-russian/blob/.fetch.rst" class="fa fa-github"> Редактировать на GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -214,95 +221,96 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="https-http-fetch">
-<h1>HTTPS/HTTP Fetch<a class="headerlink" href="#https-http-fetch" title="Ссылка на этот заголовок"></a></h1>
-<p>Ren'Py supports fetching information over HTTP and HTTPS using the
-renpy.fetch function. This function:</p>
+  <section id="https-http">
+<span id="fetch"></span><h1>Сетевые запросы HTTPS/HTTP<a class="headerlink" href="#https-http" title="Ссылка на этот заголовок"></a></h1>
+<p>Ren'Py поддерживает получение данных по протоколам HTTP и HTTPS с помощью
+функции <a class="reference internal" href="#renpy.fetch" title="renpy.fetch"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.fetch()</span></code></a>. Эта функция:</p>
 <ul class="simple">
-<li><p>Supports GET, POST, and PUT requests.</p></li>
-<li><p>Support POSTing or PUTing data or json to the server.</p></li>
-<li><p>Can return the result as bytes, a string, or a json object.</p></li>
+<li><p>Поддерживает запросы методов GET, POST и PUT.</p></li>
+<li><p>Поддерживает отправку необработанных данных (data) или структур JSON на сервер.</p></li>
+<li><p>Может возвращать результат в виде байтов (bytes), строки (text) или объекта JSON.</p></li>
 </ul>
-<p>The fetch function is meant to be used in the main thread of Ren'Py, after
-the game has started. It can be used on desktop, mobile, or the web platform.
-When used on the web platform, when not fetching from the same server that
-originally served the game, the server must support <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a>.</p>
-<p>As a very simple example, this gets news from a server:</p>
+<p>Функция <a class="reference internal" href="#renpy.fetch" title="renpy.fetch"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.fetch()</span></code></a> предназначена для вызова из основного потока Ren'Py
+после старта игры. Она работает на ПК, мобильных платформах и в браузере (веб).
+При работе в браузере запросы к сторонним серверам (отличным от того, с которого
+загружена сама игра) требуют поддержки сервером политики
+<a class="reference external" href="https://developer.mozilla.org/ru/docs/Web/HTTP/CORS">CORS</a>.</p>
+<p>Простой пример получения новостей с сервера:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">news</span> <span class="o">=</span> <span class="n">renpy</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s2">&quot;https://example.com/news.txt&quot;</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
-<span class="s2">&quot;Here&#39;s the news: [news]&quot;</span>
+<span class="s2">&quot;Свежие новости: [news]&quot;</span>
 </pre></div>
 </div>
-<p>And this posts JSON to a server, and gets JSON back:</p>
+<p>Пример отправки данных JSON на сервер с получением ответа в формате JSON:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">$</span> <span class="n">result</span> <span class="o">=</span> <span class="n">renpy</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s2">&quot;https://example.com/api&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ren&#39;Py&quot;</span><span class="p">},</span> <span class="n">result</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>As with any application that communicates over the network, security needs
-to be considered when using renpy.fetch, especially when displaying media
-returned this way. (Ren'Py is generally not hardened against malicious images,
-movies, and audio files.)</p>
-<p>The progress of ongoing fetch requests can be displayed using the <a class="reference internal" href="screen_actions.html#FetchProgressValue" title="FetchProgressValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">FetchProgressValue</span></code></a> bar value.</p>
+<p>Как и в любых сетевых приложениях, при использовании <a class="reference internal" href="#renpy.fetch" title="renpy.fetch"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.fetch()</span></code></a> необходимо
+учитывать вопросы безопасности, особенно при отображении медиафайлов, полученных
+из сети (Ren'Py не содержит механизмов защиты от вредоносных изображений, видеороликов
+и аудиофайлов).</p>
+<p>Прогресс выполнения активных сетевых запросов можно отображать на полосе прогресса
+с помощью значения шкалы <a class="reference internal" href="screen_actions.html#FetchProgressValue" title="FetchProgressValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">FetchProgressValue</span></code></a>.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.fetch">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">fetch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bytes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renpy.fetch" title="Ссылка на это определение"></a></dt>
-<dd><p>This performs an HTTP (or HTTPS) request to the given URL, and returns
-the content of that request. If it fails, raises a FetchError exception,
-with text that describes the failure. (But may not be suitable for
-presentation to the user.)</p>
+<dd><p>Выполняет HTTP- (или HTTPS-) запрос по указанному URL и возвращает содержимое
+ответа. При возникновении ошибки возбуждает исключение FetchError с описанием сбоя
+(которое, однако, может не подходить для непосредственного показа игроку).</p>
 <dl class="simple">
-<dt><cite>url</cite></dt><dd><p>The URL to fetch.</p>
+<dt><cite>url</cite></dt><dd><p>URL-адрес для выполнения запроса.</p>
 </dd>
-<dt><cite>method</cite></dt><dd><p>The method to use. Generally one of &quot;GET&quot;, &quot;POST&quot;, or &quot;PUT&quot;, but other
-HTTP methods are possible. If <cite>data</cite> or <cite>json</cite> are not None, defaults to
-&quot;POST&quot;, otherwise defaults to GET.</p>
+<dt><cite>method</cite></dt><dd><p>Используемый метод HTTP-запроса. Обычно &quot;GET&quot;, &quot;POST&quot; или &quot;PUT&quot;, однако
+поддерживаются и другие стандартные методы. Если параметры <cite>data</cite> или <cite>json</cite>
+заданы (не None), по умолчанию используется &quot;POST&quot;, иначе — &quot;GET&quot;.</p>
 </dd>
-<dt><cite>data</cite></dt><dd><p>If not None, a byte string of data to send with the request.</p>
+<dt><cite>data</cite></dt><dd><p>Если указано, байтовая строка данных для отправки в теле запроса.</p>
 </dd>
-<dt><cite>json</cite></dt><dd><p>If not None, a JSON object to send with the request. This takes precendence
-over <cite>data</cite>.</p>
+<dt><cite>json</cite></dt><dd><p>Если указано, JSON-объект для отправки в теле запроса. Имеет приоритет над <cite>data</cite>.</p>
 </dd>
-<dt><cite>content_type</cite></dt><dd><p>The content type of the data. If not given, defaults to &quot;application/json&quot;
-if <cite>json</cite> is not None, or &quot;application/octet-stream&quot; otherwise. Only
-used on a POST or PUT request.</p>
+<dt><cite>content_type</cite></dt><dd><p>Тип содержимого (MIME-тип). Если не указан, по умолчанию принимает значение
+&quot;application/json&quot;, если передан параметр <cite>json</cite>, либо &quot;application/octet-stream&quot;
+в противном случае. Применяется только при запросах POST или PUT.</p>
 </dd>
-<dt><cite>timeout</cite></dt><dd><p>The number of seconds to wait for the request to complete.</p>
+<dt><cite>timeout</cite></dt><dd><p>Время ожидания ответа сервера в секундах.</p>
 </dd>
-<dt><cite>result</cite></dt><dd><p>How to process the result. If &quot;bytes&quot;, returns the raw bytes of the result.
-If &quot;text&quot;, decodes the result using UTF-8 and returns a unicode string. If &quot;json&quot;,
-decodes the result as JSON. (Other exceptions may be generated by the decoding
-process.)</p>
+<dt><cite>result</cite></dt><dd><p>Способ обработки полученного результата. Значение &quot;bytes&quot; возвращает необработанные
+байты ответа. Значение &quot;text&quot; декодирует ответ в кодировке UTF-8 и возвращает строку
+Юникода. Значение &quot;json&quot; декодирует ответ как структуру JSON (при ошибках формата
+могут возникать исключения процесса декодирования).</p>
 </dd>
-<dt><cite>params</cite></dt><dd><p>A dictionary of parameters that are added to the URL as a query string.</p>
+<dt><cite>params</cite></dt><dd><p>Словарь параметров, добавляемых к URL в виде строки запроса (query string).</p>
 </dd>
-<dt><cite>headers</cite></dt><dd><p>A dictionary of headers to send with the request.</p>
+<dt><cite>headers</cite></dt><dd><p>Словарь HTTP-заголовков, отправляемых вместе с запросом.</p>
 </dd>
 </dl>
-<p>This may be called from inside or outside of an interaction.</p>
+<p>Функцию можно вызывать как внутри, так и вне интеракции:</p>
 <ul class="simple">
-<li><p>Outside of an interation, while waiting for <cite>timeout</cite> to pass, this will
-repeatedly call <a class="reference internal" href="statement_equivalents.html#renpy.pause" title="renpy.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.pause()</span></code></a>, so Ren'Py doesn't lock up. It
-may make sense to display a screen to the user to let them know what is going on.</p></li>
-<li><p>Inside of an interaction (for example, inside an Action), this will block
-the display system until the fetch request finishes or times out. It will try
-to service the audio system, so audio will continue to play.</p></li>
+<li><p>Вне интеракции в процессе ожидания ответа в пределах таймаута движок периодически
+вызывает <a class="reference internal" href="statement_equivalents.html#renpy.pause" title="renpy.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.pause()</span></code></a>, не позволяя игре зависнуть. В этот момент имеет смысл
+отобразить экран с сообщением о ходе загрузки.</p></li>
+<li><p>Внутри интеракции (например, внутри действия Action) функция блокирует графическую
+подсистему до завершения запроса или таймаута. При этом аудиоподсистема продолжает
+обслуживаться, сохраняя непрерывность воспроизведения звука.</p></li>
 </ul>
-<p>This function should work on all platforms. However, on the web platform,
-requests going to a different origin than the game will fail unless allowed
-by CORS.</p>
+<p>Функция работает на всех платформах. Однако в веб-версии браузерные запросы
+к сторонним источникам завершаются ошибкой, если они не разрешены политикой CORS.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="renpy.get_fetch_progress">
 <span class="sig-prename descclassname"><span class="pre">renpy.</span></span><span class="sig-name descname"><span class="pre">get_fetch_progress</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#renpy.get_fetch_progress" title="Ссылка на это определение"></a></dt>
-<dd><p>Returns the progress of the currently active fetch requests as a float
-between 0.0 and 1.0. If no fetches are in progress, returns 1.0.</p>
+<dd><p>Возвращает прогресс активных сетевых запросов в виде числа с плавающей запятой
+от 0.0 до 1.0. Если в данный момент запросы не выполняются, возвращает 1.0.</p>
 </dd></dl>
 
 <section id="requests">
-<h2>Requests<a class="headerlink" href="#requests" title="Ссылка на этот заголовок"></a></h2>
-<p>On desktop and mobile, Ren'Py includes the <a class="reference external" href="https://requests.readthedocs.io/">Requests</a>
-library. This is more powerful, but doesn't integrate as well as renpy.fetch.
-(For example, Ren'Py will call <a class="reference internal" href="statement_equivalents.html#renpy.pause" title="renpy.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.pause()</span></code></a> to wait for data, while
-requests will block, which could lead to problems like audio stalling.)</p>
+<h2>Библиотека Requests<a class="headerlink" href="#requests" title="Ссылка на этот заголовок"></a></h2>
+<p>На настольных и мобильных платформах в состав Ren'Py входит библиотека
+<a class="reference external" href="https://requests.readthedocs.io/">Requests</a>. Она предоставляет более широкие
+возможности, однако не так глубоко интегрирована в цикл событий Ren'Py
+(например, <a class="reference internal" href="#renpy.fetch" title="renpy.fetch"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.fetch()</span></code></a> во время ожидания данных периодически вызывает
+<a class="reference internal" href="statement_equivalents.html#renpy.pause" title="renpy.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">renpy.pause()</span></code></a>, тогда как функции Requests блокируют поток выполнения,
+что может приводить к прерываниям звука и задержкам анимации).</p>
 </section>
 </section>
 
@@ -311,7 +319,7 @@ requests will block, which could lead to problems like audio stalling.)</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
         <a href="pygame.html" class="btn btn-neutral float-left" title="pygame" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
-        <a href="screenshot.html" class="btn btn-neutral float-right" title="Screenshots" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="screenshot.html" class="btn btn-neutral float-right" title="Снимки экрана" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

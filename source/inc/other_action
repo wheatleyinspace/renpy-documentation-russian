@@ -2,242 +2,222 @@
 
 .. function:: Confirm(prompt, yes, no=None, confirm_selected=False, screen=None, **kwargs)
     
-    Prompts the user for confirmation of an action. If the user
-    clicks yes, the yes action is performed. Otherwise, the `no`
-    action is performed.
+    Запрашивает у пользователя подтверждение действия. Если пользователь
+    выбирает «Да», выполняется действие `yes`. В противном случае выполняется действие `no`.
     
     `prompt`
-        The prompt to display to the user.
+        Текст запроса, отображаемый пользователю.
     
     `confirm_selected`
-        If true, the prompt will be displayed even if the `yes` action
-        is already selected. If false (the default), the prompt
-        will not be displayed if the `yes` action is selected.
+        Если True, запрос отображается даже в том случае, если действие `yes` уже выбрано.
+        Если False (по умолчанию), запрос не показывается, если действие `yes` выбрано.
     
     `screen`
-        If provided, this screen will be used instead of the default screen.
+        Если указано, этот экран будет использоваться вместо экрана подтверждения по умолчанию.
     
-    Additional keyword arguments not beginning with _ are passed to
-    the screen.
+    Дополнительные именованные аргументы, не начинающиеся с _, передаются экрану.
     
-    The sensitivity and selectedness of this action match those
-    of the `yes` action.
+    Чувствительность и выбранное состояние этого действия соответствуют параметрам действия `yes`.
     
-    See :func:`renpy.confirm` for a function version of this action.
+    Функциональную версию этого действия см. в :func:`renpy.confirm`.
 
 .. function:: CopyToClipboard(s)
     
-    Copies the string `s` to the system clipboard, if possible. This
-    should work on desktop and mobile platforms, but will not work
-    on the web.
+    Копирует строку `s` в системный буфер обмена, если это возможно. Работает
+    на настольных и мобильных платформах, но не поддерживается в веб-версии.
 
 .. function:: DisableAllInputValues()
     
-    Disables all active InputValue. This will re-focus the default
-    InputValue, if there is one. Otherwise, no InputValue will be
-    focused.
+    Отключает все активные InputValue. При этом фокус возвращается объекту InputValue
+    по умолчанию, если он есть. В противном случае фокус не будет назначен ни одному InputValue.
 
 .. function:: EditFile(filename=None, line=1)
     
-    Requests Ren'Py to open the given file in a text editor, if possible.
-    This will work on some platforms but not others.
+    Запрашивает у Ren'Py открытие указанного файла в текстовом редакторе, если это возможно.
+    Работает на некоторых платформах.
     
     `filename`
-        If given, the filename to open. If None, the current filename
-        and line number are used, with `line` being ignored.
+        Имя открываемого файла. Если None, используются текущее имя файла и номер строки,
+        а аргумент `line` игнорируется.
     
     `line`
-        The line number to open the file at.
+        Номер строки, на которую следует перейти при открытии файла.
 
 .. function:: ExecJS(code)
     
-    Executes the given JavaScript source code. This is only supported on
-    the web, and will raise an exception on other platforms. The script
-    is executed asynchronously in the window context, and the return value
-    is not available.
+    Выполняет указанный исходный код JavaScript. Поддерживается только на веб-платформе
+    и вызывает исключение на остальных. Скрипт выполняется асинхронно в контексте окна,
+    а возвращаемое значение недоступно.
     
     `code`
-        The JavaScript code to execute.
+        Исходный код JavaScript для выполнения.
 
 .. function:: Function(callable, *args, _update_screens=True, **kwargs)
     
-    This Action calls ``callable(*args, **kwargs)``.
+    Это действие вызывает ``callable(*args, **kwargs)``.
     
     `callable`
-        Callable object. This assumes that if two callables compare
-        equal, calling either one will be equivalent.
+        Вызываемый объект. Предполагается, что если два вызываемых объекта равны при
+        сравнении, вызов любого из них будет эквивалентен.
     
     `args`
-        positional arguments to be passed to `callable`.
+        Позиционные аргументы, передаваемые в `callable`.
     
     `kwargs`
-        keyword arguments to be passed to `callable`.
+        Именованные аргументы, передаваемые в `callable`.
     
     `_update_screens`
-        When true, the interaction restarts and the screens are updated
-        after the function returns.
+        Если True, взаимодействие перезапускается, и экраны обновляются после возврата из функции.
     
-    If the function returns a non-None value, the interaction stops and
-    returns that value. (When called using the call screen statement, the
-    result is placed in the `_return` variable.)
+    Если функция возвращает значение, отличное от None, взаимодействие останавливается
+    и возвращает это значение. (При вызове через оператор call screen результат помещается
+    в переменную `_return`.)
     
-    Instead of using a Function action, you can define your own subclass
-    of the :class:`Action` class. This lets you name the action, and
-    determine when it should be selected and sensitive.
+    Вместо действия Function можно создать собственный подкласс :class:`Action`. Это
+    позволит задать имя действию и определить, когда оно должно быть выбрано и активно.
 
 .. function:: Help(help=None)
     
-    Displays help.
+    Отображает справку.
     
     `help`
-        A string that is used to find help. This is used in the
-        following way:
+        Строка, используемая для поиска справки:
     
-        * If a label with this name exists, the label is called in
-          a new context.
-        * Otherwise, this is interpreted as giving the name of a file
-          that should be opened in a web browser.
+        * Если существует метка с таким именем, она вызывается в новом контексте.
+        * В противном случае строка интерпретируется как имя файла, который открывается
+          в веб-браузере.
     
-        If `help` is None, :var:`config.help` is used as the default
-        value. If it is also None, the :var:`config.help_screen` screen
-        is shown in a new context, if it exists. Otherwise, does nothing.
+        Если `help` равно None, по умолчанию используется :var:`config.help`. Если оно
+        также None, в новом контексте отображается экран :var:`config.help_screen`
+        (если он существует). В противном случае ничего не происходит.
 
 .. function:: HideInterface()
     
-    Causes the interface to be hidden until the user clicks.
-    This is typically what happens when hitting the H key in a Ren'Py game.
+    Скрывает интерфейс до следующего клика пользователя.
+    Обычно это действие вызывается при нажатии клавиши H в играх Ren'Py.
 
 .. function:: If(expression, true=None, false=None)
     
-    This returns `true` if `expression` is true, and `false`
-    otherwise. Use this to select an action based on an expression.
-    Note that the default, None, can be used as an action that causes
-    a button to be disabled.
+    Возвращает `true`, если `expression` истинно, и `false` в противном случае.
+    Используется для выбора действия на основе выражения. Обратите внимание: значение
+    по умолчанию None можно использовать как действие, отключающее кнопку.
 
 .. function:: InvertSelected(action)
     
-    This inverts the selection state of the provided action, while
-    proxying over all of the other methods.
+    Инвертирует выбранное состояние переданного действия, проксируя все остальные методы.
 
 .. function:: MouseMove(x, y, duration=0)
     
-    Move the mouse pointer to `x`, `y`. If the device does not have a mouse
-    pointer, if it is not possible for Ren'Py to move that pointer,
-    or if the :var:`"automatic move" preference <preferences.mouse_move>`
-    is False, this does nothing.
+    Перемещает курсор мыши в координаты `x`, `y`. Если устройство не имеет курсора мыши,
+    если Ren'Py не может переместить курсор или если :var:`настройка автоматического перемещения <preferences.mouse_move>`
+    отключена (False), ничего не происходит.
     
-    This is unlikely to work on the Linux with Wayland, Android, iOS, or Web
-    platforms.
+    Вряд ли будет работать на Linux с Wayland, Android, iOS и веб-платформе.
     
     `duration`
-        The time it will take to perform the move, in seconds. During
-        this time, the mouse may be unresponsive.
+        Время выполнения перемещения в секундах. В течение этого времени мышь может
+        не реагировать на действия пользователя.
 
 .. function:: Notify(message)
     
-    Displays `message` using :func:`renpy.notify`.
+    Отображает `message` с помощью :func:`renpy.notify`.
 
 .. function:: OpenDirectory(directory)
     
-    Opens `directory` in a file browser. `directory` is relative to
+    Открывает каталог `directory` в файловом менеджере ОС. Путь указывается относительно
     :var:`config.basedir`.
 
 .. function:: OpenURL(url)
     
-    Causes `url` to be opened in a web browser.
+    Открывает адрес `url` в веб-браузере по умолчанию.
 
 .. function:: QueueEvent(event, up=False)
     
-    Queues the given event using :func:`renpy.queue_event`.
+    Ставит указанное событие в очередь с помощью :func:`renpy.queue_event`.
 
 .. function:: RestartStatement()
     
-    This action causes Ren'Py to rollback to before the current
-    statement, and then re-run the current statement. This may be used
-    when changing a persistent variable that affects how the statement
-    is displayed.
+    Заставляет Ren'Py откатиться к состоянию перед текущим оператором, а затем повторно
+    выполнить текущий оператор. Может использоваться при изменении постоянной (persistent)
+    переменной, влияющей на отображение оператора.
     
-    If run in a menu context, this waits until the player exits to a
-    top-level context before performing the rollback.
+    При выполнении в контексте меню ожидает возвращения игрока в контекст верхнего уровня
+    перед выполнением отката.
 
 .. function:: RollForward()
     
-    This action causes a rollforward to occur, if a roll forward is
-    possible. Otherwise, it is insensitive.
+    Выполняет перемотку вперед (rollforward), если она возможна. В противном случае
+    действие нечувствительно.
 
 .. function:: Rollback(*args, force="menu", **kwargs)
     
-    This action causes a rollback to occur, when a rollback is possible.
-    Otherwise, nothing happens.
+    Выполняет откат (rollback), если откат возможен. В противном случае ничего не происходит.
     
-    The arguments are given to :func:`renpy.rollback`. This includes the
-    `force` argument which here defaults to "menu".
+    Аргументы передаются в :func:`renpy.rollback`. Включая аргумент `force`, который здесь
+    по умолчанию равен "menu".
 
 .. function:: RollbackToIdentifier(identifier)
     
-    This causes a rollback to an identifier to occur. Rollback
-    identifiers are returned as part of HistoryEntry objects.
+    Выполняет откат к указанному идентификатору. Идентификаторы отката возвращаются
+    как часть объектов HistoryEntry.
 
 .. function:: Screenshot()
     
-    Takes a screenshot.
+    Делает снимок экрана.
 
 .. function:: Scroll(id, direction, amount='step', delay=0.0)
     
-    Causes a Bar, Viewport, or Vpgrid to scroll.
+    Прокручивает полосу (Bar), область просмотра (Viewport) или сетку (Vpgrid).
     
     `id`
-        The id of a bar, viewport, or vpgrid in the current screen.
+        Идентификатор bar, viewport или vpgrid на текущем экране.
     
     `direction`
-        For a vbar, one of "increase" or "decrease". For a viewport
-        or vpgrid, one of "horizontal increase", "vertical increase",
-        "horizontal decrease", or "vertical decrease".
+        Для вертикальной полосы (vbar): "increase" (увеличение) или "decrease" (уменьшение).
+        Для viewport или vpgrid: "horizontal increase", "vertical increase",
+        "horizontal decrease" или "vertical decrease".
     
     `amount`
-        The amount to scroll by. This can be a number of pixels, or
-        else "step" or "page".
+        Величина прокрутки: число пикселей либо "step" (шаг) или "page" (страница).
     
     `delay`
-        If non-zero, the scroll will be animated for this many seconds.
+        Если больше нуля, прокрутка анимируется в течение указанного количества секунд.
 
 .. function:: SelectedIf(action, /)
     
-    This indicates that one action in a list of actions should be used
-    to determine if a button is selected. This only makes sense
-    when the button has a list of actions. For example::
+    Указывает, что одно действие из списка действий должно использоваться для определения
+    того, выбрана ли кнопка. Имеет смысл только тогда, когда кнопке передан список действий.
+    Например::
     
-        # The button is selected only if mars_flag is True
-        textbutton "Marsopolis":
+        # Кнопка выбрана только если mars_flag равен True
+        textbutton "Марсополис":
             action [ SelectedIf(SetVariable("mars_flag", True)), SetVariable("on_mars", True) ]
     
-    The action inside SelectedIf is run normally when the button is clicked.
+    Действие внутри SelectedIf выполняется в обычном режиме при нажатии кнопки.
 
 .. function:: SensitiveIf(action, /)
     
-    This indicates that one action in a list of actions should be used
-    to determine if a button is sensitive. This only makes sense
-    when the button has a list of actions. For example::
+    Указывает, что одно действие из списка действий должно использоваться для определения
+    чувствительности кнопки. Имеет смысл только тогда, когда кнопке передан список действий.
+    Например::
     
-        # The button is sensitive only if mars_flag is True
-        textbutton "Marsopolis":
+        # Кнопка активна только если mars_flag равен True
+        textbutton "Марсополис":
             action [ SensitiveIf(SetVariable("mars_flag", True)), SetVariable("on_mars", True) ]
     
-    The action inside SensitiveIf is run normally when the button is clicked.
+    Действие внутри SensitiveIf выполняется в обычном режиме при нажатии кнопки.
 
 .. function:: Skip(fast=False, confirm=False)
     
-    Causes the game to begin skipping. If the game is in a menu
-    context, then this returns to the game. Otherwise, it just
-    enables skipping.
+    Переводит игру в режим пропуска. Если игра находится в контексте меню, возвращает
+    в игру. В противном случае просто включает пропуск.
     
     `fast`
-        If true, skips directly to the next menu choice.
+        Если True, мгновенно пропускает текст до следующего выбора.
     
     `confirm`
-        If true, asks for confirmation before beginning skipping.
+        Если True, запрашивает подтверждение перед началом пропуска.
 
 .. function:: With(transition)
     
-    Causes `transition` to occur.
-
+    Запускает выполнение указанного перехода `transition`.

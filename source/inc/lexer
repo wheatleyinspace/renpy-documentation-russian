@@ -2,17 +2,16 @@
 
 .. function:: renpy.lex_string(text: str, filename: str = '<string>', linenumber: int = 1, advance: bool = True) -> renpy.lexer.Lexer
     
-    Returns a Lexer object that can be used to lex the given text.
+    Возвращает объект Lexer, который можно использовать для лексического анализа заданного текста.
     
     `text`
-        The text to lex.
+        Текст для лексического анализа.
     
     `filename`
-        A filename for which errros will be reported.
+        Имя файла, для которого будут выводиться сообщения об ошибках.
     
     `linenumber`
-        A line number for which errors will be reported.
+        Номер строки, для которой будут выводиться сообщения об ошибках.
     
     `advance`
-        If true, the .advance() method will be called on the lexer.
-
+        Если True, для лексера будет вызван метод .advance().

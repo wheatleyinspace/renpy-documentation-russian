@@ -1,72 +1,60 @@
-Persistent Data
-===============
+.. _persistent:
 
-Ren'Py supports persistent data, saved data that is not
-associated with a particular point in a game. Persistent data is
-accessed through fields of the persistent object, which is bound to the
-variable ``persistent``.
+=================
+Постоянные данные
+=================
 
-All data reachable through fields on ``persistent`` is saved when
-Ren'Py terminates, or when :func:`renpy.save_persistent` is called.
-Persistent data is loaded when Ren'Py starts, and when Ren'Py detects
-that the persistent data has been updated on disk.
+Ren'Py поддерживает постоянные (персистентные) данные — сохранённые данные, не привязанные
+к конкретной точке прохождения или файлу сохранения игры. Доступ к постоянным данным осуществляется
+через поля специального объекта, хранящегося в переменной ``persistent``.
 
-The persistent object is special in that an access to an undefined field will
-have a None value, rather than causing an exception. If something other than
-None is to be the default of a persistent value,
-the :ref:`default <default-statement>` statement should be used::
+Все данные, доступные через поля объекта ``persistent``, автоматически сохраняются на диск
+при выходе из Ren'Py или при явном вызове функции :func:`renpy.save_persistent`. Постоянные данные
+загружаются при запуске Ren'Py, а также каждый раз, когда движок обнаруживает их изменение на диске.
+
+Объект persistent уникален тем, что обращение к ещё неопределённому полю вернёт значение None
+вместо вызова исключения AttributeError. Если значение по умолчанию для поля должно быть отличным от None,
+используйте оператор :ref:`default <default-statement>`::
 
     default persistent.main_background = "princess_not_saved"
 
-An example use of persistent is the creation of an unlockable image gallery.
-This is done by storing a flag in persistent that determines if the gallery has
-been unlocked, as in ::
+Типичным примером использования persistent является создание галереи открываемых иллюстраций.
+Для этого в persistent сохраняется флаг, определяющий, разблокирована ли галерея::
 
     label gallery:
 
         if not persistent.gallery_unlocked:
             show background
-            centered "You haven't unlocked this gallery yet."
+            centered "Вы ещё не открыли эту галерею."
             $ renpy.full_restart()
 
-        # Actually show the gallery here.
+        # Здесь отображается сам экран галереи.
 
-When the user gets an ending that causes the gallery to be unlocked, the flag
-must be set to True. ::
+Когда игрок достигает концовки, открывающей галерею, флаг устанавливается в True::
 
     $ persistent.gallery_unlocked = True
 
-As persistent data is loaded before ``init python`` blocks are run, persistent data
-should only contain types that are native to Python or Ren'Py. Alternatively,
-classes that are defined in ``python early`` blocks can be used, provided
-those classes can be pickled and implement equality.
+Поскольку постоянные данные загружаются до выполнения блоков ``init python``, они должны содержать
+только стандартные встроенные типы Python или Ren'Py. Также можно использовать классы, объявленные
+в блоках ``python early``, при условии, что они поддерживают сериализацию pickle и реализуют оператор равенства.
 
-Fields starting with two underscores (``__``) are supported, but will receive the
-name-mangling effect described in :ref:`this section <elements-of-statements>`,
-which means they will be specific to the file they're defined in. This implies that
-if the file is renamed between two releases, access to the value that field had in
-the previous release will be broken.
+Поля, начинающиеся с двух знаков подчёркивания (``__``), поддерживаются, но подвергаются
+подмене имён (name mangling), как описано в :ref:`этом разделе <elements-of-statements>`,
+становясь привязанными к имени исходного файла. Если файл будет переименован в следующем обновлении,
+доступ к сохранённому значению поля будет утерян. Кроме того, такие поля не сбрасываются
+методом :meth:`persistent._clear`.
 
-In addition to this, these fields are not affected by the :meth:`persistent._clear`
-method.
+Напоминаем: поля с одним ведущим подчёркиванием ``_`` зарезервированы движком и не должны использоваться.
 
-As a reminder, fields starting with a single underscore ``_`` are reserved and
-should not be used.
+Слияние постоянных данных
+-------------------------
 
-Merging Persistent Data
------------------------
+В некоторых случаях Ren'Py выполняет слияние постоянных данных из двух источников — например,
+при синхронизации данных на флеш-накопителе с локальным компьютером или облачным хранилищем.
 
-There are cases where Ren'Py has to merge persistent data from two
-sources. For example, Ren'Py may need to merge persistent data stored
-on a USB drive with persistent data from the local machine.
-
-Ren'Py does this merging on a field-by-field basis, taking the value
-of the field that was updated more recently. In some cases, this is
-not the desired behavior. In that case, the :func:`renpy.register_persistent`
-function can be used.
-
-For example, if we have a set of seen endings, we'd like to take the
-union of that set when merging data. ::
+По умолчанию слияние выполняется по каждому полю индивидуально: выбирается значение с более свежей
+меткой времени. Если требуется иное поведение (например, для множества открытых концовок необходимо
+сохранить объединение обоих множеств), используйте функцию :func:`renpy.register_persistent`::
 
     init python:
         if persistent.endings is None:
@@ -79,59 +67,53 @@ union of that set when merging data. ::
 
         renpy.register_persistent('endings', merge_endings)
 
-Persistent Functions
---------------------
+Функции для работы с постоянными данными
+----------------------------------------
 
 .. function:: persistent._hasattr(field_name)
 
-    Tests whether the `field_name` persistent field has been set or not.
-    This allows you to distinguish fields that have been explicitly set
-    to None from fields that have never been set.
+    Проверяет, было ли установлено поле `field_name` в объекте persistent. Позволяет отличить
+    поля, явно установленные в None, от полей, к которым ещё ни разу не обращались.
 
 .. function:: persistent._clear(progress=False)
 
-    Resets the persistent data, except for fields starting with ``__``.
+    Сбрасывает все постоянные данные (за исключением полей с префиксом ``__``).
 
     `progress`
-        If true, also resets progress data that Ren'Py keeps.
+        Если True, также сбрасывает данные о прогрессе прохождения игры.
 
-    Note that this will re-apply defaults.
+    Обратите внимание: после сброса повторно применяются значения операторов ``default``.
 
 .. include:: inc/persistent
 
-Multi-Game Persistence
-----------------------
+Межигровые постоянные данные
+----------------------------
 
-Multi-Game persistence is a feature that lets you share information between
-Ren'Py games. This may be useful if you plan to make a series of games, and
-want to have them share information.
+Межигровая сохраняемость данных (Multi-Game Persistence) позволяет обмениваться информацией между
+различными играми на Ren'Py (например, в рамках серии эпизодических новелл).
 
-To use multipersistent data, a MultiPersistent object must be created at init
-time (preferably using ``define``).
-The user can then update this object, and save it to disk by
-calling its save method. Undefined fields default to None. To ensure the
-object can be loaded again in a different game, we strongly advise against
-storing instances of user-defined types in the object.
+Для использования межигровых данных на этапе инициализации создаётся объект MultiPersistent
+(рекомендуется использовать оператор ``define``). Затем игра может изменять этот объект и сохранять
+его на диск методом save. Неопределённые поля по умолчанию равны None. Чтобы объект мог быть корректно
+загружен в другой игре, настоятельно рекомендуется хранить в нём только стандартные базовые типы данных.
 
 .. class:: MultiPersistent(name, save_on_quit=False)
 
-    Creates a new ``MultiPersistent`` object. This should only be called at init time,
-    and it returns a new ``MultiPersistent`` with the given name.
+    Создаёт объект ``MultiPersistent``. Должен вызываться только на этапе инициализации и возвращает
+    новый объект с указанным именем `name`.
 
     `name`
-        The name used to access the multipersistent data. Games using the
-        same name will access the same multipersistent data.
+        Имя для доступа к межигровым данным. Игры с одинаковым именем получают доступ к общим данным.
 
     `save_on_quit`
-        If it is True, this object will be automatically saved when Ren'Py terminates.
+        Если True, объект автоматически сохраняется при выходе из игры.
 
     .. method:: save()
 
-        Saves the multipersistent data to disk. This must be called after
-        the data is modified.
+        Сохраняет межигровые данные на диск. Метод необходимо вызывать после каждой модификации данных.
 
 
-As an example, take the first part of a two-part game::
+Пример в первой части игры::
 
     define mp = MultiPersistent("demo.renpy.org")
 
@@ -139,20 +121,20 @@ As an example, take the first part of a two-part game::
 
         # ...
 
-        # Record the fact that the user beat part 1.
+        # Записываем факт прохождения первой части игры.
 
         $ mp.beat_part_1 = True
         $ mp.save()
 
-        e "You beat part 1. See you in part 2!"
+        e "Вы прошли часть 1. До встречи в части 2!"
 
-And the second part::
+И во второй части::
 
     define mp = MultiPersistent("demo.renpy.org")
 
     label start:
 
         if mp.beat_part_1:
-            e "I see you've beaten part 1, so welcome back!"
+            e "Я вижу, вы прошли часть 1, с возвращением!"
         else:
-            e "Hmm, you haven't played part 1, why not try it first?"
+            e "Хм, кажется, вы не играли в часть 1. Почему бы не попробовать сначала её?"

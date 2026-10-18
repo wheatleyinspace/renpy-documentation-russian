@@ -1,84 +1,84 @@
 .. _character-callbacks:
 
-Character Callbacks
-===================
+Коллбэки персонажей (Character Callbacks)
+=========================================
 
-Ren'Py includes the ability to execute callbacks when various events
-occur during dialogue. This is done by giving the `callback` argument
-to :func:`Character`, or setting the :var:`config.character_callback` or
-:var:`config.all_character_callbacks` variables.
+В Ren'Py есть возможность выполнять функции обратного вызова (коллбэки) при возникновении
+различных событий во время диалога. Это делается передачей аргумента `callback`
+в :func:`Character` или установкой переменных :var:`config.character_callback` или
+:var:`config.all_character_callbacks`.
 
-The character callback is called with a single positional argument, the event
-that occurred. Possible events are:
+Коллбэк персонажа вызывается с одним позиционным аргументом — произошедшим событием.
+Возможные события:
 
 "begin"
-    Called at the start of a say statement.
+    Вызывается в начале инструкции say.
 
 "show"
-    Called before showing each segment of dialogue. Dialogue may be separated
-    into multiple segments by the {w} or {p} text tags, but always consists of
-    at least one segment.
+    Вызывается перед показом каждого сегмента диалога. Диалог может быть разделён
+    на несколько сегментов с помощью текстовых тегов {w} или {p}, но всегда состоит
+    как минимум из одного сегмента.
 
 "show_done"
-    Called after showing each segment of dialogue.
+    Вызывается после показа каждого сегмента диалога.
 
 "slow_done"
-    Called after slow text finishes showing. Note that this event may occur
-    after "end", in cases where dialogue does not cause an interaction
-    to occur.
+    Вызывается после завершения медленного вывода текста (эффект печатной машинки). Обратите
+    внимание, что это событие может произойти после "end", в случаях, когда диалог не вызывает
+    взаимодействия с пользователем.
 
 "interact_done"
-    Called after the interaction ends. Note that entering a new context (like the game menu)
-    does not end the interaction.
+    Вызывается после завершения взаимодействия. Обратите внимание, что вход в новый контекст
+    (например, в игровое меню) не завершает взаимодействие.
 
 "end"
-    Called at the end of a say statement.
+    Вызывается в конце инструкции say.
 
-The callback is called with at the keyword arguments:
+Коллбэк вызывается со следующими именованными аргументами:
 
 `interact`
-    This is true if the dialogue causes an interaction to occur.
+    True, если диалог вызывает взаимодействие с пользователем.
 
 `type`
-    The type of character (e.g. "nvl", "adv", "bubble").
+    Тип персонажа (например, "nvl", "adv", "bubble").
 
 `what`
-    The text that is going to be supplied to the what displayable.
+    Текст, который будет передан отображаемому объекту what.
 
 `multiple`
-    The `multiple` argument to :func:`Character`.
+    Аргумент `multiple`, переданный в :func:`Character`.
 
-The "show", "slow_done", and "interact_done" callbacks are also given additional keyword
-arguments:
+Для коллбэков "show", "slow_done" и "interact_done" также передаются дополнительные именованные
+аргументы:
 
 `start`
-    The start of the current segment of dialogue, in the `what` string.
+    Начальная позиция текущего сегмента диалога в строке `what`.
 
 `end`
-    The end of the current segment of dialogue, in the `what` string.
+    Конечная позиция текущего сегмента диалога в строке `what`.
 
 `delay`
-    The amount of time Ren'Py will pause after the current segment of dialogue is shown,
-    or None if Ren'Py will pause until the player clicks.
+    Время в секундах, на которое Ren'Py приостановит выполнение после показа текущего сегмента диалога,
+    или None, если Ren'Py будет ждать клика игрока.
 
 `last_segment`
-    True if this is the last segment of dialogue in the say statement, False otherwise.
+    True, если это последний сегмент диалога в инструкции say, иначе False.
 
-The "interact_done" callback takes an additional keyword argument:
+Коллбэк "interact_done" принимает дополнительный именованный аргумент:
 
 `exception`
-    True if the interaction ended due to an exception, False otherwise. Exceptions include
-    things like loading the game and rollback.
+    True, если взаимодействие завершилось из-за исключения, иначе False. К исключениям
+    относятся такие события, как загрузка игры и откат назад.
 
-Other values of the positional argument and additional keyword arguments may
-be supplied to the callback. The callback should be written to ignore keyword arguments it
-does not understand.
+В коллбэк могут передаваться и другие значения позиционного аргумента, а также дополнительные
+именованные аргументы. Коллбэк должен быть написан так, чтобы игнорировать неизвестные ему
+именованные аргументы (с использованием ``**kwargs``).
 
-Example
--------
+Пример
+------
 
-This example plays beeps in place of a character voice, when slow
-text is enabled::
+В этом примере воспроизводятся звуковые сигналы вместо голоса персонажа при включённом
+медленном выводе текста::
 
     init python:
         def beepy_voice(event, interact=True, **kwargs):
@@ -96,8 +96,8 @@ text is enabled::
 
         pike "So, hanging out on Talos IV, minding my own business, when..."
 
-To specialize a general callback with for specific characters, you can
-pass arguments to the callback function with the `cb_` prefix::
+Чтобы специализировать общий коллбэк для конкретных персонажей, можно передавать
+аргументы функции обратного вызова с префиксом `cb_`::
 
     init python:
         def boopy_voice(event, interact=True, boopfile="normal_boop.ogg", **kwargs):

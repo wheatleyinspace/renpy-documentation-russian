@@ -2,36 +2,33 @@
 
 .. function:: renpy.const(name)
     
-    Declares a variable in the store to be constant.
+    Объявляет переменную в хранилище (store) константой.
     
-    A variable is constant if nothing can change its value, or any value
-    reached by indexing it or accessing its attributes. Variables must
-    remain constant out of define, init, and translate python blocks.
+    Переменная считается константой, если ничто не может изменить ее значение
+    или любое значение, доступное через индексацию или обращение к ее атрибутам.
+    Переменные должны оставаться константными вне блоков define, init и translate python.
     
     `name`
-        A string giving the name of the variable to declare constant.
+        Строка, задающая имя переменной, объявляемой константой.
 
 .. function:: renpy.not_const(name)
     
-    Declares a name in the store to be not constant.
+    Объявляет имя в хранилище не константным.
     
-    This undoes the effect of calls to :func:`renpy.const` and
-    :func:`renpy.pure`.
+    Отменяет действие вызовов :func:`renpy.const` и :func:`renpy.pure`.
     
     `name`
-        The name to declare not constant.
+        Имя, объявляемое не константным.
 
 .. function:: renpy.pure(fn)
     
-    Declares a function as pure. A pure function must always return the
-    same value when it is called with the same arguments, outside of
-    define, init, and translate python blocks.
+    Объявляет функцию чистой (pure). Чистая функция должна всегда возвращать
+    одно и то же значение при вызове с одинаковыми аргументами вне блоков
+    define, init и translate python.
     
     `fn`
-        The name of the function to declare pure. This may either be a string
-        containing the name of the function, or the function itself.
-        If a string is passed and the function is inside a module,
-        this string should contain the module name with the dot.
+        Имя функции, объявляемой чистой. Может быть строкой, содержащей имя функции,
+        или самой функцией. Если передана строка, и функция находится внутри модуля,
+        строка должна содержать имя модуля через точку.
     
-    Returns `fn`, allowing this function to be used as a decorator.
-
+    Возвращает `fn`, позволяя использовать эту функцию в качестве декоратора.

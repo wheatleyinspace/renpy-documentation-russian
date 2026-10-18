@@ -1,65 +1,65 @@
 .. _text-editor-integration:
 
-=======================
-Text Editor Integration
-=======================
+==================================
+Интеграция с текстовым редактором
+==================================
 
-Ren'Py uses a text editor to allow the user to edit game scripts from the
-launcher, and to report errors to the user. The editor to be used can be
-customized by the user as necessary.
+Ren'Py использует текстовый редактор, позволяя разработчику открывать и редактировать
+скрипты проекта прямо из лаунчера, а также отображая сообщения об ошибках с привязкой
+к коду. Выбор редактора настраивается пользователем в соответствии с его предпочтениями.
 
-The editor is customized by creating an Editor class in a .edit.py file. This
-class contains methods that are called to manage text editing.
+Интеграция с редактором настраивается путём создания класса Editor в файле с расширением
+:file:`.edit.py`. Этот класс содержит методы, вызываемые движком для управления процессом
+редактирования текста.
 
-When run directly, Ren'Py first looks at the RENPY_EDIT_PY environment
-variable to find an .edit.py file to use. If it can find one, it uses the
-Editor class defined in that file. If not, it uses a built-in editor class
-that launches the editor in a system-specific manner.
+При прямом запуске Ren'Py сначала проверяет переменную окружения ``RENPY_EDIT_PY``,
+чтобы определить используемый файл :file:`.edit.py`. Если такой файл найден, используется
+определённый в нём класс Editor. В противном случае применяется встроенный класс редактора,
+запускающий системный текстовый редактор по умолчанию.
 
-When the Ren'Py Launcher is run, it scans subdirectories of the projects
-directory and Ren'Py directory to find files of the form `name`.edit.py. (For
-example, it would find launcher/jEdit.edit.py and myeditor/MyEditor.edit.py.)
-The latest editor with a given `name` is presented to the creator as part of
-the launcher options. The launcher also sets RENPY_EDIT_PY to the selected
-file, so that games launched from the launcher will use the selected editor.
+При запуске лаунчера Ren'Py сканирует подкаталоги каталога проектов и каталога Ren'Py
+на наличие файлов вида :file:`{имя}.edit.py` (например, :file:`launcher/jEdit.edit.py`
+или :file:`myeditor/MyEditor.edit.py`). Редактор с самым свежим файлом для данного имени
+отображается разработчику в параметрах лаунчера. Лаунчер также задаёт переменную
+``RENPY_EDIT_PY`` для выбранного файла, чтобы все запускаемые из него игры использовали
+выбранный редактор.
 
 
-Writing an .edit.py File
-------------------------
+Создание файла .edit.py
+-----------------------
 
-An edit.py file is a Python (not Ren'Py) file that must define a single
-class, named Editor. Ren'Py will call methods on this class to cause
-editing to occur.
+Файл :file:`.edit.py` представляет собой стандартный модуль Python (а не скрипт Ren'Py),
+который обязан определять единственный класс с именем ``Editor``. Ren'Py вызывает
+методы этого класса для выполнения операций редактирования.
 
-Use of the editor is done as part of an editor transaction, which groups
-related operations together. For example, if an editor transaction asks
-for a new window, all of the files in that transaction should be opened
-in the same new window. An editor transaction starts with a call to the
-begin method, may contain one or more calls to operation methods, and ends
-with a call to the end method.
+Взаимодействие с редактором строится в рамках *транзакции редактора*, объединяющей
+связанные операции. Например, если транзакция запрашивает открытие в новом окне,
+все входящие в неё файлы должны открыться в одном и том же новом окне. Транзакция
+начинается с вызова метода :meth:`begin`, может содержать один или несколько вызовов
+методов действий (таких как :meth:`open`) и завершается вызовом метода :meth:`end`.
 
-The edit.py file should import renpy.editor, and the Editor class should
-inherit from renpy.editor.Editor. As additional keyword arguments may be
-added to methods, each method you define should ignore unknown keyword
-arguments. Since you're expected to define your own
-Editor subclass, we present the methods with the `self` parameter.
+Файл :file:`.edit.py` должен импортировать модуль :mod:`renpy.editor`, а класс ``Editor``
+должен наследоваться от :class:`renpy.editor.Editor`. Поскольку в будущих версиях
+к методам могут добавляться новые именованные аргументы, каждый определяемый метод
+должен игнорировать неизвестные именованные параметры (принимать ``**kwargs``).
+Ниже методы представлены с параметром `self`, так как предполагается создание
+собственного подкласса ``Editor``.
 
 .. class:: Editor
 
   .. method:: begin(self, new_window=False, **kwargs)
 
-    Starts an editor transaction.
+    Начинает транзакцию редактора.
 
-    If `new_window` is true, the editor should attempt to open a new window.
-    Otherwise, it should attempt to perform the transaction in an existing editor
-    window.
+    Если `new_window` равно True, редактор должен попытаться открыть новое окно.
+    В противном случае операции транзакции должны выполняться в существующем окне редактора.
 
   .. method:: end(self, **kwargs)
 
-    Ends a transaction.
+    Завершает транзакцию редактора.
 
-  .. method:: open(self,  filename, line=None, **kwargs)
+  .. method:: open(self, filename, line=None, **kwargs)
 
-    Opens a `filename` in the editor.
+    Открывает файл `filename` в редакторе.
 
-    If `line` is not None, attempts to position the editing cursor at `line`.
+    Если `line` не None, пытается переместить курсор редактирования на строку `line`.

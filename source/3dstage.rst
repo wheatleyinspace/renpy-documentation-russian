@@ -1,104 +1,95 @@
 .. _3dstage:
 
-3D Stage
+========
+3D-сцена
 ========
 
-The 3D Stage, named after the stages that plays are performed on, is a concept
-that allows displayables to be positioned in 3 dimensions. Ren'Py will then
-render the displayables with the proper perspective, and will also make the
-z dimension available, to make things like lighting and depth rendering
-possible.
+3D-сцена (3D Stage), названная по аналогии с театральными подмостками, — это концепция,
+позволяющая позиционировать отображаемые объекты в трёх измерениях. Ren'Py визуализирует
+их с правильной перспективой и предоставляет третью координату Z, что открывает возможности
+для реализации реалистичного освещения, глубины резкости и трёхмерных перемещений.
 
-Coordinates
------------
+Координаты
+----------
 
-Probably the most important thing to understand about the 3D Stage is the
-coordinate system that Ren'Py uses for the 3D state. Here's the coordinate
-system that's used to place displayables in 2D:
+Наиболее важная концепция 3D-сцены — система координат, используемая Ren'Py для трёхмерного пространства.
+Ниже представлена система координат для двухмерного размещения отображаемых объектов:
 
 .. image:: axes_3d_1.png
 
-In 2D, the rectangle is the size of the screen, and the width and height
-of the visible area is set using :func:`gui.init` (usually when first making
-a new game).
+В двухмерном режиме прямоугольник соответствует размерам экрана, а ширина и высота видимой области
+задаются функцией :func:`gui.init` (обычно при первоначальном создании проекта).
 
 .. image:: axes_3d_2.png
 
-The 3D stage extends this coordinate system with a new axis, one facing
-towards the viewer, so that values greater than 0 bring an image closer
-(and make it bigger), and those less than 0 move the image away from the viewer
-(and make it smaller).
+3D-сцена расширяет эту систему новой осью Z, направленной в сторону зрителя: значения больше 0
+приближают изображение к зрителю (делая его крупнее), а значения меньше 0 отдаляют его в глубину сцены
+(уменьшая размер).
 
 .. image:: axes_3d_3.png
 
-Finally, when a rotation in 3d happens, it's in the directions given here:
+Вращение в трёхмерном пространстве осуществляется в следующих направлениях:
 
-* When rotating around Z, X moves toward Y.
-* When rotating around X, Y moves toward Z.
-* When rotating around Y, Z moves toward X.
+* При вращении вокруг оси Z ось X движется к оси Y.
+* При вращении вокруг оси X ось Y движется к оси Z.
+* При вращении вокруг оси Y ось Z движется к оси X.
 
-These coordinate systems are based on those used in Ren'Py, making it
-easy to move from 2D to the 3D stage. When importing 3D models, coordinate
-transforms may be applied to ensure the model coordinates are sensible.
+Эти системы координат основаны на стандартных соглашениях Ren'Py, что облегчает переход
+от 2D к 3D-сцене. При импорте трёхмерных моделей могут применяться преобразования координат
+для корректной ориентации объектов.
 
-Camera
+Камера
 ------
 
-The initial placement of the camera is controlled by the parameters to
-:func:`gui.init`. First, Ren'Py uses `width` and `fov` to compute the
-default `z` distance. For the default `fov` of 75:
+Начальное положение камеры определяется параметрами функции :func:`gui.init`. Сначала Ren'Py
+использует ширину `width` и угол обзора `fov` для расчёта расстояния по умолчанию по оси `z`.
+При значении `fov` по умолчанию, равном 75:
 
-* When width = 1280, z is about 834
-* When width = 1920, z is about 1251
-* When width = 3840, z is about 2502
+* При width = 1280 расстояние z составляет приблизительно 834
+* При width = 1920 расстояние z составляет приблизительно 1251
+* При width = 3840 расстояние z составляет приблизительно 2502
 
-Where the actual value of z is less than 1 higher than the values given
-here. The default z placement can be overridden with the :tpref:`perspective`
-style property, or the :var:`config.perspective` variable.
+Реальное значение z менее чем на единицу превышает указанные числа. Расстояние по умолчанию
+можно переопределить с помощью свойства стиля :tpref:`perspective` или переменной
+:var:`config.perspective`.
 
-Ren'Py automatically applies an offset of (`width` / 2, `height` / 2, `z`)
-to the camera, and it looks down the -Z axis.
+Ren'Py автоматически смещает камеру на вектор (`width` / 2, `height` / 2, `z`), направляя её взгляд
+вдоль отрицательного направления оси -Z.
 
-The `z` distance is also the distance from the camera to the plane where
-pixels on-screen have the same size as they do in the original images (ignoring
-window scaling). Increasing the camera's z position will make everything
-smaller, while decreasing it will make everything bigger.
+Расстояние `z` также является расстоянием от камеры до плоскости 1:1, где пиксели на экране имеют
+тот же размер, что и в исходных изображениях (без учёта масштабирования окна). Увеличение позиции
+камеры по z уменьшает все объекты на экране, а уменьшение — увеличивает.
 
-Finally, :tpref:`perspective` and :var:`config.perspective` describe the
-near and far planes, defaulting to 100 and 100000, respectively. This
-means that when an image is closer than 100 z-units from the camera,
-it disappears, and it also disappears if it's more than 100,000 z-units
-away.
+Параметры :tpref:`perspective` и :var:`config.perspective` также задают ближнюю и дальнюю плоскости
+отсечения (near и far planes), по умолчанию равные соответственно 100 и 100000. Это означает,
+что если изображение окажется ближе 100 единиц z к камере или дальше 100 000 единиц z, оно перестанет
+отображаться.
 
 .. var:: config.perspective = (100, z, 100000)
 
-    The default value used when :tpref:`perspective` is not set to a 3-tuple.
-    ``z`` depends on the size of the game, as defined above.
+    Значение по умолчанию, используемое, когда свойство :tpref:`perspective` не задано кортежем из 3 элементов.
+    Параметр ``z`` зависит от исходного разрешения игры, как описано выше.
 
 
-Using the 3D Stage
-------------------
+Использование 3D-сцены
+----------------------
 
-The first thing to do to use the 3D stage is to enable it for a layer, using
-the ``camera`` statement. If no layer name is provided, ``master`` is used by
-default. This is usually done with::
+Первый шаг к использованию 3D-сцены — включение её для слоя с помощью оператора ``camera``.
+Если имя слоя не указано, по умолчанию используется слой ``master``::
 
-    # Enabling the 3D stage for the master layer.
+    # Включение 3D-сцены для слоя master.
     camera:
         perspective True
 
-though it's possible that you'll want to include a default camera position, as
-described below.
+Хотя при необходимости можно сразу задать исходное положение камеры, как описано ниже.
 
-Alternatively, you can provide a specific layer name to enable the 3D stage only
-for that layer. ::
+Также можно явно указать имя слоя, чтобы включить 3D-сцену только для него::
 
-    # Enabling the 3D stage for the background layer.
+    # Включение 3D-сцены для фонового слоя background.
     camera background:
         perspective True
 
-Showing images (backgrounds and sprites) works the same way as it does in
-when using 2D coordinates. ::
+Отображение изображений (фонов и спрайтов) выполняется точно так же, как и в 2D::
 
     scene bg washington
 
@@ -106,9 +97,7 @@ when using 2D coordinates. ::
 
     show eileen happy
 
-However, it's possible to use transforms to move these displayables in
-three dimensional space::
-
+Однако теперь к этим объектам можно применять трансформации для перемещения в трёхмерном пространстве::
 
     scene bg washington:
         xalign 0.5 yalign 1.0 zpos -1000
@@ -119,9 +108,9 @@ three dimensional space::
     show eileen happy:
         xalign 0.5 yalign 1.0 zpos 200
 
-As an ATL transform is given, the default transform is not used, and it's
-necessary to specify :tpref:`xalign` and :tpref:`yalign` to position the
-displayable in the x and y axes. Of course, transforms can also be used. ::
+Поскольку задана явная трансформация ATL, стандартная трансформация не применяется, и необходимо
+указать :tpref:`xalign` и :tpref:`yalign` для позиционирования по осям X и Y. Разумеется, можно
+использовать именованные трансформации::
 
     transform zbg:
         zpos -100
@@ -138,203 +127,166 @@ displayable in the x and y axes. Of course, transforms can also be used. ::
 
     show eileen happy at center, z200
 
-
-If you try this, you'll see an empty space around the background. That's
-because by moving it back, it becomes smaller, and doesn't fill the screen.
-Ren'Py has an easy way of fixing this problem - :tpref:`zzoom`. Setting
-the :tpref:`zzoom` property to True will scale an image by the amount it was shrunk
-due to having a negative zpos. It's useful for backgrounds. ::
+Если вы запустите этот пример, то заметите пустое пространство вокруг фона. При отдалении назад
+(отрицательный zpos) фон уменьшается в размерах и перестаёт заполнять весь экран. Для решения этой
+проблемы в Ren'Py предусмотрено свойство :tpref:`zzoom`. Установка :tpref:`zzoom True` автоматически
+компенсирует перспективное сжатие, масштабируя изображение так, чтобы оно снова заполнило экран.
+Это особенно удобно для фонов::
 
     transform zbg:
         zpos -100 zzoom True
 
-It's also possible to use ATL to vary zpos, just like you would xpos and
-ypos. ::
+Координату zpos можно плавно изменять в блоках ATL, как xpos и ypos::
 
     show eileen happy at center:
         zpos 0
         linear 4.0 zpos 200
 
-Note that zpos can interact strangely with positions like ``left`` and ``right``,
-and with :propref:`xalign` and :propref:`yalign`. That's because Ren'Py will
-position the images in a three dimensional rectangular volume (like a cube, but
-not all the sides are the same length), and then apply perspective to the image,
-which can cause parts of the image to move offscreen.
+Обратите внимание: координата zpos может неожиданным образом взаимодействовать с позициями вроде
+``left`` и ``right``, а также :propref:`xalign` и :propref:`yalign`. Ren'Py сначала позиционирует
+объекты в трёхмерном параллелепипеде сцены, а затем применяет перспективную проекцию, из-за чего
+края объектов могут сместиться за границы экрана.
 
-It's possible to move the camera, as well, using ``camera``. For example, ::
+Камеру также можно анимировать с помощью оператора ``camera``::
 
     camera:
         perspective True
         xpos 0
         linear 3.0 xpos 500
 
-When doing this, it probably makes sense to use background images that are
-larger than the window.
+При таком панорамировании камеры рекомендуется использовать фоновые изображения большего разрешения,
+чем окно игры.
 
-If you apply a zpos to a sprite, and it doesn't take effect, the reason is
-probably because you omitted the ``perspective`` clause of the ``camera``
-transform.
+Если вы задаёте zpos спрайту, но положение не меняется, скорее всего, вы забыли включить клаузу
+``perspective True`` для оператора ``camera``.
 
-The camera can be rotated, with::
+Камеру можно вращать::
 
     camera:
         perspective True
         rotate 45
 
-As the camera is what is rotating, the rotation is in the opposite
-direction as one that rotates a displayable.
+Поскольку вращается сама камера, визуальный поворот сцены происходит в противоположном направлении
+по сравнению с вращением отдельного объекта.
 
 
-Depth
------
+Глубина сцены
+-------------
 
-By default, Ren'Py will display the images in its usual order, with the last
-image to be shown above the others. This might lead to odd results, like
-an image that is closer (using perspective) beign shown behind one that's
-farther away.
+По умолчанию Ren'Py выводит изображения в обычном порядке добавления на слой: более позднее
+изображение перекрывает более ранние. Это может приводить к странным эффектам, когда более близкий
+к камере объект оказывается позади далёкого объекта.
 
-If your game shows images out of order like this, you can tell the GPU
-to sort by depth, using :tpref:`gl_depth`::
+Чтобы сортировать объекты автоматически по глубине с помощью буфера глубины видеокарты, включите
+свойство :tpref:`gl_depth`::
 
     camera:
         perspective True
         gl_depth True
 
-Slight rounding errors can cause images that are nominally at the same depth to
-appear above or below each other. Flattening these images and displaying them
-together may be the solution to this.
+Небольшие погрешности округления могут приводить к мерцанию объектов, находящихся на строго одинаковой
+глубине. Объединение таких изображений в один плоский слой или разнесение по z решает эту проблему.
 
-Matrix Transforms
------------------
+Матричные трансформации
+-----------------------
 
-Ren'Py uses the :tpref:`matrixtransform` transform property to apply a matrix
-to displayables, which allows an image to be scaled, offset, and rotated in
-three-dimensional space. This property takes either a :func:`Matrix` or a
-TransformMatrix (defined below), and applies it to the vertices at the corners
-of the images being displayed.
+Ren'Py использует свойство трансформации :tpref:`matrixtransform` для применения матриц
+к отображаемым объектам, что позволяет масштабировать, смещать и вращать изображение
+в трёхмерном пространстве. Свойство принимает объект :func:`Matrix` или TransformMatrix
+и применяет его к вершинам четырёхугольника выводимого изображения.
 
-Ren'Py uses the :tpref:`matrixanchor` transform property to make applying a
-matrix easier. This defaults to (0.5, 0.5), and is translated to a pixel offset
-inside the image being transformed using the usual Ren'Py anchor rules. (If it's
-an integer or absolute, it's considered a number of pixels, otherwise it's a
-fraction of the size of the image.)
+Свойство трансформации :tpref:`matrixanchor` упрощает позиционирование точки преобразования.
+По умолчанию оно равно (0.5, 0.5) (центр изображения).
 
-Ren'Py applies the image by first shifting the image so the anchor is at (0, 0, 0).
-It then applies the transform, and then shifts it back by the same amount. Using
-the defaults, this means that the matrix will be applied to the center of the
-image.
+Ren'Py сначала сдвигает изображение так, чтобы точка привязки matrixanchor оказалась в (0, 0, 0),
+затем применяет матричную трансформацию и возвращает изображение обратно на исходную величину сдвига.
+По умолчанию трансформация применяется относительно центра спрайта.
 
-For example::
+Например::
 
     show eileen happy at center:
         matrixtransform RotateMatrix(45, 0, 0)
 
-Will rotate the image around the line going horizontally through it's center. The
-top of the image will move back, and then bottom of the image will move
-forwards.
+повернёт изображение вокруг горизонтальной линии, проходящей через его центр: верхняя часть
+изображения уйдёт назад вглубь экрана, а нижняя выдвинется вперёд.
 
-Matrixes can be chained together with multiplication. It's easiest to think
-about them being applied right to left. In this example::
-
+Матрицы можно объединять умножением (применяются справа налево)::
 
     show eileen happy at center:
         matrixtransform RotateMatrix(45, 0, 0) * OffsetMatrix(0, -300, 0)
 
-The image will be shifted up by 300 pixels, and then will be rotated around
-the X axis.
+Изображение сначала сместится вверх на 300 пикселей, а затем повернётся вокруг оси X.
 
-Structural Similarity
-^^^^^^^^^^^^^^^^^^^^^^
+Структурное сходство
+^^^^^^^^^^^^^^^^^^^^
 
-In ATL, interpolating the :tpref:`matrixtransform` property requires the
-use of TransformMatrixes that have structural similarity. That means the same
-types of TransformMatrix, multiplied together in the same order.
-
-As an example, the following will rotate and offset, then move back::
+В языке ATL для интерполяции свойства :tpref:`matrixtransform` требуется, чтобы матрицы
+TransformMatrix обладали структурным сходством — одинаковые типы матриц, перемноженные
+в одном и том же порядке::
 
     show eileen happy at center:
         matrixtransform RotateMatrix(0, 0, 0) * OffsetMatrix(0, 0, 0)
         linear 2.0 matrixtransform RotateMatrix(45, 0, 0) * OffsetMatrix(0, -300, 0)
         linear 2.0 matrixtransform RotateMatrix(0, 0, 0) * OffsetMatrix(0, 0, 0)
 
-While the first setting of matrixtransform may seem unnecessary, it is required
-to provide a base for the first linear interpolation. If it wasn't present, that
-interpolation would be skipped.
-
-
 TransformMatrix
 ---------------
 
-While Matrix objects are suitable for static transformations, they're not
-useful for animating changing transformations. It's also useful to have a way of
-taking common matrices and encapsulating them in a way that allows the
-matrix to be parameterized.
-
-The TransformMatrix is a base class that is extended by a number of
-Matrix-creating classes. Instances of TransformMatrix are called by Ren'Py,
-and return Matrixes. TransformMatrix is well integrated with ATL, allowing
-for matrixtransform animations. ::
+TransformMatrix — базовый класс, экземпляры которого возвращают объекты Matrix. TransformMatrix
+глубоко интегрирован с ATL и обеспечивает интерполяцию для matrixtransform::
 
     transform xrotate:
         matrixtransform RotateMatrix(0.0, 0.0, 0.0)
         linear 4.0 matrixtransform RotateMatrix(360.0, 0.0, 0.0)
         repeat
 
-Subclasses of TransformMatrix are expected to implement the ``__call__`` method.
-This method takes:
+Подклассы TransformMatrix реализуют метод ``__call__(self, other, done)``, где `other` — старый объект,
+а `done` — прогресс от 0.0 до 1.0.
 
-* An old object to interpolate off of. This object may be of any class,
-  and may be None if no old object exists.
-* A value between 0.0 and 1.0, representing the point to interpolate.
-  0.0 is entirely the old object, and 1.0 is entirely the new object.
+Встроенные подклассы TransformMatrix
+------------------------------------
 
-Built-In TransformMatrix Subclasses
------------------------------------
+.. seealso:: Класс :class:`SplineMatrix`, поддерживающий работу с подклассами TransformMatrix.
 
-.. seealso:: :class:`SplineMatrix`, which works with TransformMatrix subclasses.
-
-The following is the list of TransformMatrix subclasses that are built into
-Ren'Py.
+Список классов TransformMatrix, встроенных в Ren'Py:
 
 .. include:: inc/transform_matrix
 
 
-Transform Properties
---------------------
+Свойства трансформации
+----------------------
 
-The following transform properties are used by the 3D Stage.
+Следующие свойства трансформации используются в 3D-сцене:
 
 .. transform-property:: matrixanchor
 
     :type: (position, position)
     :default: (0.5, 0.5)
 
-    This gives the position of the matrix anchor relative to the image. If the
-    variables are floats, this is relative to the size of the child, otherwise
-    it's absolute pixels.
+    Задаёт положение точки привязки матрицы относительно изображения (доли от размера изображения
+    для чисел с плавающей запятой или абсолютные пиксели).
 
-    This sets the location of the (0, 0, 0) point that point_to, orientation,
-    xrotate, yrotate, zrotate and matrixtransform apply their transforms to.
+    Определяет положение точки (0, 0, 0), к которой применяют свои трансформации point_to, orientation,
+    xrotate, yrotate, zrotate и matrixtransform.
 
 .. transform-property:: point_to
 
-    :type: (float, float, float), Camera, or None
+    :type: (float, float, float), Camera или None
     :default: None
 
-    This gives a position to which to point. The camera or the
-    displayable being transformed are rotated to face that point,
-    even if the position of the camera or the displayable is changed.
+    Точка в пространстве, на которую направляется объект или камера. Камера или трансформируемый
+    отображаемый объект поворачиваются так, чтобы смотреть в эту точку, даже если их собственная позиция
+    изменяется.
 
-    If this is None, no point-of-interest rotation is applied.
+    Если None, поворот на точку интереса не применяется.
 
-    If this is not None, this is a 3-tuple or an instance of :func:`Camera`.
-    An (x, y, z) format tuple represents the position of the point of interest.
-    An instance of Camera means to point at the camera.
+    Если не None, кортеж из трёх чисел (x, y, z) или экземпляр :func:`Camera`. Кортеж задаёт
+    координаты точки. Экземпляр Camera указывает смотреть прямо в камеру.
 
-    Note point_to isn't updated automatically. so, you should write like below if
-    you want it is updated::
+    Свойство point_to не обновляется автоматически каждый кадр, поэтому для постоянного слежения
+    за камерой используйте цикл ATL::
 
-        # eileen always faces to the camera.
+        # Эйлин всегда поворачивается лицом к камере.
         show eileen happy at center:
             point_to Camera()
             0
@@ -344,106 +296,71 @@ The following transform properties are used by the 3D Stage.
 
 .. transform-property:: orientation
 
-    :type: (float, float, float) or None
+    :type: (float, float, float) или None
     :default: None
 
-    This rotates the camera or the displayable. The three values are the
-    x, y, and z rotations, in degrees. The rotations are applied in x, y, z
-    order for displayables, and z, y, x order for the camera.
+    Поворачивает камеру или отображаемый объект. Три значения представляют углы поворота вокруг осей
+    X, Y и Z в градусах. Вращения применяются в порядке X, Y, Z для объектов и Z, Y, X для камеры.
 
-    When interpolation is used with orientation, the shortest path is taken
-    between the old and new orientations.
-
-    If this is None, no orientation is applied.
+    При интерполяции поворот выполняется по кратчайшей траектории.
 
 .. transform-property:: xrotate
 
-    :type: float or None
+    :type: float или None
     :default: None
 
-    This rotates the camera or the displayable around the x axis. The value is
-    the rotation, in degrees. Rotations are applied to displayables in x, y, z
-    order. Rotations are applied to the camera in z, y, x order.
-
-    If this is None, no x-axis rotation is applied.
+    Поворачивает камеру или отображаемый объект вокруг оси X в градусах.
 
 .. transform-property:: yrotate
 
-    :type: float or None
+    :type: float или None
     :default: None
 
-    This rotates the camera or the displayable around the y axis. The value is
-    the rotation, in degrees. Rotations are applied to displayables in x, y, z
-    order. Rotations are applied to the camera in z, y, x order.
-
-    If this is None, no y-axis rotation is applied.
+    Поворачивает камеру или отображаемый объект вокруг оси Y в градусах.
 
 .. transform-property:: zrotate
 
-    :type: float or None
+    :type: float или None
     :default: None
 
-    This rotates the camera or the displayable around the z axis. The value is
-    the rotation, in degrees. Rotations are applied to displayables in x, y, z
-    order. Rotations are applied to the camera in z, y, x order.
-
-    If this is None, no z-axis rotation is applied.
+    Поворачивает камеру или отображаемый объект вокруг оси Z в градусах.
 
 .. transform-property:: matrixtransform
 
-    :type: None or Matrix or TransformMatrix
+    :type: None, Matrix или TransformMatrix
     :default: None
 
-    If not None, this gives a matrix that is used to transform the vertices
-    of the child of the transform. The transformation goes from the coordinates
-    used by the screen to the coordinates used by the child of the transform.
-
-    Interpolations involving this property are only supported when using a
-    TransformMatrix, and when the TransformMatrix values are structurally similar,
-    as described above.
+    Матрица, трансформирующая вершины дочернего отображаемого объекта. Преобразует координаты
+    из экранного пространства в систему координат дочернего объекта.
 
 .. transform-property:: perspective
 
-    :type: True or False or Float or (Float, Float, Float)
+    :type: True, False, float или (float, float, float)
     :default: None
 
-    When applied to a transform, this enables perspective rendering. This
-    takes a triple, giving the near plane, z-distance to the 1:1 plane, and
-    far plane.
+    Включает перспективный рендеринг. Принимает кортеж из трёх чисел (ближняя плоскость, расстояние
+    до плоскости 1:1, дальняя плоскость).
 
-    If a single float, the distances to the near and far planes are taken
-    from :var:`config.perspective`. If True, all three values are taken
-    from that variable.
+    Если передано одно число с плавающей запятой, расстояния до плоскостей берутся из :var:`config.perspective`.
+    Если True, все три значения берутся из этой переменной.
 
-    When perspective is not false, the meaning of the :tpref:`xpos`, :tpref:`ypos`,
-    :tpref:`zpos`, and :tpref:`rotate` are inverted, providing the effect of positioning the
-    camera rather than the child.
-
-    As the perspective transformation assumes it's aligned with the window,
-    it doesn't make sense to reposition it using :tpref:`xanchor`, and :tpref:`yanchor`,
-    or properties that set those, such as :tpref:`anchor`, :tpref:`align`, :tpref:`center`,
-    etc.
+    Когда perspective включено, координаты :tpref:`xpos`, :tpref:`ypos`, :tpref:`zpos` и :tpref:`rotate`
+    инвертируются, управляя виртуальным положением камеры.
 
 .. transform-property:: zpos
 
     :type: float
     :default: 0
 
-    This offsets the child along the z-axis. When perspective is false,
-    this is used directly, otherwise it is multiplied by -1 and used.
-
-    If setting this causes the child to disappear, it's likely that the
-    transform is not being used with a displayable where zpos is False.
+    Смещает дочерний объект вдоль оси Z. Если свойство perspective выключено, значение используется напрямую,
+    а если включено — умножается на -1.
 
 .. transform-property:: zzoom
 
     :type: bool
     :default: False
 
-    If this is true, the z-distance to the 1:1 plane (`zone`) is determined,
-    along with this displayable's zpos. The child is then scaled by (`zone` - `zpos`) / `zone`
-    in the x and y axes.
+    Если True, движок вычисляет расстояние до плоскости 1:1 (`zone`) и координату zpos объекта,
+    после чего масштабирует объект на коэффициент (`zone` - `zpos`) / `zone` по осям X и Y.
 
-    The intended use for this is in displaying a background with a negative `zpos`, which
-    would normally make the background small. Setting this to true means that the background
-    will be displayed at 1:1 size.
+    Используется для предотвращения уменьшения фонов с отрицательным zpos, возвращая их к масштабу 1:1.

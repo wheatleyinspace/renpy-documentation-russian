@@ -2,18 +2,16 @@
 
 .. class:: Tooltip(default)
     
-    A tooltip object can be used to define a portion of a screen that is
-    updated when the mouse hovers an area.
+    Объект подсказки (Tooltip) можно использовать для выделения части экрана,
+    обновляемой при наведении курсора мыши на область.
     
-    A tooltip object has a ``value`` field, which is set to the `default`
-    value passed to the constructor when the tooltip is created. When
-    a button using an action created by the tooltip is hovered, the
-    value field changes to the value associated with the action.
+    Объект tooltip имеет поле ``value``, инициализируемое значением `default`,
+    переданным конструктору при создании. Когда курсор наводится на кнопку,
+    использующую созданное этим tooltip действие, поле value принимает значение,
+    связанное с действием.
 
     .. method:: Action(value)
         
-        Returns an action that is generally used as the hovered property
-        of a button. When the button is hovered, the value field of this
-        tooltip is set to `value`. When the button loses focus, the
-        value field of this tooltip reverts to the default.
-    
+        Возвращает действие, обычно используемое в качестве свойства hovered кнопки.
+        При наведении курсора на кнопку поле value этого tooltip устанавливается
+        в `value`. При потере кнопкой фокуса поле value сбрасывается к значению по умолчанию.

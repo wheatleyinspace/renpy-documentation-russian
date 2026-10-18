@@ -2,93 +2,82 @@
 
 .. function:: Call(label, *args, **kwargs)
     
-    Ends the current statement, and calls `label`, given as a string.
-    Arguments and keyword arguments are passed to :func:`renpy.call`.
+    Завершает текущий оператор и вызывает метку `label`, заданную в виде строки.
+    Позиционные и именованные аргументы передаются в :func:`renpy.call`.
 
 .. function:: CallInNewContext(label, *args, **kwargs)
     
-    Calls `label`, given as a string, in a new context. This is useful
-    when calling a label from a screen which is itself being
-    called via `call screen`. Note that, while in a new context,
-    the player will be unable to save the game, and
-    the scene and audio state will be reset upon returning
-    to the outer context. See :ref:`Contexts <context>` for more info.
-    Arguments and keyword arguments are passed to
+    Вызывает метку `label`, заданную в виде строки, в новом контексте. Это полезно
+    при вызове метки из экрана, который сам вызван через `call screen`. Обратите внимание:
+    находясь в новом контексте, игрок не сможет сохранить игру, а состояние сцены
+    и аудио сбросится при возвращении во внешний контекст. Дополнительные сведения см.
+    в разделе :ref:`Контексты <context>`. Аргументы передаются в
     :func:`renpy.call_in_new_context`.
 
 .. function:: Hide(screen=None, transition=None, _layer=None, immediately=False)
     
-    This causes a screen to be hidden if it is shown.
+    Скрывает экран, если он отображается.
     
     `screen`
-        Either a string giving the name of the screen to be hidden, or
-        None to hide the current screen.
+        Строка, задающая имя скрываемого экрана, или None для скрытия текущего экрана.
     
     `transition`
-        If not None, a transition that occurs when hiding the screen.
+        Если не None, переход, применяемый при скрытии экрана.
     
     `_layer`
-        This is passed as the layer argument to :func:`renpy.hide_screen`.
-        Ignored if `screen` is None.
+        Передается в качестве аргумента layer в функцию :func:`renpy.hide_screen`.
+        Игнорируется, если `screen` равен None.
     
     `immediately`
-        If True, the screen is hidden immediately, without the 'on hide' event.
+        Если True, экран скрывается мгновенно, без вызова события 'on hide'.
 
 .. function:: Jump(label)
     
-    Causes control to transfer to `label`, given as a string.
+    Передает управление метке `label`, заданной в виде строки.
 
 .. function:: NullAction()
     
-    Does nothing.
+    Не делает ничего.
     
-    This can be used to make a button responsive to hover/unhover events,
-    without actually doing anything.
+    Может использоваться для того, чтобы сделать кнопку отзывчивой к наведению курсора
+    (hover/unhover), не привязывая к ней фактического действия.
 
 .. function:: Return(value=None)
     
-    Causes the current interaction to return the supplied non-None value.
-    This is often used with menus and imagemaps, to
-    select what the return value of the interaction is. If the screen
-    was called using the ``call screen`` statement, the return value
-    is placed in the `_return` variable.
+    Заставляет текущее взаимодействие вернуть указанное значение (отличное от None).
+    Часто используется в меню и картах изображений для задания возвращаемого значения
+    взаимодействия. Если экран был вызван оператором ``call screen``, возвращаемое
+    значение помещается в переменную `_return`.
     
-    When in a menu, this returns from the menu. (The value should be
-    None in this case.)
+    При использовании в меню осуществляет возврат из меню (в этом случае значение
+    должно быть None).
 
 .. function:: Show(screen, transition=None, *args, **kwargs)
     
-    This causes another screen to be shown. `screen` is a string
-    giving the name of the screen. The arguments are
-    passed to the screen being shown.
+    Отображает другой экран. `screen` — строка с именем экрана. Аргументы передаются
+    отображаемому экрану.
     
-    If not None, `transition` is used to show the new screen.
+    Если не None, `transition` используется для показа нового экрана.
     
-    This action takes the `_layer`, `_zorder` and `_tag` keyword
-    arguments, which have the same meaning as in the
-    :func:`renpy.show_screen` function.
+    Это действие принимает именованные аргументы `_layer`, `_zorder` и `_tag`, имеющие
+    то же значение, что и в функции :func:`renpy.show_screen`.
 
 .. function:: ShowTransient(screen, transition=None, *args, **kwargs)
     
-    Shows a transient screen. A transient screen will be hidden when
-    the current interaction completes. The arguments are
-    passed to the screen being shown.
+    Отображает временный (transient) экран. Временный экран скрывается по завершении
+    текущего взаимодействия. Аргументы передаются отображаемому экрану.
     
-    If not None, `transition` is use to show the new screen.
+    Если не None, `transition` используется для показа нового экрана.
     
-    This action takes the `_layer`, `_zorder` and `_tag` keyword
-    arguments, which have the same meaning as in the
-    :func:`renpy.show_screen` function.
+    Это действие принимает именованные аргументы `_layer`, `_zorder` и `_tag`, имеющие
+    то же значение, что и в функции :func:`renpy.show_screen`.
 
 .. function:: ToggleScreen(screen, transition=None, *args, **kwargs)
     
-    This toggles the visibility of `screen`. If it is not currently
-    shown, the screen is shown with the provided arguments. Otherwise,
-    the screen is hidden.
+    Переключает видимость экрана `screen`. Если экран в данный момент не отображается,
+    он показывается с переданными аргументами. В противном случае экран скрывается.
     
-    If not None, `transition` is use to show and hide the screen.
+    Если не None, `transition` используется для показа и скрытия экрана.
     
-    This action takes the `_layer`, `_zorder` and `_tag` keyword
-    arguments, which have the same meaning as in the
-    :func:`renpy.show_screen` function.
-
+    Это действие принимает именованные аргументы `_layer`, `_zorder` и `_tag`, имеющие
+    то же значение, что и в функции :func:`renpy.show_screen`.

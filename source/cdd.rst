@@ -1,29 +1,29 @@
 .. _udd:
 .. _cdd:
 
-============================
-Creator-Defined Displayables
-============================
+===========================================
+Пользовательские отображаемые объекты (CDD)
+===========================================
 
-The most complex, but most powerful, way of customizing Ren'Py's
-behavior is to use a creator-defined displayable. A creator-defined
-displayable is allowed to take arbitrary pygame events. It can
-also render other displayables, and place them at arbitrary locations
-on the screen. This makes it suitable for creating 2D mini-games that
-cannot be expressed with the tools Ren'Py gives you. (But see also the
-section :doc:`sprites <sprites>`, which describes a higher-level way
-of accomplishing many of the same things.)
+Самый сложный, но и самый мощный способ настройки поведения Ren'Py — это использование
+пользовательских отображаемых объектов (creator-defined displayables, CDD). Пользовательский
+отображаемый объект может принимать произвольные события pygame. Он также может
+рендерить другие отображаемые объекты и размещать их в любых координатах
+экрана. Это делает его идеальным инструментом для создания 2D-мини-игр, функционал
+которых невозможно реализовать стандартными инструментами Ren'Py. (См. также
+раздел :doc:`спрайты <sprites>`, где описан более высокоуровневый способ реализации
+многих схожих задач.)
 
-Creator-defined displayables are programmed entirely in Python, and we
-encourage you to have a reasonable degree of skill at object-oriented
-Python programming before you begin creating one.
+Пользовательские отображаемые объекты программируются исключительно на Python,
+поэтому перед началом их создания рекомендуется обладать уверенными навыками
+объектно-ориентированного программирования на Python.
 
-Example
-=======
+Пример
+======
 
-Here's an example of a creator-defined displayable. This displayable
-changes renders its child with an alpha that is determined by the
-distance of the mouse pointer from the center of the child. ::
+Вот пример пользовательского отображаемого объекта. Этот объект рендерит свой
+дочерний элемент с прозрачностью (альфа-каналом), которая зависит от расстояния
+между указателем мыши и центром дочернего элемента. ::
 
     init python:
 
@@ -33,55 +33,54 @@ distance of the mouse pointer from the center of the child. ::
 
             def __init__(self, child, opaque_distance, transparent_distance, **kwargs):
 
-                # Pass additional properties on to the renpy.Displayable
-                # constructor.
+                # Передаём дополнительные свойства конструктору renpy.Displayable.
                 super(Appearing, self).__init__(**kwargs)
 
-                # The child.
+                # Дочерний элемент.
                 self.child = renpy.displayable(child)
 
-                # The distance at which the child will become fully opaque, and
-                # where it will become fully transparent. The former must be less
-                # than the latter.
+                # Расстояние, на котором дочерний элемент станет полностью непрозрачным,
+                # и на котором он станет полностью прозрачным. Первое значение должно быть
+                # меньше второго.
                 self.opaque_distance = opaque_distance
                 self.transparent_distance = transparent_distance
 
-                # The alpha channel of the child.
+                # Альфа-канал дочернего элемента.
                 self.alpha = 0.0
 
-                # The width and height of us, and our child.
+                # Размеры нашего объекта и дочернего элемента.
                 self.width = 0
                 self.height = 0
 
             def render(self, width, height, st, at):
 
-                # Create a transform, that can adjust the alpha channel of the
-                # child.
+                # Создаём трансформацию, которая может изменять альфа-канал
+                # дочернего элемента.
                 t = Transform(child=self.child, alpha=self.alpha)
 
-                # Create a render from the child.
+                # Создаём render из дочернего элемента.
                 child_render = renpy.render(t, width, height, st, at)
 
-                # Get the size of the child.
+                # Получаем размер дочернего элемента.
                 self.width, self.height = child_render.get_size()
 
-                # Create the render we will return.
+                # Создаём объект render, который мы вернём.
                 render = renpy.Render(self.width, self.height)
 
-                # Blit (draw) the child's render to our render.
+                # Отрисовываем (blit) render дочернего элемента на нашем render.
                 render.blit(child_render, (0, 0))
 
-                # Return the render.
+                # Возвращаем render.
                 return render
 
             def event(self, ev, x, y, st):
 
-                # Compute the distance between the center of this displayable and
-                # the mouse pointer. The mouse pointer is supplied in x and y,
-                # relative to the upper-left corner of the displayable.
+                # Вычисляем расстояние между центром этого отображаемого объекта и
+                # указателем мыши. Координаты мыши передаются в x и y относительно
+                # верхнего левого угла отображаемого объекта.
                 distance = math.hypot(x - (self.width / 2), y - (self.height / 2))
 
-                # Base on the distance, figure out an alpha.
+                # На основе расстояния вычисляем значение прозрачности alpha.
                 if distance <= self.opaque_distance:
                     alpha = 1.0
                 elif distance >= self.transparent_distance:
@@ -89,19 +88,19 @@ distance of the mouse pointer from the center of the child. ::
                 else:
                     alpha = 1.0 - 1.0 * (distance - self.opaque_distance) / (self.transparent_distance - self.opaque_distance)
 
-                # If the alpha has changed, trigger a redraw event.
+                # Если прозрачность изменилась, инициируем событие перерисовки.
                 if alpha != self.alpha:
                     self.alpha = alpha
                     renpy.redraw(self, 0)
 
-                # Pass the event to our child.
+                # Передаём событие дочернему элементу.
                 return self.child.event(ev, x, y, st)
 
             def visit(self):
                 return [ self.child ]
 
-To use the creator-defined displayable, we can create an instance of it,
-and add that instance to the screen. ::
+Чтобы использовать созданный пользовательский отображаемый объект, мы можем создать
+его экземпляр и добавить этот экземпляр на экран. ::
 
     screen alpha_magic:
         add Appearing("logo.png", 100, 200):
@@ -119,254 +118,234 @@ and add that instance to the screen. ::
 renpy.Displayable
 =================
 
-A creator-defined displayable is created by subclassing the
-renpy.Displayable class. A creator-defined displayable must override
-the render method, and may override other methods as well.
+Пользовательский отображаемый объект создаётся путём наследования от класса
+renpy.Displayable. Пользовательский объект должен переопределить метод render
+и при необходимости может переопределять другие методы.
 
-A displayable object must be pickleable, which means it may not
-contain references to objects that cannot be pickled. Most notably,
-Render objects cannot be stored in a creator-defined displayable.
+Отображаемый объект должен поддерживать сериализацию через pickle, что означает,
+что он не может содержать ссылки на объекты, не поддерживающие pickle. В частности,
+объекты Render нельзя сохранять в полях пользовательского отображаемого объекта.
 
-Since we expect you to override the methods of the displayable
-class, we'll present them with the `self` parameter.
+Поскольку предполагается переопределение методов класса отображаемого объекта,
+мы приводим их с параметром `self`.
 
 .. class:: renpy.Displayable
 
-    Base class for creator-defined displayables.
+    Базовый класс для пользовательских отображаемых объектов.
 
     .. method:: __init__(**properties)
 
-        A subclass may override the constructor, perhaps adding new
-        parameters. If it does, it should pass all unknown keyword
-        arguments to the renpy.Displayable constructor, with the
-        call::
+        Подкласс может переопределить конструктор, возможно, добавляя новые параметры.
+        В этом случае он должен передать все неизвестные именованные аргументы конструктору
+        renpy.Displayable с помощью вызова::
 
             super(MyDisplayable, self).__init__(**properties)
 
     .. method:: render(self, width, height, st, at)
 
-        Subclasses must override this, to return a :class:`renpy.Render`
-        object. The render object determines what, if anything, is
-        shown on the screen.
+        Подклассы обязаны переопределить этот метод и вернуть объект :class:`renpy.Render`.
+        Объект render определяет то, что (если вообще что-либо) будет показано на экране.
 
         `width`, `height`
-            The amount of space available to this displayable, in
-            pixels.
+            Объём пространства, доступного этому отображаемому объекту, в пикселях.
 
         `st`
-            A float, the shown timebase, in seconds. The shown
-            timebase begins when this displayable is first shown
-            on the screen.
+            Число с плавающей запятой (float), временная шкала показа (shown timebase) в секундах.
+            Она начинается с момента первого появления этого отображаемого объекта на экране.
 
         `at`
-            A float, the animation timebase, in seconds. The animation
-            timebase begins when an image with the same tag was shown,
-            without being hidden. (When the displayable is shown
-            without a tag, this is the same as the shown timebase.)
+            Число с плавающей запятой (float), временная шкала анимации (animation timebase) в секундах.
+            Она начинается с момента показа изображения с тем же тегом без его скрытия. (Когда
+            отображаемый объект показывается без тега, это значение совпадает с `st`.)
 
-        The render method is called when the displayable is first
-        shown. It can be called again if :func:`renpy.redraw`
-        is called on this object.
+        Метод render вызывается при первом отображении объекта. Он может вызываться
+        повторно, если для этого объекта вызвана функция :func:`renpy.redraw`.
 
     .. method:: event(self, ev, x, y, st)
 
-        The event method is called to pass a pygame event to
-        the creator-defined displayable. If the event method returns
-        a value other than None, that value is returned as the result
-        of the interaction. If the event method returns None, the event
-        is passed on to other displayables.
+        Метод event вызывается для передачи события pygame пользовательскому отображаемому
+        объекту. Если метод event возвращает значение, отличное от None, это значение возвращается
+        как результат взаимодействия. Если метод event возвращает None, событие передаётся дальше
+        другим отображаемым объектам.
 
-        To ignore the event without returning None, raise :exc:`renpy.IgnoreEvent`.
+        Чтобы проигнорировать событие без возврата None, вызовите исключение :exc:`renpy.IgnoreEvent`.
 
-        The event method exists on other displayables, allowing the
-        creator-defined displayable to pass on the event.
+        Метод event существует и у других отображаемых объектов, что позволяет пользовательскому
+        объекту передавать событие дальше по цепочке.
 
         `ev`
-            An `event object <http://www.pygame.org/docs/ref/event.html>`_
+            `Объект события <http://www.pygame.org/docs/ref/event.html>`_ pygame.
 
         `x`, `y`
-            The x and y coordinates of the event, relative to the
-            upper-left corner of the displayable. These should
-            be used in preference to position information
-            found in the pygame event objects.
+            Координаты x и y события относительно верхнего левого угла отображаемого объекта.
+            Их следует предпочитать информации о позиции, находящейся в объектах событий pygame.
 
         `st`
-            A float, the shown timebase, in seconds.
+            Число с плавающей запятой (float), временная шкала показа в секундах.
 
-        An event is generated at the start of each interaction, and
-        :func:`renpy.timeout` can be used to cause another event to
-        occur.
+        Событие генерируется в начале каждого взаимодействия, а функция :func:`renpy.timeout`
+        может использоваться для принудительного вызова следующего события.
 
     .. method:: per_interact(self)
 
-        This method is called at the start of each interaction. It
-        can be used to trigger a redraw, and probably should be used
-        to trigger a redraw if the object participates in rollback.
+        Этот метод вызывается в начале каждого взаимодействия. Его можно использовать
+        для запуска перерисовки, и его практически наверняка следует использовать для перерисовки,
+        если объект участвует в откате.
 
     .. method:: visit(self)
 
-        If the displayable has child displayables, this method should
-        be overridden to return a list of those displayables. This
-        ensures that the per_interact methods of those displayables
-        are called, and also allows images used by those displayables
-        to be predicted.
+        Если у отображаемого объекта есть дочерние отображаемые объекты, этот метод
+        следует переопределить так, чтобы он возвращал список этих дочерних объектов. Это
+        гарантирует, что методы per_interact этих дочерних объектов будут вызваны, а также
+        позволяет предсказывать изображения (predicting), используемые дочерними элементами.
 
     .. method:: place(self, dest, x, y, width, height, surf, main=True)
 
-        This places a render (which must be of this displayable)
-        within a bounding area. Returns an (x, y) tuple giving the location
-        the displayable was placed at.
+        Размещает render (который должен принадлежать этому отображаемому объекту)
+        внутри ограничивающей области. Возвращает кортеж (x, y), определяющий координаты,
+        в которых был размещён объект.
 
         `dest`
-            If not None, the `surf` will be blitted to `dest` at the
-            computed coordinates.
+            Если не None, `surf` будет отрисован (blitted) в `dest` по вычисленным координатам.
 
         `x`, `y`, `width`, `height`
-            The bounding area.
+            Ограничивающая область.
 
         `surf`
-            The render to place.
+            Объект render для размещения.
 
         `main`
-            This is passed to Render.blit().
+            Передаётся в Render.blit().
 
 renpy.Render
 ============
 
-Creator-defined displayables work with renpy.Render objects. Render
-objects are returned by calling the :func:`renpy.render` function on a
-displayable. A creator-defined displayable should create a Render object
-by calling :class:`renpy.Render` from its render method.
+Пользовательские отображаемые объекты работают с объектами renpy.Render. Объекты
+Render возвращаются при вызове функции :func:`renpy.render` для отображаемого объекта.
+Пользовательский отображаемый объект должен создавать объект Render путём вызова
+:class:`renpy.Render` из своего метода render.
 
-Since the render object isn't intended to be subclassed, we will omit
-the implicit `self` parameter.
+Поскольку объект render не предназначен для создания подклассов, мы опустим неявный
+параметр `self`.
 
 .. class:: renpy.Render(width, height)
 
-    Creates a new Render object.
+    Создаёт новый объект Render.
 
     `width`, `height`
-        The width and height of the render object, in pixels.
-
+        Ширина и высота объекта render в пикселях.
 
     .. method:: blit(source, pos, main=True)
 
-        Draws another render object into this render object.
+        Отрисовывает другой объект render внутри этого объекта render.
 
         `source`
-            The render object to draw.
+            Объект render для отрисовки.
 
         `pos`
-            The location to draw into. This is an (x, y) tuple
-            with the coordinates being pixels relative to the
-            upper-left corner of the target render.
+            Позиция отрисовки. Это кортеж (x, y), где координаты заданы в пикселях
+            относительно верхнего левого угла целевого объекта render.
 
         `main`
-            A keyword-only parameter. If true, `source` will be displayed
-            in the style inspector.
+            Параметр, передаваемый только по имени. Если True, `source` будет отображаться
+            в инспекторе стилей.
 
     .. method:: place(d, x=0, y=0, width=None, height=None, st=None, at=None, render=None, main=True)
 
-        Renders `d`, a displayable, and places it into the rectangle defined by the `x`, `y`,
-        `width`, and `height`, using Ren'Py's standard placement algorithm.
-        Returns an (x, y) tuple giving the location
-        the displayable was placed at. Location is computed
-        by calling Displayable.place() method.
+        Рендерит отображаемый объект `d` и помещает его в прямоугольник, определённый `x`, `y`,
+        `width` и `height`, используя стандартный алгоритм размещения Ren'Py.
+        Возвращает кортеж (x, y) с координатами размещения отображаемого объекта.
+        Позиция вычисляется путём вызова метода Displayable.place().
 
         `x`, `y`, `width`, `height`
-            The rectangle to place in. If `width` or `height`, when None,
-            are the width and height of this render, respectively.
+            Прямоугольник для размещения. Если `width` или `height` равны None, используются
+            ширина и высота данного объекта render соответственно.
 
         `st`, `at`
-            The times passed to Render. If None, defaults to the times
-            passed to the render method calling this method.
+            Время, передаваемое в Render. Если None, по умолчанию используются значения времени,
+            переданные в вызывающий этот метод метод render.
 
         `render`
-            If not None, this is used instead of rendering `d`.
+            Если не None, используется это значение вместо повторного рендеринга `d`.
 
         `main`
-            As for .blit().
+            Аналогично параметру в .blit().
 
     .. method:: canvas()
 
-       Returns a canvas object. A canvas object has methods
-       corresponding to the
-       `pygame.draw <http://www.pygame.org/docs/ref/draw.html>`_
-       functions, with the first parameter (the surface) omitted.
+       Возвращает объект холста (canvas). Объект холста содержит методы, соответствующие
+       функциям модуля `pygame.draw <http://www.pygame.org/docs/ref/draw.html>`_, с опущенным
+       первым параметром (поверхностью).
 
-       In Ren'Py, the arc and ellipse functions aren't implemented.
+       В Ren'Py функции arc и ellipse не реализованы.
 
-       Canvas objects also have a get_surface() method that returns the
-       pygame Surface underlying the canvas.
+       У объектов canvas также есть метод get_surface(), возвращающий поверхность pygame Surface,
+       лежащую в основе холста.
 
     .. method:: get_size()
 
-        Returns a (width, height) tuple giving the size of
-        this render.
+        Возвращает кортеж (width, height), определяющий размеры этого объекта render.
 
     .. method:: subsurface(rect)
 
-        Returns a render consisting of a rectangle cut out of this
-        render.
+        Возвращает объект render, представляющий собой прямоугольную область, вырезанную
+        из данного объекта render.
 
         `rect`
-            A (x, y, width, height) tuple.
+            Кортеж (x, y, width, height).
 
     .. method:: zoom(xzoom, yzoom)
 
-        Sets the zoom level of the children of this displayable in the
-        horizontal and vertical axes. Only the children of the displayable
-        are zoomed – the width, height, and blit coordinates are not zoomed.
+        Задаёт коэффициент масштабирования дочерних элементов этого отображаемого объекта
+        по горизонтальной и вертикальной осям. Масштабируются только дочерние элементы —
+        ширина, высота и координаты blit не масштабируются.
 
-    The following attributes and methods are only used when model-based rendering
-    is enabled:
+    Следующие атрибуты и методы используются только тогда, когда включён модельный рендеринг:
 
     .. attribute:: mesh
 
-        This field enables model-based rendering for this Render. If true:
+        Это поле включает модельный рендеринг для данного Render.
 
-        If set to True:
+        Если установлено в True:
 
-        * All of the children of this displayable are rendered to textures.
-        * A mesh the size of the first child is associated with this displayable.
-        * A model is created with the mesh, shaders, uniforms, and properties
-          associated with this Render.
+        * Все дочерние элементы этого отображаемого объекта рендерятся в текстуры.
+        * К данному отображаемому объекту привязывается сетка (mesh) по размеру первого дочернего элемента.
+        * Создаётся модель с сеткой, шейдерами, uniform-переменными и свойствами, связанными с этим Render.
 
-        The model will then be drawn in a single operation.
+        Затем модель отрисовывается за одну операцию.
 
     .. method:: add_shader(shader)
 
-        This causes the shader part `shader` to be used when this Render
-        or its children are drawn. The part should be a string, or can be a
-        string beginning with "-" to prevent a shader from being drawn.
+        Указывает использовать шейдерную часть `shader` при отрисовке этого Render или его
+        дочерних элементов. Часть должна быть строкой либо строкой, начинающейся с "-", чтобы
+        предотвратить отрисовку шейдера.
 
     .. method:: add_uniform(name, value)
 
-        Causes the uniform `name` to have `value` when this Render or
-        its children are drawn.
+        Присваивает uniform-переменной `name` значение `value` при отрисовке этого Render
+        или его дочерних элементов.
 
     .. method:: add_property(name, value)
 
-        Causes the GL property `name` to have `value` when this Render or
-        one of its children are drawn.
+        Присваивает свойству GL `name` значение `value` при отрисовке этого Render или одного
+        из его дочерних элементов.
 
 
 
-Utility Functions and Classes
-=============================
+Вспомогательные функции и классы
+================================
 
 .. include:: inc/udd_utility
 
 .. function:: renpy.redraw(d, when)
 
-    Causes the displayable `d` to be redrawn (the render method called)
-    when `when` seconds have elapsed. The displayable may be redrawn before
-    that time (for example, when a child is redrawn), in which case a pending
-    redraw is forgotten.
+    Вызывает перерисовку отображаемого объекта `d` (вызов метода render) по истечении `when`
+    секунд. Отображаемый объект может быть перерисован и раньше этого времени (например, при перерисовке
+    дочернего элемента); в этом случае отложенная перерисовка отменяется.
 
 .. exception:: renpy.IgnoreEvent
 
-    This is an exception that, if raised, causes Ren'Py to ignore the
-    event. To raise this inside the event method, write::
+    Исключение, вызов которого заставляет Ren'Py проигнорировать событие. Чтобы вызвать его
+    внутри метода event, напишите::
 
         raise renpy.IgnoreEvent()

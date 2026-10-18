@@ -1,78 +1,70 @@
-==========
-Text Input
-==========
+.. _input:
 
-With some limitations, Ren'Py can prompt the user to input a small
-amount of text. This prompting is done by the :func:`renpy.input` function,
-which returns the entered text, allowing it to be saved in a variable
-or otherwise processed.
+===========
+Ввод текста
+===========
 
-On Linux, text input is limited to languages that do not require
-input method (IME) support. Most Western languages should work, but
-Chinese, Japanese, and Korean probably won't.
+С некоторыми ограничениями Ren'Py может запрашивать у пользователя ввод небольшого фрагмента текста.
+Этот запрос выполняется с помощью функции :func:`renpy.input`, возвращающей введённый текст,
+который затем можно сохранить в переменной или обработать.
 
-The renpy.input function is defined as:
+В операционной системе Linux ввод текста ограничен языками, не требующими поддержки методов ввода (IME).
+Большинство европейских языков работают штатно, однако китайский, японский и корейский языки могут
+не поддерживаться.
+
+Функция renpy.input объявляется следующим образом:
 
 .. include:: inc/input
 
-Games that use renpy.input will often want to process the result
-further, using standard Python string manipulation functions. For
-example, the following will ask the player for his or her
-name and remove leading or trailing whitespace. If the name is
-empty, it will be replaced by a default name. Finally, it is
-displayed to the user. ::
+В играх результат функции renpy.input часто подвергается дополнительной обработке стандартными
+методами строк Python. Например, следующий код запрашивает имя игрока, удаляет начальные и конечные
+пробелы, подставляет имя по умолчанию при пустом вводе и выводит результат в диалоге::
 
     define pov = Character("[povname]")
 
     python:
-        povname = renpy.input("What is your name?", length=32)
+        povname = renpy.input("Как вас зовут?", length=32)
         povname = povname.strip()
 
         if not povname:
-             povname = "Pat Smith"
+             povname = "Пат Смит"
 
-    pov "My name is [povname]!"
+    pov "Меня зовут [povname]!"
 
-In this, the length of the input is limited to 32 characters. It's important
-to test your game with long names, to makes sure that those names do not break
-text layout. At the same time, too short fields may prevent people from entering
-their preferred name.
+В этом примере длина вводимой строки ограничена 32 символами. Важно протестировать игру с длинными
+именами, чтобы убедиться, что они не нарушают верстку интерфейса. В то же время слишком короткие поля
+могут помешать игроку ввести желаемое имя.
 
 .. _input-methods:
 
-Input Methods
-=============
+Методы ввода (IME)
+==================
 
-When an input method editor (IME) supplies composition text, Ren'Py draws
-it inside the input displayable. On platforms where SDL supplies candidate
-events, Ren'Py also draws the candidate list rather than relying on the
-operating system's candidate window. This allows the candidates to be seen
-when the game is fullscreen.
+Когда редактор метода ввода (IME) передаёт вводимый текст (композицию), Ren'Py отрисовывает его
+внутри отображаемого объекта ввода. На платформах, где библиотека SDL передаёт события списка кандидатов,
+Ren'Py самостоятельно выводит список вариантов вместо использования стандартного окна операционной системы.
+Это позволяет видеть список кандидатов даже в полноэкранном режиме игры.
 
-Candidate events are supported on Windows. SDL's Linux IBus and Fcitx
-backends do not currently supply candidate events or suppress the native
-candidate window, so those backends continue to use the system candidate
-interface. Setting ``SDL_IME_IMPLEMENTED_UI`` does not enable candidate
-events on an unsupported backend.
+События кандидатов поддерживаются в Windows. Бэкенды Linux IBus и Fcitx в SDL в настоящее время
+не передают эти события и не подавляют системное окно кандидатов, продолжая использовать системный интерфейс.
+Установка переменной окружения ``SDL_IME_IMPLEMENTED_UI`` не включает поддержку событий на неподдерживаемых бэкендах.
 
-When candidate events are supplied, the list is displayed by the
-``_ime_candidates`` screen, which Ren'Py shows and hides as required.
-The screen is placed next to the text
-being entered, and can be customized by changing the following styles:
+Когда события кандидатов поступают, список отображается экраном ``_ime_candidates``, который Ren'Py
+автоматически показывает и скрывает. Экран размещается рядом с вводимым текстом и настраивается через стили:
 
 ``_ime_candidates_frame``
-    The frame containing the candidate list.
+    Фрейм (рамка), содержащий список кандидатов.
 
 ``_ime_candidates_box``
-    The box containing the candidates.
+    Контейнер box, содержащий элементы списка кандидатов.
 
 ``_ime_candidates_item_frame``, ``_ime_candidates_selected_item_frame``
-    The frames around an unselected candidate and the selected candidate.
+    Рамки вокруг невыбранного и выбранного кандидата соответственно.
 
 ``_ime_candidates_text``, ``_ime_candidates_selected_text``
-    The text of an unselected candidate and the selected candidate.
+    Текст невыбранного и выбранного кандидата.
 
-For example::
+Пример настройки стилей::
 
     style _ime_candidates_frame:
         background "#202040e0"

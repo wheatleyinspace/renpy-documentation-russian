@@ -2,15 +2,13 @@
 
 .. function:: GetTooltip(screen=None, last=False)
     
-    Returns the tooltip of the currently focused displayable, or None
-    if no displayable is focused.
+    Возвращает подсказку (tooltip) сфокусированного в данный момент отображаемого
+    объекта или None, если ни один объект не находится в фокусе.
     
     `screen`
-        If not None, this should be the name or tag of a screen. If
-        given, this function only returns the tooltip if the focused
-        displayable is part of the screen.
+        Имя или тег экрана. Если указано, функция возвращает подсказку только в том
+        случае, если сфокусированный объект принадлежит этому экрану.
     
     `last`
-        If true, returns the last non-None value this function would
-        have returned.
-
+        Если True, возвращает последнее непустое (не None) значение, которое вернула
+        бы эта функция.

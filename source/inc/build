@@ -2,104 +2,98 @@
 
 .. function:: build.archive(name, file_list='all')
     
-    Declares the existence of an archive, whose `name` is added to the
-    list of available archive names, which can be passed to
+    Объявляет существование архива, чьё имя `name` добавляется в
+    список доступных имён архивов, которые можно передавать в
     :func:`build.classify`.
     
-    If one or more files are classified with `name`, `name`.rpa is
-    built as an archive, and then distributed in packages including
-    the `file_list` given here. ::
+    Если один или несколько файлов классифицированы с именем `name`, создаётся
+    архив с именем `name`.rpa, который затем распространяется в пакетах,
+    включающих указанный здесь список файлов `file_list`. ::
     
         build.archive("secret", "windows")
     
-    If any file is included in the "secret" archive using the
-    :func:`build.classify` function, the file will be included inside
-    the secret.rpa archive in the windows builds.
+    Если какой-либо файл включён в архив "secret" с помощью функции
+    :func:`build.classify`, этот файл будет включён в архив secret.rpa
+    в сборках для Windows.
     
-    As with the :func:`build.classify` function, if the name given as
-    `file_list` doesn't exist as a file list name, it is created and
-    added to the set of valid file lists.
+    Как и в случае с функцией :func:`build.classify`, если имя, переданное в качестве
+    `file_list`, не существует среди списков файлов, оно создаётся и
+    добавляется в набор допустимых списков файлов.
 
 .. function:: build.classify(pattern, file_list)
     
-    Classifies files that match `pattern` into `file_list`, which can
-    also be an archive name.
+    Классифицирует файлы, соответствующие шаблону `pattern`, в список файлов
+    `file_list`, который также может являться именем архива.
     
-    If the name given as `file_list` doesn't exist as an archive or file
-    list name, it is created and added to the set of valid file lists.
+    Если имя, переданное в качестве `file_list`, не существует как имя архива
+    или списка файлов, оно создаётся и добавляется в набор допустимых списков файлов.
 
 .. function:: build.clear()
     
-    Clears the list of patterns used to classify files.
+    Очищает список шаблонов, используемых для классификации файлов.
 
 .. function:: build.documentation(pattern)
     
-    Declares a pattern that matches documentation. In a mac app build,
-    files matching the documentation pattern are stored twice - once
-    inside the app package, and again outside of it.
+    Объявляет шаблон, соответствующий файлам документации. В сборке приложения
+    для Mac файлы, соответствующие шаблону документации, сохраняются дважды —
+    один раз внутри пакета приложения и ещё раз снаружи.
 
 .. function:: build.executable(pattern)
     
-    Adds a pattern marking files as executable on platforms that support it.
-    (Linux and Macintosh)
+    Добавляет шаблон, помечающий файлы как исполняемые на платформах,
+    где это поддерживается (Linux и Macintosh).
 
 .. function:: build.package(name, format, file_lists, description=None, update=True, dlc=False, hidden=False, update_only=False)
     
-    Declares a package that can be built by the packaging
-    tool.
+    Объявляет пакет, который может быть собран инструментом упаковки.
     
     `name`
-        The name of the package.
+        Имя пакета.
     
     `format`
-        The format of the package. A string containing a space separated
-        list of:
+        Формат пакета. Строка, содержащая разделённый пробелами список
+        следующих значений:
     
         zip
-            A zip file.
+            Файл формата zip.
         tar.bz2
-            A tar.bz2 file.
+            Файл формата tar.bz2.
         directory
-            A directory containing the files.
+            Каталог, содержащий файлы.
         dmg
-            A Macintosh DMG containing the files.
+            Образ диска Macintosh DMG, содержащий файлы.
         app-zip
-            A zip file containing a macintosh application. This format
-            doesn't support the Ren'Py updater.
+            Файл zip, содержащий приложение для Macintosh. Этот формат не
+            поддерживает средство обновления Ren'Py.
         app-directory
-            A directory containing the mac app. This format
-            doesn't support the Ren'Py updater.
+            Каталог, содержащий приложение для Mac. Этот формат не
+            поддерживает средство обновления Ren'Py.
         app-dmg
-            A macintosh drive image containing a dmg. (Mac only.) This format
-            doesn't support the Ren'Py updater.
+            Образ диска Macintosh, содержащий dmg (только для Mac). Этот
+            формат не поддерживает средство обновления Ren'Py.
         bare-zip
-            A zip file without :var:`build.directory_name`
-            prepended.
+            Файл zip без добавления префикса :var:`build.directory_name`.
         bare-tar.bz2
-            A zip file without :var:`build.directory_name`
-            prepended.
+            Файл tar.bz2 без добавления префикса :var:`build.directory_name`.
         null
-            Used to produce only updates, without the main package.
+            Используется для генерации только файлов обновлений без создания самого пакета.
     
-        The empty string will not build any package formats (this
-        makes dlc possible).
+        Пустая строка означает, что форматы пакета собираться не будут (что
+        позволяет создавать DLC).
     
     `file_lists`
-        A list containing the file lists that will be included
-        in the package.
+        Список, содержащий списки файлов, которые будут включены в пакет.
     
     `description`
-        An optional description of the package to be built.
+        Необязательное описание собираемого пакета.
     
     `update`
-        If true and updates are being built, an update will be
-        built for this package.
+        Если True и выполняется сборка обновлений, для этого пакета будет
+        создано обновление.
     
     `dlc`
-        If true, any zip or tar.bz2 file will be built in
-        standalone DLC mode, without an update directory.
+        Если True, любые файлы zip или tar.bz2 будут собраны в автономном
+        режиме DLC без каталога обновлений.
     
     `hidden`
-        If true, this will be hidden from the list of packages in
-        the launcher.
-
+        Если True, этот пакет будет скрыт из списка пакетов в лаунчере.

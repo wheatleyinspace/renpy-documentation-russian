@@ -2,6 +2,4 @@
 
 .. function:: renpy.has_live2d()
     
-    Returns True if Live2d is supported on the current platform, and
-    False otherwise.
-
+    Возвращает True, если Live2D поддерживается на текущей платформе, и False в противном случае.

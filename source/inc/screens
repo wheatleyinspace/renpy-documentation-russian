@@ -2,215 +2,183 @@
 
 .. function:: renpy.call_screen(_screen_name, *args, _with_none=True, _mode="screen", **kwargs)
     
-    The programmatic equivalent of the call screen statement.
+    Программный эквивалент оператора call screen.
     
-    This shows `_screen_name` as a screen, then causes an interaction
-    to occur. The screen is hidden at the end of the interaction, and
-    the result of the interaction is returned.
+    Отображает `_screen_name` в качестве экрана, после чего запускает взаимодействие.
+    Экран скрывается по окончании взаимодействия, а результат взаимодействия возвращается.
     
-    Positional arguments, and keyword arguments that do not begin with
-    _ are passed to the screen.
+    Позиционные аргументы и именованные аргументы, не начинающиеся со знака подчеркивания,
+    передаются экрану.
     
-    If `_with_none` is false, "with None" is not run at the end of end
-    of the interaction.
+    Если `_with_none` равно False, в конце взаимодействия не выполняется "with None".
     
-    If `_mode` is passed, it will be the mode of this interaction,
-    otherwise the mode will be "screen".
+    Если передан `_mode`, он становится режимом данного взаимодействия (иначе "screen").
 
 .. function:: renpy.current_screen()
     
-    Returns information about the screen currently being
-    updated, rendered, or processed.
+    Возвращает информацию об экране, который в данный момент обновляется,
+    отрисовывается или обрабатывается.
     
-    See :func:`get_screen` for documented fields on the returned object.
+    Документированные поля возвращаемого объекта описаны в :func:`get_screen`.
 
 .. function:: renpy.get_adjustment(bar_value)
     
-    Given `bar_value`, a :class:`BarValue`, returns the :func:`ui.adjustment`
-    it uses. The adjustment has the following attributes defined:
+    Принимая `bar_value`, объект :class:`BarValue`, возвращает используемый им
+    регулятор :func:`ui.adjustment`. Регулятор имеет следующие атрибуты:
     
     .. attribute:: value
     
-        The current value of the bar.
+        Текущее значение полосы.
     
     .. attribute:: range
     
-        The current range of the bar.
+        Текущий диапазон полосы.
 
 .. function:: renpy.get_displayable(screen, id, layer=None, base=False)
     
-    From the `screen` on `layer`, returns the displayable with
-    `id`. Returns None if the screen doesn't exist, or there is no
-    widget with that id on the screen.
+    Возвращает отображаемый объект с идентификатором `id` из экрана `screen`
+    на слое `layer`. Возвращает None, если экран не существует или на нем нет виджета с таким id.
 
 .. function:: renpy.get_displayable_properties(id, screen=None, layer=None)
     
-    Returns the properties for the displayable with `id` in the `screen`
-    on `layer`. If `screen` is None, returns the properties for the
-    current screen. This can be used from Python or property code inside
-    a screen.
+    Возвращает свойства отображаемого объекта с `id` на экране `screen`
+    на слое `layer`. Если `screen` равен None, возвращает свойства для текущего экрана.
+    Может использоваться из Python или в коде свойств внутри экрана.
     
-    Note that this returns a dictionary containing the widget properties,
-    and so to get an individual property, the dictionary must be accessed.
+    Возвращает словарь со свойствами виджета.
 
 .. function:: renpy.get_screen(name, layer=None, tag_only=False)
     
-    Returns information about the screen with the given `name` on `layer`.
-    `name` is first interpreted as a tag name, and then as a screen name.
-    If the screen is not showing, returns None.
+    Возвращает информацию об экране с данным именем `name` на слое `layer`.
+    `name` сначала интерпретируется как тег, а затем как имя экрана.
+    Если экран не отображается, возвращает None.
     
-    This can also take a list of names, in which case the first screen
-    that is showing is returned.
+    Также может принимать список имен: в этом случае возвращается первый отображаемый экран.
     
     `tag_only`
-        If true, only the tag is considered.
+        Если True, учитывается только тег.
     
-    This function can be used to check whether a screen is showing::
+    Функцию можно использовать для проверки того, отображается ли экран::
     
         if renpy.get_screen("say"):
-            text "The say screen is showing."
+            text "Экран say отображается."
         else:
-            text "The say screen is hidden."
+            text "Экран say скрыт."
     
-    The objects returned by this function have the
-    following documented fields:
+    Объекты, возвращаемые этой функцией, имеют следующие документированные поля:
     
     .. attribute:: layer
     
-        The layer the screen is being displayed on.
+        Слой, на котором отображается экран.
     
     .. attribute:: name
     
-        The name of the screen.
+        Имя экрана.
     
     .. attribute:: zorder
     
-        The zorder the screen is being displayed at.
+        Порядок zorder отображения экрана.
     
     .. warning::
     
-        Like other similar functions, the object this returns is meant to be used
-        in the short term after the function is called. Including it in save data
-        or making it participate in rollback is not advised.
+        Возвращаемый объект предназначен для кратковременного использования сразу после
+        вызова функции. Не рекомендуется включать его в данные сохранений или в систему отката.
 
 .. function:: renpy.get_screen_docstring(name, variant=None)
     
-    Returns the docstring for the screen with `name` and `variant`.
+    Возвращает строку документации (docstring) для экрана с именем `name` и вариантом `variant`.
     
     `name`
-        The name of the screen.
+        Имя экрана.
     `variant`
-        The variant of the screen. If None, the default variant is used.
+        Вариант экрана. Если None, используется вариант по умолчанию.
 
 .. function:: renpy.get_screen_variable(name, *, screen=None, layer=None)
     
-    Returns the value of a variable in the scope of a screen.
+    Возвращает значение переменной в области видимости экрана.
     
     `name`
-        The name of the variable to return.
+        Имя возвращаемой переменной.
     
     `screen`
-        The name of the screen to return the variable from. If None,
-        the current screen is used. (The current screen is only defined
-        when updating a screen, and in actions that are run inside the
-        screen.)
+        Имя экрана. Если None, используется текущий экран (определен только при обновлении
+        экрана и в действиях, выполняемых внутри него).
     
     `layer`
-        The layer to find the screen on, if `screen` is not None.
+        Слой, на котором находится экран (если `screen` не None).
 
 .. function:: renpy.hide_screen(tag, layer=None, immediately=False)
     
-    The programmatic equivalent of the hide screen statement.
+    Программный эквивалент оператора hide screen.
     
-    Hides the screen with `tag` on `layer`.
+    Скрывает экран с тегом `tag` на слое `layer`.
     
-    If `immediately` is true, the screen is hidden immediately, without the 'on hide' event.
+    Если `immediately` равно True, экран скрывается мгновенно, без события 'on hide'.
 
 .. function:: renpy.set_focus(screen, id, layer='screens')
     
-    This attempts to focus the displayable with `id` in the screen `screen`.
-    Focusing will fail if the displayable isn't found, the window isn't
-    focused, or something else is grabbing focus.
+    Пытается передать фокус отображаемому объекту с `id` на экране `screen`.
+    Фокусировка не удастся, если объект не найден, окно не сфокусировано или фокус перехвачен.
     
-    The focus may change if the mouse moves, even slightly, after this call
-    is processed.
+    Фокус может измениться, если мышь сдвинется даже незначительно после вызова.
 
 .. function:: renpy.set_screen_variable(name, value, *, screen=None, layer=None)
     
-    Sets a variable to a value in the scope of a screen. Note that this
-    will not immediately update the variable's value - call
-    :func:`renpy.restart_interaction` to cause the screen to be updated.
+    Устанавливает значение переменной в области видимости экрана. Обратите внимание:
+    это не обновляет значение мгновенно — вызовите :func:`renpy.restart_interaction`,
+    чтобы вызвать обновление экрана.
     
     `name`
-        The name of the variable to set. This should be a variable
-        created with the :ref:`sl-default` statement, as optimization
-        may prevent changes to other variables from being visible.
+        Имя переменной. Должна быть переменной, созданной оператором :ref:`sl-default`.
     
     `value`
-        The value to set the variable to.
+        Устанавливаемое значение.
     
     `screen`
-        The name of the screen to return the variable from. If None,
-        the current screen is used. (The current screen is only defined
-        when updating a screen, and in actions that are run inside the
-        screen.)
+        Имя экрана. Если None, используется текущий экран.
     
     `layer`
-        The layer to find the screen on, if `screen` is not None.
+        Слой экрана, если `screen` не None.
 
 .. function:: renpy.show_screen(_screen_name, *args, _layer=None, _zorder=None, _tag=None, _widget_properties={}, _transient=False, **kwargs)
     
-    The programmatic equivalent of the show screen statement.
+    Программный эквивалент оператора show screen.
     
-    Shows the named screen. This takes the following keyword arguments:
+    Отображает указанный экран. Принимает следующие именованные аргументы:
     
     `_screen_name`
-        The name of the screen to show.
+        Имя отображаемого экрана.
     `_layer`
-        The layer to show the screen on. This is equivalent to the
-        ``onlayer`` clause of the :ref:`show-screen-statement` statement.
+        Слой отображения экрана (эквивалент предложения ``onlayer`` оператора :ref:`show-screen-statement`).
     `_zorder`
-        The zorder to show the screen on. If not specified, defaults to
-        the zorder associated with the screen. If that's not specified,
-        it is 0 by default.
+        Порядок отображения по оси Z (по умолчанию из экрана или 0).
     `_tag`
-        The tag to show the screen with. If not specified, defaults to
-        the tag associated with the screen. If that's not specified,
-        defaults to the name of the screen.
-    
-        This is equivalent to the ``as`` clause of the
-        :ref:`show-screen-statement` statement.
+        Тег экрана (эквивалент предложения ``as`` оператора :ref:`show-screen-statement`).
     `_widget_properties`
-        A map from the id of a widget to a property name -> property value
-        dictionary. When a widget with that id is shown by the screen, the
-        specified properties are added to it.
+        Словарь соответствия id виджета словарю свойство -> значение. Когда виджет с этим id
+        отображается экраном, указанные свойства добавляются к нему.
     `_transient`
-        If true, the screen will be automatically hidden at the end of
-        the current interaction.
+        Если True, экран автоматически скроется в конце текущего взаимодействия.
     
-    Non-keyword arguments, and keyword arguments that do not begin with
-    an underscore, are passed to the screen.
+    Остальные аргументы передаются экрану.
 
 .. function:: renpy.start_predict_screen(_screen_name, *args, **kwargs)
     
-    Causes Ren'Py to start predicting the screen named `_screen_name`
-    with the given arguments. This replaces any previous prediction
-    of `_screen_name`. To stop predicting a screen, call :func:`renpy.stop_predict_screen`.
+    Заставляет Ren'Py начать предсказание экрана `_screen_name` с указанными аргументами.
+    Заменяет любое предыдущее предсказание этого экрана. Для остановки предсказания
+    вызовите :func:`renpy.stop_predict_screen`.
     
-    Prediction will occur during normal gameplay. To wait for prediction
-    to complete, use the `predict` argument to :func:`renpy.pause`.
+    Предсказание выполняется во время нормальной игры. Чтобы дождаться завершения
+    предсказания, используйте аргумент `predict` функции :func:`renpy.pause`.
 
 .. function:: renpy.stop_predict_screen(name)
     
-    Causes Ren'Py to stop predicting the screen named `name`.
+    Останавливает предсказание экрана с именем `name`.
 
 .. function:: renpy.variant(name)
     
-    Returns true if `name` is a screen variant that corresponds to the
-    context in which Ren'Py is currently executing. See :ref:`screen-variants`
-    for more details. This function can be used as the condition in an
-    if statement to switch behavior based on the selected screen variant.
+    Возвращает True, если `name` является вариантом экрана, соответствующим контексту,
+    в котором сейчас выполняется Ren'Py. См. :ref:`screen-variants`.
     
-    `name` can also be a list of variants, in which case this function
-    returns True if any of the variants would.
-
+    `name` также может быть списком вариантов: в этом случае функция возвращает True,
+    если совпадает хотя бы один из них.

@@ -2,46 +2,42 @@
 
 .. function:: renpy.get_side_image(prefix_tag, image_tag=None, not_showing=None, layer=None)
     
-    This attempts to find an image to show as the side image.
+    Пытается найти изображение для отображения в качестве бокового изображения.
     
-    It begins by determining a set of image attributes. If `image_tag` is
-    given, it gets the image attributes from the tag. Otherwise, it gets
-    them from the image property suplied to the currently showing character.
-    If no attributes are available, this returns None.
+    Сначала определяет набор атрибутов изображения. Если указан `image_tag`, атрибуты изображения
+    извлекаются из этого тега. В противном случае они извлекаются из свойства image, переданного
+    говорящему в данный момент персонажу. Если атрибуты недоступны, функция возвращает None.
     
-    It then looks up an image with the tag `prefix_tag`, and attributes
-    consisting of:
+    Затем выполняется поиск изображения с тегом `prefix_tag` и атрибутами, состоящими из:
     
-    * An image tag (either from `image_tag` or the image property supplied
-      to the currently showing character).
-    * The attributes.
+    * Тега изображения (из `image_tag` или свойства image говорящего персонажа).
+    * Атрибутов.
     
-    If such an image exists, it's returned.
+    Если такое изображение существует, оно возвращается.
     
     `not_showing`
-        If not showing is True, this only returns a side image if an image
-        with the tag that the attributes are taken from is not currently
-        being shown. If False, it will always return an image, if possible.
-        If None, takes the value from :var:`config.side_image_only_not_showing`.
+        Если значение равно True, боковое изображение возвращается только в том случае, если
+        изображение с тегом, из которого берутся атрибуты, в данный момент не отображается на экране.
+        Если False, функция всегда возвращает изображение при наличии возможности.
+        Если None, берётся значение из :var:`config.side_image_only_not_showing`.
     
     `layer`
-        If given, the layer to look for the image tag and attributes on. If
-        None, uses the default layer for the tag.
+        Если указан, слой, на котором выполняется поиск тега изображения и атрибутов. Если None,
+        используется слой по умолчанию для данного тега.
 
 .. function:: renpy.set_tag_attributes(name, layer=None)
     
-    This sets the attributes associated with an image tag when that image
-    tag is not showing. The main use of this would be to directly set the
-    attributes used by a side image.
+    Устанавливает атрибуты, связанные с тегом изображения, когда это изображение не отображается
+    на экране. Основное применение функции — прямая установка атрибутов, используемых боковым
+    изображением.
     
-    For example::
+    Например::
     
         $ renpy.set_tag_attributes("lucy mad")
-        $ renpy.say(l, "I'm rather cross.")
+        $ renpy.say(l, "Я очень рассержена.")
     
-    and::
+    и::
     
-        l mad "I'm rather cross."
+        l mad "Я очень рассержена."
     
-    are equivalent.
-
+    эквивалентны.

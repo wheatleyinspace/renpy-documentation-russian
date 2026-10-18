@@ -2,6 +2,5 @@
 
 .. function:: renpy.clear_keymap_cache()
     
-    Clears the keymap cache. This allows changes to :var:`config.keymap` to
-    take effect without restarting Ren'Py.
-
+    Очищает кэш раскладки клавиш (keymap). Позволяет изменениям в :var:`config.keymap` вступить
+    в силу без перезапуска Ren'Py.

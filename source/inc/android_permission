@@ -2,22 +2,21 @@
 
 .. function:: renpy.check_permission(permission)
     
-    Checks to see if an Android permission has been granted to this application.
+    Проверяет, было ли предоставлено разрешение Android данному приложению.
     
     `permission`
-        A string giving the name of the permission, for example, "android.permission.WRITE_EXTERNAL_STORAGE".
+        Строка с именем разрешения, например "android.permission.WRITE_EXTERNAL_STORAGE".
     
-    Returns true if the permission has been granted, false if it has not or if called on
-    a non-Android platform.
+    Возвращает True, если разрешение было предоставлено, и False, если оно не предоставлено
+    или если вызов совершён не на платформе Android.
 
 .. function:: renpy.request_permission(permission)
     
-    Asks Android to grant a permission to this application. The user may be
-    prompted to grant the permission.
+    Запрашивает у Android предоставление разрешения данному приложению. Пользователю
+    может быть показано стандартное системное диалоговое окно запроса разрешения.
     
     `permission`
-        A string giving the name of the permission, for example, "android.permission.WRITE_EXTERNAL_STORAGE".
+        Строка с именем разрешения, например "android.permission.WRITE_EXTERNAL_STORAGE".
     
-    Returns true if the permission has been granted, false if not or if called on a
-    non-Android platform.
-
+    Возвращает True, если разрешение было предоставлено, и False, если нет или если вызов
+    совершён не на платформе Android.

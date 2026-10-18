@@ -1,69 +1,64 @@
 =====
-Skins
+Скины
 =====
 
-Ren'Py supports skinning the launcher – changing what the launcher
-looks like. To do this, follow the following steps:
+Ren'Py поддерживает смену темы оформления (скинов) лаунчера, позволяя изменять его внешний вид. Для создания скина выполните следующие действия:
 
-Skins are specific to the Ren'Py version in use, and can't be
-expected to be forward or backwards compatible.
+Скины привязаны к конкретной версии Ren'Py и не гарантируют прямой или обратной совместимости.
 
-1. Open the launcher in the launcher. This can be done from the
-   preferences screen.
+1. Откройте проект лаунчера внутри самого лаунчера. Это можно сделать на экране настроек (Preferences).
 
-2. Create the :file:`skin.rpy` script file.
+2. Создайте файл сценария :file:`skin.rpy`.
 
-3. Copy the following into :file:`skin.rpy`::
+3. Скопируйте следующий код в :file:`skin.rpy`::
 
     init -2 python:
-        # The color of non-interactive text.
+        # Цвет неинтерактивного текста.
         custom_text = "#545454"
 
-        # Colors for buttons in various states.
+        # Цвета кнопок в различных состояниях.
         custom_idle = "#42637b"
         custom_hover = "#d86b45"
         custom_disable = "#808080"
 
-        # Colors for reversed text buttons (selected list entries).
+        # Цвета для инвертированных текстовых кнопок (выбранных пунктов списка).
         custom_reverse_idle = "#78a5c5"
         reverse_hover = "#d86b45"
         custom_reverse_text = "#ffffff"
 
-        # Colors for the scrollbar thumb.
+        # Цвета ползунка полосы прокрутки.
         custom_scrollbar_idle = "#dfdfdf"
         custom_scrollbar_hover = "#d86b45"
-        # An image used as a separator pattern.
+        # Изображение, используемое в качестве фонового узора-разделителя.
         custom_pattern = "images/pattern.png"
 
-        # A displayable used for the background of everything.
+        # Отображаемый объект для общего фона всего интерфейса.
         custom_background = "images/background.png"
 
-        # A displayable used for the background of the projects list.
+        # Отображаемый объект фона списка проектов.
         custom_projects_window = Null()
 
-        # A displayable used the background of information boxes.
+        # Отображаемый объект фона информационных блоков.
         custom_info_window = "#f9f9f9c0"
 
-        # Colors for the titles of information boxes.
+        # Цвета заголовков информационных блоков.
         custom_error_color = "#d15353"
         custom_info_color = "#545454"
         custom_interaction_color = "#d19753"
         custom_question_color = "#d19753"
 
-        # The color of input text.
+        # Цвет текста ввода.
         custom_input_color = "#d86b45"
 
-        # A displayable used for the background of windows
-        # containing commands, preferences, and navigation info.
+        # Отображаемый объект фона окон с командами,
+        # настройками и навигационной информацией.
         custom_window = Frame(Fixed(Solid(custom_reverse_idle, xsize=4, xalign=0), Solid(custom_info_window, xsize=794, xalign=1.0), xsize=800, ysize=600), 0, 0, tile=True)
 
-4. Modify :file:`skin.rpy` to skin the launcher. Place the image files you use
-   into the launcher's game directory. Recommended size for background
-   800x600 pixels.
+4. Настройте значения в :file:`skin.rpy` по своему вкусу. Поместите используемые графические файлы
+   в каталог game лаунчера. Рекомендуемый размер фонового изображения — 800x600 пикселей.
 
-5. Select Custom theme in preferences.
+5. Выберите тему «Custom» в настройках лаунчера.
 
-An incorrect :file:`skin.rpy` file could prevent the launcher from
-starting. To fix it, you'll need to remove :file:`skin.rpy` and
-:file:`skin.rpyc` from the launcher's game directory, start the launcher, and
-then put them back.
+Ошибки в файле :file:`skin.rpy` могут помешать запуску лаунчера. Чтобы восстановить работу,
+удалите файлы :file:`skin.rpy` и :file:`skin.rpyc` из каталога game лаунчера, запустите лаунчер,
+исправьте ошибку и верните файлы обратно.

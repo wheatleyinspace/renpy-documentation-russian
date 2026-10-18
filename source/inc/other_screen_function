@@ -2,8 +2,6 @@
 
 .. function:: CurrentScreenName()
     
-    Returns the name of the current screen, or None if there is no
-    current screen. In the case of a screen including by the use
-    screen, this returns the name of the screen that is doing the
-    including, not the name of the screen being included.
-
+    Возвращает имя текущего экрана или None, если текущий экран отсутствует.
+    В случае экрана, включенного оператором use, возвращает имя включающего экрана,
+    а не имя включенного.

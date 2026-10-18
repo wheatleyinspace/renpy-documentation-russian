@@ -2,11 +2,10 @@
 
 .. function:: DownloadSync()
     
-    This action begins the process of downloading a Sync from the
-    Ren'Py Sync server.
+    Это действие запускает процесс загрузки синхронизации с сервера
+    Ren'Py Sync.
 
 .. function:: UploadSync()
     
-    This action begins the process of uploading the most recent
-    saves to the Ren'Py Sync server.
-
+    Это действие запускает процесс отправки самых свежих файлов сохранений
+    на сервер Ren'Py Sync.

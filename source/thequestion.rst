@@ -2,27 +2,27 @@
 
 .. _thequestion:
 
-Script of The Question
-======================
+Скрипт новеллы «The Question»
+=============================
 
-This is the main script.rpy file of The Question. For the full code of
-The Question, open it in the Ren'Py launcher, or visit
+Это основной файл script.rpy новеллы «The Question». Полный код новеллы
+«The Question» можно открыть в лаунчере Ren'Py или на странице
 https://github.com/renpy/renpy/tree/master/the_question .
 
 ::
 
-    ﻿# Declare characters used by this game.
+    ﻿# Объявление персонажей, используемых в этой игре.
     define s = Character(_("Sylvie"), color="#c8ffc8")
     define m = Character(_("Me"), color="#c8c8ff")
 
-    # This is a variable that is True if you've compared a VN to a book, and False
-    # otherwise.
+    # Переменная, принимающая значение True, если вы сравнили новеллу с книгой,
+    # и False в противном случае.
     default book = False
 
-    # The game starts here.
+    # Игра начинается здесь.
     label start:
 
-        # Start by playing some music.
+        # Начинаем с воспроизведения музыки.
         play music "illurock.opus"
 
         scene bg lecturehall

@@ -2,17 +2,16 @@
 
 .. function:: achievement.steam.get_subscribed_item_path(item_id)
     
-    Returns the path where an item of user-generated content was installed. Returns
-    None if the item was not installed.
+    Возвращает путь, по которому установлен элемент пользовательского контента (UGC).
+    Возвращает None, если элемент не установлен.
     
     `item_id`
-        The item id.
+        Идентификатор элемента контента (item id).
 
 .. function:: achievement.steam.get_subscribed_items(include_disabled=False)
     
-    Returns a list of the item ids the user has subscribed to in the steam
-    workshop.
+    Возвращает список идентификаторов элементов, на которые пользователь подписан
+    в мастерской Steam (Steam Workshop).
     
     `include_disabled`
-        If true, include items that are disabled.
-
+        Если True, включает элементы, которые отключены.

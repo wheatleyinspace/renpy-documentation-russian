@@ -2,18 +2,17 @@
 
 .. class:: NoRollback()
     
-    Instances of this class, and classes inheriting from this class,
-    do not participate in rollback. Objects reachable through an instance
-    of a NoRollback class only participate in rollback if they are
-    reachable through other paths.
+    Экземпляры этого класса и классов, наследующихся от него,
+    не участвуют в откате. Объекты, доступные через экземпляр
+    класса NoRollback, участвуют в откате только в том случае, если
+    они доступны через другие пути.
 
 .. class:: SlottedNoRollback()
     
-    Instances of classes inheriting from this class do not participate
-    in rollback. The difference between this and :class:`NoRollback` is that
-    this class does not have an associated dictionary, hence can be used
-    with ``__slots__`` to reduce memory usage.
+    Экземпляры классов, наследующихся от этого класса, не участвуют
+    в откате. Разница между этим классом и :class:`NoRollback` заключается в том, что
+    у этого класса нет связанного словаря, поэтому его можно использовать
+    с ``__slots__`` для снижения потребления памяти.
     
-    Objects reachable through an instance of a NoRollback class only participate
-    in rollback if they are reachable through other paths.
-
+    Объекты, доступные через экземпляр класса NoRollback, участвуют
+    в откате только в том случае, если они доступны через другие пути.

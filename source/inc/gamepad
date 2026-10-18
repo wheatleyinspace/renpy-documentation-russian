@@ -2,13 +2,12 @@
 
 .. function:: GamepadCalibrate()
     
-    An action that invokes the gamepad calibration routine.
+    Действие, запускающее процедуру калибровки геймпада.
 
 .. function:: GamepadExists(developer=True)
     
-    A function that returns true if a gamepad is present, and false otherwise.
+    Функция, возвращающая True, если подключен геймпад, и False в противном случае.
     
     `developer`
-        Forces this function to always return true while :var:`config.developer`
-        is true.
-
+        Заставляет функцию всегда возвращать True, пока :var:`config.developer`
+        равно True.

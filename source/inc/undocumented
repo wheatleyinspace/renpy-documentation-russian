@@ -2,15 +2,14 @@
 
 .. function:: renpy.layer_has_transforms(layer)
     
-    Used to determine if a layer has transforms associated with it. Returns
-    an object with the following attributes:
+    Определяет, применены ли трансформации к указанному слою. Возвращает объект
+    со следующими атрибутами:
     
     at_list
-        True unless the at_list is empty.
+        True, если список трансформаций at_list не пуст.
     
     camera
-        True unless the camera list is empty.
+        True, если список трансформаций camera не пуст.
     
     config_layer_transforms
-        True unless the config.layer_transforms list is empty.
-
+        True, если список трансформаций config.layer_transforms не пуст.

@@ -1,112 +1,115 @@
 .. _screens:
 
-===========================
-Screens and Screen Language
-===========================
+=====================
+Экраны и язык экранов
+=====================
 
-The things that a user sees when looking at a Ren'Py game can be
-divided into images and user interface. Images are displayed to
-the user using the scene, show, and hide statements, and are generally
-part of the story being told. Everything else the user sees is part of
-the user interface, which is customized using screens.
+Все, что пользователь видит в игре Ren'Py, можно разделить на изображения
+и пользовательский интерфейс. Изображения отображаются для пользователя с помощью
+операторов scene, show и hide и обычно являются частью рассказываемой истории.
+Все остальное, что видит пользователь, относится к пользовательскому интерфейсу,
+который настраивается с помощью экранов (screens).
 
-Screens can be displayed in four ways:
+Экраны могут отображаться четырьмя способами:
 
-* Implicitly, when script statements execute. For example,
-  the say statement will cause the `say` screen to be displayed.
-* Automatically. For example, Ren'Py will display the `main_menu`
-  screen when it starts running, or when the user returns to the
-  main menu.
-* As an action, associated with a button, mouse button, or keyboard
-  key. By default, the `save` screen is shown when the user
-  right-clicks or presses escape. It's also possible to define an
-  on-screen button that shows the `save` screen.
-* Explicitly, using statements that cause screens to be shown.
+* Неявно, при выполнении операторов сценария. Например, оператор say приводит
+  к отображению экрана `say`.
+* Автоматически. Например, Ren'Py отображает экран `main_menu` при запуске игры
+  или при возврате пользователя в главное меню.
+* В качестве действия, связанного с кнопкой, кнопкой мыши или клавишей клавиатуры.
+  По умолчанию экран `save` отображается, когда пользователь нажимает правую
+  кнопку мыши или клавишу Escape. Также можно определить экранную кнопку,
+  отображающую экран `save`.
+* Явно, с помощью операторов, предназначенных для показа экранов.
 
-More than one screen can be shown at a time.
+Одновременно может отображаться более одного экрана.
 
-Screens have two main functions. The first is to display information
-to the user. Information can be displayed using text, bars, and
-images. Some of the information displayed in this manner is vital to
-gameplay. The `say` screen, for example, is used to display dialogue
-to the user, including the character's name and what she is saying.
+Экраны выполняют две основные функции. Первая — отображение информации
+пользователю. Информация может выводиться с помощью текста, полос и
+изображений. Часть информации, отображаемой таким образом, жизненно важна
+для игрового процесса. Экран `say`, например, используется для показа диалога
+пользователю, включая имя персонажа и его реплику.
 
-The other thing a screen can do is to allow the user to interact with
-the game. Buttons and bars allow the user to invoke actions and adjust
-values. Ren'Py includes a pool of pre-defined actions, allowing the
-user to advance the game, control preferences, load and save games,
-and invoke many other actions. A game-maker can also write new actions
-in Python.
+Вторая функция экрана — предоставление пользователю возможности взаимодействовать
+с игрой. Кнопки и полосы позволяют пользователю вызывать действия и настраивать
+значения. Ren'Py включает в себя набор предопределенных действий, позволяющих
+продвигаться по игре, управлять настройками, сохранять и загружать игру
+и вызывать множество других операций. Создатель игры также может писать новые
+действия на Python.
 
-Screens are updated at the start of each interaction, and each time an
-interaction is restarted. Note that a ``with None`` statement does not
-cause an interaction to happen, and hence won't update a screen. A
-``with Pause(0)`` will be enough to trigger one, if necessary.
+Экраны обновляются в начале каждого взаимодействия (interaction) и каждый раз
+при перезапуске взаимодействия. Обратите внимание, что оператор ``with None``
+не вызывает взаимодействия и, следовательно, не обновляет экран. Для вызова
+взаимодействия при необходимости достаточно использовать ``with Pause(0)``.
 
-A screen has a scope associated with it, giving values to some variables. There are different kinds
-of variables, in screens, which are resolved as shown in the following list:
+С каждым экраном связана область видимости (scope), задающая значения некоторым
+переменным. В экранах существуют различные виды переменных, разрешение которых
+происходит в следующем порядке:
 
-- First are local variables. These only exist in a screen that is being included in another with
-  the :ref:`use <sl-use>` statement instead of being shown (or called) on its own. They are very
-  similar with screen variables (see below), and created the same way, except that local variables
-  can only be accessed by the used screen. Those are set using :class:`SetLocalVariable`, among
-  other actions, or by a python block or line in the used screen. Actions such as
-  :class:`SetScreenVariable` will *not work* on local variables.
+- В первую очередь проверяются локальные переменные. Они существуют только в экране,
+  который включается в другой экран с помощью оператора :ref:`use <sl-use>`, а не
+  отображается (или вызывается) сам по себе. Они очень похожи на экранные переменные
+  (см. ниже) и создаются тем же способом, за исключением того, что локальные переменные
+  доступны только используемому экрану. Они задаются с помощью действия
+  :class:`SetLocalVariable` и других действий либо через блок или строку Python
+  в используемом экране. Действия вроде :class:`SetScreenVariable` *не будут работать*
+  с локальными переменными.
 
-  - Local parameters are the parameters taken by the used screen. They live in the same scope as
-    local variables, and follow the same behavior and constraints as screen parameters - see
-    below.
+  - Локальные параметры — это параметры, принимаемые используемым экраном. Они находятся
+    в той же области видимости, что и локальные переменные, и подчиняются тем же правилам
+    и ограничениям, что и параметры экрана (см. ниже).
 
-- If a name cannot be resolved among local variables - or if we are not in a screen being
-  :ref:`used <sl-use>` by another - the name is searched for in screen variables. These are
-  variables created with the in-screen :ref:`sl-default` or :ref:`sl-python` statements, in the
-  top-level screen. Screen variables can be set through the :class:`SetScreenVariable` action,
-  among others, or by a python block or line in the top-level screen, or any used screen if no
-  local variable has the same name.
+- Если имя не может быть разрешено среди локальных переменных (или если мы находимся не
+  в экране, :ref:`используемом <sl-use>` другим экраном), поиск имени производится среди
+  экранных переменных. Это переменные, созданные с помощью операторов :ref:`sl-default`
+  или :ref:`sl-python` внутри экрана верхнего уровня. Экранные переменные могут
+  устанавливаться через действие :class:`SetScreenVariable`, среди прочих, либо через
+  блок или строку Python в экране верхнего уровня, или в любом используемом экране,
+  если локальная переменная с таким именем отсутствует.
 
-  - Screen parameters (that is, values defined and passed through the parentheses of the screen
-    statement) live in the same scope as screen variables (that is, they can't have the same
-    name), but they can't be set or edited through actions, since they will be reset to their
-    original value at arbitrary times, including every time an action is executed. So, if their
-    value were edited through the :class:`SetScreenVariable` action (or any other action really),
-    it would be reset immediately afterwards. This is also the case for variables defined in
-    in-screen python blocks, since these blocks are executed at arbitrary times, as opposed to
-    the in-screen :ref:`default <sl-default>` statement which executes only at the time the
-    screen gets shown.
+  - Параметры экрана (то есть значения, определенные и переданные через круглые скобки
+    оператора screen) находятся в той же области видимости, что и экранные переменные
+    (то есть они не могут иметь одинаковые имена), но их нельзя задавать или изменять
+    через действия, поскольку они будут сбрасываться до исходных значений в произвольные
+    моменты времени, включая каждый раз при выполнении действия. Поэтому, если бы их
+    значение было изменено через действие :class:`SetScreenVariable` (или любое другое действие),
+    оно было бы немедленно сброшено после этого. Это также относится к переменным,
+    определенным во внутриэкранных блоках Python, так как эти блоки выполняются в
+    произвольные моменты времени, в отличие от внутриэкранного оператора :ref:`default <sl-default>`,
+    который выполняется только в момент отображения экрана.
 
-- In last resort, a variable name is looked for in the general store, where all of Ren'Py's global
-  variables are. Such variables can be set through the :class:`SetVariable` action, among others.
+- В последнюю очередь имя переменной ищется в общем хранилище (store), где находятся
+  все глобальные переменные Ren'Py. Такие переменные могут устанавливаться с помощью
+  действия :class:`SetVariable`, среди прочих.
 
 .. note::
 
-    If you want an action to set a variable inside a screen, and you want that screen to be
-    sometimes shown directly and sometimes used inside another, use :class:`SetLocalVariable`. It
-    will be far less efficient, but it will work in both cases.
+    Если вам нужно, чтобы действие изменяло переменную внутри экрана, и вы хотите,
+    чтобы этот экран иногда отображался напрямую, а иногда использовался внутри другого
+    экрана, используйте :class:`SetLocalVariable`. Это менее эффективно, но будет
+    работать в обоих случаях.
 
-**Screens must not cause side effects that are visible from
-outside the screen.** Ren'Py will run a screen multiple times, as
-it deems necessary. It runs a screen as part of the image
-prediction process, before the screen is first shown. As a result, if
-running a screen has side effects, those side effects may occur at
-unpredictable times.
+**Экраны не должны вызывать побочных эффектов, видимых за пределами экрана.**
+Ren'Py выполняет экран несколько раз по мере необходимости. Он запускает экран
+в процессе предсказания изображений перед тем, как экран будет впервые показан.
+Поэтому, если выполнение экрана имеет побочные эффекты, они могут происходить
+в непредсказуемые моменты времени.
 
-**Using Python generators in screens may cause unpredictable results.**
-This traces back to an issue with the way the Python interpreter compiles
-Python source code that will be used in a screen context. Generators
-can be used in Python functions called from a screen, but not in the
-screen itself.
-
+**Использование генераторов Python в экранах может привести к непредсказуемым результатам.**
+Это связано с особенностями того, как интерпретатор Python компилирует исходный код
+Python, используемый в контексте экрана. Генераторы можно использовать в функциях
+Python, вызываемых из экрана, но не в самом коде экрана.
 
 
-Screen Language
-===============
 
-The screen language is a mostly-declarative way of displaying
-screens. It consists of a statement that declares a new screen,
-statements that add displayables to that screen, and control
-statements.
+Язык экранов
+============
 
-Here's an example of a screen::
+Язык экранов представляет собой преимущественно декларативный способ отображения
+экранов. Он состоит из оператора, объявляющего новый экран, операторов, добавляющих
+отображаемые объекты на этот экран, и управляющих операторов.
+
+Вот пример экрана::
 
     screen say(who, what):
         window id "window":
@@ -116,111 +119,105 @@ Here's an example of a screen::
                 text who id "who"
                 text what id "what"
 
-The first line of this is a screen statement, a Ren'Py language
-statement that's used to declare a screen. The name of the screen is
-`say`, so this is the screen that's used to display dialogue. It takes
-two parameters, `who` and `what`.
+Первая строка — это оператор screen языка Ren'Py, используемый для объявления экрана.
+Имя экрана — `say`, поэтому именно этот экран используется для отображения диалога.
+Он принимает два параметра: `who` (кто говорит) и `what` (что говорит).
 
-The screen contains a window, which has been given the id of
-"window". This window contains a vertical box, and the spacing inside
-that box is 10 pixels. It contains two text fields, one displaying the name of
-the speaker, and the displaying what is being spoken.
+Экран содержит окно (window), которому присвоен идентификатор (id) "window". Это окно
+содержит вертикальный блок (vbox) с интервалом между элементами в 10 пикселей.
+Внутри находятся два текстовых поля: одно отображает имя говорящего, а второе — произносимый текст.
 
-Screen Language Syntax
-----------------------
 
-Most screen language statements share a common syntax. (Some of the
-control statements have other syntaxes.)  A statement starts at the
-beginning of a line, with a keyword that introduces the statement.
+Синтаксис языка экранов
+-----------------------
 
-If a statement takes parameters, they immediately follow the
-keyword. The parameters are space-separated simple expressions, unless
-otherwise noted.
+Большинство операторов языка экранов имеют общий синтаксис. (Некоторые управляющие
+операторы имеют другие синтаксические конструкции.) Оператор начинается в начале
+строки с ключевого слова, задающего данный оператор.
 
-The positional parameters are followed by a property list. A property
-consists of the property name, followed by the value of that
-property. Property values are simple expressions, unless otherwise
-noted. A property list is a space-separated list of these properties.
+Если оператор принимает параметры, они следуют непосредственно за ключевым словом.
+Параметры представляют собой простые выражения, разделенные пробелами, если не
+указано иное.
 
-If a statement ends with a colon ``:``, then it takes a block. Each line
-in a block may be one of two things:
+За позиционными параметрами следует список свойств. Свойство состоит из имени
+свойства и следующего за ним значения свойства. Значения свойств являются простыми
+выражениями, если не указано иное. Список свойств представляет собой разделенный
+пробелами список таких свойств.
 
-* A property list.
-* A screen language statement.
+Если оператор заканчивается двоеточием ``:``, он принимает блок строк с отступом.
+Каждая строка в блоке может представлять собой одно из двух:
+
+* Список свойств.
+* Оператор языка экранов.
 
 .. _screen-statement:
 
-Screen Statement
-----------------
+Оператор screen
+---------------
 
-The ``screen`` statement is a Ren'Py script language statement that is
-used to declare a new screen. It is parsed using the screen language
-common syntax.
+Оператор ``screen`` — это оператор языка сценариев Ren'Py, используемый для объявления
+нового экрана. Он разбирается по общему синтаксису языка экранов.
 
-It takes one parameter, the name of the screen. This is a name, not an
-expression. It takes the following properties:
+Он принимает один параметр — имя экрана. Это имя, а не выражение. Оператор принимает
+следующие свойства:
 
 .. screen-property:: modal
 
-    If True, the screen is modal. A modal screen prevents the user
-    from interacting with displayables below it, except
-    for the default keymap. This is evaluated once, when the
-    game starts.
+    Если True, экран является модальным. Модальный экран блокирует взаимодействие
+    пользователя с отображаемыми объектами под ним, за исключением раскладки клавиш
+    по умолчанию. Оценивается один раз при запуске игры.
 
 .. screen-property:: sensitive
 
-    An expression that determines whether the screen is sensitive or not.
-    This expression is evaluated at least once per interaction.
+    Выражение, определяющее, чувствителен ли экран к взаимодействию. Это выражение
+    вычисляется как минимум один раз за каждое взаимодействие.
 
 .. screen-property:: tag
 
-    Parsed as a name, not an expression. This specifies a tag
-    associated with this screen. Showing a screen replaces other
-    screens with the same tag. This can be used to ensure that only
-    one screen of a menu is shown at a time, in the same context.
+    Разбирается как имя, а не выражение. Задает тег, связанный с этим экраном.
+    Показ экрана заменяет другие экраны с тем же тегом. Это используется, например,
+    для гарантии того, что в одном и том же контексте одновременно отображается
+    только один экран меню.
 
 .. screen-property:: zorder
 
-    This controls how close to the user a screen is displayed. The
-    larger the number, the closer the screen is displayed to the
-    user. It defaults to 0.
+    Управляет тем, насколько близко к пользователю отображается экран (глубина по оси Z).
+    Чем больше число, тем ближе экран к пользователю. По умолчанию 0.
 
 .. screen-property:: variant
 
-    If present, this should be a string or list of strings giving the
-    variant of screen to be defined. See :ref:`screen-variants`.
+    Если присутствует, должен быть строкой или списком строк, определяющим вариант
+    экрана. См. :ref:`screen-variants`.
 
 .. screen-property:: style_prefix
 
-    A string that's used to provide a prefix for the style for the
-    children of this screen, as :ref:`described below <style-prefix>`.
+    Строка, задающая префикс стиля для дочерних элементов этого экрана, как
+    :ref:`описано ниже <style-prefix>`.
 
 .. screen-property:: layer
 
-    A string giving the name of the layer the screen is shown on by
-    default.
+    Строка, задающая имя слоя, на котором экран отображается по умолчанию.
 
 .. screen-property:: roll_forward
 
-    If true, roll forward will be enabled when the screen is used in a
-    ``call screen`` statement. If false, roll forward is disabled, and
-    if None or not given, the value of :var:`config.call_screen_roll_forward`
-    is used.
+    Если True, перемотка вперед (roll forward) будет включена, когда экран используется
+    в операторе ``call screen``. Если False, перемотка вперед отключена; если None или
+    не указано, используется значение :var:`config.call_screen_roll_forward`.
 
-    When roll forwarding from a ``call screen`` statement, return values
-    and terminal jumps are preserved, but other side effects will not
-    occur. This means that if the screen only contains :func:`Jump`
-    and :func:`Return` actions, it's safe to enable `roll_forward`. Other
-    actions may have side-effects that will not occur during the roll_forward.
+    При перемотке вперед из оператора ``call screen`` возвращаемые значения и финальные
+    переходы (jumps) сохраняются, но другие побочные эффекты не возникают. Это означает,
+    что если экран содержит только действия :func:`Jump` и :func:`Return`, включение
+    `roll_forward` безопасно. Другие действия могут иметь побочные эффекты, которые
+    не произойдут при перемотке вперед.
 
-If the first line of a screen is a Python string, it is used as the docstring for
-the screen. The docstring can be retrieved with :func:`renpy.get_screen_docstring`.
+Если первой строкой экрана является строка Python, она используется в качестве строки
+документации (docstring) для экрана. Докстринг можно получить с помощью :func:`renpy.get_screen_docstring`.
 
 ::
 
    screen hello_world():
         """
-        Displays a hello world message.
+        Отображает приветственное сообщение hello world.
         """
 
         tag example
@@ -229,66 +226,61 @@ the screen. The docstring can be retrieved with :func:`renpy.get_screen_docstrin
 
         text "Hello, World."
 
-A screen can take a parameter list::
+Экран может принимать список параметров::
 
    screen center_text(s, size=42):
         text s size size
 
-If a screen has no parameters, it still should be given empty
-parentheses. If any other screen ``use``\ s a screen with no
-parentheses, the difference in behavior are described in the section
-concerning :ref:`the use statement <sl-use>`. If no other screen
-``use`` a given screen, not giving parentheses to that screen leads to
-pure inefficiency in the way Ren'py works internally, see the
-:doc:`screen optimization section <screen_optimization>` concerning
-parameters.
+Если экран не имеет параметров, ему все равно следует передавать пустые круглые скобки.
+Если какой-либо другой экран использует оператор ``use`` для вызова экрана без скобок,
+разница в поведении описана в разделе :ref:`оператор use <sl-use>`. Если ни один другой
+экран не вызывает данный экран через ``use``, отсутствие круглых скобок приводит к
+чистой неэффективности внутренней работы Ren'Py, см. :doc:`раздел оптимизации экранов <screen_optimization>`
+относительно параметров.
 
 
-User Interface Statements
-=========================
+Операторы пользовательского интерфейса
+======================================
 
-The user interface statements create displayables and add them either
-to the screen, or to an enclosing displayable. They allow the user to
-display information, allow the user to interact with the game, or
-allow the game to react to various events.
+Операторы пользовательского интерфейса создают отображаемые объекты и добавляют их либо
+на экран, либо во вмещающий отображаемый объект. Они позволяют выводить информацию,
+взаимодействовать с игрой или реагировать на различные события.
 
 .. _common-properties:
 
-All user interface statements take the following common properties:
+Все операторы пользовательского интерфейса принимают следующие общие свойства:
 
 .. screen-property:: at
 
-    This can be a transform, or a list of transforms, or an anonymous
-    transform (a transform that is defined directly in at) ::
+    Это может быть трансформация, список трансформаций или анонимная трансформация
+    (трансформация, определенная непосредственно в блоке `at`) ::
 
         transform hello_t:
             align (0.7, 0.5) alpha 0.0
             linear 0.5 alpha 1.0
 
         screen hello_title():
-            text "Hello." at hello_t
-            text "Hello." at transform:
+            text "Привет." at hello_t
+            text "Привет." at transform:
                 align (0.2, 0.5) alpha 0.0
                 linear 0.5 alpha 1.0
 
-    This transforms are used to wrap this displayable. The show, hide,
-    replace, and replaced external events are delivered to a transform
-    if and only if it is added directly to the screen.
+    Эти трансформации используются для оборачивания данного отображаемого объекта.
+    Внешние события show, hide, replace и replaced передаются трансформации тогда
+    и только тогда, когда она добавлена непосредственно на экран.
 
-    For example, if a vbox is wrapped in a transform, and added directly
-    to the screen, then events are delivered to that transform. But if
-    a transform wraps a textbutton that is added to the vbox, this
-    second transform is not given events.
+    Например, если vbox обернут в трансформацию и добавлен непосредственно на экран,
+    события передаются этой трансформации. Но если трансформация оборачивает textbutton,
+    добавленный внутрь этого vbox, этой второй трансформации события не передаются.
 
-    It's possible for a single statement to have both an `at` property
-    and an ``at transform``. The property must come first, and is
-    applied first. ::
+    Один оператор может иметь одновременно как свойство `at`, так и блок ``at transform``.
+    Свойство должно идти первым и применяется первым. ::
 
         screen title():
             add "title background":
                 at sepia
 
-            text "The Title of the Game":
+            text "Название игры":
                 at sepia, truecenter
                 at transform:
                     alpha 0.0
@@ -296,186 +288,177 @@ All user interface statements take the following common properties:
 
 .. screen-property:: default_focus
 
-    If given and true, the displayable is focused by default. When
-    multiple displayables have this, the values are compared and the
-    displayable with the greatest default focus becomes the default.
+    Если указано и True, отображаемый объект получает фокус по умолчанию. Когда
+    несколько отображаемых объектов имеют это свойство, их значения сравниваются,
+    и объект с наибольшим значением default_focus становится выбранным по умолчанию.
 
-    The default focus is only used when the last interaction was not
-    a mouse click, mouse movement, or touch.
+    Фокус по умолчанию используется только тогда, когда последнее взаимодействие
+    не было щелчком мыши, движением мыши или касанием сенсорного экрана.
 
 .. screen-property:: extra_alt
 
-    This is used to specify extra alt text for :doc:`self_voicing`.
-    If defined, the extra alt text is spoken to the player when the
-    '?' key is pressed, and self-voicing ie enabled.
+    Используется для указания дополнительного текста голосового дублирования (alt-текста)
+    для :doc:`self_voicing`. Если задано, дополнительный текст произносится игроку
+    при нажатии клавиши '?', когда самоозвучивание включено.
 
-    The ``extra_alt`` is inherited by all children of the displayable,
-    unless they have a more specific ``extra_alt`` set.
+    Свойство ``extra_alt`` наследуется всеми дочерними элементами отображаемого объекта,
+    если у них не задан более конкретный ``extra_alt``.
 
-    Extra alt text is intended to provide vision-impaired players with
-    additional information about groups of displayables.
+    Дополнительный текст предназначен для предоставления слабовидящим игрокам
+    дополнительной информации о группах элементов интерфейса.
 
 .. screen-property:: focus
 
-    Takes a string or integer, and gives a name to the displayable
-    for focus purposes. Ren'Py looks for structural similarity between
-    focus names when deciding with displayable to give focus to at the
-    start of an interaction. If a box is given a focus name, and the
-    third button in that box is focused at the end of an interaction,
-    the third button of a box with the same will be highlighted at
-    the start of the next interaction.
+    Принимает строку или целое число и присваивает имя отображаемому объекту для
+    целей фокусировки. Ren'Py ищет структурное сходство между именами фокуса при
+    выборе объекта для передачи фокуса в начале взаимодействия. Если блоку присвоено
+    имя фокуса, и третья кнопка в этом блоке находилась в фокусе в конце взаимодействия,
+    то третья кнопка блока с таким же именем будет выделена в начале следующего взаимодействия.
 
 .. screen-property:: group_alt
 
-    This is used to specify a group prefix for :doc:`self_voicing`.
-    When self-voicing is enabled, a group prefix is spoken the first time a displayable
-    with the same group prefix is focused, but will not be spoken again until a
-    displayable with a different group prefix is focused.
+    Используется для указания префикса группы для :doc:`self_voicing`.
+    При включенном самоозвучивании префикс группы произносится в первый раз, когда
+    объект с этим префиксом группы получает фокус, но не повторяется, пока не будет
+    сфокусирован объект с другим префиксом группы.
 
-    The ``group_alt`` is inherited by all children of the displayable,
-    unless they have a more specific ``group_alt`` set.
+    Свойство ``group_alt`` наследуется всеми дочерними элементами, если у них не
+    задано собственное значение ``group_alt``.
 
 .. screen-property:: id
 
-    An identifier for the user-interface statement. When a screen is
-    shown, property values can be supplied for the displayables with a
-    given identifier. Some screens will require that a displayable
-    with a given identifier is created.
+    Идентификатор для оператора пользовательского интерфейса. При отображении экрана
+    значения свойств могут быть переданы отображаемым объектам с заданным идентификатором.
+    Некоторые экраны требуют обязательного создания отображаемого объекта с определенным
+    идентификатором.
 
-    When a displayable is created with an id, the id is stored as a
-    string ion a attribute named id on the Displayable object.
+    Когда отображаемый объект создается с id, идентификатор сохраняется как строка
+    в атрибуте с именем id объекта Displayable.
 
 .. screen-property:: prefer_screen_to_id
 
-    If true, when a property is provided by both the screen and a
-    displayable identifier, the screen property is used. If false, the
-    default, the displayable property is used. (This can be used to
-    decide if the screen overrides properties set by a Character.)
+    Если True, когда свойство задано как экраном, так и через идентификатор отображаемого
+    объекта, используется свойство экрана. Если False (по умолчанию), используется
+    свойство отображаемого объекта. (Это может использоваться для определения того,
+    переопределяет ли экран свойства, установленные объектом Character.)
 
 .. screen-property:: style
 
-    A string giving the name of the style applied to this displayable. The
-    style gives default values for style properties.
+    Строка, задающая имя стиля, применяемого к этому отображаемому объекту. Стиль
+    определяет значения по умолчанию для свойств стиля.
 
 .. screen-property:: style_prefix
 
     .. _style-prefix:
 
-    Provides a prefix to the style of this displayable and all of its
-    children, unless those children have a more specific style or
-    style prefix set.
+    Задает префикс для стиля этого отображаемого объекта и всех его дочерних элементов,
+    если только у этих дочерних элементов не задан более конкретный стиль или префикс стиля.
 
-    The style name is created by concatenating a style prefix, underscore,
-    and a style suffix. The style suffix is either specified using
-    `style_suffix`, or determined by the displayable.
+    Имя стиля формируется путем объединения префикса стиля, знака подчеркивания
+    и суффикса стиля. Суффикс стиля либо указывается с помощью `style_suffix`, либо
+    определяется самим отображаемым объектом.
 
-    For example, if a vbox has a style prefix of ``"pref"``, the vbox
-    will be given the style ``"pref_vbox"``. Unless a more specific style
-    or style prefix is set, a button inside the vbox will have the style
-    ``"pref_button"``.
+    Например, если у vbox задан префикс стиля ``"pref"``, объекту vbox будет присвоен
+    стиль ``"pref_vbox"``. Если не задан более конкретный стиль или префикс стиля,
+    кнопка внутри этого vbox получит стиль ``"pref_button"``.
 
-    Styles accessed in this way are automatically created, if the style
-    does not exist. Setting a prefix of ``None`` removes the prefix from
-    this displayable and its children.
+    Стили, к которым обращаются таким образом, создаются автоматически, если стиль
+    еще не существует. Установка префикса в ``None`` удаляет префикс у данного
+    отображаемого объекта и его дочерних элементов.
 
 .. screen-property:: style_group
 
-    An alias for `style_prefix`, used in older versions of Ren'Py.
+    Псевдоним для `style_prefix`, использовавшийся в старых версиях Ren'Py.
 
 .. screen-property:: style_suffix
 
-    Specifies the suffix that is combined with the `style_prefix` to
-    generate a style name. If this is ``"small_button"`` and the
-    style prefix is ``"pref"``, the style ``"pref_small_button"`` is
-    used.
+    Задает суффикс, который объединяется с `style_prefix` для генерации имени стиля.
+    Если указано ``"small_button"``, а префикс стиля равен ``"pref"``, будет
+    использоваться стиль ``"pref_small_button"``.
 
-    If no style prefix is in use, this is used directly as the name of
-    the style. A style suffix applies to a single displayable only, not
-    a displayable and all children.
+    Если префикс стиля не используется, это значение применяется непосредственно
+    как имя стиля. Суффикс стиля применяется только к одному отображаемому объекту,
+    а не к объекту и всем его потомкам.
 
 .. screen-property:: tooltip
 
-    Assigns a tooltip to this displayable. When the displayable gains
-    focus, the value of this property will be made available from the
-    :func:`GetTooltip` function. See the :ref:`tooltips` section for
-    more details.
+    Назначает всплывающую подсказку (tooltip) этому отображаемому объекту. Когда объект
+    получает фокус, значение этого свойства становится доступным через функцию
+    :func:`GetTooltip`. Дополнительные сведения см. в разделе :ref:`tooltips`.
 
-    Objects passed to tooltip must support equality. If equality is
-    not supported, an infinite loop may occur.
+    Объекты, передаваемые в tooltip, должны поддерживать сравнение на равенство.
+    Если равенство не поддерживается, может произойти бесконечный цикл.
 
 .. screen-property:: arguments
 
-    A tuple or list containing additional positional arguments that
-    are given to the displayable.
+    Кортеж или список, содержащий дополнительные позиционные аргументы, передаваемые
+    отображаемому объекту.
 
 .. screen-property:: properties
 
-    A dictionary containing additional properties given to the
-    displayable.
+    Словарь, содержащий дополнительные свойства, передаваемые отображаемому объекту.
 
-Many user interface statements take classes of style properties, or
-transform properties. These properties can have a style prefix
-associated with them, that determines when they apply. For example, if
-text is given the ``hover_size`` property, it sets the text size when the
-text is hovered.
+Многие операторы пользовательского интерфейса принимают группы свойств стиля или свойств
+трансформации. К этим свойствам может быть применен префикс стиля, определяющий, когда
+они действуют. Например, если тексту задано свойство ``hover_size``, оно определяет
+размер текста при наведении курсора.
 
-User interface statements take an ``as`` clause, which takes a variable
-name, without any quotes. The displayable that the statement creates is
-assigned to the variable. (An example can be found in :ref:`the drag and drop
-documentation <as-example>`.)
+Операторы пользовательского интерфейса принимают предложение ``as``, за которым следует
+имя переменной без кавычек. Отображаемый объект, создаваемый оператором, присваивается
+этой переменной. (Пример можно найти в :ref:`документации по drag and drop <as-example>`.)
 
 .. _sl-bar:
 
 Bar
 ---
 
-Creates a horizontally-oriented bar that can be used to view or adjust
-data. It takes the following properties:
+Создает горизонтальную полосу, которую можно использовать для просмотра или изменения
+данных. Принимает следующие свойства:
 
 .. screen-property:: value
 
-    The current value of the bar. This can be either a :ref:`bar value <bar-values>`
-    object, or a number.
+    Текущее значение полосы. Может быть либо объектом :ref:`значения полосы <bar-values>`,
+    либо числом.
 
 .. screen-property:: range
 
-    The maximum value of the bar. This is required if `value` is a
-    number. It is ignored if `value` is a bar value object.
+    Максимальное значение полосы. Требуется, если `value` является числом. Игнорируется,
+    если `value` — объект значения полосы.
 
 .. screen-property:: adjustment
 
-    A :func:`ui.adjustment` object that this bar adjusts.
+    Объект :func:`ui.adjustment`, который настраивает эта полоса.
 
 .. screen-property:: changed
 
-    If given, this should be a Python function. The function is called
-    with the value of the adjustment when the adjustment is changed.
+    Если указано, должно быть функцией Python. Функция вызывается со значением
+    регулировки при ее изменении.
 
 .. screen-property:: hovered
 
-    An action to run when the bar gains focus.
+    Действие, выполняемое при получении полосой фокуса.
 
 .. screen-property:: unhovered
 
-    An action to run when the bar loses focus.
+    Действие, выполняемое при потере полосой фокуса.
 
 .. screen-property:: released
 
-    An action to run when the bar button is released. This will be invoked
-    even if the bar has not changed its value.
+    Действие, выполняемое при отпускании кнопки мыши на полосе. Вызывается даже
+    в том случае, если значение полосы не изменилось.
 
 .. screen-property:: action
 
-    An action to run when the bar value is changed.
+    Действие, выполняемое при изменении значения полосы.
 
-One of `value` or `adjustment` must be given. In addition, this
-function takes:
+Обязательно должно быть указано одно из двух: `value` или `adjustment`. Кроме того,
+эта функция принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`bar-style-properties`
 
-This does not take children.
+Не принимает дочерних элементов.
 
 ::
 
@@ -492,63 +475,60 @@ This does not take children.
 Button
 ------
 
-Creates an area of the screen that can be activated to run an
-action. A button takes no parameters, and the following properties.
+Создает область экрана, которую можно активировать для выполнения действия. Кнопка
+не принимает позиционных параметров и поддерживает следующие свойства:
 
 .. screen-property:: action
 
-    The action to run when the button is activated. A button is activated
-    when it is clicked, or when the player selects it and hits enter on the
-    keyboard. This also controls if the button is sensitive if `sensitive`
-    is not provided or None, and if the button is selected if `selected` is not
-    provided or None.
+    Действие, выполняемое при активации кнопки. Кнопка активируется при клике по ней
+    мышью или при выборе с клавиатуры и нажатии Enter. Это свойство также управляет
+    чувствительностью кнопки, если свойство `sensitive` не указано или равно None,
+    и тем, выбрана ли кнопка, если `selected` не указано или равно None.
 
 .. screen-property:: alternate
 
-    An action that is run if the button is activated in an alternate manner.
-    Alternate activation occurs when the player right-clicks on the button
-    on a mouse-based platform, or when the player long presses the button
-    on a touch-based platform.
+    Действие, выполняемое при альтернативной активации кнопки. Альтернативная активация
+    происходит при щелчке правой кнопкой мыши на ПК или при долгом нажатии на сенсорных устройствах.
 
 .. screen-property:: hovered
 
-    An action to run when the button gains focus.
+    Действие, выполняемое при получении кнопкой фокуса.
 
 .. screen-property:: unhovered
 
-    An action to run when the button loses focus.
+    Действие, выполняемое при потере кнопкой фокуса.
 
 .. screen-property:: selected
 
-    An expression that determines whether the button is selected or not.
-    This expression is evaluated at least once per interaction.
-    If not provided or None, the action will be used to determine selectedness.
+    Выражение, определяющее, выбрана ли кнопка в данный момент. Это выражение
+    вычисляется как минимум один раз за каждое взаимодействие. Если не указано или
+    равно None, состояние выбора определяется действием (action).
 
 .. screen-property:: sensitive
 
-    An expression that determines whether the button is sensitive or not.
-    This expression is evaluated at least once per interaction.
-    If not provided or None, the action will be used to determine sensitivity.
+    Выражение, определяющее, чувствительна ли кнопка к нажатию. Вычисляется как
+    минимум один раз за каждое взаимодействие. Если не указано или равно None,
+    чувствительность определяется действием (action).
 
 .. screen-property:: keysym
 
-    A string giving a :doc:`keysym <keymap>` describing a keyboard key that,
-    when pressed, invokes the action of this button.
+    Строка, задающая :doc:`символ клавиши (keysym) <keymap>`, описывающий клавишу
+    клавиатуры, нажатие которой вызывает действие этой кнопки.
 
 .. screen-property:: alternate_keysym
 
-    A string giving a :doc:`keysym <keymap>` describing a keyboard key that,
-    when pressed, invokes the alternate action of this button.
+    Строка, задающая :doc:`символ клавиши (keysym) <keymap>`, описывающий клавишу
+    клавиатуры, нажатие которой вызывает альтернативное действие этой кнопки.
 
-It also takes:
+Также принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`window-style-properties`
 * :ref:`button-style-properties`
 
-It takes one child. If zero, two, or more children are supplied,
-they are implicitly added to a fixed, which is added to the button.
+Принимает один дочерний элемент. Если указано ноль, два или более дочерних элементов,
+они неявно оборачиваются в fixed, который затем добавляется в кнопку.
 
 
 .. _sl-dismiss:
@@ -556,40 +536,36 @@ they are implicitly added to a fixed, which is added to the button.
 Dismiss
 -------
 
-The dismiss statement creates the highly specialized dismiss displayable,
-which gains focus when no other displayable has focus,
-and runs an action when it's activated. In this regard, it works
-very similarly to the behavior of the say statement.
+Оператор dismiss создает узкоспециализированный отображаемый объект dismiss, который
+получает фокус, когда ни один другой объект не находится в фокусе, и выполняет
+действие при своей активации. В этом отношении он работает аналогично поведению
+оператора say.
 
-This is rarely used, and mostly to allow a modal frame to be
-dismissed when the player clicks outside it, as might be the case
-with a popup window.
+Используется редко, в основном для закрытия модального фрейма при клике пользователя
+за его пределами, как во всплывающих окнах.
 
-This takes the following properties:
+Принимает следующие свойства:
 
 .. screen-property:: action
 
-    The action performed when the dismiss is activated. This property is
-    required.
+    Действие, выполняемое при активации dismiss. Это свойство обязательно.
 
 .. screen-property:: keysym
 
-    A string giving a :doc:`keysym <keymap>` describing a key that,
-    when pressed, invokes the action of this dismiss. This replaces the default
-    "dismiss" keysym.
+    Строка, задающая :doc:`символ клавиши (keysym) <keymap>`, описывающий клавишу,
+    нажатие которой вызывает действие dismiss. Заменяет стандартный keysym "dismiss".
 
 .. screen-property:: modal
 
-    By default, the dismiss is modal, preventing events from being processed
-    by displayables "behind" it.
+    По умолчанию dismiss является модальным, предотвращая обработку событий
+    отображаемыми объектами «позади» него.
 
+Также принимает:
 
-It also takes:
+* :ref:`Общие свойства <common-properties>`
+* Свойства стиля :propref:`hover_sound` и :propref:`activate_sound`.
 
-* :ref:`Common Properties <common-properties>`
-* The :propref:`hover_sound` and :propref:`activate_sound` style properties.
-
-Here's an example of dismiss being used::
+Пример использования dismiss::
 
     screen dismiss_test():
 
@@ -597,56 +573,53 @@ Here's an example of dismiss being used::
 
         frame:
             modal True
-
             align (.5, .3)
             padding (20, 20)
 
             has vbox
 
-            text "This is a very important message.":
+            text "Это очень важное сообщение.":
                 xalign 0.5
                 textalign 0.5
 
-            # Dismiss can be confusing on its own, so we'll add a button as well.
-            textbutton "Dismiss":
+            # Dismiss сам по себе может быть неочевиден, поэтому добавим и кнопку.
+            textbutton "Закрыть":
                 xalign 0.5
                 action Return()
 
-See also how dismiss is used in conjunction with :ref:`nearrect <sl-nearrect>`.
+См. также использование dismiss совместно с :ref:`nearrect <sl-nearrect>`.
 
 .. _sl-fixed:
 
 Fixed
 -----
 
-This creates an area to which children can be added. By default, the
-fixed expands to fill the available area, but the :propref:`xmaximum`
-and :propref:`ymaximum` properties can change this.
+Создает область, в которую можно добавлять дочерние элементы. По умолчанию fixed
+расширяется, заполняя всю доступную область, однако свойства :propref:`xmaximum`
+и :propref:`ymaximum` могут изменить этот размер.
 
-The children are laid out according to their position style
-properties. They can overlap if not positioned properly.
+Дочерние элементы размещаются в соответствии с их свойствами стиля позиционирования.
+При неправильном позиционировании они могут перекрывать друг друга.
 
-The fixed statement takes no parameters, and the following groups of
-properties:
+Оператор fixed не принимает параметров и поддерживает следующие группы свойств:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`fixed-style-properties`
 
-This takes any number of children, which are added to the fixed.
+Принимает любое количество дочерних элементов, добавляемых внутрь fixed.
 
-It's often unnecessary to explicitly create a fixed displayable. Each
-screen is contained within a fixed displayable, and many screen
-language statements automatically create a fixed displayable if they
-have two or more children.
+Часто нет необходимости явно создавать объект fixed. Каждый экран уже заключен
+внутрь объекта fixed, и многие операторы языка экранов автоматически создают fixed,
+если им передано два или более дочерних элемента.
 
 ::
 
     screen ask_are_you_sure:
         fixed:
-             text "Are you sure?" xalign 0.5 yalign 0.3
-             textbutton "Yes" xalign 0.33 yalign 0.5 action Return(True)
-             textbutton "No" xalign 0.66 yalign 0.5 action Return(False)
+             text "Вы уверены?" xalign 0.5 yalign 0.3
+             textbutton "Да" xalign 0.33 yalign 0.5 action Return(True)
+             textbutton "Нет" xalign 0.66 yalign 0.5 action Return(False)
 
 
 .. _sl-frame:
@@ -654,16 +627,16 @@ have two or more children.
 Frame
 -----
 
-A frame is a window that contains a background that is intended for
-displaying user-interface elements like buttons, bars, and text. It
-takes the following groups of properties:
+Фрейм (кадр) — это окно, содержащее фон, предназначенный для отображения элементов
+пользовательского интерфейса, таких как кнопки, полосы и текст. Принимает следующие
+группы свойств:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`window-style-properties`
 
-It takes one child. If zero, two, or more children are supplied, then
-a fixed is created to contain them.
+Принимает один дочерний элемент. Если передано ноль, два или более дочерних элементов,
+для их размещения создается fixed.
 
 ::
 
@@ -675,82 +648,79 @@ a fixed is created to contain them.
             yalign 0.5
 
             vbox:
-                text "Display"
+                text "Режим экрана"
                 null height 10
-                textbutton "Fullscreen" action Preference("display", "fullscreen")
-                textbutton "Window" action Preference("display", "window")
+                textbutton "Полноэкранный" action Preference("display", "fullscreen")
+                textbutton "Оконный" action Preference("display", "window")
 
 .. _sl-grid:
 
 Grid
 ----
 
-This displays its children in a grid. Each child is given an area of
-the same size, the size of the largest child.
+Отображает свои дочерние элементы в виде сетки (таблицы). Каждому дочернему элементу
+выделяется область одинакового размера, равная размеру самого крупного элемента.
 
-It takes two parameters. The first is the number of columns in the
-grid, and the second is the number of rows in the grid. If the grid
-is not full, the remaining cells are filled with the ``null`` displayable.
+Принимает два параметра: количество столбцов и количество строк в сетке. Если сетка
+заполнена не полностью, оставшиеся ячейки заполняются объектом ``null``.
 
-Grid takes several properties related to the way its children are placed:
+Grid принимает несколько свойств, управляющих размещением дочерних элементов:
 
 .. screen-property:: transpose
 
-    If False (the default), rows are filled before columns. If True,
-    then columns are filled before rows.
+    Если False (по умолчанию), сначала заполняются строки, затем столбцы. Если True,
+    сначала заполняются столбцы, затем строки.
 
 .. screen-property:: right_to_left
 
-    If True, cells are filled from right to left, instead of the default
-    left to right.
+    Если True, ячейки заполняются справа налево вместо стандартного направления слева направо.
 
 .. screen-property:: bottom_to_top
 
-    If True, cells are filled from bottom to top, instead of the default
-    top to bottom.
+    Если True, ячейки заполняются снизу вверх вместо стандартного направления сверху вниз.
 
-It also takes:
+Также принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`grid-style-properties`
 
-This must be given (columns * rows) children. Giving it a different
-number of children is an error.
+Должно быть передано ровно (столбцы * строки) дочерних элементов. Передача другого
+количества дочерних элементов вызовет ошибку.
 
 ::
 
     screen grid_test:
          grid 2 3:
-             text "Top-Left"
-             text "Top-Right"
+             text "Верх-Лево"
+             text "Верх-Право"
 
-             text "Center-Left"
-             text "Center-Right"
+             text "Центр-Лево"
+             text "Центр-Право"
 
-             text "Bottom-Left"
-             text "Bottom-Right"
+             text "Низ-Лево"
+             text "Низ-Право"
 
 .. _sl-hbox:
 
 Hbox
 ----
 
-This displays its children side by side, in an invisible horizontal
-box. It takes no parameters, and the following groups of properties:
+Отображает свои дочерние элементы рядом друг с другом в невидимом горизонтальном
+блоке. Не принимает параметров и поддерживает следующие группы свойств:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`box-style-properties`
 
-UI displayable children are added to the box.
+Дочерние отображаемые элементы интерфейса добавляются в блок.
 
 ::
 
    screen hbox_text():
        hbox:
-            text "Left"
-            text "Right"
+            text "Слева"
+            text "Справа"
 
 
 .. _sl-imagebutton:
@@ -758,97 +728,84 @@ UI displayable children are added to the box.
 Imagebutton
 -----------
 
-Creates a button consisting of images, that change state when the user
-hovers over them. This takes no parameters, and the following
-properties:
+Создает кнопку, состоящую из изображений, меняющих свое состояние при наведении курсора.
+Не принимает параметров и поддерживает следующие свойства:
 
 .. screen-property:: auto
 
-    Used to automatically define the images used by this button. This
-    should be a string that contains %s in it. If it is, and one of
-    the image properties is omitted, %s is replaced with the name of
-    that property, and the value is used as the default for that
-    property.
+    Используется для автоматического определения изображений кнопки. Должно быть строкой,
+    содержащей подстановку %s. Если это так, и одно из свойств изображений не указано,
+    %s заменяется именем этого свойства, и полученное значение используется как путь
+    к файлу по умолчанию.
 
-    For example, if `auto` is "button_%s.png", and `idle` is omitted, then
-    idle defaults to "button_idle.png". Similarly, if `auto` is "button %s",
-    the ``button idle`` image is used.
+    Например, если `auto` равно "button_%s.png", а `idle` опущено, для idle по умолчанию
+    будет использоваться "button_idle.png". Аналогично, если `auto` равно "button %s",
+    используется изображение с тегом ``button idle``.
 
-    The behavior of `auto` can be customized by changing
-    :var:`config.imagemap_auto_function`.
-
+    Поведение `auto` можно переопределить через функцию :var:`config.imagemap_auto_function`.
 
 .. screen-property:: insensitive
 
-    The image used when the button is insensitive.
+    Изображение, используемое, когда кнопка нечувствительна к нажатию.
 
 .. screen-property:: idle
 
-    The image used when the button is not focused.
+    Изображение, используемое, когда кнопка не в фокусе.
 
 .. screen-property:: hover
 
-    The image used when the button is focused.
+    Изображение, используемое при наведении курсора на кнопку.
 
 .. screen-property:: selected_idle
 
-    The image used when the button is selected and idle.
+    Изображение, когда кнопка выбрана и не находится в фокусе.
 
 .. screen-property:: selected_hover
 
-    The image used when the button is selected and hovered.
+    Изображение, когда кнопка выбрана и на нее наведен курсор.
 
 .. screen-property:: action
 
-    The action to run when the button is activated. This also controls if
-    the button is sensitive if `sensitive` is not provided or None, and if the button
-    is selected if `selected` is not provided or None.
+    Действие, выполняемое при активации кнопки. Также управляет чувствительностью
+    кнопки (если `sensitive` не задано или None) и ее выбранным состоянием
+    (если `selected` не задано или None).
 
 .. screen-property:: alternate
 
-    An action that is run if the button is activated in an alternate manner.
-    Alternate activation occurs when the player right-clicks on the button
-    on a mouse-based platform, or when the player long presses the button
-    on a touch-based platform.
+    Действие, выполняемое при альтернативной активации кнопки (ПКМ или долгое касание).
 
 .. screen-property:: hovered
 
-    An action to run when the button gains focus.
+    Действие, выполняемое при получении кнопкой фокуса.
 
 .. screen-property:: unhovered
 
-    An action to run when the button loses focus.
+    Действие, выполняемое при потере кнопкой фокуса.
 
 .. screen-property:: selected
 
-    An expression that determines whether the button is selected or not.
-    This expression is evaluated at least once per interaction.
-    If not provided or None, the action will be used to determine selectedness.
+    Выражение, определяющее, выбрана ли кнопка. Вычисляется как минимум один раз за каждое взаимодействие.
 
 .. screen-property:: sensitive
 
-    An expression that determines whether the button is sensitive or not.
-    This expression is evaluated at least once per interaction.
-    If not provided or None, the action will be used to determine sensitivity.
+    Выражение, определяющее чувствительность кнопки к взаимодействию.
 
 .. screen-property:: keysym
 
-    A string giving a :doc:`keysym <keymap>` describing a keyboard key that,
-    when pressed, invokes the action of this button.
+    Строка с :doc:`символом клавиши (keysym) <keymap>`, нажатие которой активирует кнопку.
 
 .. screen-property:: alternate_keysym
 
-    A string giving a :doc:`keysym <keymap>` describing a keyboard key that,
-    when pressed, invokes the alternate action of this button.
+    Строка с :doc:`символом клавиши (keysym) <keymap>`, нажатие которой активирует альтернативное действие кнопки.
 
-It also takes:
+Также принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`window-style-properties`
 * :ref:`button-style-properties`
 
-This takes no children.
+Не принимает дочерних элементов.
 
 ::
 
@@ -865,105 +822,97 @@ This takes no children.
 Input
 -----
 
-Creates a text input area, which allows the user to enter text. When
-the user presses return, the text will be returned by the
-interaction. (When the screen is invoked through ``call screen``, the result
-will be placed in the ``_return`` variable.)
+Создает область ввода текста, позволяющую пользователю вводить текст. При нажатии
+Enter введенный текст возвращается взаимодействием. (Когда экран вызывается через
+``call screen``, результат помещается в переменную ``_return``.)
 
-Due to limitations in supporting libraries, on Android and the web platform
-the input displayable is limited to alphabetic characters.
+В силу ограничений используемых библиотек на Android и веб-платформе ввод текста
+ограничен базовыми буквенно-цифровыми символами.
 
-The input statement takes no parameters, and the following properties:
+Оператор input не принимает позиционных параметров и поддерживает следующие свойства:
 
 .. screen-property:: value
 
-    An :ref:`input value <input-values>` object that this input uses.
-    InputValue objects determine where the default value is taken from,
-    what happens when the text is changed, what happens when enter is
-    pressed, and if the text is editable by default.
+    Объект :ref:`значения ввода <input-values>`, используемый этим полем ввода.
+    Объекты InputValue определяют, откуда берется значение по умолчанию, что происходит
+    при изменении текста, что происходит при нажатии Enter и доступен ли текст для
+    редактирования по умолчанию.
 
-    This should not be given at the same time as `default` and `changed`.
+    Не следует указывать одновременно с `default` и `changed`.
 
 .. screen-property:: default
 
-    The default text in this input.
+    Текст по умолчанию в данном поле ввода.
 
 .. screen-property:: length
 
-    The maximum length of the text in this input.
+    Максимальная длина текста в символах.
 
 .. screen-property:: pixel_width
 
-    The maximum pixel width of the input. If typing a character would
-    cause the input to exceed this width, the keypress is ignored.
+    Максимальная ширина поля ввода в пикселях. Если ввод символа приведет к превышению
+    этой ширины, нажатие клавиши игнорируется.
 
 .. screen-property:: allow
 
-    A string containing characters that are allowed to be typed into
-    this input. (By default, allow all characters.)
+    Строка символов, разрешенных для ввода в это поле. (По умолчанию разрешены все символы.)
 
 .. screen-property:: exclude
 
-    A string containing characters that are disallowed from being
-    typed into this input. (By default, "{}".)
+    Строка символов, запрещенных для ввода. (По умолчанию "{}".)
 
 .. screen-property:: copypaste
 
-    If True, it becomes possible to copy and paste
-    into this input. (By default, disabled.)
+    Если True, в поле ввода становится доступно копирование и вставка. (По умолчанию отключено.)
 
 .. screen-property:: prefix
 
-    An immutable string to prepend to what the user has typed.
+    Неизменяемая строка, добавляемая перед введенным пользователем текстом.
 
 .. screen-property:: suffix
 
-    An immutable string to append to what the user has typed.
+    Неизменяемая строка, добавляемая после введенного пользователем текста.
 
 .. screen-property:: changed
 
-    A Python function that is called with what the user has typed,
-    when the string changes.
+    Функция Python, вызываемая с текущим введенным текстом при каждом его изменении.
 
 .. screen-property:: mask
 
-    If given, a string that replaces each displayable character in
-    the text. This can be used to mask out a password.
+    Если указано, строка, заменяющая каждый отображаемый символ в тексте (например,
+    для маскирования пароля).
 
 .. screen-property:: caret_blink
 
-    If not False, the blinking period of the default caret.
-    Overrides :var:`config.input_caret_blink`.
+    Если не False, период мигания каретки ввода по умолчанию. Переопределяет
+    :var:`config.input_caret_blink`.
 
 .. screen-property:: multiline
 
-    If true, it becomes possible to move caret on the next line
-    using keyboard (Shift+Enter by default,
-    can be changed by modifying config.keymap['input_next_line']).
+    Если True, появляется возможность перевода каретки на новую строку с клавиатуры
+    (по умолчанию Shift+Enter, настраивается через config.keymap['input_next_line']).
 
 .. screen-property:: action
 
-    If not None, an action that is run when enter is pressed and the
-    input is active. This overrides the default action of returning
-    the input value.
+    Если не None, действие, выполняемое при нажатии Enter, когда ввод активен.
+    Переопределяет стандартное поведение возврата значения ввода.
 
-    Generally, this is used with a `value` that stores the input into
-    a variable, so the action can access it.
+    Как правило, используется вместе со свойством `value`, сохраняющим ввод в переменную,
+    к которой действие может получить доступ.
 
 .. screen-property:: arrowkeys
 
-    If True (the default), the arrow keys can be used to move the caret left and right
-    within the input. If False, arrow keys are ignored, making them available for other uses,
-    like changing focus.
+    Если True (по умолчанию), клавиши со стрелками используются для перемещения каретки
+    влево и вправо внутри поля ввода. Если False, стрелки игнорируются полем ввода,
+    освобождая их для других целей (например, смены фокуса).
 
+Также принимает:
 
-It also takes:
-
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`text-style-properties`
 
-This does not take any children.
+Не принимает дочерних элементов.
 
 ::
 
@@ -971,8 +920,8 @@ This does not take any children.
         window:
             has vbox
 
-            text "Enter your name."
-            input default "Joseph P. Blow, ESQ."
+            text "Введите ваше имя."
+            input default "Иван Иванов"
 
 
 .. _sl-key:
@@ -980,27 +929,24 @@ This does not take any children.
 Key
 ---
 
-This creates a keybinding that runs an action when a key is pressed,
-or one of the keys in a given list. Key is used in a loose sense here,
-as it also allows joystick and mouse events.
+Создает привязку клавиши, запускающую действие при нажатии клавиши или одной из клавиш
+из заданного списка. Понятие «клавиша» здесь используется в широком смысле, так как
+также поддерживаются события джойстика и мыши.
 
-Key takes one positional parameter, a string giving the key to
-bind. See the :doc:`keymap` section for a description of available
-keysyms. It takes two properties:
+Key принимает один позиционный параметр — строку с именем привязываемой клавиши.
+Описание доступных клавиш см. в разделе :doc:`keymap`. Принимает два свойства:
 
 .. screen-property:: action
 
-    This gives an action that is run when the key is pressed. This
-    property is mandatory.
+    Действие, выполняемое при нажатии клавиши. Обязательное свойство.
 
 .. screen-property:: capture
 
-    If true, the default, the event will capture, and will not be
-    processed by other displayables. If false and the action does
-    not end the interaction, the event will be processed by other
-    displayables.
+    Если True (по умолчанию), событие перехватывается и не передается другим отображаемым
+    объектам. Если False, и действие не завершает взаимодействие, событие обрабатывается
+    другими элементами.
 
-It takes no children.
+Не принимает дочерних элементов.
 
 ::
 
@@ -1015,31 +961,28 @@ It takes no children.
 Label
 -----
 
-Creates a window in the label style, and then places text inside that
-window. Together, this combination is used to label things inside a
-frame.
+Создает окно в стиле label, а затем помещает текст внутрь этого окна. В совокупности
+эта комбинация используется для подписи элементов внутри фрейма.
 
-It takes one positional argument, the text of the label. It takes
-the property:
+Принимает один позиционный аргумент — текст метки. Поддерживает свойства:
 
 .. screen-property:: text_style
 
-    The name of the style to use for the button text. If not supplied,
-    and the `style` property is a string, then ``"_text"`` is appended
-    to that string to give the default text style.
+    Имя стиля для текста метки. Если не указано, и свойство `style` является строкой,
+    к этой строке добавляется ``"_text"`` для получения стиля текста по умолчанию.
 
 .. screen-property:: text_-
 
-   Other properties prefixed with text_ have this prefix stripped, and
-   are then passed to the text displayable.
+   Другие свойства с префиксом text_ очищаются от этого префикса и передаются
+   отображаемому объекту text.
 
-It also takes:
+Также принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`window-style-properties`
 
-It does not take children.
+Не принимает дочерних элементов.
 
 ::
 
@@ -1047,9 +990,9 @@ It does not take children.
         frame:
             has vbox
 
-            label "Display"
-            textbutton "Fullscreen" action Preference("display", "fullscreen")
-            textbutton "Window" action Preference("display", "window")
+            label "Экран"
+            textbutton "Полноэкранный" action Preference("display", "fullscreen")
+            textbutton "Оконный" action Preference("display", "window")
 
 
 .. _mousearea:
@@ -1058,43 +1001,40 @@ It does not take children.
 Mousearea
 ---------
 
-A mouse area is an area of the screen that can react to the mouse
-entering or leaving it. Unlike a button, a mouse area does not take
-focus, so it's possible to have a mouse area with buttons inside it.
-The ``mousearea`` statement takes no parameters, and the following properties:
+Область мыши — это область экрана, которая может реагировать на вход или выход курсора мыши.
+В отличие от кнопки, область мыши не принимает фокус, поэтому внутри области мыши
+могут находиться кнопки. Оператор ``mousearea`` не принимает позиционных параметров
+и поддерживает следующие свойства:
 
 .. screen-property:: hovered
 
-    An action to run when the mouse enters the mouse area.
+    Действие, выполняемое при входе курсора мыши в область.
 
 .. screen-property:: unhovered
 
-    An action to run when the mouse leaves the mouse area.
+    Действие, выполняемое при выходе курсора мыши из области.
 
 .. screen-property:: focus_mask
 
-    The :propref:`focus_mask` style property, which may be a Displayable
-    or None. If a displayable, the mousearea will only be hovered if the
-    mouse is over an opaque portion of the displayable. (The displayable
-    is not shown to the user.)
+    Свойство стиля :propref:`focus_mask`, которое может быть Displayable или None.
+    Если задан отображаемый объект, область мыши будет считаться активной только тогда,
+    когда курсор находится над непрозрачной частью этого объекта. (Сам объект пользователю не показывается.)
 
-It also takes:
+Также принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 
-It does not take children.
+Не принимает дочерних элементов.
 
-Usually, a mousearea statement is given the :propref:`area` style
-property, which controls the size and position of the mouse
-area. Without some way of controlling its size, the mouse area would
-take up the entire screen, a less useful behavior.
+Обычно оператору mousearea задается свойство стиля :propref:`area`, управляющее
+размером и положением области мыши. Без этого свойства область мыши заняла бы весь
+экран, что редко бывает нужно.
 
 .. note::
 
-    Since Ren'Py games can be played using the keyboard and joystick, it
-    often makes sense to duplicate mousearea functionality by some other
-    means.
+    Поскольку в игры Ren'Py можно играть с помощью клавиатуры и джойстика, функциональность
+    mousearea часто имеет смысл дублировать другими средствами управления.
 
 ::
 
@@ -1106,10 +1046,10 @@ take up the entire screen, a less useful behavior.
 
     screen buttons():
         hbox:
-            textbutton "Save" action ShowMenu("save")
-            textbutton "Prefs" action ShowMenu("preferences")
-            textbutton "Skip" action Skip()
-            textbutton "Auto" action Preference("auto-forward", "toggle")
+            textbutton "Сохранить" action ShowMenu("save")
+            textbutton "Настройки" action ShowMenu("preferences")
+            textbutton "Пропуск" action Skip()
+            textbutton "Авто" action Preference("auto-forward", "toggle")
 
     label start:
         show screen button_overlay
@@ -1119,131 +1059,124 @@ take up the entire screen, a less useful behavior.
 Nearrect
 --------
 
-The ``nearrect`` statement takes a single child, and lays that child out
-at a location near a rectangle. Usually, this is a rectangle focus captured using
-the :func:`CaptureFocus` action. This can be used for tooltips and dropdown or
-pulldown menus.
+Оператор ``nearrect`` принимает один дочерний элемент и размещает его рядом
+с прямоугольником. Обычно это прямоугольник фокуса, зафиксированный действием
+:func:`CaptureFocus`. Это можно использовать для всплывающих подсказок, контекстных
+или выпадающих меню.
 
-Nearrect takes the following properties:
+Nearrect принимает следующие свойства:
 
 .. screen-property:: rect
 
-    If given, this should be an (x, y, w, h) rectangle that the child is
-    positioned relative to, as described below.
+    Если указано, должен быть прямоугольником (x, y, w, h), относительно которого
+    позиционируется дочерний элемент.
 
 .. screen-property:: focus
 
-    If given, this should be a string. This string is passed to the equivalent of
-    :func:`GetFocusRect` to find the rectangle. If a focus rectangle with that
-    name is found, the child is rendered.
+    Если указано, строка. Эта строка передается эквиваленту функции :func:`GetFocusRect`
+    для поиска прямоугольника. Если прямоугольник фокуса с таким именем найден,
+    дочерний элемент отображается.
 
-    Passing "tooltip" to this uses the location of the last displayable that
-    was focused while displaying a tooltip.
+    Передача значения "tooltip" использует координаты последнего отображаемого объекта,
+    находившегося в фокусе при показе подсказки.
 
-    If present, overrides `rect`
+    Если указано, переопределяет `rect`.
 
 .. screen-property:: preferred_side
 
-    One of ``"left"``, ``"top"``, ``"right"``, ``"bottom"`` to prefer that
-    position for the nearrect. If there is not room on one side, the opposite
-    side is used. By default, the preferred side is "bottom".
+    Одно из значений: ``"left"``, ``"top"``, ``"right"``, ``"bottom"``, определяющее
+    предпочтительную сторону размещения nearrect. Если на указанной стороне недостаточно
+    места, используется противоположная сторона. По умолчанию "bottom".
 
 .. screen-property:: prefer_top
 
-    Deprecated. Equivalent to ``preferred_side "top"``
+    Устарело. Эквивалентно ``preferred_side "top"``.
 
 .. screen-property:: invert_offsets
 
-    If True and there isn't enough space on the preferred side, multiply
-    xoffset and yoffset by -1 since the child will be on the opposite side of
-    the rectangle. False by default.
+    Если True, и на предпочтительной стороне недостаточно места, смещения xoffset и yoffset
+    умножаются на -1, так как дочерний элемент окажется на противоположной стороне прямоугольника.
+    По умолчанию False.
 
-It also takes:
+Также принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 
+Nearrect отличается от других контейнеров тем, что он размещает дочерний элемент рядом
+с заданным прямоугольником, а не внутри него. Для `preferred_side` со значением ``"top"``
+или ``"bottom"`` (соответственно ``"left"``, ``"right"``) дочерний элемент сначала
+рендерится с полной доступной шириной (соответственно высотой) и максимальной доступной
+высотой (соответственно шириной) выше и ниже прямоугольника. Затем вычисляется положение
+по Y (соответственно по X) следующим образом:
 
-Nearrect differs from the other layouts in that it positions its child near the
-given rectangle, rather than inside it. For a `preferred_side` of ``"top"`` or
-``"bottom"`` (resp. ``"left"``, ``"right"``), the child is first rendered with
-the full width (resp. height) available, and the maximum of the height
-(resp. width) above and below the rectangle. The y position (resp. x position)
-is then computed as followed.
+* Если элемент помещается на `preferred_side` прямоугольника, он размещается вплотную к нему.
+* В противном случае, если он помещается с противоположной стороны, он размещается там.
+* В противном случае элемент размещается вплотную к предпочтительной стороне (`preferred_side`).
 
-* If the child will fit on the `preferred_side` of the rectangle, the child is
-  positioned directly adjacent to the rectangle.
-* Otherwise, if the child can fit opposite the `preferred_side` of the
-  rectangle, it's positioned there.
-* Otherwise, the child is positioned directly adjacent to the rectangles's
-  `preferred_side`.
+Позиционирование по X (соответственно по Y) вычисляется по обычным правилам с использованием
+свойств :propref:`xpos` и :propref:`xanchor` (соответственно :propref:`ypos`, :propref:`yanchor`)
+дочернего элемента и свойств, задающих их (таких как :propref:`xalign`). Свойства позиции
+отсчитываются от координаты X (соответственно Y) прямоугольника, а при передаче числа с
+плавающей запятой — от его ширины (соответственно высоты).
 
-The x positioning (resp. y position) is computed using the normal rules, using
-the :propref:`xpos` and :propref:`xanchor` properties (resp. :propref:`ypos`,
-:propref:`yanchor`) of the child, and properties that set them, such as
-:propref:`xalign`. The pos properties are relative to the x coordinate
-(resp. y coordinate) of the rectangle, and in the case of a floating point
-number, the width (resp. height).
+В конце позиционирования свойства :propref:`xoffset` и :propref:`yoffset` применяются как обычно.
 
-At the end of positioning, the :propref:`xoffset` and :propref:`yoffset`
-properties are applied as normal.
+Если дочерним элементом nearrect является трансформация, ей передаются события ``show``
+и ``hide``. Однако положение изменится мгновенно. Nearrect лучше всего размещать на верхнем
+уровне экрана, применяя трансформации и позиционирование к его дочернему элементу, а не к самому nearrect.
 
-If the child of the nearrect is a transform, the transform is given ``show``
-and ``hide`` events. However, the position will change instantly. Nearrect
-works best on the top of a screen, with transforms and positioning applied
-to its child, rather the nearrect.
+Один из вариантов использования nearrect — выпадающие меню::
 
-One use of nearrect is for dropdown menus::
-
-    default difficulty = "Easy"
+    default difficulty = "Обычная"
 
     screen select_difficulty():
 
-        # This frame can be a very complex layout, if required.
+        # Этот фрейм при необходимости может иметь сложный макет.
         frame:
             align (.5, .3)
             padding (20, 20)
 
             has vbox
 
-            # This is the button that is clicked to enable the dropdown
-            textbutton "Difficulty: [difficulty]":
+            # Кнопка, нажатие которой открывает выпадающее меню
+            textbutton "Сложность: [difficulty]":
 
-                # This action captures the focus rectangle, and in doing so,
-                # displays the dropdown.
+                # Это действие захватывает прямоугольник фокуса и тем самым
+                # открывает выпадающее меню.
                 action CaptureFocus("diff_drop")
 
-            textbutton "Done":
+            textbutton "Готово":
                 action Return()
 
-        # All sorts of other screen elements could be here, but the nearrect needs
-        # to be at the top level, and the last thing shown, apart from its child.
+        # Здесь могут быть любые другие элементы экрана, но nearrect должен
+        # быть на верхнем уровне и отображаться последним (кроме своего потомка).
 
-        # Only if the focus has been captured, display the dropdown.
-        # You could also use showif instead of basic if
+        # Отображаем выпадающее меню, только если фокус был захвачен.
+        # Вместо обычного if можно использовать showif
         if GetFocusRect("diff_drop"):
 
-            # If the player clicks outside the frame, dismiss the dropdown.
-            # The ClearFocus action dismisses this dropdown.
+            # Если пользователь кликает вне меню, закрываем его.
+            # Действие ClearFocus закрывает данное выпадающее меню.
             dismiss action ClearFocus("diff_drop")
 
-            # This positions the displayable near (usually under) the button above.
+            # Размещает элемент рядом (обычно под) кнопкой выше.
             nearrect:
                 focus "diff_drop"
 
-                # Finally, this frame contains the choices in the dropdown, with
-                # each using ClearFocus to dismiss the dropdown.
+                # Наконец, этот фрейм содержит варианты выбора в меню,
+                # каждый из которых использует ClearFocus для закрытия меню.
                 frame:
                     modal True
 
                     has vbox
 
-                    textbutton "Easy" action [ SetVariable("difficulty", "Easy"), ClearFocus("diff_drop") ]
-                    textbutton "Medium" action [ SetVariable("difficulty", "Medium"), ClearFocus("diff_drop") ]
-                    textbutton "Hard" action [ SetVariable("difficulty", "Hard"), ClearFocus("diff_drop") ]
-                    textbutton "Nightmare" action [ SetVariable("difficulty", "Nightmare"), ClearFocus("diff_drop") ]
+                    textbutton "Легкая" action [ SetVariable("difficulty", "Легкая"), ClearFocus("diff_drop") ]
+                    textbutton "Обычная" action [ SetVariable("difficulty", "Обычная"), ClearFocus("diff_drop") ]
+                    textbutton "Высокая" action [ SetVariable("difficulty", "Высокая"), ClearFocus("diff_drop") ]
+                    textbutton "Кошмарная" action [ SetVariable("difficulty", "Кошмар"), ClearFocus("diff_drop") ]
 
-Dropdowns may benefit from improved styling, which isn't done here.
+Выпадающие меню могут выиграть от улучшенной стилизации, которая в данном примере не приведена.
 
 
 .. _sl-null:
@@ -1251,32 +1184,31 @@ Dropdowns may benefit from improved styling, which isn't done here.
 Null
 ----
 
-The null statement inserts an empty area on the screen. This can be
-used to space things out. The null statement takes no parameters, and
-the following properties:
+Оператор null вставляет пустую область на экран. Это можно использовать для создания
+отступов и интервалов. Не принимает параметров и поддерживает следующие свойства:
 
 .. screen-property:: width
 
-    The width of the empty area, in pixels.
+    Ширина пустой области в пикселях.
 
 .. screen-property:: height
 
-    The height of the empty area, in pixels.
+    Высота пустой области в пикселях.
 
-It also takes:
+Также принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 
-It does not take children.
+Не принимает дочерних элементов.
 
 ::
 
     screen text_box():
         vbox:
-             text "The title."
+             text "Заголовок."
              null height 20
-             text "This body text."
+             text "Основной текст."
 
 
 .. _sl-side:
@@ -1284,187 +1216,168 @@ It does not take children.
 Side
 ----
 
-This positions displayables in the corners or center of a grid. It
-takes a single parameter, a string containing a space-separated list of
-places to place its children. Each component of this list should be
-one of:
+Размещает отображаемые элементы по углам или в центре сетки. Принимает один
+параметр — строку со списком позиций через пробел. Каждый компонент этого списка
+должен быть одним из следующих:
 
     'c', 't', 'b', 'l', 'r', 'tl', 'tr', 'bl', 'br'
 
-'c' means center, 't' top, 'tl' top left, 'br' bottom right, and so on.
+'c' означает центр (center), 't' — верх (top), 'tl' — верхний левый угол (top left),
+'br' — нижний правый угол (bottom right) и так далее.
 
-A side takes the following properties:
+Side принимает следующие свойства:
 
 .. screen-property:: spacing
 
-    The spacing between the rows and columns of the grid.
+    Расстояние между строками и столбцами сетки.
 
-A side takes the following property groups:
+Поддерживает следующие группы свойств:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 
-Rendering a side starts with a three-step process to figure out the minimum size of the center, sides, and corner.
+Отрисовка side начинается с трехэтапного процесса определения минимальных размеров центра, сторон и углов:
 
-* First, the minimum size of the center is found by offering it (0, 0)
-  space to render in.
-* Next, the minimum sizes of the sides are determined, by offering them
-  the minimum size of the adjacent edge of the center, and 0 in the other direction.
-  That is, 't' and 'b' are offered (center_min_width, 0), and 'l' and 'r' are offered (0, center_min_height).
-* Finally, the corners have their minimum s ize determined by offering each the minimum size of the adjacent
-  sides. For example, 'tl' would be offered (left_min_width, top_min_height), and so on.
+* Сначала определяется минимальный размер центра путем предложения ему пространства (0, 0).
+* Затем определяются минимальные размеры сторон: им предлагается минимальный размер прилегающего края центра
+  и 0 в другом направлении. То есть 't' и 'b' получают (center_min_width, 0), а 'l' и 'r' получают (0, center_min_height).
+* Наконец, определяются минимальные размеры углов: каждому предлагается минимальный размер прилегающих сторон.
+  Например, 'tl' получит (left_min_width, top_min_height) и так далее.
 
-Any displayable can grow larger than the offered size. It may be necessary to supply corners or sides a minimum size
-(using :propref:`xminimum` or :propref:`yminimum`) to ensure each has an appropriate size.
+Любой отображаемый объект может вырасти больше предложенного размера. Может потребоваться явно задать минимальный размер
+углам или сторонам (с помощью :propref:`xminimum` или :propref:`yminimum`), чтобы обеспечить им правильный размер.
 
-After the sizing pass, a grid is created, such that each row and column is large enough to fit the largest child in
-that row and column. If :propref:`xfill` or :propref:`yfill` is given, the center is given extra space to ensure the
-Side fills the available area.
+После шага определения размеров создается сетка, в которой каждая строка и столбец достаточно велики, чтобы вместить
+самый крупный дочерний элемент в этой строке и столбце. Если задано :propref:`xfill` или :propref:`yfill`, центру
+выделяется дополнительное пространство, чтобы Side заполнил всю доступную область.
 
-The children are then rendered in the order they are given, and placed into the appropriate cell using the normal
-placement algorithm. Children correspond to entries in the places list, so this must have the same number of children
-as there are entries in the places list.
+Затем дочерние элементы отрисовываются в порядке их объявления и помещаются в соответствующие ячейки по стандартному
+алгоритму. Элементы соответствуют позициям в списке places, поэтому количество потомков должно совпадать с количеством
+элементов в строке places.
 
 ::
 
     screen side_test():
          side "c tl br":
-              text "Center"
-              text "Top-Left"
-              text "Bottom-Right"
+              text "Центр"
+              text "Верх-Лево"
+              text "Низ-Право"
 
 .. _sl-text:
 
 Text
 ----
 
-The text statement displays text. It takes a single parameter, the
-text to display. It also takes the following groups of properties:
+Оператор text выводит текст на экран. Принимает один позиционный параметр — отображаемый
+текст. Также принимает следующие группы свойств:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`text-style-properties`
 
-It does not take children.
+Не принимает дочерних элементов.
 
 ::
 
     screen hello_world():
-        text "Hello, World." size 40
+        text "Привет, мир!" size 40
 
 .. _sl-textbutton:
 
 Textbutton
 ----------
 
-Creates a button containing a text label. The button takes a single
-parameter, the text to include as part of the button. It takes the
-following properties:
+Создает кнопку, содержащую текстовую метку. Кнопка принимает один позиционный параметр —
+текст кнопки. Принимает следующие свойства:
 
 .. screen-property:: action
 
-    The action to run when the button is activated. This also controls if
-    the button is sensitive if `sensitive` is not provided or None, and if the button
-    is selected if `selected` is not provided or None.
+    Действие, выполняемое при активации кнопки. Также определяет чувствительность кнопки
+    (если `sensitive` не задано или None) и ее выбранное состояние (если `selected` не задано или None).
 
 .. screen-property:: alternate
 
-    An action that is run if the button is activated in an alternate manner.
-    Alternate activation occurs when the player right-clicks on the button
-    on a mouse-based platform, or when the player long presses the button
-    on a touch-based platform.
+    Действие при альтернативной активации кнопки (ПКМ или долгое касание).
 
 .. screen-property:: hovered
 
-    An action to run when the button gains focus.
+    Действие при получении фокуса.
 
 .. screen-property:: unhovered
 
-    An action to run when the button loses focus.
+    Действие при потере фокуса.
 
 .. screen-property:: selected
 
-    An expression that determines whether the button is selected or not.
-    This expression is evaluated at least once per interaction.
-    If not provided or None, the action will be used to determine selectedness.
+    Выражение, определяющее, выбрана ли кнопка в данный момент.
 
 .. screen-property:: sensitive
 
-    An expression that determines whether the button is sensitive or not.
-    This expression is evaluated at least once per interaction.
-    If not provided or None, the action will be used to determine sensitivity.
+    Выражение, определяющее, чувствительна ли кнопка к нажатию.
 
 .. screen-property:: keysym
 
-    A string giving a :doc:`keysym <keymap>` describing a keyboard key that,
-    when pressed, invokes the action of this button.
+    Строка с :doc:`символом клавиши <keymap>`, активирующей кнопку.
 
 .. screen-property:: alternate_keysym
 
-    A string giving a :doc:`keysym <keymap>` describing a keyboard key that,
-    when pressed, invokes the alternate action of this button.
+    Строка с :doc:`символом клавиши <keymap>`, активирующей альтернативное действие.
 
 .. screen-property:: text_style
 
-    The name of the style to use for the button text. If not supplied,
-    and the `style` property is a string, then ``"_text"`` is appended
-    to that string to give the default text style.
+    Имя стиля текста кнопки. Если не указано, и свойство `style` является строкой,
+    к этой строке добавляется ``"_text"`` для стиля текста по умолчанию.
 
 .. screen-property:: text_-
 
-    Other properties prefixed with text_ have this prefix stripped, and are
-    then passed to the text displayable.
+    Другие свойства с префиксом text_ очищаются от префикса и передаются тексту.
 
-It also takes:
+Также принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`window-style-properties`
 * :ref:`button-style-properties`
 
-It does not take children.
+Не принимает дочерних элементов.
 
 ::
 
     screen textbutton_screen():
         vbox:
-            textbutton "Wine" action Jump("wine")
-            textbutton "Women" action Jump("women")
-            textbutton "Song" action Jump("song")
+            textbutton "Вино" action Jump("wine")
+            textbutton "Женщины" action Jump("women")
+            textbutton "Песни" action Jump("song")
 
 .. _sl-timer:
 
 Timer
 -----
 
-This creates a timer that runs an action when time runs out. It takes
-one positional parameter, giving the timeout time, in seconds. It
-takes the properties:
+Создает таймер, запускающий действие по истечении времени. Принимает один позиционный
+параметр — время ожидания в секундах. Поддерживает свойства:
 
 .. screen-property:: action
 
-    This gives an action that is run when the timer expires. This
-    property is mandatory.
+    Действие, выполняемое при срабатывании таймера. Обязательное свойство.
 
 .. screen-property:: repeat
 
-    If True, the timer repeats after it times out.
+    Если True, таймер повторяется после каждого срабатывания.
 
 .. screen-property:: modal
 
-    If True, the timer will not fire if it is blocked by a modal
-    screen. If false or not given, the timer will fire even if it
-    is blocked by a modal screen.
+    Если True, таймер не сработает, если он перекрыт модальным экраном. Если False
+    или не указано, таймер сработает даже при блокировке модальным экраном.
 
-
-Timer takes no children.
+Timer не принимает дочерних элементов.
 
 ::
 
     screen timer_test():
         vbox:
-             textbutton "Yes." action Jump("yes")
-             textbutton "No." action Jump("no")
+             textbutton "Да." action Jump("yes")
+             textbutton "Нет." action Jump("no")
 
         timer 3.0 action Jump("too_slow")
 
@@ -1473,13 +1386,13 @@ Timer takes no children.
 Transform
 ---------
 
-Applies a transform to its child. This takes no parameters, and the
-following property groups:
+Применяет трансформацию к своему дочернему элементу. Не принимает параметров
+и поддерживает следующие группы свойств:
 
-* :ref:`Common Properties <common-properties>`
-* :ref:`Transform Properties <transform-properties>`
+* :ref:`Общие свойства <common-properties>`
+* :ref:`Свойства трансформации <transform-properties>`
 
-This should take a single child.
+Принимает один дочерний элемент.
 
 
 .. _sl-vbar:
@@ -1487,8 +1400,7 @@ This should take a single child.
 Vbar
 ----
 
-The vertically oriented equivalent of `bar`_. Properties are the same
-as `bar`.
+Вертикальный эквивалент оператора `bar`_. Свойства аналогичны `bar`.
 
 ::
 
@@ -1506,22 +1418,21 @@ as `bar`.
 Vbox
 ----
 
-This displays its children one above the other, in an invisible
-vertical box. It takes no parameters, and the following groups of
-properties:
+Отображает дочерние элементы друг над другом в невидимом вертикальном блоке.
+Не принимает параметров и поддерживает следующие группы свойств:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`box-style-properties`
 
-UI displayable children are added to the box.
+Дочерние отображаемые элементы добавляются в блок.
 
 ::
 
     screen vbox_test():
         vbox:
-             text "Top."
-             text "Bottom."
+             text "Верх."
+             text "Низ."
 
 
 .. _sl-viewport:
@@ -1529,132 +1440,108 @@ UI displayable children are added to the box.
 Viewport
 --------
 
-A viewport is area of the screen that can be scrolled by dragging,
-with the mouse wheel, or with scrollbars. It can be used to display
-part of something that is bigger than the screen. It takes the
-following properties:
+Область просмотра (viewport) — это область экрана, которую можно прокручивать перетаскиванием
+мышью, колесом мыши или полосами прокрутки. Используется для отображения частей объектов,
+размер которых превышает экран. Принимает следующие свойства:
 
 .. screen-property:: child_size
 
-    The size that is offered to the child for rendering. An (`xsize`,
-    `ysize`) tuple. This can usually be omitted, when the child can
-    compute it's own size. If either component is None, the child's
-    size is used.
+    Размер, предлагаемый дочернему элементу для отрисовки. Кортеж вида (`xsize`, `ysize`).
+    Обычно опускается, когда дочерний элемент может самостоятельно вычислить свой размер.
+    Если любой компонент равен None, используется собственный размер дочернего элемента.
 
 .. screen-property:: mousewheel
 
-    This should be one of:
+    Одно из значений:
 
     False
-        To ignore the mousewheel. (The default.)
+        Игнорировать колесо мыши (по умолчанию).
     True
-        To scroll vertically.
+        Прокручивать по вертикали.
     "horizontal"
-        To scroll horizontally.
+        Прокручивать по горизонтали.
     "change"
-        To scroll the viewport vertically, only if doing so would cause the
-        viewport to move. If not, the mousewheel event is passed to the rest
-        of the interface. (For example, if change is given, placing
-        ``key "viewport_wheeldown" action Return()`` before the viewport
-        will cause the screen to return if the viewport scrolls past the
-        bottom.)
+        Прокручивать вертикально только в том случае, если это приведет к перемещению
+        области просмотра. В противном случае событие колеса мыши передается остальному
+        интерфейсу (например, размещение строки ``key "viewport_wheeldown" action Return()``
+        перед областью просмотра приведет к возврату из экрана, если прокрутка достигла дна).
     "horizontal-change"
-        Combines horizontal scrolling with change mode.
+        Сочетает горизонтальную прокрутку с режимом change.
 
 .. screen-property:: draggable
 
-    If True, dragging the mouse will scroll the viewport. This can also be
-    a :ref:`variant <screen-variants>`, in which case the viewport will be draggable
-    if the variant is in place. (For example, ``draggable "touch"``.)
+    Если True, перетаскивание мышью будет прокручивать область просмотра. Также может быть
+    :ref:`вариантом экрана <screen-variants>`, в случае чего область просмотра станет
+    перетаскиваемой только при активности данного варианта (например, ``draggable "touch"``).
 
 .. screen-property:: edgescroll
 
-    Controlls scrolling when the mouse reaches the edge of the
-    viewport. If not None, this should be a two- or three-element
-    tuple:
+    Управляет автоматической прокруткой при достижении курсором края области просмотра.
+    Если не None, должен быть кортежем из двух или трех элементов:
 
-    * The first element in the tuple is the distance from
-      the edge of the viewport that edgescrolling begins to take
-      effect, in pixels.
-
-    * The second element is the maximum scrolling rate, in pixels per
-      second.
-
-    * If present, the third element is a function that adjusts the
-      scrolling speed, based on how close to the pointer is to an
-      edge. The function should take a number between -1.0 and 1.0, and
-      return a number in the same range. The default function returns
-      its input, and implements proportional scrolling.  A function
-      that returned -1.0 or 1.0 based on the sign of its input would
-      implement constant-speed scrolling.
+    * Первый элемент — расстояние от края области просмотра в пикселях, при котором начинается прокрутка.
+    * Второй элемент — максимальная скорость прокрутки в пикселях в секунду.
+    * Третий элемент (необязательный) — функция, регулирующая скорость в зависимости от близости курсора к краю.
+      Функция принимает число от -1.0 до 1.0 и возвращает число в том же диапазоне.
+      По умолчанию функция возвращает переданное значение, обеспечивая пропорциональную прокрутку.
 
 .. screen-property:: xadjustment
 
-    The :func:`ui.adjustment` used for the x-axis of the
-    viewport. When omitted, a new adjustment is created.
+    Объект :func:`ui.adjustment`, используемый для оси X области просмотра. При опускании
+    создается новый.
 
 .. screen-property:: yadjustment
 
-    The :func:`ui.adjustment` used for the y-axis of the
-    viewport. When omitted, a new adjustment is created.
+    Объект :func:`ui.adjustment`, используемый для оси Y области просмотра. При опускании
+    создается новый.
 
 .. screen-property:: xinitial
 
-    The initial horizontal offset of the viewport. This may be an integer
-    giving the number of pixels, or a float giving a fraction of the
-    possible offset.
+    Начальное горизонтальное смещение. Может быть целым числом в пикселях или числом
+    с плавающей запятой, задающим долю от возможного смещения.
 
 .. screen-property:: yinitial
 
-    The initial vertical offset of the viewport. This may be an integer
-    giving the number of pixels, or a float giving a fraction of the
-    possible offset.
+    Начальное вертикальное смещение. Целое число в пикселях или число с плавающей запятой.
 
 .. screen-property:: scrollbars
 
-    If not None, scrollbars are added along with this viewport.
-    This works by creating a side layout, and placing the created
-    viewport in the center of the side. If `scrollbars` is "horizontal",
-    a horizontal scrollbar is placed beneath the viewport. If `scrollbars`
-    is "vertical", a vertical scrollbar is placed to the right of the
-    viewport. If `scrollbars` is "both", both horizontal and vertical
-    scrollbars are created.
+    Если не None, вместе с этой областью просмотра добавляются полосы прокрутки.
+    Это работает за счет создания макета side и помещения области просмотра в его центр.
+    Если `scrollbars` равно "horizontal", горизонтальная полоса помещается под областью.
+    Если "vertical", вертикальная полоса помещается справа. Если "both", создаются обе полосы.
 
-    When `scrollbars` is not None, the `viewport` takes prefixed properties:
+    Когда `scrollbars` не None, `viewport` принимает свойства с префиксами:
 
-    * Properties beginning with ``viewport_`` are passed to the viewport.
-    * Properties beginning with ``side_`` are passed to the side.
-    * Properties beginning with ``scrollbar_`` are passed to the horizontal scrollbar, if it exists.
-    * Properties beginning with ``vscrollbar_`` are passed to the vertical scrollbar, if it exists.
+    * Свойства с префиксом ``viewport_`` передаются области просмотра.
+    * Свойства с префиксом ``side_`` передаются контейнеру side.
+    * Свойства с префиксом ``scrollbar_`` передаются горизонтальной полосе прокрутки (если она есть).
+    * Свойства с префиксом ``vscrollbar_`` передаются вертикальной полосе прокрутки (если она есть).
 
-    Unprefixed properties are also accepted. :ref:`position-style-properties` are
-    passed to the side, while other unprefixed properties are supplied to the
-    viewport.
+    Также принимаются свойства без префиксов: :ref:`position-style-properties` передаются
+    в контейнер side, а прочие свойства без префиксов передаются в viewport.
 
 .. screen-property:: arrowkeys
 
-    If true, the viewport can be scrolled with the left, right, up, and down
-    arrow keys. This takes precedence over the usual function of these keys,
-    which is changing focus. However, the arrow keys will change focus when the
-    viewport reaches its limits.
+    Если True, область просмотра можно прокручивать клавишами со стрелками влево, вправо,
+    вверх и вниз. Это имеет приоритет над сменяемостью фокуса, однако стрелки начнут менять
+    фокус, когда прокрутка достигнет границы.
 
 .. screen-property:: pagekeys
 
-    If true, the viewport can be scrolled up and down by the pageup and
-    pagedown keys. This disables the usual functionality of these keys,
-    which is to cause rollback and rollforward.
+    Если True, прокрутку можно выполнять клавишами PageUp и PageDown (отключает их
+    стандартную функцию отката/перемотки).
 
-In addition, it takes the following groups of style properties:
+Также принимает следующие группы свойств стиля:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 
-It takes one child. If zero, two, or more children are supplied, then
-a fixed is created to contain them.
+Принимает один дочерний элемент. Если указано ноль, два или более дочерних элементов,
+создается fixed для их размещения.
 
-To make a viewport scrollable, it's often best to assign an id to it,
-and then use :func:`XScrollValue` and :func:`YScrollValue` with that
-id.
+Для управления прокруткой через полосы часто удобнее всего назначить id области просмотра
+и затем использовать :func:`XScrollValue` и :func:`YScrollValue` с этим id.
 
 ::
 
@@ -1676,46 +1563,43 @@ id.
 Vpgrid
 ------
 
-A vpgrid (viewport grid) combines a viewport and grid into a single
-displayable. The vpgrid takes multiple children (like a grid) and is
-optimized so that only the children being displayed within the viewport
-are rendered.
+Vpgrid (сетка в области просмотра) объединяет viewport и grid в один отображаемый
+объект. Vpgrid принимает несколько дочерних элементов (как grid) и оптимизирован так,
+что отрисовываются только те элементы, которые попадают в видимую область просмотра.
 
-A vpgrid assumes that all children are the same size, the size being taken
-from the dimensions of the first child. If a vpgrid appears to be rendering
-incorrectly, please ensure that all children are of the same size.
+Vpgrid предполагает, что все дочерние элементы имеют одинаковый размер, определяемый
+размерами первого дочернего элемента. Если vpgrid отображается некорректно, убедитесь,
+что все элементы имеют одинаковый размер.
 
-A vpgrid must be given at least one of the `cols` and `rows` properties.
-If one is omitted or None, the other is automatically determined from the
-size, spacing, and number of children. If a row or column would be underfull,
-``null`` displayable are used to fill the remaining space.
+Vpgrid обязательно должен иметь как минимум одно из свойств: `cols` или `rows`.
+Если одно из них опущенно или равно None, второе вычисляется автоматически исходя
+из размера, отступов и количества элементов. Если строка или столбец заполнены не полностью,
+пустые ячейки заполняются отображаемыми объектами ``null``.
 
-Vpgrids take the following properties:
+Свойства vpgrid:
 
 .. screen-property:: cols
 
-    The number of columns in the grid.
+    Количество столбцов в сетке.
 
 .. screen-property:: rows
 
-    The number of rows in the grid.
+    Количество строк в сетке.
 
 .. screen-property:: transpose
 
-    If true, columns are filled before rows. The default of this depends
-    on the `cols` and `rows` properties. If `cols` is given, columns
-    are filled before rows, otherwise rows are filled before columns.
+    Если True, сначала заполняются столбцы, затем строки. По умолчанию зависит от
+    свойств `cols` и `rows`. Если задано `cols`, сначала заполняются столбцы, иначе — строки.
 
-In addition, a vpgrid takes all properties a :ref:`viewport <sl-viewport>` can,
-and the following groups of style properties:
+Кроме того, vpgrid принимает все свойства, доступные для :ref:`viewport <sl-viewport>`,
+а также следующие группы свойств стиля:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`grid-style-properties`
 
-When the `scrollbar` property is given, prefixed properties are passed to
-the vpgrid in the same way as they are with viewports. (Properties prefixed
-with ``viewport_`` are passed to the vpgrid itself.)
+При указании свойства `scrollbars` свойства с префиксами передаются в vpgrid так же,
+как и в случае с viewport. (Свойства с префиксом ``viewport_`` передаются самому vpgrid.)
 
 ::
 
@@ -1730,13 +1614,12 @@ with ``viewport_`` are passed to the vpgrid itself.)
 
             scrollbars "vertical"
 
-            # Since we have scrollbars, this positions the side, rather than
-            # the vpgrid.
+            # Поскольку есть полосы прокрутки, это позиционирует side, а не vpgrid.
             xalign 0.5
 
             for i in range(1, 101):
 
-                textbutton "Button [i]":
+                textbutton "Кнопка [i]":
                     xysize (200, 50)
                     action Return(i)
 
@@ -1747,21 +1630,20 @@ with ``viewport_`` are passed to the vpgrid itself.)
 Window
 ------
 
-A window is a window that contains a background that is intended for
-displaying in-game dialogue. It takes the following groups of
-properties:
+Окно — это контейнер с фоном, предназначенным для отображения внутриигрового диалога.
+Принимает следующие группы свойств:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`window-style-properties`
 
-It takes one child. If zero, two, or more children are supplied, then
-a fixed is created to contain them.
+Принимает один дочерний элемент. Если указано ноль, два или более дочерних элементов,
+для их размещения создается fixed.
 
 ::
 
     screen say(who, what):
-        window id "window"
+        window id "window":
             vbox:
                 spacing 10
 
@@ -1769,18 +1651,16 @@ a fixed is created to contain them.
                 text what id "what"
 
 
-Imagemap Statements
-===================
+Операторы изображений-карт (Imagemap)
+=====================================
 
-A convenient way of creating a screen, especially for those who think
-visually, is to create an imagemap. When creating an imagemap, the
-imagemap statement is used to specify up to six images. The hotspot
-and hotbar images are used to carve rectangular areas out of the
-image, and apply actions and values to those areas.
+Удобный способ создания экранов, особенно для разработчиков с визуальным мышлением —
+создание карты изображений (imagemap). При создании imagemap оператор imagemap
+используется для задания до шести изображений. Операторы hotspot (активная зона)
+и hotbar (активная полоса) вырезают прямоугольные области из изображения и назначают
+им действия и значения.
 
-Here's an example of a preferences screen that uses imagemaps.
-
-::
+Вот пример экрана настроек с использованием карты изображений::
 
     screen preferences():
 
@@ -1790,15 +1670,15 @@ Here's an example of a preferences screen that uses imagemaps.
         imagemap:
             auto "gui_set/gui_prefs_%s.png"
 
-            hotspot (740, 232, 75, 73) action Preference("display", "fullscreen") alt _("Display Fullscreen")
-            hotspot (832, 232, 75, 73) action Preference("display", "window") alt _("Display Window")
-            hotspot (1074, 232, 75, 73) action Preference("transitions", "all") alt _("Transitions All")
-            hotspot (1166, 232, 75, 73) action  Preference("transitions", "none") alt _("Transitions None")
+            hotspot (740, 232, 75, 73) action Preference("display", "fullscreen") alt _("Полноэкранный режим")
+            hotspot (832, 232, 75, 73) action Preference("display", "window") alt _("Оконный режим")
+            hotspot (1074, 232, 75, 73) action Preference("transitions", "all") alt _("Все переходы")
+            hotspot (1166, 232, 75, 73) action  Preference("transitions", "none") alt _("Без переходов")
 
-            hotbar (736, 415, 161, 20) value Preference("music volume") alt _("Music Volume")
-            hotbar (1070, 415, 161, 20) value Preference("sound volume") alt _("Sound Volume")
-            hotbar (667, 535, 161, 20) value Preference("voice volume") alt _("Voice Volume")
-            hotbar (1001, 535, 161, 20) value Preference("text speed") alt _("Text Speed")
+            hotbar (736, 415, 161, 20) value Preference("music volume") alt _("Громкость музыки")
+            hotbar (1070, 415, 161, 20) value Preference("sound volume") alt _("Громкость звуков")
+            hotbar (667, 535, 161, 20) value Preference("voice volume") alt _("Громкость голоса")
+            hotbar (1001, 535, 161, 20) value Preference("text speed") alt _("Скорость текста")
 
 
 .. _sl-imagemap:
@@ -1806,72 +1686,66 @@ Here's an example of a preferences screen that uses imagemaps.
 Imagemap
 --------
 
-The imagemap statement is used to specify an imagemap. It takes no
-parameters, and the following properties:
+Оператор imagemap используется для объявления карты изображений. Не принимает позиционных
+параметров и поддерживает следующие свойства:
 
 .. screen-property:: auto
 
-    Used to automatically define the images used by this imagemap. This
-    should be a string that contains %s in it. If it is, and one of
-    the image properties is omitted, %s is replaced with the name of
-    that property, and the value is used as the default for that
-    property.
+    Используется для автоматического определения изображений карты. Строка, содержащая %s.
+    Если одно из свойств изображений опущено, %s заменяется именем этого свойства,
+    и значение используется по умолчанию.
 
-    For example, if `auto` is "imagemap_%s.png", and `idle` is omitted, then
-    idle defaults to "imagemap_idle.png". If `auto` is "imagemap %s", the
-    ``imagemap idle`` image is used.
+    Например, если `auto` равно "imagemap_%s.png", а `idle` опущено, для idle по умолчанию
+    будет использоваться "imagemap_idle.png". Если `auto` равно "imagemap %s", используется
+    изображение с тегом ``imagemap idle``.
 
-    The behavior of `auto` can be customized by changing
-    :var:`config.imagemap_auto_function`.
+    Поведение `auto` можно переопределить через функцию :var:`config.imagemap_auto_function`.
 
 .. screen-property:: ground
 
-    The image used for portions of the imagemap that are not part of a
-    hotspot or hotbar.
+    Изображение для тех областей карты, которые не входят ни в один hotspot или hotbar.
 
 .. screen-property:: insensitive
 
-    The image used when a hotspot or hotbar is insensitive.
+    Изображение, используемое, когда активная зона или полоса нечувствительна.
 
 .. screen-property:: idle
 
-    The image used when a hotspot is not selected and not focused, and
-    for the empty portion of unfocused hotbars.
+    Изображение, когда активная зона не выбрана и не находится в фокусе, а также для
+    пустой части неактивных полос.
 
 .. screen-property:: hover
 
-    The image used when a hotspot is not selected and focused, and
-    for the empty portion of focused hotbars.
+    Изображение, когда активная зона не выбрана и находится под курсором, а также для
+    пустой части полос в фокусе.
 
 .. screen-property:: selected_idle
 
-    The image used when a hotspot is selected and not focused, and
-    for the full portion of unfocused hotbars.
+    Изображение выбранной зоны не в фокусе, а также для заполненной части неактивных полос.
 
 .. screen-property:: selected_hover
 
-    The image used when a hotspot is selected and focused, and
-    for the full portion of focused hotbars.
+    Изображение выбранной зоны под курсором, а также для заполненной части активных полос.
 
 .. screen-property:: alpha
 
-    If true, the default, a hotspot only gains focus when the mouse is
-    in an area of the hover image that is opaque. If false, the hotspot
-    gains focus whenever the mouse is within its rectangular boundary.
+    Если True (по умолчанию), активная зона получает фокус только тогда, когда курсор
+    находится над непрозрачной областью изображения hover. Если False, зона получает
+    фокус при попадании в ее прямоугольные границы.
 
 .. screen-property:: cache
 
-    If true, the default, hotspot data is cached in to improve performance
-    at the cost of some additional disk space.
+    Если True (по умолчанию), данные активных зон кэшируются для повышения производительности
+    ценой небольшого дополнительного дискового пространства.
 
-It takes the following groups of properties:
+Принимает следующие группы свойств:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`position-style-properties`
 * :ref:`fixed-style-properties`
 
-An imagemap creates a fixed, allowing any child to be added to it (not
-just hotspots and hotbars).
+Imagemap создает fixed, позволяя добавлять к нему любые дочерние элементы (не только
+hotspot и hotbar).
 
 
 .. _sl-hotspot:
@@ -1879,120 +1753,105 @@ just hotspots and hotbars).
 Hotspot
 -------
 
-A hotspot is a button consisting of a portion of the imagemap that
-contains it. It takes a single parameter, a (x, y, width, height)
-tuple giving the area of the imagemap that makes up the button. It
-also takes the following properties:
+Активная зона (hotspot) — это кнопка, состоящая из части содержащей ее карты изображений.
+Принимает один позиционный параметр — кортеж (x, y, width, height), задающий область
+карты, образующую кнопку. Поддерживает следующие свойства:
 
 .. screen-property:: action
 
-    The action to run when the button is activated. This also controls
-    if the button is sensitive, and if the button is selected.
+    Действие, выполняемое при активации кнопки. Также управляет чувствительностью
+    кнопки и ее выбранным состоянием.
 
 .. screen-property:: alternate
 
-    An action that is run if the hotspot is activated in an alternate manner.
-    Alternate activation occurs when the player right-clicks on the hotspot
-    on a mouse-based platform, or when the player long presses the hotspot
-    on a touch-based platform.
+    Действие при альтернативной активации кнопки (ПКМ или долгое касание).
 
 .. screen-property:: hovered
 
-    An action to run when the button gains focus.
+    Действие при получении фокуса.
 
 .. screen-property:: unhovered
 
-    An action to run when the button loses focus.
+    Действие при потере фокуса.
 
 .. screen-property:: selected
 
-    An expression that determines whether the button is selected or not.
-    This expression is evaluated at least once per interaction.
-    If not provided or None, the action will be used to determine selectedness.
+    Выражение, определяющее, выбрана ли кнопка в данный момент.
 
 .. screen-property:: sensitive
 
-    An expression that determines whether the button is sensitive or not.
-    This expression is evaluated at least once per interaction.
-    If not provided or None, the action will be used to determine sensitivity.
+    Выражение, определяющее, чувствительна ли кнопка к нажатию.
 
 .. screen-property:: keysym
 
-    A string giving a :doc:`keysym <keymap>` describing a keyboard key that,
-    when pressed, invokes the action of this button.
+    Строка с :doc:`символом клавиши <keymap>`, активирующей кнопку.
 
 .. screen-property:: alternate_keysym
 
-    A string giving a :doc:`keysym <keymap>` describing a keyboard key that,
-    when pressed, invokes the alternate action of this button.
+    Строка с :doc:`символом клавиши <keymap>`, активирующей альтернативное действие кнопки.
 
-It also takes:
+Также принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`button-style-properties`
 
-A hotspot creates a fixed, allowing children to be added to it. The
-fixed has an area that is the same size as the hotspot, meaning that
-the children will be positioned relative to the hotspot.
+Hotspot создает fixed, позволяя добавлять к нему дочерние элементы. Этот fixed имеет
+размер, равный активной зоне, что означает, что дочерние элементы будут позиционироваться
+относительно этой зоны.
 
-Hotspots should be given the ``alt`` style property to allow Ren'Py's
-self-voicing feature to work.
+Элементам hotspot следует задавать свойство стиля ``alt`` для поддержки самоозвучивания Ren'Py.
 
 .. _sl-hotbar:
 
 Hotbar
 ------
 
-A hotbar is a bar that consists of a portion of the imagemap that
-contains it. It takes a single parameter, a (x, y, width, height)
-tuple giving the area of the imagemap that makes up the button. It
-also takes the following properties:
+Активная полоса (hotbar) — это полоса, состоящая из части содержащей ее карты изображений.
+Принимает один позиционный параметр — кортеж (x, y, width, height), задающий область
+карты. Поддерживает следующие свойства:
 
 .. screen-property:: value
 
-    The current value of the bar. This can be either a :ref:`bar value <input-values>`
-    object, or a number.
+    Текущее значение полосы: объект :ref:`значения полосы <input-values>` или число.
 
 .. screen-property:: range
 
-    The maximum value of the bar. This is required if `value` is a
-    number.
+    Максимальное значение полосы. Требуется, если `value` — число.
 
 .. screen-property:: adjustment
 
-    A :func:`ui.adjustment` object that this bar adjusts.
+    Объект :func:`ui.adjustment`, который регулирует эта полоса.
 
-One of `value` or `adjustment` must be given. In addition, this
-function takes:
+Обязательно должно быть указано одно из двух: `value` или `adjustment`. Также принимает:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 * :ref:`bar-style-properties`
 
-This does not take children.
+Не принимает дочерних элементов.
 
-Hotbars should be given the ``alt`` style property to allow Ren'Py's
-self-voicing feature to work.
+Элементам hotbar следует задавать свойство стиля ``alt`` для работы самоозвучивания Ren'Py.
 
-Add Statement
-=============
 
-The add statement is a bit special, as it adds an already-existing displayble
-to the screen. As a result, it doesn't take the properties common to the
-user interface statements.
+Оператор add
+============
+
+Оператор add является особенным, поскольку он добавляет на экран уже существующий
+отображаемый объект. Поэтому он не принимает общих свойств операторов пользовательского
+интерфейса.
 
 .. _sl-add:
 
 Add
 ---
 
-Adds an image or other displayable to the screen. This optionally
-takes :ref:`transform properties <transform-properties>`. If at least
-one transform property is given, a :class:`Transform` is created to wrap the
-image, and the properties are given to the transform.
+Добавляет изображение или другой отображаемый объект на экран. Необязательно принимает
+:ref:`свойства трансформации <transform-properties>`. Если указано хотя бы одно свойство
+трансформации, создается :class:`Transform`, оборачивающий изображение, и свойства
+передаются этой трансформации.
 
-If the displayable is None, nothing is added to the screen.
+Если отображаемый объект равен None, на экран ничего не добавляется.
 
-This does not take any children.
+Не принимает дочерних элементов.
 
 ::
 
@@ -2002,121 +1861,108 @@ This does not take any children.
 
 
 
-Advanced Displayables
-=====================
+Продвинутые отображаемые объекты
+================================
 
-In addition to the commonly-used statements, the screen language has
-statements that correspond to advanced displayables. The mapping from
-displayable to statement is simple. Positional parameters of the
-displayables become positional parameters of the statement. Keyword
-arguments and the relevant style properties become screen language
-properties.
+В дополнение к общеупотребительным операторам язык экранов включает операторы,
+соответствующие продвинутым отображаемым объектам. Отображение объекта на оператор
+просто: позиционные параметры объекта становятся позиционными параметрами оператора.
+Именованные аргументы и соответствующие свойства стиля становятся свойствами языка экранов.
 
-The advanced displayable statements are:
+Операторы продвинутых отображаемых объектов:
 
 .. _sl-areapicker:
 
 Areapicker
 ----------
 
-Intended for use in development tools, this lets the user select a
-rectangular area on the screen. It takes the following properties:
+Предназначен для использования в инструментах разработки, позволяет пользователю
+выбрать прямоугольную область на экране. Принимает следующие свойства:
 
 .. screen-property:: cols
 
-    If not None, the default, this divides the screen up into a grid
-    with this many columns.
+    Если не None, делит экран на сетку с указанным количеством столбцов.
 
 .. screen-property:: rows
 
-    If not None, the default, this divides the screen up into a grid
-    with this many rows.
+    Если не None, делит экран на сетку с указанным количеством строк.
 
 .. screen-property:: position
 
-    If not None, the default, this is a function called with the
-    x and y coordinates of the location the user first clicked,
-    rounded to the grid.
+    Если не None, функция, вызываемая с координатами x и y точки первого клика пользователя,
+    округленными до шага сетки.
 
 .. screen-property:: changed
 
-    This is called with the rectangle, an (x, y, width, height) tuple,
-    whenever the user changes the selected area.
+    Вызывается с кортежем прямоугольника (x, y, width, height) каждый раз, когда пользователь
+    изменяет выделенную область.
 
 .. screen-property:: finished
 
-    This is called with the rectangle, an (x, y, width, height) tuple,
-    when the user finishes selecting an area.
+    Вызывается с кортежем (x, y, width, height), когда пользователь завершает выбор области.
 
 .. screen-property:: persist
 
-    If true, the child will be shown in the selected area when the
-    selection is complete. If false, the default, the child will be
-    hidden once the selection is complete.
+    Если True, дочерний элемент будет отображаться в выбранной области после завершения
+    выбора. Если False (по умолчанию), дочерний элемент скрывается после завершения выбора.
 
-It takes the following group of properties:
+Принимает группу свойств:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 
-An areapicker takes one child. The child is displayed on the screen in the
-selected area.
+Areapicker принимает один дочерний элемент, который отображается в выбранной области.
 
 Drag
 ----
 
-Creates a :class:`Drag` that can be dragged around the screen. With the
-exception of `d`, which is supplied by the screen language, this takes
-all properties defined in that class.
+Создает перетаскиваемый объект :class:`Drag`, который можно перемещать по экрану.
+За исключением `d`, передаваемого языком экранов, принимает все свойства, определенные
+в этом классе.
 
-It also takes the following properties:
+Также принимает следующие свойства:
 
-* :ref:`Common Properties <common-properties>`
-* The :propref:`hover_sound` and :propref:`activate_sound` style
-  properties
-* The :propref:`focus_mask` style_property.
+* :ref:`Общие свойства <common-properties>`
+* Свойства стиля :propref:`hover_sound` и :propref:`activate_sound`
+* Свойство стиля :propref:`focus_mask`
 
-A drag takes one child, or the :propref:`child` style property can be
-used to supply the child and its focused variants.
+Drag принимает один дочерний элемент, либо свойство стиля :propref:`child` может
+использоваться для передачи дочернего элемента и его вариантов в фокусе.
 
 Draggroup
 ---------
 
-Creates a :class:`DragGroup`.  This takes the same properties as :class:`DragGroup`,
-and also takes the following properties:
+Создает группу перетаскиваемых объектов :class:`DragGroup`. Принимает те же свойства,
+что и :class:`DragGroup`, а также:
 
-* :ref:`Common Properties <common-properties>`
+* :ref:`Общие свойства <common-properties>`
 
-A drag group may have zero or more drags as its children. It may also have
-non-drags as children, in which case it functions like fixed.
+Группа перетаскивания может иметь ноль или более объектов drag в качестве потомков.
+Она также может содержать обычные объекты, в каковом случае работает подобно fixed.
 
 
 .. _sl-has:
 
-Has Statement
-=============
+Оператор has
+============
 
-The has statement allows you to specify a container to use, instead of
-fixed, for statements that take only one child. The has statement
-may only be used inside a statement that takes one child. The keyword
-``has`` is followed (on the same line) by another statement, which
-must be a statement that creates a container displayable, one that
-takes more than one child.
+Оператор has позволяет указать контейнер вместо fixed для операторов, принимающих
+только один дочерний элемент. Оператор has может использоваться только внутри
+оператора, принимающего один дочерний элемент. За ключевым словом ``has``
+в той же строке следует другой оператор, который обязательно должен быть контейнером,
+принимающим более одного потомка.
 
-The has statement changes the way in which the block that contains it
-is parsed. Child displayables created in that block are added to the
-container, rather than the parent displayable. Keyword arguments to
-the parent displayable are not allowed after the has
-statement. Multiple has statements can be used in the same block.
+Оператор has меняет способ разбора содержащего его блока. Дочерние отображаемые
+объекты, созданные в этом блоке, добавляются в контейнер, а не в родительский элемент.
+Именованные аргументы к родительскому элементу после оператора has не допускаются.
+В одном блоке можно использовать несколько операторов has.
 
-The has statement can be supplied as a child of the following
-statements:
+Оператор has может быть передан потомком следующих операторов:
 
 * button
 * frame
 * window
 
-The has statement can be given the following statements as a
-container.
+В качестве контейнера оператору has можно передавать следующие операторы:
 
 * fixed
 * grid
@@ -2135,33 +1981,32 @@ container.
             bar value Preference("voice volume")
 
 
-Control Statements
-==================
+Управляющие операторы
+=====================
 
-The screen language includes control statements for conditional
-execution, iteration, including other screens, executing actions when
-events occur, and executing arbitrary Python.
+Язык экранов включает управляющие операторы для условного выполнения, итерации,
+включения других экранов, выполнения действий при возникновении событий
+и выполнения произвольного кода Python.
 
 .. _sl-default:
 
 Default
 -------
 
-The ``default`` statement sets the default value of a variable, if it is not
-passed as an argument to the screen, or inherited from a screen that calls
-us using the use statement.
+Оператор ``default`` задает значение переменной по умолчанию, если она не была передана
+в качестве аргумента экрану и не унаследована от экрана, вызвавшего нас оператором use.
 
 ::
 
     screen scheduler():
         default club = None
         vbox:
-             text "What would you like to do?"
-             textbutton "Art Club" action SetScreenVariable("club", "art")
-             textbutton "Writing Club" action SetScreenVariable("club", "writing")
+             text "Чем бы вы хотели заняться?"
+             textbutton "Художественный кружок" action SetScreenVariable("club", "art")
+             textbutton "Литературный клуб" action SetScreenVariable("club", "writing")
 
              if club:
-                 textbutton "Select" action Return(club)
+                 textbutton "Выбрать" action Return(club)
 
 
 .. _sl-for:
@@ -2169,10 +2014,9 @@ us using the use statement.
 For
 ---
 
-The ``for`` statement is similar to the Python ``for`` statement, except that
-it does not support the ``else`` clause (it does, however, support the
-``continue`` and ``break`` statements). It supports assignment to
-(optionally nested) tuple patterns, as well as variables.
+Оператор ``for`` аналогичен оператору ``for`` в Python, за исключением того, что он
+не поддерживает ветку ``else`` (однако поддерживает операторы ``continue`` и ``break``).
+Он поддерживает распаковку в кортежи (в том числе вложенные), а также присваивание переменным.
 
 ::
 
@@ -2184,20 +2028,18 @@ it does not support the ``else`` clause (it does, however, support the
                 textbutton numeral action Return(i + 1)
 
 
-The for statement takes an index clause::
-
+Оператор for принимает предложение index::
 
     screen five_buttons():
         vbox:
             for i, numeral index numeral in enumerate(numerals):
                 textbutton numeral action Return(i + 1)
 
-If given, the ``index`` clause should consist of an expression that returns
-a hashable and comparable value that is unique for each row in the list.
-Ren'Py uses this value to make sure that transforms and other state wind
-up associated with the correct iteration. If you're seeing weird behavior
-when elements are added to or removed from a list you're iterating over,
-you might want to use an index clause.
+Если предложение ``index`` указано, оно должно состоять из выражения, возвращающего
+хэшируемое и сравнимое значение, уникальное для каждой строки списка. Ren'Py использует
+это значение, чтобы гарантировать, что трансформации и другие состояния связываются
+с правильной итерацией. Если вы замечаете странное поведение при добавлении или удалении
+элементов из списка, по которому идет итерация, вам стоит использовать предложение index.
 
 
 .. _sl-if:
@@ -2205,42 +2047,40 @@ you might want to use an index clause.
 If
 --
 
-The screen language ``if`` statement is the same as the Python/Ren'Py ``if``
-statement. It supports the ``if``, ``elif``, and ``else`` clauses.
+Оператор языка экранов ``if`` аналогичен оператору ``if`` в Python/Ren'Py. Он поддерживает
+ветки ``if``, ``elif`` и ``else``.
 
 ::
 
     screen skipping_indicator():
         if renpy.is_skipping():
-             text "Skipping."
+             text "Пропуск."
         else:
-             text "Not Skipping."
+             text "Не пропускается."
 
 .. _sl-on:
 
 On
 --
 
-The ``on`` statement allows the screen to execute an action when an event
-occurs. It takes one parameter, a string giving the name of an
-event. This should be one of:
+Оператор ``on`` позволяет экрану выполнять действие при возникновении события. Принимает
+один параметр — строку с именем события. Должно быть одним из:
 
 * ``"show"``
-    This event occurs when the screen is shown (note that if a screen with
-    the same tag is already showing, the event is ``"replace"`` instead).
+    Событие возникает при отображении экрана (обратите внимание: если экран с тем же
+    тегом уже отображается, вместо этого возникает событие ``"replace"``).
 
 * ``"hide"``
-    This event occurs when the screen is hidden (note that if it's replaced
-    by a screen with the same tag, the event is ``"replaced"`` instead).
+    Событие возникает при скрытии экрана (если он заменяется экраном с тем же тегом,
+    вместо этого возникает событие ``"replaced"``).
 
 * ``"replace"``
-    This event occurs the screen is shown, replacing a screen with the same tag.
+    Событие возникает при показе экрана, заменяющего экран с тем же тегом.
 
 * ``"replaced"``
-    This event occurs when the screen is replaced by a screen with the same tag.
+    Событие возникает, когда экран заменяется экраном с тем же тегом.
 
-It then takes an action property, giving an action to run if the event
-occurs.
+Затем указывается свойство action, задающее действие, выполняемое при возникновении события.
 
 ::
 
@@ -2248,9 +2088,9 @@ occurs.
         frame:
             has hbox
 
-            text "Display"
-            textbutton "Fullscreen" action Preferences("display", "fullscreen")
-            textbutton "Window" action Preferences("display", "window")
+            text "Экран"
+            textbutton "Полноэкранный" action Preferences("display", "fullscreen")
+            textbutton "Оконный" action Preferences("display", "window")
 
         on "show" action Show("navigation")
         on "hide" action Hide("navigation")
@@ -2261,14 +2101,13 @@ occurs.
 Use
 ---
 
-The ``use`` statement allows a screen to include another. The use
-statement takes the name of the screen to use. This can optionally be
-followed by an argument list, in parenthesis.
+Оператор ``use`` позволяет экрану включать в себя другой экран. Принимает имя используемого
+экрана. За ним необязательно может следовать список аргументов в круглых скобках.
 
-If the used screen has no parentheses, it has read and write access
-to the scope of the current screen, updated with any keyword arguments
-passed via the ``use`` statement. Otherwise, its scope is initialized
-to the result of assigning the arguments to those parameters. ::
+Если используемый экран не имеет скобок, он получает доступ на чтение и запись к области
+видимости текущего экрана, дополненной любыми именованными аргументами, переданными через
+оператор ``use``. В противном случае его область видимости инициализируется результатом
+присваивания аргументов этим параметрам. ::
 
     screen file_slot(slot):
         button:
@@ -2278,24 +2117,23 @@ to the result of assigning the arguments to those parameters. ::
 
             add FileScreenshot(slot)
             vbox:
-                text FileTime(slot, empty="Empty Slot.")
+                text FileTime(slot, empty="Пустой слот.")
                 text FileSaveName(slot)
 
 
-     screen save():
-         grid 2 5:
-             for i in range(1, 11):
-                  use file_slot(i)
+    screen save():
+        grid 2 5:
+            for i in range(1, 11):
+                 use file_slot(i)
 
 
-The use statement may take clauses properties, ``id`` and ``as``. These properties must be placed
-after the parameter list, if present, and must be on the first line of the statement, not in
-th block.
+Оператор use может принимать предложения-свойства: ``id`` и ``as``. Эти свойства должны
+располагаться после списка параметров (если он есть) и обязательно в первой строке оператора,
+а не внутри его блока.
 
-The ``id`` clause is only useful when
-two screens with the same tag use the same screen. In this case,
-when one screen replaces the other, the state of the used screen
-is transfered from old to new.
+Предложение ``id`` полезно только тогда, когда два экрана с одинаковым тегом используют
+один и тот же вложенный экран. В этом случае, когда один экран заменяет другой, состояние
+используемого экрана переносится из старого в новый.
 
 ::
 
@@ -2304,7 +2142,7 @@ is transfered from old to new.
         linear 1.0 xpos 0
 
     screen common():
-        text "Test" at t1
+        text "Тест" at t1
 
     screen s1():
         tag s
@@ -2323,8 +2161,8 @@ is transfered from old to new.
         pause
         return
 
-The ``as`` clause should be followed by a variable name. When the used screen finishes, the binding of the `main`
-variable in the screen is assigned to the given variable. For example::
+За предложением ``as`` должно следовать имя переменной. Когда используемый экран завершает
+работу, значение переменной `main` в этом экране присваивается указанной переменной. Например::
 
     screen child():
         add MyCreatorDefinedDisplayable() as main
@@ -2332,27 +2170,26 @@ variable in the screen is assigned to the given variable. For example::
     screen parent():
         use child as mycdd
 
-        # Here, the MyCreatorDefinedDisplaybale instance is assigned to cdd.
+        # Здесь экземпляр MyCreatorDefinedDisplayable присвоен mycdd.
 
 
-Instead of the name of the screen, the keyword ``expression`` can be
-given, followed by an expression giving the name of the screen to use.
-If parameters are required, the ``pass`` keyword must be given to separate
-them from the expression.
+Вместо имени экрана можно указать ключевое слово ``expression``, за которым следует выражение,
+возвращающее имя экрана для использования. Если требуются параметры, ключевое слово ``pass``
+должно разделять выражение и параметры.
 
 ::
 
     screen ed(num):
-        text "Ed"
-        text "Captain"
+        text "Эд"
+        text "Капитан"
 
     screen kelly(num):
-        text "Kelly"
-        text "First Officer"
+        text "Келли"
+        text "Первый помощник"
 
     screen bortus(num):
-        text "Bortus"
-        text "Second Officer"
+        text "Бортус"
+        text "Второй помощник"
 
     screen crew():
         hbox:
@@ -2361,16 +2198,14 @@ them from the expression.
                     use expression member.screen pass (i + 1)
 
 
-Use and Transclude
-^^^^^^^^^^^^^^^^^^
+Использование Use и Transclude
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A use statement may also take a block containing screen language statements.
-When a block is given, the screen that is used may contain the ``transclude``
-statement. The ``transclude`` statement is replaced with the statements
-contained within the use statement's block.
+Оператор use может также принимать блок с операторами языка экранов. Когда такой блок
+передан, используемый экран может содержать оператор ``transclude``. Оператор ``transclude``
+заменяется операторами, содержащимися в блоке оператора use.
 
-This makes it possible to define reusable layouts using screens. For example,
-the screen::
+Это позволяет создавать многократно используемые макеты с помощью экранов. Например::
 
     screen movable_frame(pos):
         drag:
@@ -2382,87 +2217,82 @@ the screen::
 
                 transclude
 
-is meant to be a reusable component that wraps other components. Here's
-an example of how it can be used::
+задуман как переиспользуемый компонент, оборачивающий другие компоненты. Вот пример
+его использования::
 
     screen test:
         use movable_frame((0, 0)):
-            text "You can drag me."
+            text "Меня можно перетаскивать."
 
         use movable_frame((0, 100)):
             vbox:
-                text "You can drag me too."
-                textbutton "Got it!" action Return(True)
+                text "Меня тоже можно перетаскивать."
+                textbutton "Понятно!" action Return(True)
 
-The use and transclude constructs form the basis of
-:ref:`creator-defined screen language statements <creator-defined-sl>`.
+Конструкции use и transclude лежат в основе
+:ref:`пользовательских операторов языка экранов <creator-defined-sl>`.
 
 .. _sl-python:
 
 Python
 ------
 
-The screen language also includes single-line and multiple-line Python
-statements, which can execute Python. The Python runs in the scope
-of the screen.
+Язык экранов также включает однострочные и многострочные операторы Python, которые могут
+выполнять произвольный код на Python. Код Python выполняется в области видимости экрана.
 
-**Python must not cause side effects that are visible from
-outside the screen.** Ren'Py will run a screen multiple times, as it
-deems necessary. It runs a screen as part of the image prediction
-process, before the screen is first shown. As a result, if a screen
-has side effects, those side effects may occur at unpredictable times.
+**Код Python не должен вызывать побочных эффектов, видимых за пределами экрана.**
+Ren'Py запускает экран несколько раз по мере необходимости. Он запускает экран в рамках
+процесса предсказания изображений перед его первым показом. Поэтому, если экран имеет
+побочные эффекты, они могут происходить в непредсказуемые моменты времени.
 
 ::
 
     screen python_screen:
         python:
-            test_name = "Test %d" % test_number
+            test_name = "Тест %d" % test_number
 
         text test_name
 
         $ test_label = "test_%d" % test_label
 
-        textbutton "Run Test" action Jump(test_label)
+        textbutton "Запустить тест" action Jump(test_label)
 
 
 .. _sl-showif:
 
-Showif Statement
-================
+Оператор showif
+===============
 
-The ``showif`` statement takes a condition. It shows its children when the
-condition is true, and hides the children when the condition is false.
-When showif's children have transforms, it will supply them with ATL
-events to manage the show and hide process, so that Ren'Py can animate
-the show and hide process.
+Оператор ``showif`` принимает условие. Он показывает свои дочерние элементы, когда
+условие истинно, и скрывает их, когда условие ложно. Если у дочерних элементов есть
+трансформации, им передаются события ATL для управления процессом показа и скрытия,
+что позволяет Ren'Py анимировать появление и исчезновение элементов.
 
-The ``showif`` statement wraps its children in a displayable that manages
-the show and hide process.
+Оператор ``showif`` оборачивает свои дочерние элементы в отображаемый объект, управляющий
+процессом отображения и скрытия.
 
-Multiple showif statements can be grouped together into a single
-``showif``/``elif``/``else`` construct, similar to an if statement.
-**Unlike the if statement, showif executes all of its blocks, including Python, even if the condition is false.**
-This is because the showif statement needs to create the children that it is
-hiding.
+Несколько операторов showif можно объединять в единую конструкцию ``showif``/``elif``/``else``,
+аналогично оператору if.
+**В отличие от оператора if, showif выполняет все свои блоки, включая код Python, даже если условие ложно.**
+Это необходимо потому, что оператору showif нужно предварительно создать дочерние элементы,
+которые он скрывает.
 
-Showif delivers three events to its children:
+Showif передает своим дочерним элементам три события:
 
 ``appear``
-    Is delivered if the condition is true when the screen is first shown,
-    to instantly show the child.
+    Передается, если условие истинно в момент первого показа экрана, чтобы мгновенно отобразить элемент.
 ``show``
-    Is delivered when the condition changes from false to true.
+    Передается, когда условие меняется с ложного на истинное.
 ``hide``
-    Is delivered when the condition changes from true to false.
+    Передается, когда условие меняется с истинного на ложное.
 
-For these purposes, the condition of an ``elif`` clause is always false if any
-prior condition is true, while the condition of an else clause is only true
-when all prior conditions are false.
+В этих целях условие ветки ``elif`` всегда считается ложным, если любое из предшествующих условий
+истинно, тогда как условие ветки else истинно только тогда, когда все предшествующие условия ложны.
 
-For example::
+Например::
 
     transform cd_transform:
-        # This is run before appear, show, or hide.
+        # Выполняется до appear, show или hide.
         xalign 0.5 yalign 0.5 alpha 0.0
 
         on appear:
@@ -2483,79 +2313,73 @@ For example::
             textbutton "0" action SetScreenVariable("n", 0)
 
         showif n == 3:
-            text "Three" size 100 at cd_transform
+            text "Три" size 100 at cd_transform
         elif n == 2:
-            text "Two" size 100 at cd_transform
+            text "Два" size 100 at cd_transform
         elif n == 1:
-            text "One" size 100 at cd_transform
+            text "Один" size 100 at cd_transform
         else:
-            text "Liftoff!" size 100 at cd_transform
+            text "Пуск!" size 100 at cd_transform
 
     label start:
         call screen countdown
 
 
-Screen Statements
+Операторы экранов
 =================
 
-In addition to the screen statement, there are three Ren'Py script
-language statements that involve screens.
+В дополнение к объявлению экранов через оператор screen существуют три оператора
+языка сценариев Ren'Py, взаимодействующие с экранами.
 
 .. _show-screen-statement:
 
 Show Screen
 -----------
 
-The ``show screen`` statement causes a screen to be shown. It takes an
-screen name, a series of optional clauses, and optional Python arguments
-which are passed to the screen. :func:`renpy.show_screen` and
-:func:`renpy.call_screen` take additional specific keywords.
+Оператор ``show screen`` отображает экран. Он принимает имя экрана, ряд необязательных
+предложений и необязательные аргументы Python, передаваемые экрану. Функции
+:func:`renpy.show_screen` и :func:`renpy.call_screen` принимают дополнительные специальные именованные аргументы.
 
-The ``show screen`` statement takes the following clauses, some of them similar
-to the clauses of the :ref:`show-statement`:
+Оператор ``show screen`` принимает следующие предложения, некоторые из которых аналогичны
+предложениям :ref:`оператора show <show-statement>`:
 
 ``as``
-    The ``as`` clause takes a name. If not specified, it defaults to the
-    tag associated with the screen (see the :ref:`screen-statement`).
-    If that's not specified, it defaults to the name of the screen.
+    Предложение ``as`` принимает имя. Если не указано, по умолчанию используется тег,
+    связанный с экраном (см. :ref:`screen-statement`). Если тег не задан, используется имя экрана.
 
 ``onlayer``
-    The layer to show the screen on.
+    Слой, на котором будет отображен экран.
 
 ``zorder``
-    The zorder to show the screen on. If not specified, defaults to
-    the zorder associated with the screen. If that's not specified,
-    it is 0 by default.
+    Порядок по оси Z, на котором отображается экран. Если не указан, по умолчанию используется
+    значение zorder, связанное с экраном. Если оно не задано, по умолчанию равно 0.
 
 ``expression``
-    If the ``expression`` keyword is given, the expression following it will be evaluated
-    as the screen name. To pass arguments to the screen with the expression keyword,
-    separate the expression and arguments with the ``pass`` keyword::
+    Если указано ключевое слово ``expression``, следующее за ним выражение вычисляется
+    как имя экрана. Для передачи аргументов экрану вместе с expression используйте ключевое слово ``pass``::
 
         $ screen_name = "my_screen"
         show screen expression screen_name
-        # Or if you need to pass some arguments
+        # Или если нужно передать аргументы
         show screen expression screen_name pass ("Foo", message="Bar")
 
 ``with``
-    This is interpreted in the same way that the with clause of a ``show``
-    statement is::
+    Интерпретируется точно так же, как предложение with оператора ``show``::
 
         show screen clock_screen with dissolve
 
 ``nopredict``
-    The ``nopredict`` keyword doesn't take a value. It prevents screen prediction
-    from occurring. During screen prediction, arguments to the screen are evaluated.
-    Please ensure that evaluating the screen arguments does not cause unexpected
-    side-effects to occur.
+    Ключевое слово ``nopredict`` не принимает значений. Оно отключает предсказание экрана.
+    Во время предсказания аргументы экрана вычисляются заранее. Пожалуйста, убедитесь,
+    что вычисление аргументов экрана не вызывает нежелательных побочных эффектов.
 
     .. warning::
 
-        If evaluating the arguments to a screen causes side-effects to occur,
-        your game may behave in unexpected ways.
+        Если вычисление аргументов экрана вызывает побочные эффекты, игра может вести себя
+        непредсказуемо.
 
-Screens shown in this way are displayed until they are explicitly
-hidden. This allows them to be used for overlay purposes.
+Экраны, показанные таким образом, отображаются до тех пор, пока не будут явно скрыты.
+Это позволяет использовать их в качестве оверлеев.
 
 ::
 
@@ -2570,15 +2394,15 @@ hidden. This allows them to be used for overlay purposes.
 Hide Screen
 -----------
 
-The ``hide screen`` statement is used to hide a screen that is currently
-being shown. It takes a screen tag. It first tries to find a screen with
-the given tag on the given layer (see the ``onlayer`` clause). If none is
-found, it looks for a screen with that name on the layer, regardless of
-the tag the screen is shown as. If none is found, nothing happens::
+Оператор ``hide screen`` используется для скрытия экрана, отображаемого в данный момент.
+Он принимает тег экрана. Сначала он пытается найти экран с заданным тегом на указанном
+слое (см. предложение ``onlayer``). Если таковой не найден, он ищет экран с этим именем
+на данном слое, независимо от тега, под которым экран отображается. Если экран не найден,
+ничего не происходит::
 
     show screen A
-    show screen B as A # B replaces A (which hides it)
-    hide screen A # hides B, tagged as A
+    show screen B as A # B заменяет A (что скрывает A)
+    hide screen A # скрывает B, отображаемый под тегом A
 
 ::
 
@@ -2586,20 +2410,18 @@ the tag the screen is shown as. If none is found, nothing happens::
     show screen B as C
 
     hide screen B
-    # hides the A screen, shown as B
-    # the B screen, shown as C, stays shown
+    # скрывает экран A, отображаемый как B
+    # экран B, отображаемый как C, остается видимым
 
     hide screen B
-    # hides the B screen
+    # скрывает экран B
 
-It also takes the ``onlayer`` clause, which defaults to the ``screens``
-layer.
+Также принимает предложение ``onlayer``, по умолчанию имеющее значение слоя ``screens``.
 
-The with clause is interpreted the same way the ``with`` clause of a
-:ref:`show-statement` is.
+Предложение with интерпретируется так же, как предложение ``with`` :ref:`оператора show <show-statement>`.
 
-Similar to the ``show screen`` statement, ``hide screen`` also takes the
-``expression`` keyword, allowing to use an arbitrary expression as the screen name.
+Аналогично оператору ``show screen``, оператор ``hide screen`` поддерживает ключевое
+слово ``expression``, позволяя использовать произвольное выражение в качестве имени экрана.
 
 ::
 
@@ -2614,62 +2436,53 @@ Similar to the ``show screen`` statement, ``hide screen`` also takes the
 Call Screen
 -----------
 
-The ``call screen`` statement shows a screen, and then hides it again at
-the end of the current interaction. If the screen returns a value,
-then the value is placed in the global ``_return`` variable.
+Оператор ``call screen`` отображает экран, а затем скрывает его по окончании текущего
+взаимодействия. Если экран возвращает значение, оно помещается в глобальную переменную ``_return``.
 
-This can be used to display an imagemap. The imagemap can place a
-value into the ``_return`` variable using the :func:`Return` action,
-or can jump to a label using the :func:`Jump` action.
+Это можно использовать для отображения карты изображений. Карта изображений может поместить
+значение в переменную ``_return`` с помощью действия :func:`Return` или перейти к метке
+с помощью действия :func:`Jump`.
 
-The call screen statement takes various optional clauses, most of them similar to
-those of the :ref:`show-screen-statement`:
+Оператор call screen принимает различные необязательные предложения, большинство из которых
+аналогичны предложениям :ref:`оператора show screen <show-screen-statement>`:
 
 ``as``
-    The ``as`` clause takes a name. If not specified, it defaults to the
-    tag associated with the screen (see the :ref:`screen-statement`).
-    If that's not specified, it defaults to the name of the screen.
+    Принимает имя. Если не указано, по умолчанию используется тег экрана (см. :ref:`screen-statement`).
+    Если тег не задан, используется имя экрана.
 
 ``onlayer``
-    The layer to show the screen on.
+    Слой, на котором будет показан экран.
 
 ``zorder``
-    The zorder to show the screen on. If not specified, defaults to
-    the zorder associated with the screen. If that's not specified,
-    it is 0 by default.
+    Порядок отображения по оси Z. По умолчанию берется из объявления экрана или равен 0.
 
 ``nopredict``
-    This keyword prevents screen prediction from occurring. During screen prediction,
-    arguments to the screen are evaluated. Please ensure that evaluating
-    the screen arguments does not cause unexpected side-effects to occur.
+    Отключает предсказание экрана. Во время предсказания аргументы экрана вычисляются.
+    Убедитесь, что вычисление аргументов не вызывает нежелательных побочных эффектов.
 
     .. warning::
 
-        If evaluating the arguments to a screen causes side-effects to occur,
-        your game may behave in unexpected ways.
+        Если вычисление аргументов экрана вызывает побочные эффекты, игра может вести себя
+        непредсказуемо.
 
 ``expression``
-    Similar to the ``show screen`` statement, ``call screen`` also takes the
-    ``expression`` keyword, allowing to use an arbitrary expression as the screen
-    name. This also comes with the ``pass`` keyword, allowing arguments to be
-    passed to the screen.
+    Аналогично ``show screen``, оператор ``call screen`` принимает ключевое слово ``expression``,
+    позволяя использовать произвольное выражение в качестве имени экрана. Также поддерживается
+    ключевое слово ``pass`` для передачи аргументов.
 
 ``with``
-    In a call screen statement, the ``with`` clause causes a transition
-    to occur when the screen is shown.
+    В операторе call screen предложение ``with`` вызывает переход при отображении экрана.
 
-    This does **not** cause a ``with None`` occur before the screen is shown, so all show and hide statements before
-    the screen will run. If you need a ``with None``, add one.
+    Это **не** вызывает перехода ``with None`` перед показом экрана, поэтому все предшествующие
+    операторы show и hide выполнятся. Если вам нужен ``with None``, добавьте его явно.
 
-Since calling a screen is an interaction, and interactions trigger
-an implicit ``with None``, using a ``with`` statement after the
-``call screen`` instruction won't make the screen disappear using the
-transition, as the screen will already will be gone. To disable the
-implicit ``with None`` transition, pass the ``_with_none=False``
-special keyword argument to the screen, as in the example below.
+Поскольку вызов экрана является взаимодействием, а взаимодействия запускают неявный переход
+``with None``, использование оператора ``with`` после инструкции ``call screen`` не приведет
+к плавному скрытию экрана с помощью перехода, так как к этому моменту экран уже исчезнет.
+Чтобы отключить неявный переход ``with None``, передайте экрану специальный именованный
+аргумент ``_with_none=False``, как показано в примере ниже.
 
-Other ways of triggering transitions also work, such as the
-``[ With(dissolve), Return() ]`` action list.
+Другие способы запуска переходов также работают, например список действий ``[ With(dissolve), Return() ]``.
 
 ::
 
@@ -2677,12 +2490,12 @@ Other ways of triggering transitions also work, such as the
 
     call screen my_screen(side_effect_function()) nopredict
 
-    # Shows the screen with dissolve
+    # Показывает экран с растворением (dissolve)
     call screen my_other_screen with dissolve
-    # The screens instantly hides with None, then the pixellate transition executes
+    # Экран мгновенно исчезает с None, затем выполняется переход pixellate
     with pixellate
 
-    # Shows the screen with dissolve and hides it with pixellate.
+    # Показывает экран с dissolve и скрывает его с pixellate.
     call screen my_other_screen(_with_none=False) with dissolve
     with pixellate
 
@@ -2691,102 +2504,88 @@ Other ways of triggering transitions also work, such as the
 
 .. _screen-variants:
 
-Screen Variants
-===============
+Варианты экранов
+================
 
-Ren'Py runs both on traditional mouse-oriented devices such as Windows,
-Mac, and Linux PCs, and newer touch-oriented devices such as Android-based
-smartphones and tablets. Screen variants allow a game to supply
-multiple versions of a screen, and use the version that best matches
-the hardware it is running on.
+Ren'Py работает как на традиционных устройствах с управлением мышью (ПК под управлением Windows,
+macOS и Linux), так и на современных сенсорных устройствах (смартфоны и планшеты на базе Android и iOS).
+Варианты экранов позволяют игре предоставлять несколько версий одного экрана и использовать
+ту версию, которая лучше всего соответствует текущему аппаратному обеспечению.
 
-Ren'Py chooses a screen variant to use by searching variants in the
-order they are listed in :var:`config.variants`. The first variant
-that exists is used.
+Ren'Py выбирает вариант экрана для использования, просматривая варианты в том порядке,
+в котором они перечислены в :var:`config.variants`. Используется первый найденный вариант.
 
-If the RENPY_VARIANT environment variable is present, config.variants
-is initialized by splitting the value of the variable on whitespace,
-and then appending ``None``. Setting RENPY_VARIANT to a value such as
-``"medium tablet touch"`` or ``"small phone touch"`` allows screens intended for
-Android devices to be tested on a PC.
+Если присутствует переменная окружения RENPY_VARIANT, config.variants инициализируется
+путем разделения значения переменной по пробелам с последующим добавлением ``None``.
+Установка RENPY_VARIANT в такие значения, как ``"medium tablet touch"`` или ``"small phone touch"``,
+позволяет тестировать экраны для устройств Android прямо на ПК.
 
-If the environment variable is not present, a list of variants is
-built up automatically, by going through the following list in order
-and choosing the entries that apply to the current platform.
+Если переменная окружения отсутствует, список вариантов формируется автоматически путем
+последовательного прохода по следующему списку и выбора записей, применимых к текущей платформе:
 
 ``"steam_deck"``
-    True if running on a Steam Deck or equivalent hardware.
+    True, если игра запущена на Steam Deck или эквивалентном оборудовании.
 
 ``"steam_big_picture"``
-    True if running in Steam Big Picture mode.
+    True, если запуск произведен в режиме Steam Big Picture.
 
 ``"large"``
-    A screen large enough that relatively small text can be
-    comfortably read, and buttons can be easily clicked. This
-    is used for computer screens.
+    Достаточно большой экран, на котором относительно мелкий текст читается комфортно,
+    а по кнопкам легко кликать мышью. Используется для экранов настольных компьютеров.
 
 ``"medium"``
-    A screen where smallish text can be read, but buttons may
-    need to grow in size so they can be comfortably pressed.
-    This is used for tablets.
+    Экран, на котором некрупный текст читается хорошо, но кнопкам может потребоваться
+    увеличенный размер для комфортного нажатия пальцем. Используется для планшетов.
 
 ``"small"``
-    A screen where text must be expanded in order to be read. This
-    is used for phones and televisions. (A television might be
-    physically large, but it's often far away, making it hard
-    to read.)
+    Экран, на котором текст должен быть увеличен для нормального чтения. Используется для
+    телефонов и телевизоров. (Телевизор может быть физически большим, но часто находится далеко,
+    что затрудняет чтение мелкого текста.)
 
 ``"tablet"``
-    Defined on touchscreen based devices where the screen has a
-    diagonal size of 6 inches or more. (In general, ``"medium"`` should
-    be used instead of ``"tablet"``.)
+    Определен на устройствах с сенсорным экраном, диагональ которого составляет 6 дюймов
+    или более. (Как правило, вместо ``"tablet"`` рекомендуется использовать ``"medium"``.)
 
 ``"phone"``
-    Defined on touchscreen-based devices where the diagonal size of
-    the screen is less than 6 inches. On such a small device, it's
-    important to make buttons large enough a user can easily choose
-    them. (In general, ``"small"`` should be used instead of ``"phone"``.)
+    Определен на устройствах с сенсорным экраном, диагональ которого менее 6 дюймов.
+    На таких маленьких экранах важно делать кнопки достаточно большими для удобного нажатия.
+    (Как правило, вместо ``"phone"`` рекомендуется использовать ``"small"``.)
 
 ``"touch"``
-    Defined on touchscreen-based devices.
+    Определен на устройствах с сенсорным экраном.
 
 ``"tv"``
-    Defined on television-based devices.
+    Определен на телевизионных приставках и смарт-ТВ.
 
 ``"firetv"``
-    Defined on the Amazon Fire TV console. (``"tv"`` and ``"small"`` are also defined.)
+    Определен на консоли Amazon Fire TV (также определены ``"tv"`` и ``"small"``).
 
 ``"chromeos"``
-    Defined when running as an Android app on a Chromebook.
+    Определен при запуске в качестве приложения Android на Chromebook.
 
 ``"android"``
-    Defined on all Android devices.
+    Определен на всех устройствах Android.
 
 ``"ios"``
-    Defined on iOS devices, like the iPad (where ``"tablet"`` and ``"medium"``
-    are also defined) and the iPhone (where ``"phone"`` and ``"small"`` are
-    also defined).
+    Определен на устройствах iOS, таких как iPad (где также определены ``"tablet"`` и ``"medium"``)
+    и iPhone (где также определены ``"phone"`` и ``"small"``).
 
 ``"mobile"``
-    Defined on mobile platforms, such as Android, iOS and mobile web browsers.
+    Определен на мобильных платформах, таких как Android, iOS и мобильные веб-браузеры.
 
 ``"pc"``
-    Defined on Windows, Mac OS X, and Linux. A PC is expected to have
-    a mouse and keyboard present, to allow buttons to be hovered, and
-    to allow precise pointing.
+    Определен в Windows, macOS и Linux. Предполагается наличие мыши и клавиатуры, что
+    обеспечивает точное наведение курсора и появление эффекта наведения (hover).
 
 ``"web"``
-    Defined when running inside a web browser.
+    Определен при запуске внутри веб-браузера.
 
 ``None``
-    Always defined.
+    Определен всегда.
 
-An example of defining a screen variant is:
+Пример определения варианта экрана::
 
-::
-
-   # A variant hello_world screen, used on small touch-based
-   # devices.
+   # Вариант экрана hello_world, используемый на небольших сенсорных устройствах.
    screen hello_world():
         tag example
         zorder 1
@@ -2795,14 +2594,11 @@ An example of defining a screen variant is:
 
         text "Hello, World." size 30
 
-See also
-========
+См. также
+=========
 
-:doc:`screen_actions` : a comprehensive list of actions and other tools
-to be used with screens.
+:doc:`screen_actions` : подробный список действий и других инструментов, используемых с экранами.
 
-:doc:`screen_optimization` : some useful ways of making screens as
-efficient as possible.
+:doc:`screen_optimization` : полезные способы сделать экраны максимально эффективными.
 
-:doc:`screen_python` : go from using Ren'Py's predefined tools, to
-extending Ren'Py.
+:doc:`screen_python` : переход от предопределенных инструментов Ren'Py к расширению возможностей движка.

@@ -2,99 +2,86 @@
 
 .. function:: DictInputValue(dict, key, default=True, returnable=False)
     
-    An input value that updates ``dict[key]``.
+    Значение ввода, обновляющее элемент ``dict[key]``.
     
     `dict`
-        May be a dict object or a list.
+        Словарь или список.
     `default`
-        If true, this input can be editable by default.
+        Если True, поле доступно для редактирования по умолчанию.
     `returnable`
-        If true, the value of this input will be returned when the
-        user presses enter.
+        Если True, значение этого поля ввода возвращается при нажатии клавиши Enter.
 
 .. function:: FieldInputValue(object, field, default=True, returnable=False)
     
-    An input value that updates `field` on `object`.
+    Значение ввода, обновляющее поле `field` объекта `object`.
     
     `field`
-        A string giving the name of the field.
+        Строка с именем поля.
     `default`
-        If true, this input can be editable by default.
+        Если True, поле доступно для редактирования по умолчанию.
     `returnable`
-        If true, the value of this input will be returned when the
-        user presses enter.
+        Если True, значение этого поля ввода возвращается при нажатии клавиши Enter.
 
-.. function:: FilePageNameInputValue(pattern='Page {}', auto='Automatic saves', quick='Quick saves', page=None, default=False)
+.. function:: FilePageNameInputValue(pattern='Страница {}', auto='Автосохранения', quick='Быстрые сохранения', page=None, default=False)
     
-    An input value that updates the name of a file page.
+    Значение ввода, обновляющее имя страницы сохранений.
     
     `pattern`
-        This is used for the default name of a page. Python-style substitution
-        is performed, such that {} is replaced with the number of the page.
+        Используется для имени страницы по умолчанию. Применяется форматирование в стиле
+        Python: {} заменяется номером страницы.
     
     `auto`
-        The name of the autosave page.
+        Имя страницы автоматических сохранений.
     
     `quick`
-        The name of the quicksave page.
+        Имя страницы быстрых сохранений.
     
     `page`
-        If given, the number of the page to display. This should usually
-        be left as None, to give the current page.
+        Номер отображаемой страницы. Обычно оставляется равным None (текущая страница).
     
     `default`
-        If true, this input can be editable by default.
+        Если True, поле доступно для редактирования по умолчанию.
 
 .. function:: LocalVariableInputValue(variable, default=True, returnable=False)
     
-    An input value that updates a local variable in a ``use``\ d screen.
+    Значение ввода, обновляющее локальную переменную во вложенном (``use``) экране.
     
-    To target a variable in a top-level screen, prefer using
+    Для переменных экрана верхнего уровня предпочтительнее использовать
     :func:`ScreenVariableInputValue`.
     
-    For more information, see :ref:`sl-use`.
+    Дополнительные сведения см. в :ref:`sl-use`.
     
-    This must be created in the context that the variable is set in - it
-    can't be passed in from somewhere else.
+    Должно создаваться в том же контексте, где задана переменная.
     
     `variable`
-        A string giving the name of the variable to update.
+        Имя обновляемой переменной (строка).
     `default`
-        If true, this input can be editable by default.
+        Если True, поле доступно для редактирования по умолчанию.
     `returnable`
-        If true, the value of this input will be returned when the
-        user presses enter.
+        Если True, значение возвращается при нажатии Enter.
 
 .. function:: ScreenVariableInputValue(variable, default=True, returnable=False)
     
-    An input value that updates a variable in a screen.
+    Значение ввода, обновляющее переменную экрана.
     
-    In a ``use``\ d screen, this targets a variable in the context of the
-    screen containing the ``use``\ d one(s). To target variables within a
-    ``use``\ d screen, and only in that case, use
-    :func:`LocalVariableInputValue` instead.
+    Во вложенном (``use``) экране воздействует на переменную экрана, содержащего вложенный.
+    Для переменных внутри самого вложенного экрана используйте :func:`LocalVariableInputValue`.
     
     `variable`
-        A string giving the name of the variable to update.
+        Имя обновляемой переменной экрана (строка).
     `default`
-        If true, this input can be editable by default.
+        Если True, поле доступно для редактирования по умолчанию.
     `returnable`
-        If true, the value of this input will be returned when the
-        user presses enter.
+        Если True, значение возвращается при нажатии Enter.
 
 .. function:: VariableInputValue(variable, default=True, returnable=False)
     
-    An input value that updates `variable`.
+    Значение ввода, обновляющее переменную `variable`.
     
     `variable`
-        A string giving the name of the variable to update.
-    
-        The `variable` parameter must be a string, and can be a simple name like "strength", or
-        one with dots separating the variable from fields, like "hero.strength"
-        or "persistent.show_cutscenes".
+        Строка с именем переменной. Может быть простым именем вроде "strength"
+        или составным через точку: "hero.strength", "persistent.show_cutscenes".
     `default`
-        If true, this input can be editable by default.
+        Если True, поле доступно для редактирования по умолчанию.
     `returnable`
-        If true, the value of this input will be returned when the
-        user presses enter.
-
+        Если True, значение возвращается при нажатии Enter.

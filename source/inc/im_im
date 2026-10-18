@@ -2,122 +2,110 @@
 
 .. class:: im.AlphaMask(base, mask, **properties)
     
-    An image manipulator that takes two image manipulators, `base` and
-    `mask`, as arguments. It replaces the alpha channel of `base` with
-    the red channel of `mask`.
+    Манипулятор изображений, принимающий два манипулятора изображений — `base` и
+    `mask`. Он заменяет альфа-канал `base` красным каналом `mask`.
     
-    This is used to provide an image's alpha channel in a second
-    image, like having one jpeg for color data, and a second one
-    for alpha. In some cases, two jpegs can be smaller than a
-    single png file.
+    Используется для хранения альфа-канала изображения в отдельном файле (например,
+    один JPEG для данных цвета, а второй — для альфа-маски). В ряде случаев два JPEG-файла
+    занимают меньше места на диске, чем один PNG.
     
-    The two images need to have the same size, and the same oversampling factor.
+    Оба изображения должны иметь одинаковый размер и одинаковый коэффициент передискретизации (oversampling).
     
-    Note that this takes different arguments from :func:`AlphaMask`,
-    which uses the mask's alpha channel. You can convert using the
-    "renpy.red_to_alpha" shader. The following is a faster equivalent
-    of this image manipulator::
+    Обратите внимание, что параметры этого класса отличаются от :func:`AlphaMask`,
+    использующего альфа-канал маски. Преобразование можно выполнить с помощью шейдера
+    "renpy.red_to_alpha". Ниже приведён более быстрый современный эквивалент данного манипулятора::
     
         AlphaMask(base, Transform(mask, shader="renpy.red_to_alpha"))
 
 .. class:: im.Blur(im, xrad, yrad=None, **properties)
     
-    An image manipulator that blurs the image manipulator `im` using
-    an elliptical kernel described by `xrad` and optionally `yrad`.
+    Манипулятор изображений, размывающий изображение `im` по эллиптическому ядру,
+    задаваемому радиусом `xrad` и опциональным радиусом `yrad`.
     
-    If `yrad` is None, it will take the value of `xrad` resulting in
-    a circular kernel being used.
+    Если `yrad` равен None, используется значение `xrad`, что даёт круговое ядро размытия.
     
     ::
     
         image logo blurred = im.Blur("logo.png", 1.5)
     
     .. deprecated:: 7.4.0
-        Use the :tpref:`blur` transform property.
+        Используйте свойство трансформации :tpref:`blur`.
 
 .. class:: im.Crop(im, rect)
     
-    An image manipulator that crops `rect`, a (x, y, width, height) tuple,
-    out of `im`, an image manipulator.
+    Манипулятор изображений, вырезающий область `rect` (кортеж вида `(x, y, width, height)`)
+    из манипулятора изображений `im`.
     
     ::
     
         image logo crop = im.Crop("logo.png", (0, 0, 100, 307))
     
     .. deprecated:: 7.4.0
-        Use the :tpref:`crop` transform property.
+        Используйте свойство трансформации :tpref:`crop`.
 
 .. class:: im.Data(data: bytes, filename: str, **properties)
     
-    This image manipulator loads an image from binary data.
+    Манипулятор изображений, загружающий изображение из двоичных данных в памяти.
     
     `data`
-        A string of bytes, giving the compressed image data in a standard
-        file format.
+        Байтовая строка, содержащая сжатые графические данные в одном из поддерживаемых форматов файлов.
     
     `filename`
-        A "filename" associated with the image. This is used to provide a
-        hint to Ren'Py about the format of `data`. (It's not actually
-        loaded from disk.)
+        Имя файла, ассоциированное с изображением. Используется в качестве подсказки для Ren'Py
+        относительно формата данных в `data` (с диска файл не считывается).
 
 .. class:: im.FactorScale(im, width, height=None, bilinear=True, **properties)
     
-    An image manipulator that scales `im` (a second image manipulator)
-    to `width` times its original `width`, and `height` times its
-    original height. If `height` is omitted, it defaults to `width`.
+    Манипулятор изображений, масштабирующий `im` в `width` раз по ширине и в `height` раз
+    по высоте относительно исходных размеров. Если `height` опущен, используется значение `width`.
     
-    If `bilinear` is true, then bilinear interpolation is used for
-    the scaling. Otherwise, nearest neighbor interpolation is used.
+    Если `bilinear` равно True, используется билинейная фильтрация масштабирования,
+    иначе — интерполяция по ближайшим соседям (nearest neighbor).
     
     ::
     
         image logo doubled = im.FactorScale("logo.png", 1.5)
     
     .. deprecated:: 7.4.0
-        Use the :tpref:`zoom`, or the
-        :tpref:`xzoom` and :tpref:`yzoom` transform properties.
+        Используйте свойства трансформации :tpref:`zoom` либо :tpref:`xzoom` и :tpref:`yzoom`.
 
 .. class:: im.Flip(im, horizontal=False, vertical=False, **properties)
     
-    An image manipulator that flips `im` (an image manipulator)
-    vertically or horizontally.  `vertical` and `horizontal` control
-    the directions in which the image is flipped.
+    Манипулятор изображений, зеркально отражающий `im` по вертикали или горизонтали.
+    Параметры `vertical` и `horizontal` задают оси отражения.
     
     ::
     
         image eileen flip = im.Flip("eileen_happy.png", vertical=True)
     
     .. deprecated:: 7.4.0
-        Set :tpref:`xzoom` (for horizontal flip)
-        or :tpref:`yzoom` (for vertical flip) to a negative value.
+        Задайте отрицательное значение для свойств :tpref:`xzoom` (для горизонтального отражения)
+        или :tpref:`yzoom` (для вертикального отражения).
 
 .. function:: im.Grayscale(im, **properties)
     
-    An image manipulator that creates a desaturated version of the image
-    manipulator `im`.
+    Манипулятор изображений, создающий обесцвеченную (чёрно-белую) версию изображения `im`.
     
     .. deprecated:: 7.4.0
-        Set the :tpref:`matrixcolor` transform property to
+        Задайте свойство трансформации :tpref:`matrixcolor` равным
         :func:`SaturationMatrix(0) <SaturationMatrix>`.
 
 .. function:: im.Sepia(im, **properties)
     
-    An image manipulator that creates a sepia-toned version of the image
-    manipulator `im`.
+    Манипулятор изображений, создающий версию изображения `im` в оттенках сепии.
     
     .. deprecated:: 7.4.0
-        Set the :tpref:`matrixcolor` transform property to
-        :func:`SepiaMatrix() <SepiaMatrix>`
+        Задайте свойство трансформации :tpref:`matrixcolor` равным
+        :func:`SepiaMatrix() <SepiaMatrix>`.
 
 .. class:: im.Tile(im, size=None, **properties)
     
-    An image manipulator that tiles the image manipulator `im`, until
-    it is `size`.
+    Манипулятор изображений, многократно повторяющий (замащивающий) изображение `im`
+    плиткой до достижения размера `size`.
     
     `size`
-        If not None, a (width, height) tuple. If None, this defaults to
+        Если не None, кортеж (width, height). Если None, по умолчанию принимает значение
         (:var:`config.screen_width`, :var:`config.screen_height`).
     
     .. deprecated:: 7.4.0
-        Use :func:`Tile(im, xysize=size, **properties) <Tile>`.
-
+        Используйте :func:`Tile(im, xysize=size, **properties) <Tile>`.

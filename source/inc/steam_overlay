@@ -2,39 +2,39 @@
 
 .. function:: achievement.steam.activate_overlay(dialog)
     
-    Activates the Steam overlay.
+    Активирует оверлей Steam.
     
     `dialog`
-        The dialog to open the overlay to. One of "Friends", "Community",
-        "Players", "Settings", "OfficialGameGroup", "Stats", "Achievements"
+        Диалог, на котором открывается оверлей. Одно из следующих значений:
+        "Friends", "Community", "Players", "Settings", "OfficialGameGroup",
+        "Stats", "Achievements".
 
 .. function:: achievement.steam.activate_overlay_to_store(appid, flag=None)
     
-    Opens the steam overlay to the store.
+    Открывает оверлей Steam на странице магазина.
     
     `appid`
-        The appid to open.
+        Идентификатор приложения (appid) для открытия.
     
     `flag`
-        One of achievement.steam.STORE_NONE, .STORE_ADD_TO_CART, or .STORE_ADD_TO_CART_AND_SHOW.
+        Одно из следующих значений: achievement.steam.STORE_NONE,
+        .STORE_ADD_TO_CART или .STORE_ADD_TO_CART_AND_SHOW.
 
 .. function:: achievement.steam.activate_overlay_to_web_page(url)
     
-    Activates the Steam overlay, and opens the web page at `url`.
+    Активирует оверлей Steam и открывает веб-страницу по адресу `url`.
 
 .. function:: achievement.steam.is_overlay_enabled()
     
-    Returns true if the steam overlay is enabled. (This might take a while to
-    return true once the game starts.)
+    Возвращает True, если оверлей Steam включён. (После запуска игры может
+    потребоваться некоторое время, прежде чем функция начнёт возвращать True.)
 
 .. function:: achievement.steam.overlay_needs_present()
     
-    Returns true if the steam overlay is enabled. (This might take a while to
-    return true once the game starts.)
+    Возвращает True, если оверлей Steam требует вызова отрисовки (present).
 
 .. function:: achievement.steam.set_overlay_notification_position(position)
     
-    Sets the position of the steam overlay. `Position` should be one of
-    achievement.steam.POSITION_TOP_LEFT, .POSITION_TOP_RIGHT, .POSITION_BOTTOM_LEFT,
-    or .POSITION_BOTTOM_RIGHT.
-
+    Задаёт позицию всплывающих уведомлений оверлея Steam. Параметр `position` должен
+    быть одной из констант: achievement.steam.POSITION_TOP_LEFT, .POSITION_TOP_RIGHT,
+    .POSITION_BOTTOM_LEFT или .POSITION_BOTTOM_RIGHT.

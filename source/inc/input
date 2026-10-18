@@ -2,51 +2,43 @@
 
 .. function:: renpy.input(default='', allow=None, exclude='{}', length=None, pixel_width=None, screen="input", mask=None, copypaste=True, multiline=False, **kwargs)
     
-    Calling this function pops up a window asking the player to enter some
-    text. It returns the entered text.
+    Выводит окно с запросом на ввод текста от игрока и возвращает введённый текст.
     
     `prompt`
-        A string giving a prompt to display to the player.
+        Строка с текстом подсказки (приглашения к вводу), отображаемая игроку.
     
     `default`
-        A string giving the initial text that will be edited by the player.
+        Строка с начальным текстом, который игрок может отредактировать.
     
     `allow`
-        If not None, a string giving a list of characters that will
-        be allowed in the text.
+        Если не None, строка со списком символов, разрешённых для ввода.
     
     `exclude`
-        If not None, if a character is present in this string, it is not
-        allowed in the text.
+        Если не None, символы из этой строки запрещены для ввода.
     
     `length`
-        If not None, this must be an integer giving the maximum length
-        of the input string.
+        Если не None, целое число, задающее максимальную длину строки в символах.
     
     `pixel_width`
-        If not None, the input is limited to being this many pixels wide,
-        in the font used by the input to display text.
+        Если не None, ширина вводимого текста ограничивается этим количеством пикселей
+        в используемом шрифте.
     
     `screen`
-        The name of the screen that takes input. If not given, the ``input``
-        screen is used.
+        Имя экрана, обрабатывающего ввод. По умолчанию используется экран ``input``.
     
     `mask`
-        If not None, a single-character string that replaces the input text that
-        is shown to the player, such as to conceal a password.
+        Если не None, односимвольная строка, заменяющая введённые символы на экране (например,
+        для скрытия пароля).
     
     `copypaste`
-        When true, copying from and pasting to this input is allowed.
+        Если True, разрешено копирование и вставка текста в поле ввода.
     
     `multiline`
-        When true, move caret to next line is allowed.
+        Если True, разрешён перевод курсора на новую строку (многострочный ввод).
     
-    If :var:`config.disable_input` is True, this function only returns
-    `default`.
+    Если :var:`config.disable_input` равно True, функция сразу возвращает `default`.
     
-    Keywords prefixed with ``show_`` have the prefix stripped and
-    are passed to the screen.
+    Именованные аргументы с префиксом ``show_`` передаются экрану со снятым префиксом.
     
-    Due to limitations in supporting libraries, on Android and the web platform
-    this function is limited to alphabetic characters.
-
+    Из-за ограничений вспомогательных библиотек на Android и веб-платформе функция ограничена
+    символами латинского алфавита.

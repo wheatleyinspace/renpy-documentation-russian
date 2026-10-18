@@ -1,483 +1,471 @@
-Building Distributions
-======================
+Сборка дистрибутивов
+====================
 
-Ren'Py includes support for building game distributions. Upon choosing
-"Build Distributions" in the launcher, Ren'Py will scan itself and the
-project to determine the files to include in the distribution, will
-create any archives that are necessary, and will build package and
-update files.
+Ren'Py включает встроенную поддержку сборки дистрибутивов игры. При выборе
+пункта «Сборка дистрибутивов» («Build Distributions») в лаунчере Ren'Py
+просканирует сам движок и проект, чтобы определить, какие файлы включить в
+дистрибутив, создаст все необходимые архивы, сформирует пакеты и файлы обновлений.
 
-With no configuration, Ren'Py is able to build the following kinds of
-packages:
+Без дополнительной настройки Ren'Py может собирать следующие типы пакетов:
 
-PC: Windows and Linux
-    A zip file targeting Windows x86_64 and Linux x86_64
+PC: Windows и Linux
+    Zip-архив для Windows x86_64 и Linux x86_64.
 
 Linux
-    A tar.bz2 file targeting Linux x86_64. This will also include
-    the 32-bit and 64-bit ARM version of Ren'Py, if present. (These
-    are found in the sdkarm Ren'Py package.)
+    Архив tar.bz2 для Linux x86_64. Он также включает 32- и 64-битные ARM-версии
+    Ren'Py, если они установлены (они содержатся в пакете Ren'Py sdkarm).
 
 Macintosh
-    A zip file containing a Macintosh application targeting macOS
-    OS X on Intel and Apple Silicon processors. Game data will be
-    included inside the application, which appears to the user
-    as a single file. The updater does not work with this package.
+    Zip-архив, содержащий приложение Macintosh для macOS на процессорах Intel
+    и Apple Silicon. Данные игры включаются внутрь приложения, которое выглядит
+    для пользователя как единый файл. Средство обновления не работает с этим
+    пакетом.
 
 Windows
-    A zip file targeting Windows x86_64.
+    Zip-архив для Windows x86_64.
 
-Windows, Mac, and Linux for Markets
-    A distribution that contains the information required to run on
-    software markets like itch.io and Steam. This isn't meant to be
-    run directly (and probably won't work on the Mac), but should be
-    fed to the app store upload process.
+Windows, Mac и Linux для торговых площадок
+    Дистрибутив, содержащий информацию, необходимую для работы на площадках
+    распространения игр, таких как itch.io и Steam. Он не предназначен для
+    прямого запуска (и, скорее всего, не запустится на Mac), но должен
+    передаваться в процесс загрузки магазина приложений.
 
 .. warning::
 
-    The zip and tar.bz2 files that Ren'Py produces contain permissions
-    information that must be present for Ren'Py to run on Linux and
-    Macintosh.
+    Файлы zip и tar.bz2, создаваемые Ren'Py, содержат информацию о правах
+    доступа к файлам, которая необходима для корректного запуска Ren'Py на Linux
+    и Macintosh.
 
-    Unpacking and re-packing a zip file on Windows and then running it
-    on Linux or Macintosh is not supported.
+    Распаковка и повторная запаковка zip-архива в Windows с последующим запуском
+    на Linux или Macintosh не поддерживается.
 
-Basic Configuration
--------------------
+Базовая настройка
+-----------------
 
-The build process can be configured by setting variables and calling
-function that live in the build namespace. This must be done from
-inside an ``init python`` block. The default settings for these configurations are
-set in :file:`options.rpy`.
+Процесс сборки можно настроить, задавая переменные и вызывая функции из
+пространства имён ``build``. Это должно выполняться внутри блока ``init python``.
+Настройки по умолчанию для этих конфигураций задаются в файле :file:`options.rpy`.
 
-There are a few basic variables and functions that many games will
-use.
+Существует несколько основных переменных и функций, которые используются во
+многих играх.
 
 .. var:: build.name = "..."
 
-    This is used to automatically generate build.directory_name
-    and build.executable_name, if neither is set. This should not
-    contain spaces, colons, or semicolons.
+    Используется для автоматической генерации ``build.directory_name`` и
+    ``build.executable_name``, если ни одна из них не задана явно. Не должна
+    содержать пробелов, двоеточий или точек с запятой.
 
 .. var:: build.directory_name = "..."
 
-    This is used to create the names of directories in the archive
-    files. For example, if this is set to "mygame-1.0", the Linux
-    version of the project will unpack to "mygame-1.0-linux".
+    Используется для создания имён каталогов в архивных файлах. Например, если
+    задано значение "mygame-1.0", то версия проекта для Linux будет распаковываться
+    в каталог "mygame-1.0-linux".
 
-    This is also used to determine the name of the directory in
-    which the package files are placed. For example, if you set
-    build.directory_name to mygame-1.0, the archive files will
-    be placed in mygame-1.0-dists in the directory above the base
-    directory.
+    Также используется для определения имени каталога, в который помещаются
+    файлы пакетов. Например, если установить ``build.directory_name`` в mygame-1.0,
+    архивные файлы будут помещены в каталог ``mygame-1.0-dists`` на уровень выше
+    базового каталога.
 
-    This variable should not contain special characters like spaces,
-    colons, and semicolons. If not set, it defaults to :var:`build.name`,
-    a dash, and the version. The version is taken from :var:`build.version`,
-    if set, or :var:`config.version`.
+    Эта переменная не должна содержать специальных символов, таких как пробелы,
+    двоеточия и точки с запятой. Если не задана, по умолчанию принимает значение
+    :var:`build.name`, дефис и номер версии. Версия берётся из :var:`build.version`,
+    если она задана, либо из :var:`config.version`.
 
 .. var:: build.executable_name = "..."
 
-    This variable controls the name of the executables that the user
-    clicks on to start the game.
+    Эта переменная управляет именем исполняемых файлов, которые пользователь
+    запускает для старта игры.
 
-    This variable should not contain special characters like spaces,
-    colons, and semicolons. If not set, it defaults to :var:`build.name`.
+    Она не должна содержать специальных символов, таких как пробелы, двоеточия
+    и точки с запятой. Если не задана, по умолчанию принимает значение :var:`build.name`.
 
-    For example, if this is set to "mygame", the user will be able
-    to run mygame.exe on Windows, mygame.app on Macintosh, and
-    mygame.sh on Linux.
+    Например, если задано значение "mygame", пользователь сможет запускать
+    ``mygame.exe`` в Windows, ``mygame.app`` на Macintosh и ``mygame.sh`` в Linux.
 
 .. _special-files:
 
-Special Files
--------------
+Специальные файлы
+-----------------
 
-There are two files that can be included in your game's base directory
-to customize the build.
+Существует два файла, которые можно поместить в базовый каталог игры для
+настройки сборки:
 
 :file:`icon.ico`
-    The icon that is used on Windows.
+    Значок приложения, используемый в Windows.
 
 :file:`icon.icns`
-    The icon that is used on Macintosh.
+    Значок приложения, используемый на Macintosh.
 
-These icon files must be in specific formats. You'll need to use a
-program or web service (such as https://anyconv.com/png-to-ico-converter/ and
-https://anyconv.com/png-to-icns-converter/ ) to convert them.
+Файлы значков должны быть в соответствующих форматах. Для их конвертации
+потребуется использовать программу или веб-сервис (например,
+https://anyconv.com/png-to-ico-converter/ и https://anyconv.com/png-to-icns-converter/).
 
-Classifying and Ignoring Files
-------------------------------
+Классификация и игнорирование файлов
+------------------------------------
 
-The build process works by first classifying files in the Ren'Py
-distribution and your game into file lists. These file lists are then
-added to package files.
+Процесс сборки сначала распределяет файлы дистрибутива Ren'Py и вашей игры по
+спискам файлов. Затем эти списки файлов добавляются в файлы пакетов.
 
-The classification is done by the build.classify function. It takes a
-patterns and a space-separated list of filenames. Patterns are matched
-from first to last, with the first match taking precedence (even if a
-more-specific pattern follows.) Patterns are matched with and without
-a leading /. Patterns may include the following special characters:
+Классификация выполняется с помощью функции ``build.classify``. Она принимает
+шаблон и разделённый пробелами список файлов. Шаблоны проверяются по порядку от
+первого к последнему, при этом первое совпадение имеет приоритет (даже если далее
+следует более конкретный шаблон). Шаблоны сопоставляются как с ведущим слешем ``/``,
+так и без него. Шаблоны могут содержать следующие специальные символы:
 
 /
-   The directory separator.
+   Разделитель каталогов.
 \*
-   Matches all characters except for the directory separator.
+   Соответствует любым символам, кроме разделителя каталогов.
 \*\*
-   Matches all characters.
+   Соответствует абсолютно любым символам.
 
-For example:
+Например:
 
 \*\*.txt
-    Matches all txt files.
+    Соответствует всем txt-файлам.
 game/\*.txt
-    Matches txt files in the game directory.
+    Соответствует txt-файлам в каталоге ``game``.
 
-There are seven file lists that files can be classified into by
-default. (Ren'Py places its own files into the first six of these.)
+По умолчанию существует семь списков файлов, по которым можно распределять файлы
+(Ren'Py помещает свои собственные файлы в первые шесть из них):
 
 all
-    These files will be included in all packages, and in Android
-    builds.
+    Эти файлы будут включены во все пакеты, а также в сборки для Android.
 linux
-    These files will be included in packages targeting Linux.
+    Эти файлы будут включены в пакеты для Linux.
 mac
-    These files will be included in packages targeting Macintosh.
+    Эти файлы будут включены в пакеты для Macintosh.
 windows
-    These files will be included in packages targeting Windows.
+    Эти файлы будут включены в пакеты для Windows.
 renpy
-    These files will be included in packages that require the Ren'Py
-    engine files. (Linux, Macintosh, and Windows.)
+    Эти файлы будут включены в пакеты, требующие файлов движка Ren'Py (Linux,
+    Macintosh и Windows).
 android
-    These files will be included in Android builds.
+    Эти файлы будут включены в сборки для Android.
 
-This set of valid file lists can be expanded by passing
-:func:`build.classify` new names as its ``file_list`` argument.
+Этот набор допустимых списков файлов можно расширить, передав новые имена в
+качестве аргумента ``file_list`` функции :func:`build.classify`.
 
-Files can also be classified in archives. By default, the "archive"
-archive is declared:
+Файлы также могут быть классифицированы в архивы. По умолчанию объявлен архив
+"archive":
 
 archive
-    These files will be included in the archive.rpa archive.
+    Эти файлы будут включены в архив ``archive.rpa``.
 
-The set of archives can also be expanded, using the :func:`build.archive`
-function.
+Набор архивов также можно расширить с помощью функции :func:`build.archive`.
 
-Files that are not otherwise classified are placed in the "all" file
-list.
+Файлы, которые не были классифицированы иначе, помещаются в список файлов "all".
 
-To exclude files from distribution, classify them as None or the
-empty string. In this case, \* and \*\* at the end of the pattern
-must match at least one character.
+Чтобы исключить файлы из дистрибутива, классифицируйте их как ``None`` или как
+пустую строку. В этом случае знаки ``*`` и ``**`` в конце шаблона должны
+соответствовать хотя бы одному символу.
 
-For example::
+Например::
 
-    # Include README.txt
+    # Включить README.txt
     build.classify("README.txt", "all")
 
-    # But exclude all other txt files.
+    # Но исключить все остальные txt-файлы.
     build.classify("**.txt", None)
 
-    # Add png and jpg files in the game directory into an archive.
+    # Добавить png и jpg файлы из каталога game в архив.
     build.classify("game/**.png", "archive")
     build.classify("game/**.jpg", "archive")
 
-Documentation
--------------
+Документация
+------------
 
-Calling the build.documentation function with patterns marks files
-matching those patterns as documentation. Documentation files are
-included twice in a Macintosh application – both inside and outside
-of the application itself.
+Вызов функции ``build.documentation`` с шаблонами помечает файлы, соответствующие
+этим шаблонам, как документацию. Файлы документации включаются в приложение для
+Macintosh дважды — как внутри самого приложения, так и снаружи.
 
-For example, to mark all txt and html files in the base directory as
-documentation, call::
+Например, чтобы пометить все txt- и html-файлы в базовом каталоге как документацию,
+вызовите::
 
     build.documentation("*.txt")
     build.documentation("*.html")
 
 .. _packages:
 
-Packages
---------
+Пакеты
+------
 
-It's also possible to add new types of packages to the Ren'Py build
-process. This is done by calling the build.package function with a
-package name, type, and a string containing the file lists to
-include.
+В процесс сборки Ren'Py также можно добавлять новые типы пакетов. Это делается
+с помощью вызова функции ``build.package`` с указанием имени пакета, его типа
+и строки, содержащей включаемые списки файлов.
 
-Say we wanted to build a normal version of our game, and one
-containing bonus material. We could classify the bonus files in to a
-"bonus" file list, and then declare an all-premium package with::
+Предположим, мы хотим собрать обычную версию нашей игры и версию, содержащую
+бонусные материалы. Мы можем классифицировать бонусные файлы в список файлов
+"bonus", а затем объявить премиум-пакет следующим образом::
 
-    # Declare a new archive belonging to a new "bonus" file list.
+    # Объявляем новый архив, принадлежащий новому списку файлов "bonus".
     build.archive("bonus_archive", "bonus")
 
-    # Put the bonus files into the new archive.
+    # Помещаем бонусные файлы в новый архив.
     build.classify("game/bonus/**", "bonus_archive")
 
-    # Declare the package.
+    # Объявляем пакет.
     build.package("all-premium", "zip", "windows mac linux renpy all bonus")
 
-Supported package types are "zip" and "tar.bz2" to generate files in
-those formats, and "directory" to create a directory filled with
-files.
+Поддерживаемые типы пакетов: "zip" и "tar.bz2" для создания файлов в этих
+форматах, а также "directory" для создания каталога с файлами.
 
 
 .. _archives:
 
-Archives
---------
+Архивы
+------
 
-Ren'Py supports combining files into a simple archive format. While
-not very secure, this protects files from casual copying.
+Ren'Py поддерживает объединение файлов в простой формат архива. Хотя он и не
+является защищённым от взлома, он предотвращает простое копирование файлов.
 
-By default, all files classified into the "archive" file list will be
-placed in an archive.rpa archive, which is included in the all file
-list.
+По умолчанию все файлы, классифицированные в список файлов "archive", будут
+помещены в архив ``archive.rpa``, который включается в список файлов "all".
 
-By calling build.archive, it's possible to declare a new archives and
-the file lists they will be included in. (It's rare to use anything
-but the all file list, however.) To use an archive, classify files
-into a list with its name.
+С помощью вызова ``build.archive`` можно объявлять новые архивы и списки файлов,
+в которые они будут включены (однако практически всегда используется список "all").
+Чтобы использовать архив, классифицируйте файлы в список с его именем.
 
-For example, the following will archive images in :file:`images.rpa`, and
-game scripts into :file:`scripts.rpa`::
+Например, следующий код упакует изображения в :file:`images.rpa`, а игровые
+скрипты — в :file:`scripts.rpa`::
 
-    # Declare two archives.
+    # Объявляем два архива.
     build.archive("scripts", "all")
     build.archive("images", "all")
 
-    # Put script files into the scripts archive.
+    # Помещаем файлы сценариев в архив scripts.
     build.classify("game/**.rpy", "scripts")
     build.classify("game/**.rpyc", "scripts")
 
-    # Put images into the images archive.
+    # Помещаем изображения в архив images.
     build.classify("game/**.jpg", "images")
     build.classify("game/**.png", "images")
 
-If an archive file is empty, it will not be built.
+Если архивный файл пуст, он не будет создан.
 
-Please think twice about archiving your game. Keeping files open will
-help others run your game on future platforms – platforms that may not
-exist until after you're gone.
+Пожалуйста, дважды подумайте перед тем, как архивировать свою игру. Сохранение
+файлов открытыми поможет другим запускать вашу игру на будущих платформах —
+платформах, которые могут появиться лишь спустя годы.
 
 .. _old-game:
 
-The Old-game Directory
-----------------------
+Каталог old-game
+----------------
 
-Ren'Py uses compiled script files (called `.rpyc` files) to run your game quickly.
-These files also store important details, like unique IDs for each line of dialogue
-or scene, that save files rely on. When a game is updated and `.rpy` scripts change,
-Ren'Py updates or creates accompanying `.rpyc` files when the game is launched.
+Ren'Py использует скомпилированные файлы скриптов (файлы `.rpyc`) для быстрой
+работы игры. В этих файлах также хранятся важные данные, такие как уникальные
+идентификаторы каждой строки диалога или сцены, на которые опираются файлы сохранений.
+Когда игра обновляется и скрипты `.rpy` изменяются, Ren'Py обновляет или создаёт
+соответствующие файлы `.rpyc` при запуске игры.
 
-This updating nature of `.rpyc` files can create a challenge for developers who
-are making multiple releases, like when a game is distributed through early access
-or platforms like Patreon, or are working on large, multi-developer games. During
-development, it's easy to make a series of changes to an `.rpy` file that causes the
-resulting `.rpyc` file to have different IDs than the ones used in your current stable
-release. For teams, this is an even larger challenge because multiple developers might
-edit the same `.rpy`.
-Without a single `.rpyc` file as the definite source, how can Ren'Py preserve its IDs?
+Эта динамическая природа файлов `.rpyc` может создать трудности для разработчиков,
+выпускающих частые обновления (например, в раннем доступе или на Patreon), или
+работающих в больших командах. Во время разработки легко внести серию изменений в
+файл `.rpy`, из-за чего созданный файл `.rpyc` получит идентификаторы, отличные от
+тех, что использовались в вашей текущей стабильной версии. Для команд это ещё
+более сложная задача, так как несколько разработчиков могут одновременно редактировать
+один и тот же `.rpy`.
+Как Ren'Py может сохранить идентификаторы без единого авторитетного файла `.rpyc`?
 
-To keep these changes from breaking save game compatibility, developers can use the
-`old-game`-directory. This special folder, which sits next to the `game`-directory in
-your project folder, lets you save a copy of the `.rpyc` files from your previous release.
-Its structure should match the `game`-directory. For example, move `game/scripts/day1.rpyc`
-to `old-game/scripts/day1.rpyc`. Files in `old-game` that aren't `.rpyc` files are ignored.
+Чтобы такие изменения не нарушали совместимость файлов сохранений, разработчики
+могут использовать каталог `old-game`. Эта специальная папка, располагающаяся
+рядом с папкой `game` в каталоге проекта, позволяет хранить копию файлов `.rpyc`
+из вашего предыдущего релиза. Её структура должна полностью повторять структуру
+папки `game`. Например, переместите `game/scripts/day1.rpyc` в
+`old-game/scripts/day1.rpyc`. Любые файлы в `old-game`, не являющиеся `.rpyc`,
+игнорируются.
 
-When you have an `old-game`-directory with `.rpyc` files from your last release, Ren'Py
-uses them to help create new `.rpyc` files for changed `.rpy` scripts. It keeps the same
-IDs for parts of your script that haven't changed, so older save files can still load properly.
+При наличии каталога `old-game` с файлами `.rpyc` из прошлого релиза Ren'Py
+использует их для формирования новых файлов `.rpyc` изменённых скриптов `.rpy`.
+Он сохраняет прежние идентификаторы для тех частей скрипта, которые не изменились,
+поэтому старые файлы сохранений по-прежнему смогут корректно загружаться.
 
-**How to make the most of the `old-game`-directory:**
+**Как извлечь максимум пользы из каталога `old-game`:**
 
-* When launching the game, if an `.rpy` file has changed and there's a matching `.rpyc` file in `old-game`, Ren'Py uses that `.rpyc` file to update the one in `game`. This keeps its IDs consistent with your last release for maximum save compatibility.
-* Before building a new release, enable "Force Recompile" on the build-page of the Ren'Py SDK, and click "Update old-game" before pressing "Build". This recompiles all `.rpyc` files using the ones in `old-game` as a starting point, then updates `old-game` with these new, stable `.rpyc` files for your next release.
-* If you've already released your game, you can still benefit from `old-game` by copying the `.rpyc` files from your latest release's game directory into your project's `old-game` directory, matching the same folder structure.
+* При запуске игры, если файл `.rpy` изменился и в `old-game` есть соответствующий ему файл `.rpyc`, Ren'Py использует этот файл `.rpyc` для обновления файла в `game`. Это сохраняет идентификаторы согласованными с вашим прошлым релизом для максимальной совместимости сохранений.
+* Перед сборкой нового релиза включите опцию «Принудительная перекомпиляция» («Force Recompile») на странице сборки дистрибутивов в Ren'Py SDK и нажмите «Обновить old-game» («Update old-game») перед тем, как нажать «Собрать» («Build»). Это перекомпилирует все файлы `.rpyc`, используя файлы из `old-game` в качестве основы, а затем обновит `old-game` этими новыми стабильными файлами `.rpyc` для следующего релиза.
+* Если вы уже выпустили игру, вы всё равно можете воспользоваться преимуществами `old-game`, скопировав файлы `.rpyc` из каталога `game` вашего последнего релиза в каталог `old-game` вашего проекта с сохранением той же структуры папок.
 
-More information about how .rpyc files help with loading saves into changed
-games can be found at:
+Более подробную информацию о том, как файлы .rpyc помогают загружать сохранения в
+изменённых играх, можно найти по ссылкам:
 
 * `Under the hood: .rpyc files <https://www.patreon.com/posts/under-hood-rpyc-23035810>`_
 * `Ren'Py developer update: February 2021 <https://www.patreon.com/posts/renpy-developer-48146908>`_
 
 
-Requirements
-------------
+Системные требования
+--------------------
 
-Some stores ask the requirements for Ren'Py applications to run. While
-this varies from game to game, here's a set of minimums for a generic
-visual novel.
+Некоторые магазины запрашивают системные требования для запуска приложений Ren'Py.
+Хотя они различаются от игры к игре, ниже приведён набор базовых минимальных
+требований для типовой визуальной новеллы.
 
 **Windows**
 
-* Version: Windows 10 or higher.
-* CPU: 2.0 Ghz 64-bit Intel-compatible
-* RAM: 2.0 GB
-* Graphics: OpenGL 3.0 or DirectX 11
+* Версия: Windows 10 или выше.
+* Процессор: 64-битный Intel-совместимый с частотой 2.0 ГГц
+* ОЗУ: 2.0 ГБ
+* Видеокарта: OpenGL 3.0 или DirectX 11
 
 **macOS**
 
-* Version: 10.10+
-* CPU: 2.0 Ghz 64-bit Intel-compatible or M1+
-* RAM: 2.0 GB
-* Graphics: OpenGL 3.0
+* Версия: 10.10+
+* Процессор: 64-битный Intel-совместимый с частотой 2.0 ГГц или Apple Silicon (M1+)
+* ОЗУ: 2.0 ГБ
+* Видеокарта: OpenGL 3.0
 
 **Linux**
 
-* Version: Ubuntu 20.04+
-* CPU: 2.0 Ghz 64-bit Intel-compatible
-* RAM: 2.0 GB
-* Graphics: OpenGL 3.0
+* Версия: Ubuntu 20.04+
+* Процессор: 64-битный Intel-совместимый с частотой 2.0 ГГц
+* ОЗУ: 2.0 ГБ
+* Видеокарта: OpenGL 3.0
 
-The amount of disk space required is entirely determined by the assets in your
-game, and the amount of CPU and RAM needed may also vary. Ren'Py will also run
-under OpenGL 2 with certain extensions available.
+Объём необходимого дискового пространства полностью определяется ресурсами вашей
+игры; объём необходимой оперативной памяти и требования к процессору также могут
+различаться. Ren'Py также может работать под OpenGL 2 при наличии определённых
+расширений.
 
 
-Build Functions
----------------
+Функции сборки
+--------------
 
 .. include:: inc/build
 
-Build Info
-----------
+Информация о сборке
+-------------------
 
-There are two variables that can be used to provide information about
-the build. This information is used to generate the game/cache/build_info.json
-file, which is loaded as Ren'Py starts.
+Существуют две переменные, которые можно использовать для получения информации
+о сборке. Эта информация используется для создания файла
+`game/cache/build_info.json`, который загружается при запуске Ren'Py.
 
 .. var:: build.time = None
 
-    This variable defaults to None, but if your game has been built,
-    it will be set to the time the game was built, in seconds since
-    January 1, 1970.
+    По умолчанию эта переменная равна ``None``, но после сборки игры ей будет
+    присвоено время сборки игры в секундах, прошедших с 1 января 1970 года
+    (Unix timestamp).
 
 .. var:: build.info = { }
 
-    This variable lets you store information that will be placed into
-    the game/cache/build_info.json file in the built game. When the built
-    game starts, game/cache/build_info.json is loaded and the contents
-    placed into this variable.
+    Эта переменная позволяет сохранять информацию, которая будет помещена в
+    файл `game/cache/build_info.json` собранной игры. При запуске собранной
+    игры файл `game/cache/build_info.json` загружается, а его содержимое
+    помещается в эту переменную.
 
-    Generally, you'll want to check that a field does not exist, and
-    set it, using setdefault.
+    Как правило, рекомендуется проверять отсутствие поля и устанавливать его
+    с помощью метода ``setdefault``.
 
-    For example, this stores the name of the computer that built the
-    game in the build_info.json file::
+    Например, следующий код сохраняет имя компьютера, на котором была собрана
+    игра, в файле `build_info.json`::
 
         python hide:
             import socket
             build.info.setdefault("build_host", socket.gethostname())
 
-    The information in this variable needs to be of types that can be
-    placed in JSON files. (That is, None, booleans, strings,
-    numbers, lists, and dictionaries)
+    Данные в этой переменной должны быть типов, поддерживаемых форматом JSON
+    (то есть ``None``, логические значения, строки, числа, списки и словари).
 
 
-Advanced Configuration
-----------------------
+Расширенная настройка
+---------------------
 
-The following variables provide further control of the build process:
+Следующие переменные обеспечивают более тонкий контроль над процессом сборки:
 
 .. var:: build.allow_integrated_gpu = True
 
-    Allows Ren'Py to run on the integrated GPU on platforms that have both
-    integrated and discrete GPUs. Right now, this is only supported on Mac
-    OS X.
+    Позволяет Ren'Py работать на встроенном графическом процессоре (iGPU) на
+    платформах, имеющих как встроенную, так и дискретную видеокарту. В настоящее
+    время это поддерживается только на macOS.
 
 .. var:: build.destination = "{directory_name}-dists"
 
-    Gives the path to the directory the archive files will be placed in. This
-    may be an absolute or a relative path. A relative path is considered to
-    be relative to the projects directory.
+    Задаёт путь к каталогу, в который будут помещаться архивные файлы. Может быть
+    абсолютным или относительным путём. Относительный путь отсчитывается от
+    каталога проектов.
 
-    The following values are substituted in using Python's ``str.format`` function.
+    Следующие значения подставляются с помощью функции Python ``str.format``:
 
     ``{directory_name}``
-        The value of build.directory_name.
+        Значение переменной :var:`build.directory_name`.
 
     ``{executable_name}``
-        The value of build.executable_name.
+        Значение переменной :var:`build.executable_name`.
 
     ``{version}``
-        The value of build.version.
+        Значение переменной :var:`build.version`.
 
 .. var:: build.change_icon_i686 = True
 
-    If True, and icon.ico exists, the icon of the 32-bit Windows executable
-    will be changed. If False, the icon will not be changed. Setting this
-    to False may prevent some antivirus programs from producing a false
-    positive for your game.
+    Если True и файл `icon.ico` существует, значок 32-битного исполняемого файла
+    Windows будет изменён. Если False, значок изменяться не будет. Установка
+    этого параметра в значение False может предотвратить ложные срабатывания
+    некоторых антивирусных программ.
 
 .. var:: build.exclude_empty_directories = True
 
-    If true, empty directories (including directories left empty by
-    file archiving) will be removed from generated packages. If false,
-    empty directories will be included.
+    Если True, пустые каталоги (включая каталоги, оставшиеся пустыми после
+    архивирования файлов) будут удалены из создаваемых пакетов. Если False,
+    пустые каталоги будут включены.
 
 
 .. var:: build.game_only_update = False
 
-    If true, :var:`build.include_update` is enabled, and
-    the "Game-Only Update for Mobile" package becomes available.
+    Если True, параметр :var:`build.include_update` включается, и становится
+    доступен пакет обновления игры для мобильных устройств («Game-Only Update for Mobile»).
 
 
 .. var:: build.include_i686 = True
 
-    If true, files necessary to run on 32-bit x86 processors will be included
-    in the Linux and Mac builds. If False, these files will not be included.
+    Если True, файлы, необходимые для запуска на 32-разрядных процессорах x86,
+    будут включены в сборки для Linux и Mac. Если False, эти файлы не будут включены.
 
 .. var:: build.include_old_themes = True
 
-    When true, files required to support themes that existed before Ren'Py
-    6.99.9 will be included in the build. When false, such files are excluded.
+    Если True, файлы, необходимые для поддержки тем оформления, существовавших
+    до Ren'Py 6.99.9, будут включены в сборку. Если False, такие файлы исключаются.
 
-    This is set to False when :func:`gui.init` is called.
+    Принимает значение False при вызове :func:`gui.init`.
 
 .. var:: build.include_update = False
 
-    When true, Ren'Py will produce the files required for the :doc:`updater <updater>`
-    to work.
+    Если True, Ren'Py создаст файлы, необходимые для работы :doc:`средства обновления <updater>`.
 
 .. var:: build.itch_project = None
 
-    Setting this allows the Ren'Py launcher to upload your project to
-    itch.io. This should be set to the name of a project registered
-    with itch. (For example, "renpytom/the-question").
+    Настройка этого параметра позволяет лаунчеру Ren'Py загружать ваш проект на
+    itch.io. Здесь должно быть указано имя проекта, зарегистрированного на itch
+    (например, "renpytom/the-question").
 
-    Once this is set, after the distributions have been built, you can
-    click "Build distributions", "Upload to itch.io" to cause an upload
-    to occur.
+    После того как эта переменная задана, после завершения сборки дистрибутивов
+    вы можете нажать «Сборка дистрибутивов» -> «Загрузить на itch.io», чтобы
+    выполнить загрузку.
 
 .. var:: build.wavedash_id = None
 
-    When this is set to a non-empty string, the Ren'Py launcher writes a
-    :file:`wavedash.toml` file when building a web distribution. This file
-    configures the distribution for upload to `Wavedash <https://docs.wavedash.com/engines/renpy>`_.
+    Если задана непустая строка, лаунчер Ren'Py записывает файл :file:`wavedash.toml`
+    при сборке веб-дистрибутива. Этот файл настраивает дистрибутив для загрузки на
+    `Wavedash <https://docs.wavedash.com/engines/renpy>`_.
 
-    The value is used as the Wavedash game ID. The generated file specifies
-    the running Ren'Py major, minor, and patch version, uses :file:`game.zip`
-    as its executable, and sets its upload directory to the web distribution
-    directory.
+    Значение используется в качестве ID игры на Wavedash. Созданный файл
+    указывает мажорную, минорную и патч-версию запущенного Ren'Py, использует
+    :file:`game.zip` в качестве исполняемого файла и задаёт каталог загрузки на
+    папку веб-дистрибутива.
 
-    For example::
+    Например::
 
         define build.wavedash_id = "YOUR_GAME_ID_HERE"
 
-    Once this is set, click "Web", "Upload to wavedash.com" to
-    upload the web build. If a web distribution has not been built, or if the
-    game ID has changed since it was built, the launcher offers to build or
-    rebuild it before uploading.
-    The launcher downloads and updates the Wavedash CLI automatically. If you
-    are not authenticated, it opens the browser login before uploading.
+    После задания этого параметра нажмите «Веб» -> «Загрузить на wavedash.com»,
+    чтобы загрузить веб-сборку. Если веб-дистрибутив ещё не собран или ID игры
+    изменился с момента сборки, лаунчер предложит собрать или пересобрать его
+    перед загрузкой.
+    Лаунчер автоматически загружает и обновляет CLI Wavedash. Если вы не
+    авторизованы, он откроет страницу входа в браузере перед загрузкой.
 
 .. var:: build.itch_channels = { ... }
 
-    This maps a filename pattern (such as "\*-win.zip") to a string giving
-    the itch channel the file should be uploaded to. This defaults to::
+    Сопоставляет шаблон имени файла (например, "\*-win.zip") со строкой,
+    задающей канал itch, на который должен быть загружен файл. По умолчанию::
 
         {
             "*-all.zip" : "win-osx-linux",
@@ -490,18 +478,20 @@ The following variables provide further control of the build process:
         }
 
 .. var:: build.mac_info_plist = { }
-
-    This is a dictionary mapping strings to strings, that can be used to
-    add or override keys in the mac's Info.plist file.
+    
+    Словарь, сопоставляющий строки со строками, который можно использовать
+    для добавления или переопределения ключей в файле ``Info.plist`` для Mac.
 
 .. var:: build.update_formats = [ "rpu" ]
 
-    This is a list of formats that the updater will build. The default,
-    "rpu" is supported from Ren'Py 7.7 and 8.2 on. If you need to support
-    updating using the earlier zsync-based updates, add "zsync' to the
-    list.
+    Список форматов, которые будет собирать средство обновления. Формат по
+    умолчанию, "rpu", поддерживается начиная с Ren'Py 7.7 и 8.2. Если вам
+    необходимо поддерживать обновления с использованием более раннего механизма
+    на основе zsync, добавьте "zsync" в этот список.
 
 .. var:: build.version = None
 
-    Gives a version of the build used by the build process. If None, this defaults to config.version. The main use
-    of this is to allow config.version to have characters that are not valid in file or directory names.
+    Задаёт версию сборки, используемую процессом создания дистрибутива. Если
+    ``None``, по умолчанию используется ``config.version``. Основное назначение —
+    позволить использовать в ``config.version`` символы, недопустимые в именах
+    файлов или папок.

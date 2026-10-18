@@ -1,46 +1,44 @@
 :orphan:
 
-Default Shader Parts
-====================
+==============================
+Стандартные фрагменты шейдеров
+==============================
 
-Shader parts are used by :doc:`model` and :doc:`textshaders`. This file
-contains an index of parts by priority, and the source of each shader
-part.
+Фрагменты шейдеров используются в :doc:`модельном рендеринге <model>` и :doc:`текстовых шейдерах <textshaders>`.
+Этот файл содержит указатель фрагментов по приоритетам и исходный код каждого фрагмента.
 
-Vertex Part Priorities
-----------------------
+Приоритеты фрагментов вершинного шейдера
+----------------------------------------
 
-How Ren'Py uses vertex part priorities:
+Использование приоритетов вершинных фрагментов в Ren'Py:
 
-* Priority 0 sets up gl_Position.
-* Priority 10 is used to capture gl_Position in virtual or drawable coordinates before adjustment.
-* Priorities 20-80 adjust gl_Position in virtual or drawable coordinates.
-* Priority 90 is used to capture gl_Position in virtual or drawable coordinates after adjustment.
-* Priority 100 transforms gl_Position to viewport coordinates.
-* Priority 200 stores more information in the variables passed to the fragment
-  shader, without touching gl_Position.
+* Приоритет 0 инициализирует gl_Position.
+* Приоритет 10 сохраняет gl_Position в виртуальных или физических координатах до корректировок.
+* Приоритеты 20-80 корректируют gl_Position в виртуальных или физических координатах.
+* Приоритет 90 сохраняет gl_Position после корректировок.
+* Приоритет 100 преобразует gl_Position в координаты viewport.
+* Приоритет 200 передаёт дополнительную информацию во фрагментный шейдер без изменения gl_Position.
 
-In order:
+По порядку:
 
 .. include:: inc/shadervertexpriorities
 
-Fragment Part Priorities
-------------------------
+Приоритеты фрагментов пиксельного (фрагментного) шейдера
+--------------------------------------------------------
 
-How Ren'Py uses fragment part priorities:
+Использование приоритетов фрагментных частей в Ren'Py:
 
-* Priority 200 determines an original color and stores it in the fragment
-  output (``fragment_color`` in GLSL ES 3.00 or ``gl_FragColor`` in
-  GLSL ES 1.00).
-* Priority 300 multiplies that color with a second texture.
-* Priority 325 stores alpha before the text shaders adjust it.
-* Priority 350 applies text shaders that adjust alpha.
-* Priority 375 can undo part of the effect of these text shaders.
-* Priority 400 adjusts the color, applying Transform and displayable-based changes.
-* Priority 450 converts color to alpha.
-* Priority 500 adjusts the alpha channel, applying Transform and displayable-based changes.
+* Приоритет 200 определяет исходный цвет и записывает его в выход фрагмента (``fragment_color``
+  в GLSL ES 3.00 или ``gl_FragColor`` в GLSL ES 1.00).
+* Приоритет 300 умножает этот цвет на вторую текстуру.
+* Приоритет 325 сохраняет значение альфы перед модификацией текстовыми шейдерами.
+* Приоритет 350 применяет текстовые шейдеры, изменяющие альфу.
+* Приоритет 375 может отменять часть эффекта этих текстовых шейдеров.
+* Приоритет 400 корректирует цвет на основе Transform и отображаемых объектов.
+* Приоритет 450 преобразует цвет в альфу.
+* Приоритет 500 корректирует альфа-канал на основе Transform и отображаемых объектов.
 
-In order:
+По порядку:
 
 .. include:: inc/shaderfragmentpriorities
 

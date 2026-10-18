@@ -1,24 +1,27 @@
 :orphan:
 
-Image Manipulators
-==================
+.. _image-manipulators:
 
-An image manipulator is a displayable that takes an image or image
-manipulator, and either loads it or performs an operation on it.
-Image manipulators can only take images or other
-image manipulators as input.
+==============================================
+Манипуляторы изображений (Image Manipulators)
+==============================================
 
-An image manipulator can be used any place a displayable can, but not
-vice-versa. An :func:`Image` is a kind of image manipulator, so an
-Image can be used whenever an image manipulator is required.
+Манипулятор изображений (image manipulator) — это отображаемый объект, который принимает
+изображение или другой манипулятор изображений и либо загружает его, либо выполняет над ним
+графическую операцию. Манипуляторы изображений могут принимать на вход только другие манипуляторы
+изображений или пути к графическим файлам.
+
+Манипулятор изображений можно использовать в любом месте, где допустим отображаемый объект
+(displayable), но не наоборот. Функция :func:`Image` создаёт разновидность манипулятора
+изображений, поэтому :func:`Image` можно использовать везде, где требуется манипулятор изображений.
 
 .. warning::
 
-    The use of image manipulators is
-    historic. A number of image manipulators that had been documented in the
-    past should no longer be used, as they suffer from inherent problems,
-    and in general (except for :func:`im.Data`), the :func:`Transform`
-    displayable provides similar functionality while fixing the problems.
+    Использование манипуляторов изображений считается устаревшим и сохраняется ради обратной
+    совместимости. Многие манипуляторы изображений, описанные в ранних версиях документации,
+    больше не рекомендуются к использованию из-за ограничений производительности и кэширования.
+    В большинстве случаев (за исключением :func:`im.Data`) отображаемый объект :func:`Transform`
+    предоставляет аналогичный функционал, лишённый этих недостатков.
 
 .. include:: inc/im_im
 
@@ -27,32 +30,29 @@ im.MatrixColor
 
 .. warning::
 
-    The im.MatrixColor image manipulator has been replaced by Transforms
-    and ATL transforms that specify the matrixcolor property. Each `im.matrix`
-    generator has been given a new `Matrix` equivalent, which can be found
-    in the :doc:`matrixcolor documentation <matrixcolor>`.
+    Манипулятор изображений im.MatrixColor заменён объектами Transform и свойствами ATL,
+    задающими свойство трансформации :tpref:`matrixcolor`. Для каждого генератора `im.matrix`
+    создан эквивалент на основе `Matrix`, описанный в :doc:`документации по матрицам цветов <matrixcolor>`.
 
-The im.MatrixColor image manipulator is an image manipulator that uses
-a matrix to control how the colors of an image are transformed. The
-matrix used can be an im.matrix object, which encodes a 5x5 matrix in
-an object that supports matrix multiplication, and is returned by a
-series of functions. im.matrix objects may be multiplied together to
-yield a second object that performs both operations. For example::
+Манипулятор изображений im.MatrixColor применяет матрицу для линейного преобразования
+цветовых компонентов изображения. В качестве матрицы используется объект im.matrix,
+кодирующий матрицу размером 5x5 и поддерживающий операцию матричного умножения.
+Объекты im.matrix можно перемножать между собой, получая результирующую матрицу,
+выполняющую обе операции за один проход. Например::
 
     image city blue = im.MatrixColor(
         "city.jpg",
         im.matrix.desaturate() * im.matrix.tint(0.9, 0.9, 1.0))
 
-first desaturates the image, and then tints it blue. When the
-intermediate image is not needed, multiplying matrices is far
-more efficient, in both time and image cache space, than using
-two im.MatrixColors.
+Сначала изображение обесцвечивается, а затем тонируется в синий оттенок. Когда промежуточное
+изображение не требуется, перемножение матриц работает значительно быстрее и экономит место
+в кэше текстур по сравнению с двумя последовательными вызовами im.MatrixColor.
 
 .. warning::
 
-    The new Matrix objects multiply in the opposite order as the im.Matrixcolor
-    ones. With X being the Matrix corresponding to im.Matrixcolor.x,
-    ``C*B*A`` will be the Matrix corresponding to ``im.a*im.b*im.c``.
+    Новые объекты Matrix перемножаются в порядке, противоположном старым объектам im.matrix.
+    Если X — матрица Matrix, соответствующая im.Matrixcolor.x, то матрице ``im.a*im.b*im.c``
+    будет соответствовать произведение ``C*B*A``.
 
 .. include:: inc/im_matrixcolor
 .. include:: inc/im_matrix

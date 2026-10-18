@@ -2,16 +2,14 @@
 
 .. function:: renpy.alt(s, translate=True, force=False)
     
-    This queues `s` to be spoken. If `translate` is true, then the string
-    will be translated before it is spoken. If `force` is true, then the
-    string will be spoken even if self-voicing is disabled.
+    Ставит строку `s` в очередь на озвучивание. Если `translate` равно True, строка
+    будет переведена перед произнесением. Если `force` равно True, строка будет
+    озвучена, даже если голосовое сопровождение отключено.
     
-    This is intended for accessibility purposes, and should not be used
-    for gameplay purposes.
+    Эта функция предназначена для специальных возможностей (accessibility) и не должна
+    использоваться в игровом процессе.
 
 .. function:: renpy.get_tts_voices()
     
-    Returns a list of available text-to-speech voice names. Returns an
-    empty list if no voices are available, or if the platform does not support voice
-    enumeration.
-
+    Возвращает список имён доступных голосов синтезатора речи (TTS). Возвращает пустой
+    список, если голоса недоступны или если платформа не поддерживает перечисление голосов.

@@ -1,92 +1,94 @@
 .. _achievement:
 
-Achievements
-============
+==========
+Достижения
+==========
 
-The Achievement module allows the developer to grant achievements to the
-player, to clear achievements, and to determine if an achievement has been
-granted. It also allows the recording of progress towards an achievement.
+Модуль достижений (Achievement) позволяет разработчику выдавать достижения
+игроку, сбрасывать достижения и проверять, было ли получено то или иное достижение.
+Он также позволяет отслеживать прогресс выполнения достижения.
 
-By default, the achievement stores information in the persistent file. If
-Steam support is available and enabled, achievement information is
-automatically synchronized with Steam.
+По умолчанию модуль достижений сохраняет информацию в файле постоянных данных (persistent).
+Если доступна и включена поддержка Steam, данные о достижениях автоматически
+синхронизируются со Steam.
 
-Steam support must be added to Ren'Py, to ensure that it is only distributed
-by creators that have been accepted to the Steam partner program. To install
-it, choose "preferences", "Install libraries", "Install Steam Support".
+Поддержку Steam необходимо отдельно добавить в Ren'Py, чтобы гарантировать, что она
+распространяется только разработчиками, принятыми в партнёрскую программу Steam.
+Чтобы установить её, в лаунчере выберите «Настройки» (preferences) -> «Установить библиотеки»
+(Install libraries) -> «Установить поддержку Steam» (Install Steam Support).
 
 
 .. include:: inc/achievement
 
 
-Variables that control achievements are:
+Переменные, управляющие достижениями:
 
 .. var:: achievement.steam_position = None
 
-    If not None, this sets the position of the steam notification popup.
-    This must be a string, one of "top left", "top right", "bottom left",
-    or "bottom right".
+    Если не None, задаёт позицию всплывающего уведомления Steam.
+    Должно быть строкой, одной из следующих: "top left", "top right", "bottom left"
+    или "bottom right".
 
 .. var:: config.steam_appid = None
 
-    If not None, this should be the Steam appid. Ren'Py will automatically
-    set this appid when it starts. This needs to be set using the define
-    statement::
+    Если не None, задаёт appid игры в Steam. Ren'Py автоматически установит этот
+    appid при запуске. Задаётся с помощью инструкции define::
 
         define config.steam_appid = 12345
 
 .. var:: config.automatic_steam_timeline = True
 
-    If true, when run under Steam, the game will automatically update the Steam Timeline.
+    Если True, при запуске под Steam игра будет автоматически обновлять временную шкалу Steam Timeline.
 
-    This currently consists of:
+    В настоящее время это включает в себя:
 
-    * Updating the game phase to match :var:`save_name`, if that variable is set.
-    * Updating the game mode to reflect when the player is inside a menu.
+    * Обновление фазы игры в соответствии с :var:`save_name`, если эта переменная задана.
+    * Обновление режима игры для отражения нахождения игрока внутри меню.
 
 
-Steamworks API
+API Steamworks
 --------------
 
-When Steam is available, a ctypes-based binding to the Steamworks API is
-available as ``achievement.steamapi``. The binding is an instance of the
-steamapi module, as found `here <https://github.com/renpy/renpy-build/blob/master/steamapi/steamapi.py>`_,
-and represents a machine translation of the C++ Steamworks API to Python.
+Когда Steam доступен, привязка на основе ctypes к API Steamworks доступна
+как ``achievement.steamapi``. Привязка представляет собой экземпляр модуля steamapi,
+расположенного `здесь <https://github.com/renpy/renpy-build/blob/master/steamapi/steamapi.py>`_,
+и представляет собой машинный перевод C++ API Steamworks на Python.
 
-In addition, a large number of functions are available in the achievement.steam object, if and only
-if the Steamworks API is available.
+Кроме того, большое количество функций доступно в объекте achievement.steam, если
+и только если доступен API Steamworks.
 
 .. var:: achievement.steam
 
-    If Steam initialized successfully, this is a namespace with high-level Steam methods. If Steam did not
-    initialize, this is None. Always check that this is not None before calling a method.
+    Если Steam успешно инициализирован, представляет собой пространство имён с высокоуровневыми
+    методами Steam. Если Steam не инициализирован, значение равно None. Всегда проверяйте,
+    что это значение не равно None, перед вызовом методов.
 
-Steam Apps
-^^^^^^^^^^
+Приложения Steam (Steam Apps)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. include:: inc/steam_apps
 
-Steam Overlay
-^^^^^^^^^^^^^
+Оверлей Steam (Steam Overlay)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. include:: inc/steam_overlay
 
-Steam Stats
-^^^^^^^^^^^
+Статистика Steam (Steam Stats)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. include:: inc/steam_stats
 
-Steam Timeline
-^^^^^^^^^^^^^^
+Временная шкала Steam (Steam Timeline)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. include:: inc/steam_timeline
 
-Steam User
-^^^^^^^^^^
+Пользователь Steam (Steam User)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. include:: inc/steam_user
 
-Steam Workshop
-^^^^^^^^^^^^^^
+Мастерская Steam (Steam Workshop)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. include:: inc/steam_ugc

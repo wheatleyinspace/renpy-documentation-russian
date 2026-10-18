@@ -1,26 +1,30 @@
-User Age
-========
+.. _user-age:
 
-To help you comply with regulations that may require you to restrict access to certain content based on the
-user's age, Ren'Py exposes platform functionality that gives you a rage of ages for the user. This information
-is only available on platforms that support it, and may only be available for certain jurisdictions.
+====================
+Возраст пользователя
+====================
+
+Чтобы помочь вам соблюдать законодательные нормы, требующие ограничения доступа к определённому контенту
+в зависимости от возраста пользователя, Ren'Py предоставляет платформенный функционал, возвращающий
+диапазон возраста пользователя. Эта информация доступна только на поддерживающих её платформах
+и может предоставляться только для определённых юрисдикций.
 
 .. include:: inc/age
 
 
-Example
--------
+Пример
+------
 
 ::
 
     $ age_lower, age_upper = renpy.get_user_age()
 
     if age_upper < 18:
-        # The user is under 18, for sure. Deny them access.
+        # Пользователю гарантированно меньше 18 лет. Закрываем доступ.
         jump under_18_screen
     elif age_lower >= 18:
-        # The user is over 18, for sure. Let them in.
+        # Пользователю гарантированно 18 лет или больше. Предоставляем доступ.
         jump bypass_age_check
     else:
-        # Ask the user their age.
+        # Запрашиваем подтверждение возраста у пользователя.
         jump age_check

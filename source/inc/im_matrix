@@ -2,139 +2,123 @@
 
 .. class:: im.matrix()
     
-    Constructs an im.matrix object from `matrix`. im.matrix objects
-    support The operations supported are matrix multiplication, scalar
-    multiplication, element-wise addition, and element-wise
-    subtraction. These operations are invoked using the standard
-    mathematical operators (\*, \*, +, and -, respectively). If two
-    im.matrix objects are multiplied, matrix multiplication is
-    performed, otherwise scalar multiplication is used.
+    Создаёт объект im.matrix из `matrix`. Объекты im.matrix поддерживают матричное
+    умножение, умножение на скаляр, а также поэлементное сложение и вычитание.
+    Эти операции вызываются стандартными математическими операторами (\*, \*, + и -
+    соответственно). При умножении двух объектов im.matrix выполняется матричное умножение,
+    в остальных случаях — умножение на число.
     
-    `matrix` is a 20 or 25 element list or tuple. If it is 20 elements
-    long, it is padded with (0, 0, 0, 0, 1) to make a 5x5 matrix,
-    suitable for multiplication.
+    `matrix` представляет собой список или кортеж из 20 или 25 элементов. Если передано
+    20 элементов, список дополняется значениями (0, 0, 0, 0, 1) до квадратной матрицы 5x5,
+    готовой к матричному умножению.
     
     .. deprecated:: 7.4.0
-        Use :class:`Matrix`.
+        Используйте класс :class:`Matrix`.
 
 .. function:: im.matrix.brightness(b)
     
-    Returns an im.matrix that alters the brightness of an image.
+    Возвращает im.matrix, изменяющую яркость изображения.
     
     `b`
-        The amount of change in image brightness. This should be
-        a number between -1 and 1, with -1 the darkest possible
-        image and 1 the brightest.
+        Величина изменения яркости изображения. Должна быть числом от -1 до 1,
+        где -1 даёт максимально тёмное (чёрное) изображение, а 1 — максимально яркое (белое).
     
     .. deprecated:: 7.4.0
-        Use :func:`BrightnessMatrix(b) <BrightnessMatrix>`
-        with the :tpref:`matrixcolor` transform property.
+        Используйте :func:`BrightnessMatrix(b) <BrightnessMatrix>`
+        со свойством трансформации :tpref:`matrixcolor`.
 
 .. function:: im.matrix.colorize(black_color, white_color)
     
-    Returns an im.matrix that colorizes a black and white image.
-    `black_color` and `white_color` are Ren'Py style colors, so
-    they may be specified as strings or tuples of (0-255) color
-    values. ::
+    Возвращает im.matrix, раскрашивающую чёрно-белое изображение в заданные цвета.
+    `black_color` и `white_color` задают цвета в формате Ren'Py — строками или кортежами
+    значений компонентов (0–255). ::
     
-        # This makes black colors red, and white colors blue.
+        # Окрашивает чёрные участки в красный цвет, а белые — в синий.
         image logo colored = im.MatrixColor(
             "bwlogo.png",
             im.matrix.colorize("#f00", "#00f"))
     
-    
     .. deprecated:: 7.4.0
-        Use :func:`ColorizeMatrix(black_color, white_color) <ColorizeMatrix>`
-        with the :tpref:`matrixcolor` transform property.
+        Используйте :func:`ColorizeMatrix(black_color, white_color) <ColorizeMatrix>`
+        со свойством трансформации :tpref:`matrixcolor`.
 
 .. function:: im.matrix.contrast(c)
     
-    Returns an im.matrix that alters the contrast of an image. `c` should
-    be greater than 0.0, with values between 0.0 and 1.0 decreasing contrast, and
-    values greater than 1.0 increasing contrast.
+    Возвращает im.matrix, изменяющую контрастность изображения. Параметр `c` должен быть
+    строго больше 0.0: значения между 0.0 и 1.0 снижают контрастность, а значения больше
+    1.0 — увеличивают.
     
     .. deprecated:: 7.4.0
-        Use :func:`ContrastMatrix(c) <ContrastMatrix>`
-        with the :tpref:`matrixcolor` transform property.
+        Используйте :func:`ContrastMatrix(c) <ContrastMatrix>`
+        со свойством трансформации :tpref:`matrixcolor`.
 
 .. function:: im.matrix.desaturate()
     
-    Returns an im.matrix that desaturates the image (makes it
-    grayscale). This is equivalent to calling
-    im.matrix.saturation(0).
+    Возвращает im.matrix, полностью обесцвечивающую изображение (делающую его полутоновым).
+    Эквивалентно вызову ``im.matrix.saturation(0)``.
     
     .. deprecated:: 7.4.0
-        Use :func:`SaturationMatrix(0) <SaturationMatrix>`
-        with the :tpref:`matrixcolor` transform property.
+        Используйте :func:`SaturationMatrix(0) <SaturationMatrix>`
+        со свойством трансформации :tpref:`matrixcolor`.
 
 .. function:: im.matrix.hue(h)
     
-    Returns an im.matrix that rotates the hue by `h` degrees, while
-    preserving luminosity.
+    Возвращает im.matrix, сдвигающую цветовой тон (hue) на `h` градусов с сохранением яркости.
     
     .. deprecated:: 7.4.0
-        Use :func:`HueMatrix(h) <HueMatrix>`
-        with the :tpref:`matrixcolor` transform property.
+        Используйте :func:`HueMatrix(h) <HueMatrix>`
+        со свойством трансформации :tpref:`matrixcolor`.
 
 .. function:: im.matrix.identity()
     
-    Returns an identity matrix, one that does not change color or
-    alpha.
+    Возвращает единичную матрицу, оставляющую цвет и прозрачность без изменений.
     
     .. deprecated:: 7.4.0
-        Use :func:`IdentityMatrix() <IdentityMatrix>`
-        with the :tpref:`matrixcolor` transform property.
+        Используйте :func:`IdentityMatrix() <IdentityMatrix>`
+        со свойством трансформации :tpref:`matrixcolor`.
 
 .. function:: im.matrix.invert()
     
-    Returns an im.matrix that inverts the red, green, and blue
-    channels of the image without changing the alpha channel.
+    Возвращает im.matrix, инвертирующую красный, зелёный и синий каналы изображения без
+    изменения альфа-канала.
     
     .. deprecated:: 7.4.0
-        Use :func:`InvertMatrix(1.0) <InvertMatrix>`
-        with the :tpref:`matrixcolor` transform property.
+        Используйте :func:`InvertMatrix(1.0) <InvertMatrix>`
+        со свойством трансформации :tpref:`matrixcolor`.
 
 .. function:: im.matrix.opacity(o)
     
-    Returns an im.matrix that alters the opacity of an image. An
-    `o` of 0.0 is fully transparent, while 1.0 is fully opaque.
+    Возвращает im.matrix, регулирующую непрозрачность изображения. Значение `o`, равное 0.0,
+    соответствует полной прозрачности, а 1.0 — исходной непрозрачности.
     
     .. deprecated:: 7.4.0
-        Use :func:`OpacityMatrix(o) <OpacityMatrix>`
-        with the :tpref:`matrixcolor` transform property.
+        Используйте :func:`OpacityMatrix(o) <OpacityMatrix>`
+        со свойством трансформации :tpref:`matrixcolor`.
 
 .. function:: im.matrix.saturation(level, desat=(0.2126, 0.7152, 0.0722))
     
-    Returns an im.matrix that alters the saturation of an
-    image. The alpha channel is untouched.
+    Возвращает im.matrix, изменяющую насыщенность изображения. Альфа-канал остаётся без изменений.
     
     `level`
-        The amount of saturation in the resulting image. 1.0 is
-        the unaltered image, while 0.0 is grayscale.
+        Коэффициент насыщенности результирующего изображения. Значение 1.0 оставляет изображение
+        без изменений, а 0.0 делает его полностью чёрно-белым.
     
     `desat`
-        This is a 3-element tuple that controls how much of the
-        red, green, and blue channels will be placed into all
-        three channels of a fully desaturated image. The default
-        is based on the constants used for the luminance channel
-        of an NTSC television signal. Since the human eye is
-        mostly sensitive to green, more of the green channel is
-        kept then the other two channels.
+        Кортеж из трёх чисел, определяющий весовые коэффициенты красного, зелёного и синего каналов
+        при расчёте яркости для обесцвеченного изображения. По умолчанию используются константы яркости
+        стандарта телевещания NTSC. Поскольку человеческий глаз наиболее чувствителен к зелёному цвету,
+        доля зелёного канала превышает доли двух других.
     
     .. deprecated:: 7.4.0
-        Use :func:`SaturationMatrix(value, desat) <SaturationMatrix>`
-        with the :tpref:`matrixcolor` transform property.
+        Используйте :func:`SaturationMatrix(value, desat) <SaturationMatrix>`
+        со свойством трансформации :tpref:`matrixcolor`.
 
 .. function:: im.matrix.tint(r, g, b)
     
-    Returns an im.matrix that tints an image, without changing
-    the alpha channel. `r`, `g`, and `b` should be numbers between
-    0 and 1, and control what fraction of the given channel is
-    placed into the final image. (For example, if `r` is .5, and
-    the value of the red channel is 100, the transformed color
-    will have a red value of 50.)
+    Возвращает im.matrix, тонирующую изображение без изменения альфа-канала. Числа `r`, `g` и `b`
+    должны находиться в диапазоне от 0 до 1 и задавать множители для соответствующих каналов цвета
+    (например, если `r` равно 0.5, а исходное значение красного канала было 100, то в результате оно станет 50).
     
     .. deprecated:: 7.4.0
-        Use :func:`TintMatrix(Color((r, g, b))) <TintMatrix>`
-        with the :tpref:`matrixcolor` transform property.
-
+        Используйте :func:`TintMatrix(Color((r, g, b))) <TintMatrix>`
+        со свойством трансформации :tpref:`matrixcolor`.

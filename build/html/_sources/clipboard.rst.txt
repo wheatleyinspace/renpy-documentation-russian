@@ -1,12 +1,14 @@
-Clipboard
-=========
+.. _clipboard:
 
-Ren'Py supports reading from and writing to the system clipboard. This
-allows a game to copy text and data for the player to paste into
-other applications, and to read text and data that the player has copied.
+============
+Буфер обмена
+============
 
-Clipboard support is platform-dependent. On desktop platforms (Windows,
-macOS, Linux), the clipboard is fully supported. On the web and mobile plaforms,
-support may be limited to text and standard mime types.
+Ren'Py поддерживает чтение из системного буфера обмена и запись в него. Это позволяет игре копировать
+текст и графические данные для вставки в другие приложения, а также считывать данные, скопированные игроком.
+
+Поддержка буфера обмена зависит от платформы. На настольных системах (Windows, macOS, Linux) буфер обмена
+поддерживается в полном объёме. На веб- и мобильных платформах поддержка может быть ограничена текстом
+и стандартными MIME-типами.
 
 .. include:: inc/clipboard

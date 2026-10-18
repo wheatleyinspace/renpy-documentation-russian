@@ -2,16 +2,14 @@
 
 .. function:: renpy.with_statement(trans, always=False)
     
-    Causes a transition to occur. This is the Python equivalent of the
-    with statement.
+    Запускает переход. Это эквивалент инструкции with на Python.
     
     `trans`
-        The transition.
+        Переход.
     
     `always`
-        If True, the transition will always occur, even if the user has
-        disabled transitions.
+        Если True, переход будет происходить всегда, даже если пользователь
+        отключил переходы.
     
-    This function returns true if the user chose to interrupt the transition,
-    and false otherwise.
-
+    Эта функция возвращает True, если пользователь прервал переход кликом,
+    и False в противном случае.

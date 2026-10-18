@@ -2,103 +2,74 @@
 
 .. class:: ui.adjustment(range=1, value=0, step=None, page=None, changed=None, adjustable=None, ranged=None, force_step=False, raw_changed=None)
     
-    Adjustment objects represent a value that can be adjusted by a bar
-    or viewport. They contain information about the value, the range
-    of the value, and how to adjust the value in small steps and large
-    pages.
+    Объекты регулятора (adjustment) представляют значение, которое можно настраивать
+    с помощью полосы (bar) или области просмотра (viewport). Они содержат информацию
+    о значении, диапазоне значения, а также о шаге регулировки и размере страниц.
     
-    The following parameters correspond to fields or properties on
-    the adjustment object:
+    Следующие параметры соответствуют полям или свойствам объекта регулятора:
     
     `range`
-        The range of the adjustment, a number.
+        Диапазон регулятора (число).
     
     `value`
-        The value of the adjustment, a number.
+        Текущее значение регулятора (число).
     
     `step`
-        The step size of the adjustment, a number. If None, then
-        defaults to 1/10th of a page, if set. Otherwise, defaults
-        to the 1/20th of the range.
-    
-        This is used when scrolling a viewport with the mouse wheel.
+        Размер шага (число). Если None, по умолчанию 1/10 страницы (если задана),
+        иначе 1/20 диапазона. Используется при прокрутке области просмотра колесом мыши.
     
     `page`
-        The page size of the adjustment. If None, this is set
-        automatically by a viewport. If never set, defaults to 1/10th
-        of the range.
+        Размер страницы регулятора. Если None, устанавливается областью просмотра
+        автоматически. Если не задан, по умолчанию равен 1/10 диапазона.
+        Используется при клике по полосе прокрутки.
     
-        It's can be used when clicking on a scrollbar.
-    
-    The following parameters control the behavior of the adjustment.
+    Следующие параметры управляют поведением регулятора:
     
     `adjustable`
-        If True, this adjustment can be changed by a bar. If False,
-        it can't.
-    
-        It defaults to being adjustable if a `changed` function
-        is given or if the adjustment is associated with a viewport,
-        and not adjustable otherwise.
+        Если True, регулятор можно изменять полосой. По умолчанию True, если задана
+        функция `changed` или если регулятор связан с областью просмотра.
     
     `changed`
-        This function is called with the new value when the value of
-        the adjustment changes.
+        Функция, вызываемая с новым значением при изменении значения регулятора.
     
     `raw_changed`
-        This function is called when the value of the adjustment
-        changes. Unlike `changed`, this function is called with
-        the raw value, which may be out of range. It's called with
-        two arguments, the adjustment and the new value.
+        Функция, вызываемая при изменении значения регулятора. В отличие от `changed`,
+        вызывается с «сырым» значением, которое может выходить за пределы диапазона.
+        Принимает два аргумента: объект регулятора и новое значение.
     
     `ranged`
-        This function is called with the adjustment object when
-        the range of the adjustment is set by a viewport.
-    
-        This function may be called multiple times, as part of the layout
-        process.
+        Функция, вызываемая с объектом регулятора при установке его диапазона областью просмотра.
+        Может вызываться многократно в процессе компоновки.
     
     `force_step`
-        If True and this adjustment changes by dragging associated
-        viewport or a bar, value will be changed only if the drag
-        reached next step.
-        If "release" and this adjustment changes by dragging associated
-        viewport or a bar, after the release, value will be
-        rounded to the nearest step.
-        If False, this adjustment will changes by dragging, ignoring
-        the step value.
+        Если True, и значение меняется перетаскиванием связанной области просмотра или полосы,
+        значение меняется только при достижении следующего шага.
+        Если "release", после отпускания мыши значение округляется до ближайшего шага.
+        Если False, значение меняется плавно, игнорируя шаг.
     
     .. method:: change(value)
     
-        Changes the value of the adjustment to `value`, updating
-        any bars and viewports that use the adjustment.
+        Изменяет значение регулятора на `value`, обновляя все полосы и области просмотра,
+        использующие этот регулятор.
 
 .. function:: ui.interact(*, roll_forward=None, mouse=None)
     
-    Causes an interaction with the user, and returns the result of that
-    interaction. This causes Ren'Py to redraw the screen and begin processing
-    input events. When a displayable returns a value in response to an event,
-    that value is returned from ui.interact, and the interaction ends.
+    Вызывает взаимодействие с пользователем и возвращает результат этого взаимодействия.
+    Заставляет Ren'Py перерисовать экран и начать обработку событий ввода. Когда отображаемый
+    объект возвращает значение в ответ на событие, это значение возвращается из ui.interact,
+    и взаимодействие завершается.
     
-    This function is rarely called directly. It is usually called by other
-    parts of Ren'Py, including the say statement, menu statement, with statement,
-    pause statement, call screen, :func:`renpy.input`, among many other
-    functions. However, it can be called directly if necessary.
+    Эта функция редко вызывается напрямую: обычно ее вызывают другие части Ren'Py,
+    включая операторы say, menu, with, pause, call screen, :func:`renpy.input` и другие.
     
-    When an interaction ends, the transient layer and all screens shown with
-    `_transient` as true are cleared from the scene lists.
+    При завершении взаимодействия слой transient и все экраны, показанные с параметром
+    `_transient=True`, удаляются из списков сцен.
     
-    The following arguments are documented. As other, undocumented arguments
-    exist for Ren'Py's internal use, please pass all arguments as keyword
-    arguments.
+    Документированные аргументы:
     
     `roll_forward`
-        The information that will be returned by this function when a
-        roll forward occurs. (If None, the roll forward is ignored.) This
-        should usually be passed the result of the :func:`renpy.roll_forward_info`
-        function.
+        Информация, возвращаемая функцией при перемотке вперед (обычно результат вызова
+        :func:`renpy.roll_forward_info`). Если None, перемотка вперед игнорируется.
     
     `mouse`
-        The style of mouse cursor to use during this function. If None, picks between
-        'default', 'mainmenu', and 'gamemenu' based on whether the main menu or game menu
-        is active.
-
+        Стиль курсора мыши: 'default', 'mainmenu' или 'gamemenu'.

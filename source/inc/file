@@ -2,52 +2,46 @@
 
 .. function:: renpy.file(fn, encoding=None)
     
-    An alias for :func:`renpy.open_file`, for compatibility with older
-    versions of Ren'Py.
+    Псевдоним для :func:`renpy.open_file`, сохранённый для совместимости со старыми
+    версиями Ren'Py.
 
 .. function:: renpy.list_files(common=False)
     
-    Lists the files in the game directory and archive files. Returns
-    a list of files, with / as the directory separator.
+    Возвращает список файлов в каталоге игры и в архивах RPA. В качестве
+    разделителя каталогов в путях используется слэш ``/``.
     
     `common`
-        If true, files in the common directory are included in the
-        listing.
+        Если True, в результирующий список также включаются файлы из каталога common.
 
 .. function:: renpy.loadable(filename, directory=None, tl=True)
     
-    Returns True if the given filename is loadable, meaning that it
-    can be loaded from the disk or from inside an archive. Returns
-    False if this is not the case.
+    Возвращает True, если файл с именем `filename` доступен для загрузки (то есть
+    может быть загружен с диска или из архива). В противном случае возвращает False.
     
     `directory`
-        If not None, a directory to search in if the file is not found
-        in the game directory. This will be prepended to filename, and
-        the search tried again.
+        Если не None, задаёт каталог поиска на случай, если файл не найден в каталоге
+        игры. Значение добавляется в начало пути `filename` при повторном поиске.
     `tl`
-        If True, a translation subdirectory will be considered as well.
+        Если True, поиск также выполняется в подкаталоге текущего перевода.
 
 .. function:: renpy.open_file(fn, encoding=None, directory=None)
     
-    Returns a read-only file-like object that accesses the file named `fn`. The file is
-    accessed using Ren'Py's standard search method, and may reside in the game directory,
-    in an RPA archive, or as an Android asset.
+    Возвращает файлоподобный объект, открытый только для чтения, для доступа к файлу с именем `fn`.
+    Поиск файла выполняется по стандартным правилам поиска Ren'Py — файл может находиться
+    в каталоге игры, в архиве RPA или в ресурсах Android (assets).
     
-    The object supports a wide subset of the fields and methods found on Python's
-    standard file object, opened in binary mode. (Basically, all of the methods that
-    are sensible for a read-only file.)
+    Объект поддерживает большинство полей и методов стандартного файлового объекта Python,
+    открытого в двоичном режиме (в частности, все методы, применимые к файлам, открытым только для чтения).
     
     `encoding`
-        If given, the file is open in text mode with the given encoding.
-        If False, the file is opened in binary mode.
-        If None, the default, the encoding is taken from :var:`config.open_file_encoding`.
-        In most cases, None will open a file in binary mode.
+        Если указано, файл открывается в текстовом режиме с заданной кодировкой.
+        Если False, файл открывается в двоичном режиме.
+        Если None (по умолчанию), кодировка определяется переменной :var:`config.open_file_encoding`.
+        В большинстве случаев значение None открывает файл в двоичном режиме.
     
     `directory`
-        If not None, a directory to search in if the file is not found
-        in the game directory. This will be prepended to filename, and
-        the search tried again.
+        Если не None, задаёт каталог поиска на случай, если файл не найден в каталоге
+        игры. Значение добавляется в начало пути `filename` при повторном поиске.
     
-    This returns an io.BufferedReader object if encoding is None, and an
-    io.TextIOWrapper object if encoding is not None.
-
+    Возвращает объект :class:`io.BufferedReader`, если кодировка None, или объект
+    :class:`io.TextIOWrapper`, если указана кодировка.

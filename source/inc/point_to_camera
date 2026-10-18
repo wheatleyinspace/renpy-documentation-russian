@@ -2,9 +2,8 @@
 
 .. class:: Camera(layer='master')
     
-    Instances of this class can be used with point_to to point
-    at the location of the camera for a particular layer.
+    Экземпляры этого класса используются со свойством point_to для направления объекта
+    в сторону камеры указанного слоя.
     
     `layer`
-        The name of the layer.
-
+        Имя слоя.

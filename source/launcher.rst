@@ -1,38 +1,39 @@
-========
-Launcher
-========
+=======
+Лаунчер
+=======
 
-The Ren'Py launcher is mostly documented in other portions of the manual. This
-page contains information about the launcher that doesn't fit anywhere else.
+Лаунчер Ren'Py подробно описан в других разделах руководства. На этой странице
+содержится дополнительная информация о лаунчере, не вошедшая в другие разделы.
 
 
-Project Folders
----------------
+Папки проектов
+--------------
 
-The launcher supports folders. You can create a folder by creating a directory
-under the projects directory, and moving the project into it, then clicking Refresh.
-Only one level of folders is supported, so you can't create a folder inside a folder.
+Лаунчер поддерживает группировку проектов по папкам. Чтобы создать папку, создайте
+каталог внутри каталога проектов, переместите в него проекты и нажмите «Обновить»
+в лаунчере. Поддерживается только один уровень вложенности папок (нельзя создать
+папку внутри другой папки).
 
-Folders can be expanded and collapsed by clicking on the name in the launcher.
+Папки можно разворачивать и сворачивать, нажимая на их названия в лаунчере.
 
 .. warning::
 
-    Currently, the Ren'Py launcher only supports one project with a given name. So it's not
-    possible to have the same project name in different folders.
+    В настоящее время лаунчер Ren'Py поддерживает только один проект с данным именем.
+    Нельзя иметь проекты с одинаковыми именами в разных папках.
 
 Projects.txt
 ------------
 
-If a file named ``projects.txt`` exists in the projects directory, it's expected
-to contain a list of full paths, one per line. These paths are treated as if
-they were inside the projects directory, and projects they contain show
-up in the launcher.
+Если в каталоге проектов существует файл с именем ``projects.txt``, он должен содержать
+список полных путей к каталогам, по одному на строку. Эти пути обрабатываются так,
+как если бы они находились внутри каталога проектов, и содержащиеся в них проекты
+будут отображаться в лаунчере.
 
 
-No Launcher Links
------------------
+Отключение ссылок в лаунчере
+----------------------------
 
-If a file named ``no_launcher_links.txt`` exists in the Ren'Py base directory (the one with
-renpy.exe, renpy.sh, and renpy.app in it), the launcher will disable links to renpy.org. While
-not guaranteed, this is intended in educational and homeschool environments to prevent young
-Ren'Py users from seeing adult sponsors.
+Если в базовом каталоге Ren'Py (содержащем renpy.exe, renpy.sh и renpy.app) существует
+файл с именем ``no_launcher_links.txt``, лаунчер отключит все внешние ссылки на сайт
+renpy.org. Это предназначено для образовательных учреждений и домашнего обучения,
+чтобы юные пользователи Ren'Py не видели спонсорских ссылок для взрослой аудитории.

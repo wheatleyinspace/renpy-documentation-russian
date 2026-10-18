@@ -2,93 +2,72 @@
 
 .. class:: Sprite()
     
-    This represents a sprite that is managed by the SpriteManager. It contains
-    fields that control the placement of the sprite on the screen. Sprites
-    should not be created directly. Instead, they should be created by
-    calling :meth:`SpriteManager.create`.
+    Представляет отдельный спрайт под управлением SpriteManager. Содержит поля, контролирующие
+    расположение спрайта на экране. Спрайты не следует создавать напрямую — вместо этого вызывайте
+    метод :meth:`SpriteManager.create`.
     
-    The fields of a sprite object are:
+    Поля объекта Sprite:
     
     `x`, `y`
-        The x and y coordinates of the upper-left corner of the sprite,
-        relative to the SpriteManager.
+        Координаты X и Y левого верхнего угла спрайта относительно SpriteManager.
     
     `zorder`
-        An integer that's used to control the order of this sprite in the
-        relative to the other sprites in the SpriteManager. The larger the
-        number is, the closer to the viewer the sprite is.
+        Целое число, управляющее порядком отрисовки спрайта относительно других спрайтов в SpriteManager.
+        Чем больше число, тем ближе спрайт к зрителю.
     
     `events`
-        If True, then events are passed to child. If False, the default,
-        the children ignore events (and hence don't spend time processing
-        them).
+        Если True, события ввода передаются дочернему отображаемому объекту. По умолчанию False
+        (события игнорируются для максимальной производительности).
     
-    The methods of a Sprite object are:
+    Методы объекта Sprite:
 
     .. method:: destroy()
         
-        Destroys this sprite, preventing it from being displayed and
-        removing it from the SpriteManager.
+        Уничтожает данный спрайт, прекращая его отрисовку и удаляя из SpriteManager.
     
     .. method:: set_child(d)
         
-        Changes the Displayable associated with this sprite to `d`.
-    
+        Заменяет отображаемый объект, связанный со спрайтом, на `d`.
+
 .. class:: SpriteManager(update=None, event=None, predict=None, ignore_time=False, animation=True, **properties)
     
-    This displayable manages a collection of sprites, and displays
-    them at the fastest speed possible.
+    Отображаемый объект, управляющий набором спрайтов и отрисовывающий их с максимальной скоростью.
     
     `update`
-        If not None, a function that is called each time a sprite
-        is rendered by this sprite manager. It is called with one
-        argument, the time in seconds since this sprite manager
-        was first displayed.  It is expected to return the number
-        of seconds until the function is called again, and the
-        SpriteManager is rendered again.
+        Функция, вызываемая каждый раз при отрисовке спрайтов данным менеджером. Принимает один аргумент —
+        время в секундах с момента первого показа SpriteManager. Должна возвращать количество секунд
+        до следующего вызова функции и повторного рендеринга.
     
     `event`
-        If not None, a function that is called when an event occurs.
-        It takes as arguments:
-        * A pygame event object.
-        * The x coordinate of the event.
-        * The y coordinate of the event.
-        * The time since the sprite manager was first shown.
-        If it returns a non-None value, the interaction ends, and
-        that value is returned.
+        Функция, вызываемая при возникновении события ввода. Принимает аргументы:
+        * Объект события pygame.
+        * Координату X события.
+        * Координату Y события.
+        * Время с момента первого показа менеджера спрайтов.
+        Если возвращает значение, отличное от None, взаимодействие завершается, а это значение возвращается.
     
     `predict`
-        If not None, a function that returns a list of
-        displayables. These displayables are predicted when the
-        sprite manager is.
+        Функция, возвращающая список отображаемых объектов для предсказания при загрузке менеджера спрайтов.
     
     `ignore_time`
-        If True, then time is ignored when rendering displayables. This
-        should be used when the sprite manager is used with a relatively
-        small pool of images, and those images do not change over time.
-        This should only be used with a small number of displayables, as
-        it will keep all displayables used in memory for the life of the
-        SpriteManager.
+        Если True, время игнорируется при отрисовке дочерних объектов. Рекомендуется использовать при небольшом
+        статичном наборе картинок. Все используемые отображаемые объекты удерживаются в памяти на всё время
+        жизни SpriteManager.
     
     `animation`
-        If True, then this sprite manager uses the animation timebase.
-        This prevents it from resetting when shown twice.
+        Если True, используется временная шкала анимации, предотвращающая сброс времени при повторном показе.
     
-    After being rendered once (before the `update` function is called),
-    SpriteManagers have the following fields:
+    После первого рендеринга (до вызова функции `update`) у SpriteManager появляются поля:
     
     `width`, `height`
-        The width and height of this SpriteManager, in pixels.
+        Ширина и высота менеджера спрайтов в пикселях.
     
-    
-    SpriteManagers have the following methods:
+    Методы SpriteManager:
 
     .. method:: create(d)
         
-        Creates a new Sprite for the displayable `d`, and adds it to this
-        SpriteManager.
+        Создаёт новый спрайт для отображаемого объекта `d` и добавляет его в SpriteManager.
     
     .. method:: redraw(delay=0)
         
-        Causes this SpriteManager to be redrawn in `delay` seconds.
-    
+        Инициирует перерисовку SpriteManager через `delay` секунд.

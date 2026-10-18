@@ -1,35 +1,31 @@
 .. _gesture:
 
-Gestures
-========
+=====
+Жесты
+=====
 
-Ren'Py includes a gesture recognizer that is enabled when a touchscreen
-is used. This makes it possible for gestures to functions that would
-otherwise require a keyboard and mouse.
+В Ren'Py есть система распознавания жестов, активируемая при использовании сенсорного экрана.
+Это позволяет назначать на жесты функции, которые иначе требовали бы клавиатуры или мыши.
 
-The gesture recognizer first classifies swipes into 8 compass directions,
-"n", "ne", "e", "se", "s", "sw", "w", "nw". North is considered to be
-towards the top of the screen. It then concatenates the swipes into a string
-using the "_" as a delimiter. For example, if the player swipes down and
-to the right, the string "s_e" will be produced.
+Распознаватель жестов сначала классифицирует свайпы по 8 направлениям сторон света:
+"n", "ne", "e", "se", "s", "sw", "w", "nw" (север "n" направлен к верхней границе экрана).
+Затем направления объединяются в строку через символ подчёркивания "_". Например, если игрок
+проводит пальцем вниз, а затем вправо, формируется строка "s_e".
 
-Assuming :var:`config.dispatch_gesture` is None, what happens next is that
-gesture is mapped to an event using :var:`config.gestures`. If it is found,
-it is queued using :func:`renpy.queue_event`. Otherwise, the gesture is
-ignored.
+Если переменная :var:`config.dispatch_gesture` равна None, жест сопоставляется с событием через словарь
+:var:`config.gestures`. Если соответствие найдено, событие ставится в очередь с помощью
+:func:`renpy.queue_event`. В противном случае жест игнорируется.
 
-Gesture recognition is only enabled when "touch" is present in
-:var:`config.variants`, which should be the case when running on
-a touchscreen device.
+Распознавание жестов активно только тогда, когда вариант "touch" присутствует в :var:`config.variants`
+(что автоматически происходит на устройствах с сенсорным экраном).
 
 .. var:: config.gestures = { "n_s_w_e_w_e" : "progress_screen" }
 
-    A map from gesture to the event activated by the gesture.
+    Словарь, сопоставляющий строку жеста с активируемым событием.
 
 .. var:: config.dispatch_gesture : Callable
 
-    The function that is used to dispatch gestures. This function is
-    passed the raw gesture string. If it returns non-None, the
-    interaction ends.
+    Функция диспетчеризации жестов. Принимает исходную строку жеста. Если возвращает не None,
+    взаимодействие завершается.
 
 .. include:: inc/gesture

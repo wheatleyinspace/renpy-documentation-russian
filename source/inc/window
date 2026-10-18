@@ -2,27 +2,22 @@
 
 .. function:: _window_hide(trans=False, auto=False)
     
-    The Python equivalent of the ``window hide`` statement.
+    Эквивалент инструкции ``window hide`` на Python.
     
     `trans`
-        If False, the default window hide transition is used. If None,
-        no transition is used. Otherwise, the specified transition is
-        used.
+        Если False, используется переход скрытия окна по умолчанию. Если None,
+        переход не используется. В противном случае используется указанный переход.
     
     `auto`
-        If True, this becomes the equivalent of the ``window auto hide``
-        statement.
+        Если True, становится эквивалентом инструкции ``window auto hide``.
 
 .. function:: _window_show(trans=False, auto=False)
     
-    The Python equivalent of the ``window show`` statement.
+    Эквивалент инструкции ``window show`` на Python.
     
     `trans`
-        If False, the default window show transition is used. If None,
-        no transition is used. Otherwise, the specified transition is
-        used.
+        Если False, используется переход показа окна по умолчанию. Если None,
+        переход не используется. В противном случае используется указанный переход.
     
     `auto`
-        If True, this becomes the equivalent of the ``window auto show``
-        statement.
-
+        Если True, становится эквивалентом инструкции ``window auto show``.

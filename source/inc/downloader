@@ -2,11 +2,10 @@
 
 .. function:: updater.continue_game_download(screen='downloader')
     
-    Continues downloading the game data. This will loop until the
-    download is complete, or the user exits the game.
+    Продолжает процесс скачивания игровых данных. Цикл выполняется до тех пор,
+    пока загрузка не завершится или пользователь не выйдет из игры.
 
 .. function:: updater.start_game_download(url, **kwargs)
     
-    Starts downloading the game data from `url`. This begins the process
-    of determining what needs to be downloaded, and returns an Update object.
-
+    Начинает процесс скачивания игровых данных по указанному `url`. Запускает
+    процедуру проверки необходимых для загрузки пакетов и возвращает объект Update.

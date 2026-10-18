@@ -2,17 +2,16 @@
 
 .. function:: renpy.get_sdl_dll(version=2)
     
-    Returns a ctypes.cdll object that refers to the library that contains
-    the instance of SDL3 that Ren'Py is using. If this fails, None is returned.
+    Возвращает объект ctypes.cdll, ссылающийся на библиотеку, содержащую
+    экземпляр SDL3, который использует Ren'Py. При неудаче возвращает None.
     
     `version`
-        The version of SDL to look for. Currently only version 3 is supported, and a call without
-        a version will always return None.
+        Версия SDL для поиска. В настоящее время поддерживается только версия 3;
+        вызов без указания версии всегда вернёт None.
 
 .. function:: renpy.get_sdl_window_pointer()
     
     :rtype: ctypes.c_void_p | None
     
-    Returns a pointer to the main window, or None if the main window is not
-    displayed (or some other problem occurs).
-
+    Возвращает указатель на главное окно или None, если главное окно
+    не отображается (или произошла другая ошибка).

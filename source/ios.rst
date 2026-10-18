@@ -2,146 +2,139 @@
 iOS
 ===
 
-Ren'Py supports creating iOS apps that run on iPhone and iPad devices. As
-creating an iOS app requires Apple-developed programs (like the Xcode IDE),
-iOS apps can only be created on Macintosh computers.
+Ren'Py поддерживает создание приложений iOS, работающих на устройствах iPhone и iPad.
+Поскольку для создания приложений iOS требуются программы, разработанные Apple
+(например, IDE Xcode), сборка приложений iOS возможна только на компьютерах под управлением macOS.
 
-Required Language
-=================
+Обязательное уведомление о лицензиях
+====================================
 
-Some of the libraries used by Ren'Py on iOS are licensed under the terms
-of the GNU Lesser/Library General Public License. You'll need to comply
-with the terms of that license to distribute Ren'Py. We believe including
-the following language in your app's description will suffice, but check
-with a lawyer to be sure.
+Некоторые библиотеки, используемые Ren'Py на iOS, распространяются на условиях
+лицензии GNU Lesser General Public License (LGPL). Для распространения приложений Ren'Py
+вам необходимо соблюдать условия этой лицензии. Мы полагаем, что включения следующего
+текста в описание вашего приложения будет достаточно, однако для полной уверенности
+проконсультируйтесь с юристом.
 
     This program contains free software licensed under a number of licenses,
     including the GNU Lesser General Public License. A complete list of
     software is available at https://www.renpy.org/l/license/.
 
-Work in Progress
-================
+Текущее состояние разработки
+============================
 
-The current Ren'Py iOS support is a work in progress. While it has been
-used to release games to the Apple App Store, the default Ren'Py interface
-does not comply with Apple's guidelines and will need to be changed.
+Поддержка iOS в Ren'Py постоянно развивается. Хотя на движке уже выпускались игры
+в Apple App Store, стандартный графический интерфейс Ren'Py не полностью соответствует
+рекомендациям Apple (Human Interface Guidelines) и потребует адаптации.
 
-Please let us know the results of getting your game through the App Store
-approval process.
-
-
-Platform Differences
-====================
-
-iOS is similar to Android, but differs from the mouse-based platforms
-that Ren'Py supports. All of the :ref:`android platform differences <android-platform-differences>`
-apply to iOS.
-
-A list of video formats supported by iOS can be found
-`here <https://developer.apple.com/library/ios/documentation/Miscellaneous/Conceptual/iPhoneOSTechOverview/MediaLayer/MediaLayer.html#//apple_ref/doc/uid/TP40007898-CH9-SW6>`_.
+Пожалуйста, сообщайте разработчикам Ren'Py о результатах прохождения модерации вашей игры
+в App Store.
 
 
-Testing and Emulation
-=====================
+Отличия платформы
+=================
 
-For testing purposes, Ren'Py supports two iOS emulation modes. These
-are accessed from the iOS screen of the launcher. Both modes simulate
-running on a touchscreen, such that events only reach the game when
-the mouse button is down.
+Платформа iOS во многом похожа на Android, но имеет существенные отличия от платформ
+с управлением мышью. Все :ref:`отличия платформы Android <android-platform-differences>`
+в полной мере применимы и к iOS.
+
+Список видеоформатов, поддерживаемых iOS, доступен
+`в документации Apple <https://developer.apple.com/library/ios/documentation/Miscellaneous/Conceptual/iPhoneOSTechOverview/MediaLayer/MediaLayer.html#//apple_ref/doc/uid/TP40007898-CH9-SW6>`_.
+
+
+Тестирование и эмуляция
+=======================
+
+Для тестирования Ren'Py поддерживает два режима эмуляции iOS. Доступ к ним осуществляется
+через раздел «iOS» в лаунчере. Оба режима симулируют работу сенсорного экрана: события
+передаются в игру только при зажатой кнопке мыши.
 
 iPhone
-    This mode emulates an iPhone.
+    Эмулирует интерфейс смартфона iPhone.
 
 Tablet
-    This mode emulates an iPad.
+    Эмулирует планшет iPad.
 
-While these emulators can be used to quickly test your project, it's best to
-also test on real hardware. The emulators do not deal with some human-factors
-issues, like the size of a user's fingers.
-
-
-Packaging
-=========
-
-Packaging a Ren'Py game for iOS is currently an involved process compared
-to the other platforms Ren'Py supports. We currently assume you have some
-experience with creating iOS apps, or can follow Apple's instructions.
-
-Getting Started
----------------
-
-Before you can package a Ren'Py game, you'll need to set up your Macintosh
-to create iOS applications. This means setting up Xcode on your Mac,
-enrolling in the iOS Developer Program, and creating a provisioning
-profile that allows your apps to run on your iOS device.
-
-The Apple-written `App Distribution Quick Start <https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppStoreDistributionTutorial/Introduction/Introduction.html>`_
-guide explains how to configure all of the above. We suggest working through
-it, and even packaging a one of the template apps before moving on to
-Ren'Py games.
-
-Creating the Xcode Project
---------------------------
-
-The first step in creating your iOS application is to create the Xcode project.
-This is done by selecting "Create Xcode Project" from the iOS menu in the
-Ren'Py launcher.
-
-The name of the Xcode project is automatically chosen based on the name that
-shows up in the launcher. The project is customized based this name, but
-those customizations can be edited in Xcode.
-
-Xcode projects created in this way are specific to a single version of
-Ren'Py. After upgrading Ren'Py, you must create a new Xcode project for your
-game, and repeat the project customizations.
-
-Building the Project
---------------------
-
-After the project has been created in Ren'Py, it can be opened in Xcode by
-choosing "Launch Xcode" from the launcher. Once the project is open in Xcode,
-it can be built and installed on the iOS device.
-
-Updating the Project
---------------------
-
-Choosing "Update Xcode Project" will copy the latest version of your
-Ren'Py project into the Xcode project. This is suitable for when your project
-files change, but not for when Ren'Py itself has been updated.
+Хотя эти эмуляторы удобны для быстрой проверки проекта, настоятельно рекомендуется
+тестировать игру на реальных устройствах. Эмуляторы не учитывают эргономические факторы,
+такие как реальный физический размер пальцев пользователя на компактном экране.
 
 
-Customization
+Сборка пакета
 =============
 
-Most customization is performed in the Xcode project. For example, the
-icon, launch images, and orientations are all customized in Xcode.
+Сборка игры Ren'Py для iOS в настоящее время представляет собой более сложный процесс
+по сравнению с другими платформами. Предполагается, что у вас есть опыт разработки приложений
+для iOS или вы можете следовать официальным руководствам Apple.
+
+Подготовка к работе
+-------------------
+
+Перед упаковкой игры Ren'Py необходимо подготовить компьютер Mac для сборки приложений iOS.
+Это включает установку Xcode на Mac, регистрацию в программе Apple Developer Program и
+создание профиля подготовки (provisioning profile), позволяющего запускать приложения
+на вашем устройстве iOS.
+
+В официальном руководстве Apple `App Distribution Quick Start <https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppStoreDistributionTutorial/Introduction/Introduction.html>`_
+подробно объясняется вся процедура настройки. Мы рекомендуем ознакомиться с ним и даже
+собрать одно из тестовых шаблонных приложений Xcode перед переходом к проектам Ren'Py.
+
+Создание проекта Xcode
+----------------------
+
+Первым шагом в создании приложения iOS является генерация проекта Xcode. Для этого выберите
+пункт «Create Xcode Project» (Создать проект Xcode) в меню iOS лаунчера Ren'Py.
+
+Имя проекта Xcode выбирается автоматически на основе названия игры в лаунчере. Настройки
+проекта кастомизируются на основе этого имени, но могут быть изменены непосредственно в Xcode.
+
+Проекты Xcode, созданные таким образом, привязаны к конкретной версии Ren'Py. После обновления
+Ren'Py необходимо создать новый проект Xcode для вашей игры и заново применить пользовательские настройки.
+
+Сборка проекта
+--------------
+
+После того как проект создан в Ren'Py, его можно открыть в Xcode, выбрав пункт «Launch Xcode»
+в лаунчере. Когда проект открыт в Xcode, его можно собрать и установить на устройство iOS.
+
+Обновление проекта
+------------------
+
+Пункт «Update Xcode Project» копирует последнюю версию файлов вашего проекта Ren'Py в проект Xcode.
+Это используется при изменении файлов сценария и ресурсов игры, но не подходит в случае обновления
+самого Ren'Py.
+
+
+Настройка
+=========
+
+Большинство настроек выполняется внутри проекта Xcode. Например, иконка приложения, стартовые
+изображения и ориентация экрана настраиваются в Xcode.
 
 .. _ios-storyboard:
 
-Launch Storyboard
------------------
+Экран запуска (Launch Storyboard)
+---------------------------------
 
-When the application is run, the Launch Storyboard (configured as part of the
-Xcode project, outside of Ren'Py) will be displayed until Ren'Py is ready
-to display the game's user interface.
+При запуске приложения отображается раскадровка запуска (Launch Storyboard, настроенная в проекте
+Xcode вне Ren'Py), пока Ren'Py подготавливает и выводит интерфейс игры.
 
-Once Ren'Py finishes initializing, it will either resume the current game,
-or run the splashscreen and main menu.
+После завершения инициализации Ren'Py либо возобновляет текущую сессию игры, либо запускает заставку
+(splashscreen) и главное меню.
 
-Generation
------------
+Генерация иконок
+----------------
 
-To ease development, it's possible to have Ren'Py generate the iOS icon
-images from files.
+Для упрощения процесса разработки Ren'Py умеет автоматически генерировать набор иконок iOS
+из файла изображения.
 
 ``ios-icon.png``
-    If present, this file is scaled to the various sizes of png file
-    needed to make an iOS icon.
+    Если этот файл присутствует в проекте, он автоматически масштабируется до различных
+    разрешений PNG, необходимых для иконки iOS.
 
 .. _pyobjus:
 
 Pyobjus
 =======
 
-On iOS and macOS, a version of `Pyobjus <https://pyobjus.readthedocs.io/en/latest/>`__
-is available, allowing advanced creators to call system libraries.
+На платформах iOS и macOS доступна библиотека `Pyobjus <https://pyobjus.readthedocs.io/en/latest/>`__,
+позволяющая опытным разработчикам вызывать функции системных библиотек Objective-C из Python.

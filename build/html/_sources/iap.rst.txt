@@ -1,32 +1,31 @@
-=================
-In-App Purchasing
-=================
+.. _in-app-purchasing:
 
-Ren'Py includes a high-level in-app purchasing framework. This framework
-currently only supports unlock-style purchases from the Apple App Store,
-Google Play, and the Amazon Appstore.
+==========================================
+Внутриигровые покупки (In-App Purchasing)
+==========================================
 
-Using this framework is fairly simple, and consists of the following
-functions.
+Ren'Py включает в себя высокоуровневый фреймворк для реализации внутриигровых покупок (IAP).
+В настоящее время этот механизм поддерживает бессрочные покупки (разблокировки) и расходуемые
+товары в магазинах Apple App Store, Google Play и Amazon Appstore.
 
-* In the init phase of your game, register available purchases using the
-  :func:`iap.register` function.
-* Once the game has started, check to see if a purchase has been purchased
-  using the :func:`iap.has_purchased` function.
-* Allow the user to purchase an item using the :func:`iap.purchase` function
-  or the :func:`iap.Purchase` action.
-* Allow the user to restore purchases bought on other devices using the
-  :func:`iap.restore` function or the :func:`iap.Restore` action.
+Использование фреймворка построено на следующих этапах:
 
-To offer in-app purchases, the purchases (including an associated price)
-must be set up on the various marketplaces.
+* В фазе инициализации игры зарегистрируйте доступные товары с помощью функции :func:`iap.register`.
+* После запуска игры проверяйте, куплен ли товар, с помощью функции :func:`iap.has_purchased`.
+* Предоставьте пользователю возможность совершить покупку через функцию :func:`iap.purchase`
+  или экранное действие :func:`iap.Purchase`.
+* Предоставьте возможность восстановить покупки, сделанные на других устройствах, с помощью
+  функции :func:`iap.restore` или экранного действия :func:`iap.Restore`.
 
-IAP Functions
--------------
+Чтобы внутриигровые покупки работали, соответствующие идентификаторы товаров (с указанием цен)
+должны быть предварительно настроены в консолях соответствующих торговых площадок.
+
+Функции IAP
+-----------
 
 .. include:: inc/iap
 
-IAP Actions
------------
+Действия IAP
+------------
 
 .. include:: inc/iap_actions

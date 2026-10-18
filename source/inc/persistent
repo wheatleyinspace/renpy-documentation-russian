@@ -2,31 +2,26 @@
 
 .. function:: renpy.register_persistent(field, func)
     
-    Registers a function that is used to merge values of a persistent field
-    loaded from disk with values of current persistent object.
+    Регистрирует функцию слияния значений постоянного поля при загрузке с диска
+    со значениями текущего объекта persistent.
     
     `field`
-        The name of a field on the persistent object.
+        Имя поля объекта persistent.
     
     `function`
-        A function that is called with three parameters, `old`, `new`, and
-        `current`:
+        Функция, принимающая три параметра: `old`, `new` и `current`:
     
         `old`
-            The value of the field in the older object.
+            Значение поля в более старом объекте данных.
     
         `new`
-            The value of the field in the newer object.
+            Значение поля в более новом объекте данных.
     
         `current`
-            The value of the field in the current persistent object. This is
-            provided for cases where the identity of the object referred to
-            by the field can't change.
+            Значение поля в текущем объекте persistent (позволяет мутировать существующий объект).
     
-        The function is expected to return the new value of the field in the
-        persistent object.
+        Функция должна вернуть новое итоговое значение поля объекта persistent.
 
 .. function:: renpy.save_persistent()
     
-    Saves the persistent data to disk.
-
+    Сохраняет постоянные данные на диск.

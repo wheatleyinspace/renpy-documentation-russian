@@ -4,344 +4,310 @@
 Android
 =======
 
-Ren'Py support devices running the Android operating system, such as
-smartphones and tablets. While these devices do not support 100% of
-Ren'Py's functionality, with minimal modification visual novels can be
-packaged and ported to these devices.
+Ren'Py поддерживает устройства под управлением операционной системы Android, такие
+как смартфоны и планшеты. Хотя на этих устройствах доступна не вся функциональность
+Ren'Py на 100%, с минимальными доработками визуальные новеллы можно упаковать
+и портировать на мобильные устройства.
 
-RAPT – the Ren'Py Android Packaging Tool – is a program, downloaded separately
-from Ren'Py, that creates an Android package for testing or release purposes.
+RAPT (Ren'Py Android Packaging Tool) — инструмент сборки пакетов Android для Ren'Py,
+загружаемый отдельно через лаунчер. Он создаёт установочные пакеты Android для
+тестирования и релизной публикации.
 
-Ren'Py runs on Android 5.0 and later, on devices that support OpenGL ES 3.0. It
-will not start on a device that only supports OpenGL ES 2.0. Older devices may
-also lack the resources to run larger games properly.
+Ren'Py работает на Android 5.0 и выше на устройствах с поддержкой OpenGL ES 3.0.
+Игра не запустится на устройствах, поддерживающих только OpenGL ES 2.0. Старым
+устройствам также может не хватать оперативной памяти для комфортной работы масштабных игр.
 
-Required Language
-=================
+Обязательное уведомление о лицензиях
+====================================
 
-Some of the libraries used by RAPT are licensed under the terms
-of the GNU Lesser/Library General Public License. You'll need to comply
-with the terms of that license to distribute Ren'Py. We believe including
-the following language in your app's description will suffice, but check
-with a lawyer to be sure.
+Некоторые библиотеки, используемые RAPT, распространяются на условиях лицензии
+GNU Lesser General Public License (LGPL). Для распространения игр Ren'Py необходимо
+соблюдать условия этой лицензии. Мы полагаем, что включения следующего текста
+в описание вашего приложения в магазинах будет достаточно, однако для полной
+уверенности проконсультируйтесь с юристом:
 
     This program contains free software licensed under a number of licenses,
     including the GNU Lesser General Public License. A complete list of
     software is available at https://www.renpy.org/l/license/.
 
 
-User Instructions
-=================
+Инструкции для пользователя
+===========================
 
-When a Ren'Py game has been launched on Android, the following
-keybindings work:
+При запуске игры Ren'Py на Android действуют следующие системные сочетания и клавиши:
 
-`Home`
-     Returns to the Android home screen, suspending the Ren'Py
-     game. As part of the suspend process, Ren'Py will automatically
-     save the game. If necessary, the save will be automatically
-     loaded when the user returns to the game.
+`Домой (Home)`
+     Возвращает на главный экран Android, приостанавливая игру Ren'Py. В процессе
+     приостановки Ren'Py автоматически сохраняет текущее состояние игры. При возврате
+     в игру это сохранение будет автоматически восстановлено при необходимости.
 
-`Volume Up`, `Volume Down`
-     Controls Android's media volume.
+`Громкость вверх`, `Громкость вниз`
+     Управляют громкостью мультимедиа в Android.
 
 
 .. _android-platform-differences:
 
-Platform Differences
-====================
+Отличия платформы
+=================
 
-There are many important differences between the touch-based Android
-platform and the mouse-based platforms that Ren'Py supports. Changes
-due to the Android software and hardware are:
+Между сенсорной платформой Android и настольными платформами с мышью существует ряд
+важных различий. Изменения, обусловленные аппаратными и программными особенностями Android:
 
-* The touchscreen is treated as if it was a mouse. However, it will
-  only produce mouse events when the user is actively touching the
-  screen.
+* Сенсорный экран обрабатывается как мышь. Однако события мыши генерируются только
+  тогда, когда пользователь физически касается экрана.
 
-* Text input (such as :func:`renpy.input`) is limited to the input methods
-  that do not require completions to work. (Western languages probably work,
-  while other languages might not.)
+* Ввод текста (например, :func:`renpy.input`) ограничен методами ввода, не требующими
+  системного автодополнения (латиница и кириллица обычно работают нормально, тогда
+  как языки со сложным иероглифическим вводом могут не поддерживаться).
 
-In addition, there are a few changes that may be necessary due to
-human factors:
+Кроме того, разработчику необходимо учитывать эргономические факторы:
 
-* Since Android smartphones can be smaller than a computer monitor, it
-  may be necessary to increase text size.
+* Поскольку экраны смартфонов значительно меньше мониторов ПК, может потребоваться
+  увеличить размер шрифта.
 
-* Since touch input is less accurate than mouse input, touch-based
-  buttons need to be larger than mouse-based ones.
+* Сенсорный ввод пальцем менее точен, чем курсор мыши, поэтому сенсорные кнопки
+  должны быть ощутимо крупнее кнопок настольного интерфейса.
 
-To help you adapt to these differences, Ren'Py for Android
-automatically selects screen variants based on the
-device's screen size and capabilities. See :ref:`screen-variants` for
-more information.
+Чтобы помочь вам адаптировать игру к этим различиям, Ren'Py для Android автоматически
+выбирает :ref:`варианты экранов <screen-variants>` на основе физического размера экрана
+и характеристик устройства.
 
-Due to the security policy of mobile devices, MultiPersistent functionality
-is limited only to this game and its updates, i.e. it cannot be shared by
-another game.
+В силу политик безопасности мобильных платформ функционал MultiPersistent ограничен
+только данной игрой и её обновлениями (данные не могут разделяться между разными играми).
 
 
-Testing and Emulation
-=====================
+Тестирование и эмуляция
+=======================
 
-For testing purposes, Ren'Py supports three Android emulation modes. These
-are accessed from the Android screen of the launcher.
+Для целей тестирования Ren'Py поддерживает три режима эмуляции Android. Доступ к ним
+осуществляется через раздел «Android» в лаунчере:
 
 Phone
-    This mode emulates an Android phone. Touch emulation is performed
-    using the mouse, but only when the mouse button is held down. Escape
-    is mapped to the menu button, and Page Up is mapped to the back button.
+    Эмулирует смартфон Android. Сенсорное управление симулируется мышью при зажатой
+    кнопке мыши. Клавиша Escape привязана к кнопке меню, а Page Up — к кнопке «Назад».
 
 Tablet
-    This mode emulates an Android tablet. Touch emulation is performed
-    using the mouse, but only when the mouse button is held down. Escape
-    is mapped to the menu button, and Page Up is mapped to the back button.
+    Эмулирует планшет Android. Сенсорное управление симулируется мышью при зажатой
+    кнопке мыши. Клавиша Escape привязана к кнопке меню, а Page Up — к кнопке «Назад».
 
 Television
-    This mode emulates a television-based Android device
-    console. The keyboard is mapped to remote or controller input, with the
-    arrow keys providing navigation. Select is enter, Escape is menu, and
-    page-up is back.
+    Эмулирует телевизионную приставку или консоль на Android TV. Клавиатура сопоставлена
+    с пультом ДУ или геймпадом: стрелки служат для навигации, Enter — кнопка подтверждения,
+    Escape — вызов меню, Page Up — кнопка «Назад».
 
-    This mode also displays an overlay showing the Television-unsafe area.
-    Content in the Television-unsafe area may not display on all televisions.
+    В этом режиме отображается наложение безопасной зоны для ТВ (overscan area).
+    Содержимое вне безопасной зоны может обрезаться на некоторых телевизорах.
 
-While these emulators can be used to quickly test your project, it's best to
-also test on real hardware. The emulators do not deal with some human-factors
-issues, like the size of a user's fingers.
+Хотя эмуляторы удобны для быстрого тестирования, настоятельно рекомендуется также
+проверять игру на реальных устройствах: эмуляторы не воспроизводят тактильные ощущения
+и реальные физические размеры пальцев пользователя.
 
 
 .. highlight:: none
 
 .. _android-building:
 
-Building Android Applications
+Сборка приложений для Android
 =============================
 
+Ren'Py предоставляет удобные инструменты для сборки и развёртывания игр на Android.
+Вы собираете пакет на компьютере и передаёте его на подключённое мобильное устройство.
+После этого игра запускается как стандартное приложение Android. Убедившись в её
+корректной работе, вы можете загрузить собранный пакет в Google Play и другие магазины приложений.
 
-Ren'Py contains tools that help you take a packaging-centric approach
-to Android game development. In this approach, you will use a PC to
-build an Android package and upload it to your device. You can then
-run the game like any Android application. When it works correctly,
-you can upload the package you make to Google Play and other app
-stores.
+Процесс сборки приложения Android состоит из пяти шагов:
 
-Building an Android application consists of four steps:
+1. Загрузите и установите Java Development Kit (JDK) и USB-драйверы Android (ссылки ниже).
 
-1. Download and install the Java Development Kit
-   and Android USB Drivers (scroll down for links).
+2. Установите Android SDK с помощью лаунчера Ren'Py.
 
-2. Use the launcher to install the Android SDK.
+3. Сгенерируйте ключи подписи через лаунчер.
 
-3. Use the launcher to generate keys.
+4. Настройте параметры сборки Android в лаунчере.
 
-4. Use the launcher to configure the Android build.
+5. Запустите сборку приложения через лаунчер.
 
-5. Use the launcher to build the Android application.
-
-Once you've finished these steps, you'll have a runnable Android
-package. You'll only need to run step 3 when you decide to make changes to your
-game's configuration or when configuring a new game entirely; you'll run step
-4 most often, whenever you need to make a new build of your game.
+После выполнения этих шагов вы получите готовый установочный пакет Android. Шаг 3
+выполняется один раз для проекта; чаще всего вы будете выполнять шаг 5 при создании
+каждого нового билда игры.
 
 
-Step 1: Installing the Dependencies
------------------------------------
+Шаг 1: Установка зависимостей
+-----------------------------
 
-There are three things you may need to manually download and install
-before you can build packages:
+Перед сборкой пакетов вам потребуется вручную установить следующие компоненты:
 
-**Java Development Kit.**
-The Java Development Kit (JDK) contains several tools that are used by
-RAPT, including the tools used to generate keys and sign
-packages. It can be downloaded from:
+**Java Development Kit (JDK).**
+Java Development Kit содержит утилиты, необходимые RAPT, включая инструменты
+генерации ключей и цифровой подписи пакетов. Его можно скачать по ссылкам:
 
-    https://adoptopenjdk.net/releases.html
     https://adoptium.net/temurin/releases/?version=21
+    https://adoptopenjdk.net/releases.html
 
-You'll need version 21 of the JDK.
+Вам потребуется JDK версии 21.
 
-Please note that the developer-focused JDK is different from the
-user-focused JRE, and you'll need the JDK to create Android packages.
+Обратите внимание: комплект разработчика JDK отличается от обычной пользовательской
+среды JRE; для сборки пакетов Android обязательно требуется именно JDK.
 
-
-**Android Device.**
-You'll also want to set your device up for development. You'll want to enable
-developer mode on your device, and set up your computer for Android development.
-Instructions on how to set up your computer can be found at:
+**Устройство Android.**
+Подготовьте мобильное устройство к разработке: включите режим разработчика
+и отладку по USB, а также установите драйверы Android на компьютер. Инструкции доступны на:
 
     https://developer.android.com/studio/run/device
 
-You can also run your app in an x86_64 image on the Android emulator (note
-that x86 is not supported). Setting the emulator up is outside of the scope
-of this document.
+Вы также можете запускать приложение в образе x86_64 официального эмулятора Android
+(обратите внимание: архитектура x86 не поддерживается). Настройка эмулятора выходит
+за рамки данного руководства.
 
 
-Step 2: Set up the Android SDK and Development Environment
-----------------------------------------------------------
+Шаг 2: Настройка Android SDK и среды разработки
+-----------------------------------------------
 
-The next step is to set up the Android SDK and the rest of your
-development environment. This step will:
+Следующий шаг — загрузка Android SDK и подготовка среды разработки. Этот этап:
 
-* Check that the JDK is installed properly.
-* Install the Android SDK.
-* Use the Android SDK to install the appropriate development
-  packages.
+* Проверяет корректность установки JDK.
+* Загружает и устанавливает Android SDK.
+* Загружает необходимые пакеты инструментов сборки через Android SDK.
 
-This step requires Internet access.
+Для выполнения этого шага требуется подключение к Интернету.
 
-To perform this step, choose "Install SDK" from the
-Android screen in the Ren'Py Launcher. RAPT will report on what it's
-doing. It will also prompt you to accept the licenses.
+Выберите пункт «Install SDK» (Установить SDK) на экране Android в лаунчере Ren'Py.
+RAPT отобразит ход загрузки и предложит принять условия лицензионных соглашений.
 
-If you don't want to download the SDK each time, you can create a file
-named sdk.txt containing a single line that is the path to the
-already-installed SDK.
+Если вы не хотите загружать SDK повторно для каждого проекта, можно создать файл
+:file:`sdk.txt` в корне Ren'Py с одной строкой — полным путём к уже установленному SDK.
 
-Step 3: Generate keys
----------------------
 
-After this, choose "Generate Keys" to generate Android and Bundle
-keys for your package.
+Шаг 3: Генерация ключей
+-----------------------
+
+После установки SDK выберите «Generate Keys» (Сгенерировать ключи) для создания
+ключей подписи Android (android.keystore) и бандла (bundle.keystore).
 
 .. warning::
 
-    The keys generated by RAPT are created with a standard
-    passphrase. You need to make sure you do not lose access to these
-    files.
+    Ключи, сгенерированные RAPT, защищены стандартным паролем. Вы обязаны надёжно
+    сохранить эти файлы и не потерять к ним доступ!
 
-    You should keep the android.keystore and bundle.keystore files in
-    a safe place. You should also back it up, because without the
-    key, you won't be able to upload the generated applications.
+    Храните файлы :file:`android.keystore` и :file:`bundle.keystore` в надёжном месте
+    и обязательно сделайте их резервную копию. Без этих ключей вы не сможете
+    выпускать обновления для ранее опубликованных в магазинах приложений.
 
-    You should make sure that these files are never made public,
-    especially if version control is being used.
+    Ни в коем случае не выкладывайте эти файлы в открытый доступ и не коммитьте
+    их в публичные репозитории систем контроля версий.
 
-When creating Android keys, Ren'Py will back them up to the same place it
-backs up script files. This isn't a substitute for making your own backups.
+При создании ключей Ren'Py делает их резервную копию в папку бэкапов скриптов,
+однако это не заменяет полноценного собственного резервного копирования.
 
-Step 4: Configure Your Game
----------------------------
 
-Before building a package, you must give Ren'Py some information
-about the Android build of your game. To do this, choose "Configure"
-from the Android screen of the Ren'Py launcher.
+Шаг 4: Настройка параметров игры
+--------------------------------
 
-If you need to change the information you can re-run the configure command.
-Your previous choices will be remembered.
+Перед сборкой необходимо указать Ren'Py параметры сборки Android для вашей игры.
+Для этого выберите пункт «Configure» (Настроить) на экране Android в лаунчере Ren'Py.
 
-Step 5: Build and Install the Package
--------------------------------------
+При необходимости изменить настройки вы можете запустить настройку заново —
+ранее введённые ответы сохраняются.
 
-Finally, you can build and install the package.  You'll first want to
-choose between one of the two release modes:
+
+Шаг 5: Сборка и установка пакета
+--------------------------------
+
+Наконец, можно собрать и установить пакет. Сначала выберите один из двух форматов релиза:
 
 Play Bundle
-    Play bundle releases are in the Android App Bundle (AAB) format,
-    and are suitable only for upload to the Google Play store, though
-    such releases can also be installed on Play-enabled Android devices.
+    Релизы в формате Android App Bundle (AAB). Предназначены исключительно для загрузки
+    в магазин Google Play, хотя их также можно установить на устройства с сервисами Google Play.
 
-    Play bundles may be up to 2 GB in size, but this is divided into
-    4 500MB fast-follow pack files, with each file in your game assigned
-    to one of the four bundles. This may be an issue with four files -
-    a game won't be able to fit 5 files of 300 MB in size, as there will
-    only be room for one in each of the four pack files.
+    Размер Play Bundle может достигать 2 ГБ, однако он разделяется на 4 файла быстрого
+    скачивания (fast-follow pack) объёмом по 500 МБ каждый. Каждый файл игры привязывается
+    к одному из четырёх бандлов. Это может вызвать сложность при наличии неделимых файлов:
+    например, пять файлов размером по 300 МБ не поместятся в четыре 500-мегабайтных пакета.
 
 Universal APK
-    Universal APK release are suitable for direct installation onto
-    Android devices, either through Ren'Py, ADB, non-Play app stores,
-    or sideloading through the web.
+    Универсальный APK-файл, подходящий для прямой установки на любые устройства Android
+    через Ren'Py, ADB, сторонние магазины приложений или скачивание с сайта.
 
-    Universal APKs can be up to 2 GB in size, with no restrictions on
-    the contents.
+    Размер Universal APK может достигать 2 ГБ без ограничений на распределение файлов.
 
-There are three commands which allow you to perform various combinations
-of building the package, installing it on your device, and launching the
-application for testing.
+Лаунчер предлагает команды, позволяющие выполнять сборку пакета, установку на подключённое
+устройство и немедленный запуск приложения для тестирования.
 
-You may need to uninstall the app when switching between release modes.
+При переключении между режимами сборки (Play Bundle и APK) может потребоваться предварительно
+удалить старую версию приложения с устройства.
 
 
-Very Large Games
-================
+Игры очень большого размера
+===========================
 
-It's possible to build games that are larger than 2 GB. This is done using
-the :doc:`downloader`, with a small game being included in the Play
-bundle or Universal APK, and the rest of the game being downloaded
-from a capable web server.
+В Ren'Py можно создавать игры для Android объёмом более 2 ГБ. Это делается с помощью
+модуля :doc:`downloader`: базовое приложение небольшого размера включается в Play Bundle
+или Universal APK, а остальная часть игровых файлов загружается при первом запуске
+с высокоскоростного веб-сервера.
 
 
-Icon and Presplash Images
-=========================
+Иконка и изображения презаставки (presplash)
+============================================
 
-Icon
------
+Иконка
+------
 
-Ren'Py will create an icon from your app from two files in the game's
-base directory:
+Ren'Py формирует адаптивную иконку приложения из двух файлов в базовом каталоге игры:
 
 android-icon_foreground.png
-    The foreground layer of the icon. This should be 432x432 pixels
-    and transparent.
-
+    Передний план иконки (foreground). Размер 432x432 пикселя, прозрачный фон.
 
 android-icon_background.png
-    The background layer of the icon. This should be 432x432 pixels
-    and opaque.
+    Фоновый слой иконки (background). Размер 432x432 пикселя, непрозрачный фон.
 
-Android adaptive icons work by masking the two layers of the icon to an area that
-is at least 132x132 pixels, in the center. The area outside of this safe
-space may be shown, but it might be masked out, too. Bleeding outside
-of the safe area is encouraged. The two layers might move a little relative
-to each other when the icon is dragged around.
+Адаптивные иконки Android работают путём наложения маски на оба слоя в центральной области
+размером не менее 132x132 пикселей. Область за пределами этой безопасной зоны может
+отображаться, но может и обрезаться маской. Выход элементов за пределы безопасной зоны
+рекомендуется. При перетаскивании иконки на рабочем столе Android слои могут слегка
+смещаться относительно друг друга, создавая эффект параллакса.
 
-For more information about adaptive icons, please check out:
+Подробнее об адаптивных иконках см.:
 
     https://medium.com/google-design/designing-adaptive-icons-515af294c783
 
-Note that 1dp corresponds to 4 actual pixels.
+Обратите внимание: 1 dp соответствует 4 реальным пикселям.
 
-When generating the application, Ren'Py will convert these files to an
-appropriate size for each device, and will generate static icons for devices
-that do not support adaptive icons.
+При сборке приложения Ren'Py автоматически масштабирует эти изображения под различные
+плотности экранов устройств и генерирует статическую иконку для старых версий Android,
+не поддерживающих адаптивные иконки.
 
 .. _android-presplash:
 
-Presplash
----------
+Презаставка (Presplash)
+-----------------------
 
-The presplash is shown before Ren'Py fully loads, before the main splashscreen
-starts. It's especially important on Android, as the first time Ren'Py runs
-it will unpack supporting files, which make take some time.
+Презаставка отображается во время начальной загрузки Ren'Py, до показа заставки (splashscreen)
+и главного меню. На Android это особенно важно: при первом запуске игры Ren'Py распаковывает
+служебные файлы данных, что может занять некоторое время.
 
 android-presplash.jpg
-    The image that's used when the app is loading. This should be surrounded
-    by 1px of a monocolored border. When displayed, the image is scaled to
-    fit available space while preserving aspect ratio, and the rest of the
-    screen is filled with the border color.
+    Изображение, отображаемое при загрузке приложения. Должно иметь одноцветную рамку
+    толщиной в 1 пиксель. При отображении изображение масштабируется под экран с сохранением
+    пропорций, а оставшееся пространство экрана заливается цветом рамки.
 
 android-downloading.jpg
-    The image that's used when the app is downloading assets from Google
-    Play Asset delivery. This should be surrounded
-    by 1px of a monocolored border. When displayed, the image is scaled to
-    fit available space while preserving aspect ratio, and the rest of the
-    screen is filled with the border color.
+    Изображение, отображаемое при загрузке ресурсов через Google Play Asset Delivery.
+    Также должно быть окружено одноцветной рамкой в 1 пиксель. При показе картинка
+    масштабируется с сохранением пропорций, а края заливаются цветом рамки.
 
-    A 20px-high progress bar is displayed 20px from the bottom, left, and
-    right sides of the screen, showing download progress.
+    В нижней части экрана (с отступом в 20 пикселей снизу, слева и справа) отображается
+    индикатор выполнения загрузки высотой 20 пикселей.
 
 .. _pyjnius:
 
 Pyjnius
 =======
 
-When running on Android, a version of the `Pyjnius <https://pyjnius.readthedocs.io/en/latest/>`__
-library is available. This allows advanced creators to call into the Android
-libraries.
+При работе на Android доступна библиотека `Pyjnius <https://pyjnius.readthedocs.io/en/latest/>`__.
+Она позволяет опытным разработчикам вызывать методы Java-классов Android напрямую из Python.
 
-It may be necessary to get the main activity. It can be found in the mActivity
-field in the org.renpy.android.PythonSDLActivity class. For example::
+В частности, может потребоваться получить ссылку на главную активность (Activity). Её можно
+найти в поле `mActivity` класса `org.renpy.android.PythonSDLActivity`. Например::
 
     init python:
         if renpy.android:
@@ -353,20 +319,20 @@ field in the org.renpy.android.PythonSDLActivity class. For example::
 
 .. _android-permissions:
 
-Permissions
-===========
+Разрешения (Permissions)
+========================
 
-While Ren'Py doesn't require additional permissions to run, if your
-game uses Pyjnius to call into Android, it might be necessary to
-request permissions. Ren'Py has a variable and two functions to
-interact with the Android permissions system.
+Хотя самому Ren'Py не требуются дополнительные системные разрешения для работы, если ваша
+игра использует Pyjnius для вызова системных функций Android, может потребоваться запросить
+соответствующие разрешения. Ren'Py предоставляет переменную конфигурации и две функции
+для работы с системой разрешений Android.
 
 .. var:: build.android_permissions = [ ]
 
-    This is a list of strings, with each string giving the full name
-    of an Android permission. For example, "android.permission.WRITE_EXTERNAL_STORAGE".
-    This simply declares that the application might request these permissions, it's
-    necessary to use renpy.check_permission and renpy.request_permission as necessary
-    to request the permission.
+    Список строк, где каждая строка задаёт полное имя разрешения Android.
+    Например, "android.permission.WRITE_EXTERNAL_STORAGE".
+    Эта переменная объявляет, что приложение может запрашивать данные разрешения;
+    для фактического запроса необходимо использовать функции :func:`renpy.check_permission`
+    и :func:`renpy.request_permission`.
 
 .. include:: inc/android_permission

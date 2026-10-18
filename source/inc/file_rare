@@ -2,26 +2,24 @@
 
 .. function:: renpy.exists(filename)
     
-    Returns true if the given filename can be found in the
-    searchpath. This only works if a physical file exists on disk. It
-    won't find the file if it's inside of an archive.
+    Возвращает True, если файл с именем `filename` найден в путях поиска.
+    Работает только для физических файлов на диске и не обнаруживает файлы
+    внутри архивов.
     
-    You almost certainly want to use :func:`renpy.loadable` in preference
-    to this function.
+    В большинстве случаев вместо этой функции рекомендуется использовать :func:`renpy.loadable`.
 
 .. function:: renpy.fsdecode(s: str | bytes) -> str
     
-    Converts s from filesystem encoding to unicode.
+    Преобразует строку `s` из кодировки файловой системы в строку Юникода.
 
 .. function:: renpy.fsencode(s: str | bytes, force: bool = False) -> str | bytes
     
-    Converts s from unicode to the filesystem encoding.
+    Преобразует строку Юникода `s` в кодировку файловой системы.
 
 .. function:: renpy.image_size(im)
     
-    Given an image manipulator, loads it and returns a (``width``,
-    ``height``) tuple giving its size.
+    Принимает манипулятор изображений, загружает его и возвращает кортеж
+    (``width``, ``height``) с его размерами.
     
-    This reads the image in from disk and decompresses it, without
-    using the image cache. This can be slow.
-
+    Функция считывает изображение с диска и распаковывает его в обход
+    кэша изображений, поэтому её выполнение может быть медленным.

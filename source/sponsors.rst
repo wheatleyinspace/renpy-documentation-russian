@@ -1,9 +1,9 @@
-Ren'Py Development Sponsors
-===========================
+Спонсоры разработки Ren'Py
+==========================
 
-Ren'Py development is generously sponsored by the following people and
-organizations. To find out more about sponsoring Ren'Py, please visit
-`the sponsorship page on the Ren'Py website <https://www.renpy.org/sponsors.html>`_.
+Разработка Ren'Py щедро поддерживается следующими людьми и организациями.
+Подробнее о спонсорской поддержке Ren'Py можно узнать на
+`странице спонсорства на официальном сайте Ren'Py <https://www.renpy.org/sponsors.html>`_.
 
 .. raw:: html
     :file: sponsors.html

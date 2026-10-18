@@ -2,48 +2,46 @@
 
 .. class:: Matrix(l)
     
-    This represents a 4x4 matrix, that is used in various places in Ren'Py.
+    Представляет матрицу 4x4, используемую в различных подсистемах Ren'Py.
     
-    When used to transform coordinates, the 16 elements of this matrix are::
+    При использовании для трансформации координат 16 элементов этой матрицы имеют вид::
     
         xdx, xdy, xdz, xdw,
         ydx, ydy, ydz, ydw,
         zdx, zdy, zdz, zdw,
         wdx, wdy, wdz, wdw
     
-    where x' = xdx * x + xdy * y + xdz * z + xdw * w, where x is the original
-    value of x and x' is the transformed value, and similarly for x, y, z, and
-    w.  This is usually applied to a position where w is 1, allowing any combination
-    of translation, rotation, and scaling to be expressed in a single matrix.
+    где x' = xdx * x + xdy * y + xdz * z + xdw * w, x — исходное значение x, а x' — преобразованное
+    значение (аналогично для x, y, z и w). Обычно применяется к координатам с w = 1, что позволяет
+    выразить любую комбинацию перемещения, вращения и масштабирования в одной матрице.
     
-    When used to transform colors, the 16 elements of this matrix are::
+    При использовании для трансформации цветов 16 элементов матрицы представляют::
     
         rdr, rdg, rdb, rda,
         gdr, gdg, gdg, gda,
         bdr, bdg, bdb, bda,
         adr, adg, adb, ada,
     
-    For the red, green, blue, and alpha channels.
+    для красного, зелёного, синего и альфа-каналов.
     
-    Matrix objects can be multiplied using the Python multiplication operator,
-    to generate a matrix that performs both operations. The order in which
-    the matrixes appear can matter. Assuming `v` is a position or color being
-    transformed::
+    Объекты Matrix можно перемножать с помощью оператора умножения Python для получения матрицы,
+    выполняющей обе операции последовательно. Порядок матриц имеет значение. Предполагая, что `v` —
+    преобразуемая позиция или цвет::
     
         (step2 * step1) * v
     
-    is equivalent to::
+    эквивалентно::
     
         step2 * (step1 * v)
     
     `l`
-        This can be a list of 4, 9, or 16 numbers that is used to introduce
-        this matrix. If not the full 16, the top-left corner of the matrix
-        is initialized, with zdz and wdw set to 1.0 if not given. For example::
+        Список из 4, 9 или 16 чисел для инициализации матрицы. Если передано меньше 16 чисел,
+        заполняется верхний левый угол матрицы, а элементы zdz и wdw устанавливаются в 1.0,
+        если не заданы. Например::
     
             Matrix([ 1, 2, 3, 4 ])
     
-        would result in the Matrix::
+        создаст матрицу::
     
             1.0, 2.0, 0.0, 0.0,
             3.0, 4.0, 0.0, 0.0,
@@ -52,52 +50,47 @@
 
 .. function:: Matrix.identity()
     
-    Returns an identity matrix.
+    Возвращает единичную матрицу.
 
 .. function:: Matrix.offset(x, y, z)
     
-    Returns a matrix that offsets the vertex by a fixed amount.
+    Возвращает матрицу, смещающую вершину на фиксированное расстояние.
 
 .. function:: Matrix.perspective(w, h, n, p, f)
     
-    Returns a matrix suitable for the perspective projection of an image
-    in the Ren'Py coordinate system. This is a view into the a coordinate
-    system where, where when z=0, (0, 0) corresponds to the top-left corner
-    of the screen, and (w, h) corresponds to the bottom-right corner of
-    the screen.
+    Возвращает матрицу перспективной проекции изображения в системе координат Ren'Py.
+    Это проекция в систему координат, где при z=0 точка (0, 0) соответствует левому верхнему
+    углу экрана, а (w, h) — правому нижнему углу экрана.
     
     `w`, `h`
-        The width and height of the input plane, in pixels.
+        Ширина и высота входной плоскости в пикселях.
     
     `n`
-        The distance of the near plane from the camera.
+        Расстояние от камеры до ближней плоскости отсечения (near plane).
     
     `p`
-        How far the z=0 plane is from the camera. This is also where one
-        virtual pixel is one coordinate unit in x and y.
+        Расстояние от камеры до плоскости z=0. В этой плоскости один виртуальный пиксель равен
+        одной единице координат по x и y.
     
     `f`
-        The distance of the far plane from the camera.
+        Расстояние от камеры до дальней плоскости отсечения (far plane).
 
 .. function:: Matrix.rotate(x, y, z)
     
-    Returns a matrix that rotates the displayable around the
-    origin.
+    Возвращает матрицу, поворачивающую отображаемый объект вокруг начала координат.
     
     `x`, `y`, `z`
-        The amount to rotate around the origin, in degrees.
+        Угол поворота вокруг начала координат в градусах.
     
+    Вращения применяются по порядку:
     
-    The rotations are applied in order:
-    
-    * A clockwise rotation by `x` degrees in the Y/Z plane.
-    * A clockwise rotation by `y` degrees in the Z/X plane.
-    * A clockwise rotation by `z` degrees in the X/Y plane.
+    * Поворот по часовой стрелке на `x` градусов в плоскости Y/Z.
+    * Поворот по часовой стрелке на `y` градусов в плоскости Z/X.
+    * Поворот по часовой стрелке на `z` градусов в плоскости X/Y.
 
 .. function:: Matrix.scale(x, y, z)
     
-    Returns a matrix that scales the displayable.
+    Возвращает матрицу масштабирования отображаемого объекта.
     
     `x`, `y`, `z`
-        The factor to scale each axis by.
-
+        Коэффициенты масштабирования по каждой из осей.

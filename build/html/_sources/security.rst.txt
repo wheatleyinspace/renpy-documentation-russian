@@ -1,32 +1,33 @@
-Security
-========
+Безопасность
+============
 
-Games and Mods
---------------
+Игры и модификации
+------------------
 
-Like all games and other software that you run on your computer, you should
-only run a Ren'Py game if you trust the creator and everyone involved in
-getting the game to you. Malicious software, including games written in
-Ren'Py, can perform arbitrarily harmful actions on your computer, and can
-even send information elsewhere.
+Как и в случае с любыми другими играми и программами, запускаемыми на вашем
+компьютере, следует запускать игру на Ren'Py только в том случае, если вы доверяете
+её автору и всем, кто участвовал в её доставке вам. Вредоносное программное
+обеспечение, включая игры, созданные на Ren'Py, может совершать любые деструктивные
+действия на вашем компьютере и даже передавать информацию третьим лицам.
 
-This includes mods that involve changing a game or Ren'Py's source code -
-if you don't trust the creator of the mod and everyone that brought it
-to you, you should not apply the mod.
+Это относится и к модификациям (модам), предполагающим изменение игры или исходного
+кода Ren'Py: если вы не доверяете создателю мода и тем, от кого вы его получили,
+не следует устанавливать и запускать такой мод.
 
-Save and Persistent Files
--------------------------
+Файлы сохранений и постоянных данных
+------------------------------------
 
-Ren'Py save files, including the ``persistent`` file, are created using
-the Python pickle format. This file format is powerful enough that it
-should be treated like software - if a malicious person can get you to
-load a file they created, they can run arbitrary code on your computer.
+Файлы сохранений Ren'Py, включая файл постоянных данных ``persistent``, создаются
+с использованием формата сериализации Python pickle. Этот формат файлов настолько
+мощен, что к нему следует относиться как к исполняемым программам: если злоумышленник
+сможет убедить вас загрузить созданный им файл, он сможет выполнить произвольный
+код на вашем компьютере.
 
-It's best to treat save and persistent files as if the files contained
-software, and only load them if you trust the creator of the file, and
-everyone that brought it to you.
+Безопаснее всего относиться к файлам сохранений и persistent-файлам как к программному
+коду и загружать их только тогда, когда вы полностью доверяете создателю файла и
+источнику, из которого он был получен.
 
-Save and persistent files are not designed to be shared between players,
-and so those files may contain information about you and your computer.
-We recommend that you do not share save and persistent files with
-other users.
+Файлы сохранений и постоянных данных не предназначены для обмена между игроками,
+поэтому они могут содержать конфиденциальную информацию о вас и вашей системе.
+Мы настоятельно рекомендуем не делиться файлами сохранений и постоянных данных с
+другими пользователями.

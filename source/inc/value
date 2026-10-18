@@ -2,279 +2,164 @@
 
 .. function:: AnimatedValue(value=0.0, range=1.0, delay=1.0, old_value=None)
     
-    This animates a value, taking `delay` seconds to vary the value from
-    `old_value` to `value`.
+    Анимирует значение, плавно изменяя его от `old_value` до `value`
+    в течение `delay` секунд.
     
     `value`
-        The value itself, a number.
+        Само конечное числовое значение.
     
     `range`
-        The range of the value, a number.
+        Диапазон значения (число).
     
     `delay`
-        The time it takes to animate the value, in seconds. Defaults
-        to 1.0.
+        Время анимации значения в секундах. По умолчанию 1.0.
     
     `old_value`
-        The old value. If this is None, then the value is taken from the
-        AnimatedValue we replaced, if any. Otherwise, it is initialized
-        to `value`.
+        Старое значение. Если None, значение берется из заменяемого объекта
+        AnimatedValue (если есть), иначе инициализируется значением `value`.
 
 .. function:: AudioPositionValue(channel='music', update_interval=0.1, adjustable=False)
     
-    A value that shows the playback position of the audio file playing
-    in `channel`.
+    Значение, отображающее текущую позицию воспроизведения аудиофайла
+    на канале `channel`.
     
     `update_interval`
-        How often the value updates, in seconds.
+        Интервал обновления значения в секундах.
     
     `adjustable`
-        If true, the player can seek by dragging the bar. Seeking occurs
-        when the drag is released or on click.
+        Если True, игрок может перематывать трек, перетаскивая полосу или кликая по ней.
 
 .. function:: DictValue(dict, key, range=None, max_is_zero=False, style='bar', offset=0, step=None, action=None, force_step=False, min=None, max=None)
     
-    A bar value that allows the user to adjust the value of a key in
-    a dict, or of an element at a particular index in a list.
+    Значение полосы, позволяющее пользователю изменять значение по ключу в словаре
+    или по индексу в списке.
     
     `dict`
-        The dict, or the list.
+        Словарь или список.
     `key`
-        The key, or the index when using a list.
+        Ключ словаря или индекс списка.
     `range`
-        The range to adjust over. This must be specified if `max` and `min`
-        are not given.
+        Диапазон регулировки. Обязателен, если не указаны `min` и `max`.
     `max_is_zero`
-        If True, then when the key or index's value is zero, the value of the
-        bar will be `range`, and all other values will be shifted down
-        by 1. This works both ways - when the bar is set to the maximum,
-        the value of the key or index is set to 0.
-    
-        This is used internally, for some preferences.
+        Если True, то при нулевом значении полоса устанавливается в `range`,
+        а остальные значения сдвигаются на 1. Работает в обе стороны.
     `style`
-        The styles of the created bar.
+        Стили создаваемой полосы.
     `offset`
-        An offset to add to the value.
+        Смещение, прибавляемое к значению.
     `step`
-        The amount to change the bar by. If None, defaults to 1/10th of
-        the bar.
+        Шаг изменения значения. По умолчанию 1/10 диапазона.
     `force_step`
-        If True, the bar can only take discrete steps, with the steps given
-        by `step`. If False, the bar can take any value in the range.
+        Если True, полоса может принимать только дискретные значения с шагом `step`.
     `action`
-        If not None, an action to call when the key or index's value is changed.
+        Действие, вызываемое при изменении значения.
     `min`
-        The minimum value of the bar. If both `min` and `max` are given,
-        `range` and `offset` are calculated from them.
+        Минимальное значение. Если указаны `min` и `max`, `range` и `offset` вычисляются из них.
     `max`
-        The maximum value of the bar. If both `min` and `max` are given,
-        `range` and `offset` are calculated from them.
+        Максимальное значение.
 
 .. function:: FetchProgressValue(update_interval=0.1)
     
-    A value that shows the progress of active fetch requests. This shows a full bar if no
-    fetch requests are active.
+    Значение, показывающее прогресс активных сетевых запросов fetch. Показывает
+    полную полосу, если активных запросов нет.
     
     `update_interval`
-        How often the value updates, in seconds.
+        Интервал обновления значения в секундах.
 
 .. function:: FieldValue(object, field, range=None, max_is_zero=False, style='bar', offset=0, step=None, action=None, force_step=False, min=None, max=None)
     
-    A bar value that allows the user to adjust the value of a field
-    on an object.
+    Значение полосы, позволяющее настраивать значение атрибута (поля) объекта.
     
     `object`
-        The object.
+        Объект.
     `field`
-        The field name, a string.
+        Имя поля (строка).
     `range`
-        The range to adjust over. This must be specified if `max` and `min`
-        are not given.
+        Диапазон регулировки.
     `max_is_zero`
-        If True, then when the field's value is zero, the value of the
-        bar will be `range`, and all other values will be shifted down
-        by 1. This works both ways - when the bar is set to the maximum,
-        the value of the field is set to 0.
-    
-        This is used internally, for some preferences.
+        Если True, при значении 0 значение полосы устанавливается в `range`.
     `style`
-        The styles of the created bar.
+        Стиль полосы.
     `offset`
-        An offset to add to the value.
+        Смещение значения.
     `step`
-        The amount to change the bar by. If None, defaults to 1/10th of
-        the bar.
+        Шаг изменения значения.
     `force_step`
-        If True, the bar can only take discrete steps, with the steps given
-        by `step`. If False, the bar can take any value in the range.
+        Ограничивает значение дискретными шагами.
     `action`
-        If not None, an action to call when the field's value is changed.
-    `min`
-        The minimum value of the bar. If both `min` and `max` are given,
-        `range` and `offset` are calculated from them.
-    `max`
-        The maximum value of the bar. If both `min` and `max` are given,
-        `range` and `offset` are calculated from them.
+        Действие при изменении значения.
+    `min`, `max`
+        Минимальное и максимальное значения.
 
 .. function:: LocalVariableValue(variable, range=None, max_is_zero=False, style='bar', offset=0, step=None, action=None, force_step=False, min=None, max=None)
     
-    A bar value that adjusts the value of a variable in a ``use``\ d
-    screen.
+    Значение полосы, настраивающее значение переменной во вложенном (``use``) экране.
     
-    To target a variable in a top-level screen, prefer using
+    Для переменных экрана верхнего уровня предпочтительнее использовать
     :func:`ScreenVariableValue`.
     
-    For more information, see :ref:`sl-use`.
+    Дополнительные сведения см. в :ref:`sl-use`.
     
-    This must be created in the context that the variable is set in
-    - it can't be passed in from somewhere else.
+    Должно создаваться в контексте, где переменная задана — его нельзя передавать извне.
     
     `variable`
-        A string giving the name of the variable to adjust.
-    `range`
-        The range to adjust over. This must be specified if `max` and `min`
-        are not given.
-    `max_is_zero`
-        If True, then when the local variable's value is zero, the value of the
-        bar will be `range`, and all other values will be shifted down
-        by 1. This works both ways - when the bar is set to the maximum,
-        the value of the local variable is set to 0.
-    
-        This is used internally, for some preferences.
-    `style`
-        The styles of the created bar.
-    `offset`
-        An offset to add to the value.
-    `step`
-        The amount to change the bar by. If None, defaults to 1/10th of
-        the bar.
-    `force_step`
-        If True, the bar can only take discrete steps, with the steps given
-        by `step`. If False, the bar can take any value in the range.
-    `action`
-        If not None, an action to call when the local variable's value is changed.
-    `min`
-        The minimum value of the bar. If both `min` and `max` are given,
-        `range` and `offset` are calculated from them.
-    `max`
-        The maximum value of the bar. If both `min` and `max` are given,
-        `range` and `offset` are calculated from them.
+        Имя настраиваемой переменной (строка).
+    `range`, `max_is_zero`, `style`, `offset`, `step`, `force_step`, `action`, `min`, `max`
+        Параметры, аналогичные :func:`FieldValue`.
 
 .. function:: MixerValue(mixer, step=None, force_step=False)
     
-    The value of an audio mixer.
+    Значение аудиомикшера.
     
     `mixer`
-        The name of the mixer to adjust. This is usually one of
-        "main", "music", "sfx", or "voice". See :ref:`volume`
-        for more information.
+        Имя регулируемого микшера: обычно "main", "music", "sfx" или "voice".
+        См. :ref:`volume`.
     
     `step`
-        The amount to change the bar by. If None, defaults to 1/10th of
-        the bar. For MixerValue, this is the amount of decibels to change the
-        volume by.
+        Шаг изменения в децибелах. По умолчанию 1/10 полосы.
     
     `force_step`
-        If True, the bar can only take discrete steps, with the steps given
-        by `step`. If False, the bar can take any value in the range.
+        Если True, полоса перемещается только дискретными шагами.
 
 .. function:: ScreenVariableValue(variable, range=None, max_is_zero=False, style='bar', offset=0, step=None, action=None, force_step=False, min=None, max=None)
     
-    A bar value that adjusts the value of a variable in a screen.
+    Значение полосы, настраивающее значение переменной экрана.
     
-    In a ``use``\ d screen, this targets a variable in the context of
-    the screen containing the ``use``\ d one(s). To target variables
-    within a ``use``\ d screen, and only in that case, use
-    :func:`LocalVariableValue` instead.
+    Во вложенном (``use``) экране воздействует на переменную экрана, содержащего
+    вложенный экран. Для переменных внутри самого вложенного экрана используйте
+    :func:`LocalVariableValue`.
     
     `variable`
-        A string giving the name of the variable to adjust.
-    `range`
-        The range to adjust over. This must be specified if `max` and `min`
-        are not given.
-    `max_is_zero`
-        If True, then when the screen variable's value is zero, the value of the
-        bar will be `range`, and all other values will be shifted down
-        by 1. This works both ways - when the bar is set to the maximum,
-        the value of the screen variable is set to 0.
-    
-        This is used internally, for some preferences.
-    `style`
-        The styles of the created bar.
-    `offset`
-        An offset to add to the value.
-    `step`
-        The amount to change the bar by. If None, defaults to 1/10th of
-        the bar.
-    `force_step`
-        If True, the bar can only take discrete steps, with the steps given
-        by `step`. If False, the bar can take any value in the range.
-    `action`
-        If not None, an action to call when the screen variable's value is changed.
-    `min`
-        The minimum value of the bar. If both `min` and `max` are given,
-        `range` and `offset` are calculated from them.
-    `max`
-        The maximum value of the bar. If both `min` and `max` are given,
-        `range` and `offset` are calculated from them.
+        Имя настраиваемой экранной переменной (строка).
+    `range`, `max_is_zero`, `style`, `offset`, `step`, `force_step`, `action`, `min`, `max`
+        Параметры, аналогичные :func:`FieldValue`.
 
 .. function:: StaticValue(value=0.0, range=1.0)
     
-    This allows a value to be specified statically.
+    Позволяет задать статическое значение для полосы.
     
     `value`
-        The value itself, a number.
+        Само числовое значение.
     
     `range`
-        The range of the value.
+        Диапазон значения.
 
 .. function:: VariableValue(variable, range=None, max_is_zero=False, style='bar', offset=0, step=None, action=None, force_step=False, min=None, max=None)
     
-    A bar value that allows the user to adjust the value of a variable in
-    the default store.
+    Значение полосы, настраивающее переменную в стандартном хранилище (store).
     
     `variable`
-        The `variable` parameter must be a string, and can be a simple
-        name like "strength", or one with dots separating the variable
-        from fields, like "hero.strength" or "persistent.show_cutscenes".
-    `range`
-        The range to adjust over. This must be specified if `max` and `min`
-        are not given.
-    `max_is_zero`
-        If True, then when the variable's value is zero, the value of the
-        bar will be `range`, and all other values will be shifted down
-        by 1. This works both ways - when the bar is set to the maximum,
-        the value of the variable is set to 0.
-    
-        This is used internally, for some preferences.
-    `style`
-        The styles of the created bar.
-    `offset`
-        An offset to add to the value.
-    `step`
-        The amount to change the bar by. If None, defaults to 1/10th of
-        the bar.
-    `force_step`
-        If True, the bar can only take discrete steps, with the steps given
-        by `step`. If False, the bar can take any value in the range.
-    `action`
-        If not None, an action to call when the variable's value is changed.
-    `min`
-        The minimum value of the bar. If both `min` and `max` are given,
-        `range` and `offset` are calculated from them.
-    `max`
-        The maximum value of the bar. If both `min` and `max` are given,
-        `range` and `offset` are calculated from them.
+        Имя переменной (строка). Может быть простым именем вроде "strength"
+        или содержать поля через точку, например "hero.strength" или "persistent.show_cutscenes".
+    `range`, `max_is_zero`, `style`, `offset`, `step`, `force_step`, `action`, `min`, `max`
+        Параметры, аналогичные :func:`FieldValue`.
 
 .. function:: XScrollValue(viewport)
     
-    The value of an adjustment that horizontally scrolls the viewport with the
-    given id, on the current screen. The viewport must be defined before a bar
-    with this value is.
+    Значение регулятора, горизонтально прокручивающего область просмотра (viewport)
+    с указанным id на текущем экране. Область просмотра должна быть определена до полосы с этим значением.
 
 .. function:: YScrollValue(viewport)
     
-    The value of an adjustment that vertically scrolls the viewport with the
-    given id, on the current screen. The viewport must be defined before a bar
-    with this value is.
-
+    Значение регулятора, вертикально прокручивающего область просмотра (viewport)
+    с указанным id на текущем экране. Область просмотра должна быть определена до полосы с этим значением.

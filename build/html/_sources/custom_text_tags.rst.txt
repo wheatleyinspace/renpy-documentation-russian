@@ -1,40 +1,38 @@
-﻿================
-Custom Text Tags
-================
+===============================
+Пользовательские текстовые теги
+===============================
 
-Ren'Py has support for defining your own text tags. These text tags
-can manipulate the text and text tags defined within, including adding
-and removing text and other text tags.
+В Ren'Py есть поддержка создания собственных текстовых тегов. Эти теги
+могут манипулировать текстом и тегами, определёнными внутри них, включая добавление
+и удаление текста и других текстовых тегов.
 
-Custom text tags are created by assigning a text tag function to an
-entry in one of the following dictionaries. A tag must be in one or
-the other dictionary, not both.
+Пользовательские текстовые теги создаются путём привязки функции тега к записи
+в одном из следующих словарей. Тег должен находиться либо в одном, либо в другом
+словаре, но не в обоих одновременно.
 
 .. var:: config.custom_text_tags = { }
 
-    Maps text tag names to text tag functions, when the text tag can
-    wrap other text.
+    Сопоставляет имена текстовых тегов с функциями тегов, когда текстовый тег
+    может оборачивать другой текст (парный тег).
 
 .. var:: config.self_closing_custom_text_tags = { }
 
-    Maps text tag names to a self-closing text tag functions, when the text tag
-    does not wrap other text.
+    Сопоставляет имена текстовых тегов с функциями самозакрывающихся тегов, когда тег
+    не оборачивает другой текст (одиночный тег).
 
 .. warning::
 
-    The functions may be called at any moment as part of the prediction
-    process. For that reason, their behavior should not depend on the state
-    of the game (global variables, typically) and they should not induce
-    side-effects (calling :doc:`statement_equivalents` for example, or
-    changing global variables).
+    Эти функции могут быть вызваны в любой момент в рамках процесса предсказания (prediction).
+    По этой причине их поведение не должно зависеть от состояния игры (обычно от глобальных переменных),
+    и они не должны вызывать побочных эффектов (например, вызывать :doc:`statement_equivalents`
+    или изменять глобальные переменные).
 
-A text tag function takes three arguments: The tag itself, the argument
-for the tag, and a list of content tuples. For example, for the text::
+Функция текстового тега принимает три аргумента: сам тег, аргумент тега и список
+кортежей содержимого. Например, для текста::
 
     "{big=2}Hello, {b}World{/b}{/big}"
 
-The tag will be "big", the argument will be the string "2", and the list
-of content tuples will be::
+тегом будет "big", аргументом — строка "2", а список кортежей содержимого будет иметь вид::
 
     [
         (renpy.TEXT_TEXT, "Hello, "),
@@ -43,44 +41,40 @@ of content tuples will be::
         (renpy.TEXT_TAG, "/b"),
     ]
 
-The text tag function should return a new list of content tuples, which
-is used to replace the text tag and its contents.
+Функция текстового тега должна возвращать новый список кортежей содержимого, который
+используется для замены текстового тега и его содержимого.
 
-Content tuples consist of two components. The first component is one of the
-the constants in the following list. The second component varies based on
-the first component, as described below.
+Кортежи содержимого состоят из двух компонентов. Первый компонент — одна из констант
+из следующего списка. Второй компонент зависит от первого компонента, как описано ниже:
 
 renpy.TEXT_TEXT
-    The second component is text that is intended for display to the user.
+    Второй компонент — это строка текста, предназначенная для отображения пользователю.
 
 renpy.TEXT_TAG
-    The second component is the contents of a text tag, without the
-    enclosing braces.
+    Второй компонент — это содержимое текстового тега без окружающих фигурных скобок.
 
 renpy.TEXT_DISPLAYABLE
-    The second component is a displayable to be embedded into the text.
+    Второй компонент — отображаемый объект, который должен быть встроен в текст.
 
 renpy.TEXT_PARAGRAPH
-    This represents a break between paragraphs, and the second component
-    is undefined (but must be present).
+    Обозначает перенос абзаца, второй компонент не определён (но должен присутствовать).
 
-A self-closing text tag function is similar, except that it does not take
-the third argument.
+Функция самозакрывающегося тега устроена аналогично, за исключением того, что она
+не принимает третий аргумент.
 
-Lists of tokens can be passed to :func:`Text` when its `tokenized`
-argument is True.
+Списки токенов можно передавать в :func:`Text`, когда аргумент `tokenized` равен True.
 
 .. warning::
 
-    The dialogue text tags {p}, {w}, {nw}, and {fast} are processed before
-    custom text tags, and should either be not included inside a custom
-    text tag, or passed through unchanged.
+    Диалоговые текстовые теги {p}, {w}, {nw} и {fast} обрабатываются до пользовательских
+    текстовых тегов и должны либо не включаться внутрь пользовательского текстового тега,
+    либо передаваться без изменений.
 
-Examples
---------
+Примеры
+-------
 
-The example ``big`` text tag works like the {size} text tag, but applies a
-multiplier to its argument. ::
+В качестве примера тег ``big`` работает подобно тегу {size}, но применяет множитель
+к своему аргументу. ::
 
     init python:
 
@@ -99,8 +93,8 @@ multiplier to its argument. ::
 
     "This is {big=3}BIG!{/big}"
 
-The example ``rot13`` text tag applies the ROT13 transform to text. Note that
-ROT26 – ROT13 applied twice – is just normal text. ::
+В следующем примере текстовый тег ``rot13`` применяет шифр ROT13 к тексту. Обратите внимание,
+что ROT26 (дважды применённый ROT13) — это исходный обычный текст. ::
 
     init python:
 
@@ -136,8 +130,8 @@ ROT26 – ROT13 applied twice – is just normal text. ::
 
     "Rot0. {rot13}Rot13. {rot13}Rot26. {/rot13}Rot13. {/rot13}Rot0."
 
-The ``bang`` text tag inserts a specific image into the text, and doesn't require
-a closing tag. ::
+Тег ``bang`` вставляет специальный восклицательный знак в текст и не требует
+закрывающего тега. ::
 
     init python:
         def bang_tag(tag, argument):

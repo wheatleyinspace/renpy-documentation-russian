@@ -1,93 +1,89 @@
-Speech Bubbles
-==============
+Текстовые облачка (Speech Bubbles)
+==================================
 
-Ren'Py supports dialogue that's displayed in speech bubbles, which can be
-interactively positioned on the screen. This provides an alternative to
-the textboxes used by ADV-style games, and the full screen dialogue used
-by NVL-mode.
+Ren'Py поддерживает отображение диалогов в текстовых облачках (речевых бабблах),
+которые можно интерактивно размещать на экране. Это предоставляет альтернативу
+стандартным текстовым окнам игр стиля ADV и полноэкранному тексту в режиме NVL.
 
-To use speech bubbles your game, you'll have to define Characters with
-an image tag, a kind of ``bubble``. For example, ::
+Чтобы использовать текстовые облачка в вашей игре, вам потребуется объявить персонажей
+(Character) с тегом изображения и типом ``bubble``. Например::
 
-    define e = Character(None, image="eileen", kind=bubble) # Eileen
-    define l = Character(None, image="lucy", kind=bubble)   # Lucy
+    define e = Character(None, image="eileen", kind=bubble) # Эйлин
+    define l = Character(None, image="lucy", kind=bubble)   # Люси
 
-While a name is supported, in general the speaking character will be
-implied by the tails of the bubble, so the name can be omitted.
+Хотя указание имени персонажа поддерживается, в большинстве случаев говорящий персонаж
+понятен по направлению «хвостика» баббла, поэтому имя можно опустить.
 
-You may then use these characters to write dialogue normally.
+После этого вы можете писать диалоги для этих персонажей обычным образом.
 
-To position the balloons, hit shift+B to display the speech bubble editor.
-For each character that has a speech balloon, this will have two buttons
-in it.
+Чтобы позиционировать бабблы, нажмите комбинацию клавиш Shift+B для вызова редактора
+речевых облачков. Для каждого персонажа с активным бабблом в редакторе будут отображаться
+две кнопки.
 
-Pressing the area button will launch the speech bubble editor. This editor
-lets you drag to select the area where the speech bubble will be placed,
-on a grid. When you complete the drag, the speech bubble will change
-locations.
+Нажатие кнопки области (area) запускает режим редактирования области. Этот редактор
+позволяет перетаскиванием мыши выделить прямоугольную область на сетке, где будет
+расположен баббл. После отпускания кнопки мыши баббл переместится в указанное место.
 
-Pressing the properties buttons will select between sets of properties
-associated with the speech bubble. For the default speech bubble, the
-different properties control the position of the speech bubble tail.
+Нажатие кнопки свойств (properties) переключает между наборами свойств, связанными
+с данным бабблом. Для баббла по умолчанию различные наборы свойств управляют положением
+хвостика облачка.
 
-Once you've changed the area or properties for a character (or group of
-characters with the same image tags), those properties remain set until
-changed again, or until the next scene statement.
+После того как вы изменили область или свойства для персонажа (или группы персонажей
+с одинаковыми тегами изображений), эти параметры остаются в силе до следующего изменения
+или до следующей инструкции scene.
 
-When the area or properties are being set on the current line of dialogue,
-the corresponding line is brighter. If the values are being inherited from
-a prior line of dialogue or the default, the button is dimmed out. Right
-clicking on a button will prevent the current line from setting the value.
+Когда область или свойства задаются непосредственно на текущей строке диалога,
+соответствующая кнопка подсвечивается ярче. Если значения наследуются из предыдущей
+строки диалога или установлены по умолчанию, кнопка затемнена. Клик правой кнопкой
+мыши по кнопке предотвращает сохранение этого значения для текущей строки.
 
 .. _retained-bubbles:
 
-Retained Bubbles
-----------------
+Удерживаемые бабблы (Retained Bubbles)
+--------------------------------------
 
-Ren'Py supports a mode in which bubbles are retained between lines of
-dialogue, so they pop up one by one, until the previous bubbles are
-cleared from the screen. To enable this mode, set a bubble character's
-`retain` property to True::
+Ren'Py поддерживает режим, при котором бабблы сохраняются между строками диалога,
+появляясь один за другим, пока предыдущие облачка не будут очищены с экрана.
+Чтобы включить этот режим, установите свойство `retain` персонажа-баббла в True::
 
     define e = Character(None, image="eileen", kind=bubble, retain=True)
 
-Once that's done, the bubbles will keep popping up. Each bubble will
-need to be placed individually, so bubbles don't overlap. In the bubble editor,
-pressing the "(clear retained bubbles)" button will remove all of the
-retained bubbles from the screen, except for the most recent.
+После этого облачка будут продолжать оставаться на экране. Каждое облачко потребуется
+разместить индивидуально, чтобы они не перекрывали друг друга. В редакторе бабблов
+нажатие кнопки «(clear retained bubbles)» удаляет все удерживаемые бабблы с экрана,
+кроме самого последнего.
 
-When :ref:`warping to a line <warping_to_a_line>`, bubble dialogue reconstructs
-retained bubbles and dialogue history along the replayed path. Bubble layout
-properties and automatic clearing rules still apply; non-retained bubbles
-are not left on screen by replay.
+При :ref:`перемещении к строке <warping_to_a_line>` диалоги с бабблами восстанавливают
+удерживаемые бабблы и историю диалогов вдоль воспроизведённого пути. Правила компоновки
+бабблов и автоматической очистки сохраняются; бабблы без флага retain не остаются на экране.
 
-Tips
-----
+Советы
+------
 
-The speech bubbles use the same identifiers used by the translation system,
-see the :ref:`Translation Tips <translation-tips>` for more information
-about them. These identifiers can change if:
+Речевые бабблы используют те же идентификаторы строк, что и система переводов.
+Подробнее о них см. раздел :ref:`Советы по переводу <translation-tips>`.
+Эти идентификаторы могут измениться, если:
 
-* The text of a line changes.
-* Another line with the same text inside the same label is added or removed.
-* A label before the line is added or removed (however, adding or removing
-  a label with the ``hide`` clause will not change the translation identifier).
+* Изменяется текст реплики.
+* Добавляется или удаляется другая реплика с таким же текстом внутри той же метки.
+* Добавляется или удаляется метка перед репликой (однако добавление или удаление
+  метки с параметром ``hide`` не меняет идентификатор перевода).
 
-If you edit a scene, it's suggested that you replay through it to make sure
-the changes did not affect speech bubble placement.
+Если вы отредактировали сцену, рекомендуется воспроизвести её, чтобы убедиться,
+что изменения не повлияли на позиционирование бабблов.
 
-It's possible to apply transforms to the speech bubble by editing the :ref:`bubble-screen`.
+К бабблам можно применять трансформации, отредактировав :ref:`экран bubble <bubble-screen>`.
 
 .. _bubble-ctc:
 
-If you'd like a CTC indicator to be part of the bubble screen, consider giving the
-`ctc_position` argument to Character the value of "screen-variable". You may also need
-to add::
+Если вы хотите, чтобы индикатор клика (CTC) отображался внутри экрана баббла,
+передайте аргументу `ctc_position` функции Character значение "screen-variable".
+Также может потребоваться добавить::
 
     showif ctc:
         add ctc
 
-to the end of the bubble screen, if this is not present. You'd then define the character as:
+в конец экрана bubble, если эта строка там отсутствует. Затем персонаж определяется следующим образом::
 
     define e = Character(
         None,
@@ -95,56 +91,51 @@ to the end of the bubble screen, if this is not present. You'd then define the c
         kind=bubble,
         ctc_position="screen-variable",
         ctc=Transform("ctc_image.png", align=(0.5, 1.0))
+        )
 
 
-Configuration Variables
+Переменные конфигурации
 -----------------------
 
-The speech bubble system is controlled by variables in the ``bubble`` namespace,
-and by the ``bubble`` screen and its associated styles.
+Система речевых бабблов управляется переменными в пространстве имён ``bubble``,
+а также экраном ``bubble`` и связанными с ним стилями.
 
-The ``bubble`` namespace contains the following variables:
+Пространство имён ``bubble`` содержит следующие переменные:
 
 .. var:: bubble.area_property = "window_area"
 
-    The name of the property that contains the area of the speech bubble. This is given as if
-    it was supplied to :func:`Character`, with the same prefixing system. By default, this is
-    ``"window_area"``, which means that the area is given as a property to the window displayable.
-    Another useful choice is ``"show_area"``, which will cause the area to be supplied as the
-    `area` argument to the bubble screen.
+    Имя свойства, содержащего область речевого баббла. Задаётся так же, как если бы передавалось
+    в :func:`Character`, с той же системой префиксов. По умолчанию это ``"window_area"``, что означает,
+    что область передаётся как свойство отображаемому объекту window. Другой полезный вариант —
+    ``"show_area"``, при котором область передаётся как аргумент `area` непосредственно в экран bubble.
 
 .. var:: bubble.clear_retain_statements = [ "call screen", "menu",  "say", "say-centered", "say-nvl", "scene", ]
 
-    This is a list of statements that will automatically cause retained bubbles to be cleared.
+    Список инструкций, выполнение которых автоматически приводит к очистке удерживаемых бабблов.
 
 .. var:: bubble.cols = 24
 
-    The granularity of the grid that's used to position and size speech bubbles,
-    in the horizontal direction.
+    Дискретность сетки по горизонтали, используемой для позиционирования и изменения размеров бабблов.
 
 .. var:: bubble.db_filename = "bubble.json"
 
-    The database file, stored in the game directory, that contains the
-    speech bubble information.
+    Файл базы данных в каталоге игры, содержащий информацию о расположении речевых бабблов.
 
 .. var:: bubble.default_area = (15, 1, 8, 5)
 
-    This is the default area that speech bubbles are placed in, if no other
-    area is specified. This is a tuple of the form (x, y, w, h),
-    where each value is a number of grid cells.
+    Область по умолчанию для размещения речевых бабблов, если иная область не указана.
+    Представляет собой кортеж вида (x, y, w, h), где каждое значение указывает количество ячеек сетки.
 
 .. var:: bubble.expand_area = { ... }
 
-    This is a map from the name of a set of properties to a (left, top, right, bottom)
-    tuple. If found in this set, the area of the speech bubble is expanded by the
-    given number of pixels.
+    Отображение из имени набора свойств в кортеж (left, top, right, bottom). Если имя найдено
+    в этом словаре, область баббла расширяется на указанное количество пикселей.
 
-    This makes the speech bubble bigger than the area the creator dragged out.
-    The intent is that this can be used to drag out the body of the speech
-    bubble without concern for the tail, and also for the text itself to stay
-    put when the set of properties is changed and the tail moves.
+    Это делает баббл больше области, выделенной разработчиком. Это предназначено для того, чтобы
+    выделять основную часть («тело») баббла без оглядки на хвостик, а также чтобы сам текст
+    оставался на месте при переключении набора свойств и перемещении хвостика.
 
-    By default, this is::
+    По умолчанию задано следующее значение::
 
         define bubble.expand_area = {
             "bottom_left" : (0, 0, 0, 22),
@@ -155,25 +146,21 @@ The ``bubble`` namespace contains the following variables:
 
 .. var:: bubble.layer = "screens"
 
-    The layer that non-retained bubbles are placed on.
+    Слой, на котором размещаются обычные (неудерживаемые) бабблы.
 
 .. var:: bubble.properties = { ... }
 
-    These are properties, apart from the area, that can be used to customize
-    the speech bubble. This is a map from the name of a set of properties
-    to a dictionary of properties and values. These properties supersede those
-    given to the character, and are then supplied to the ``bubble`` screen.
+    Свойства (помимо области), используемые для настройки речевого баббла. Это словарь, сопоставляющий
+    имя набора свойств со словарём свойств и их значений. Эти свойства переопределяют свойства персонажа
+    и передаются в экран ``bubble``.
 
-    This uses the same prefixing system as :func:`Character` does. Properties
-    beginning with ``window_`` have the prefix removed, and are passed to the
-    displayable with id "window" in the bubble screen, which is the bubble
-    itself. Properties with ``what_`` have the prefix removed, and are passed
-    to the displayable with id "what" in the bubble screen, which is the text
-    of the bubble. Properties with ``who_`` are handled similarly, and given
-    to the characters name. Properties with ``show_`` are given as arguments
-    to the bubble screen itself.
+    Используется та же система префиксов, что и в :func:`Character`. У свойств с префиксом ``window_``
+    префикс удаляется, и они передаются отображаемому объекту с идентификатором "window" в экране bubble
+    (то есть самому бабблу). Свойства с ``what_`` передаются объекту с id "what" (тексту внутри баббла).
+    Свойства с ``who_`` передаются имени персонажа. Свойства с ``show_`` передаются как аргументы самому
+    экрану bubble.
 
-    In a new game, screens.rpy includes::
+    В новом проекте файл screens.rpy содержит::
 
         define bubble.frame = Frame("gui/bubble.png", 55, 55, 55, 95)
 
@@ -199,42 +186,36 @@ The ``bubble`` namespace contains the following variables:
             },
         }
 
-    The bubble.frame variable is just used to make defining bubble.properties
-    easier. Then for each of the four styles of bubble, the bubble is flipped
-    so the tail is in the right place, and the padding is adjusted to leave
-    room for the tail.
+    Переменная bubble.frame используется для удобства задания bubble.properties. Для каждого из четырёх
+    стилей баббл зеркально отражается, чтобы хвостик оказался в нужном месте, а внутренние отступы (padding)
+    корректируются, чтобы освободить место под хвостик.
 
 .. var:: bubble.properties_order = [ ]
 
-    This is a list of the names of the sets of properties, in the order they should
-    be cycled through in the speech bubble editor. If the names of the sets of properties
-    are not given, the properties are cycled through in alphabetical order.
+    Список имён наборов свойств в том порядке, в котором они должны переключаться в редакторе речевых
+    бабблов. Если список не задан, свойства переключаются в алфавитном порядке.
 
 .. var:: bubble.properties_callback = None
 
-    If not None, this should be a function that takes an image tag, and returns
-    a list or tuple of property names that should be used for that image tag, in
-    the order those names should be cycled through. This takes precedence over
-    bubble.properties_order, and can be used to customize the list of bubble
-    properties by character.
+    Если не None, функция, принимающая тег изображения и возвращающая список или кортеж имён свойств,
+    которые должны использоваться для этого тега, в порядке их переключения. Имеет приоритет над
+    bubble.properties_order и может использоваться для индивидуальной настройки списка свойств для каждого персонажа.
 
 .. var:: bubble.retain_layer = "screens"
 
-    The layer that retained bubbles are placed on.
+    Слой, на котором размещаются удерживаемые бабблы.
 
 .. var:: bubble.rows = 24
 
-    The granularity of the grid that's used to position and size speech bubbles,
-    in the vertical direction.
+    Дискретность сетки по вертикали, используемой для позиционирования и изменения размеров бабблов.
 
 
 .. _bubble-screen:
 
-Bubble Screen
--------------
+Экран bubble
+------------
 
-The default ``bubble`` screen can be found in ``screens.rpy``, and is similar
-to the default ``say`` screen::
+Экран ``bubble`` по умолчанию находится в ``screens.rpy`` и устроен аналогично экрану ``say``::
 
     screen bubble(who, what):
         style_prefix "bubble"
@@ -254,14 +235,13 @@ to the default ``say`` screen::
             text what:
                 id "what"
 
-It's separate from the say screen as it uses its own set of styles, including
-``bubble_window``, ``bubble_what``, ``bubble_namebox``, and ``bubble_who``.
-These styles can be customized directly to avoid having to set a property
-in all of the sets of properties in :var:`bubble.properties`.
+Он отделён от экрана say, поскольку использует собственный набор стилей: ``bubble_window``,
+``bubble_what``, ``bubble_namebox`` и ``bubble_who``.
+Эти стили можно настраивать напрямую, чтобы избежать необходимости указывать свойства
+во всех наборах свойств в :var:`bubble.properties`.
 
-If you'd like to apply effects to the speech bubble, you can do so by
-adding a transform to the bubble screen that accepts the show and hide
-transform events, like::
+Если вы хотите применить визуальные эффекты к речевому бабблу, вы можете добавить трансформацию
+к экрану bubble, реагирующую на события трансформации show и hide::
 
     screen bubble(who, what):
         style_prefix "bubble"
@@ -290,25 +270,25 @@ transform events, like::
                 id "what"
 
 
-Adding Bubble Support to a Game
--------------------------------
+Добавление поддержки бабблов в существующую игру
+------------------------------------------------
 
-Games made before the release of Ren'Py 8.1 won't include the default screens
-and settings required for the speech bubble system. There are two things you
-need to do to fix this. First, download:
+Игры, созданные до выхода Ren'Py 8.1, не содержат стандартных экранов и настроек,
+необходимых для системы речевых бабблов. Чтобы добавить их, выполните два шага.
+Сначала скачайте:
 
 * https://raw.githubusercontent.com/renpy/renpy/master/gui/game/gui/bubble.png
 * https://raw.githubusercontent.com/renpy/renpy/master/gui/game/gui/thoughtbubble.png
 
-And place the files in the ``game/gui`` directory of your game. Then, add this to
-the end of screens.rpy::
+и поместите эти файлы в каталог ``game/gui`` вашей игры. Затем добавьте следующий код
+в конец файла screens.rpy::
 
     ## Bubble screen ###############################################################
     ##
-    ## The bubble screen is used to display dialogue to the player when using
-    ## speech bubbles. The bubble screen takes the same parameters as the say
-    ## screen, must create a displayable with the id of "what", and can create
-    ## displayables with the "namebox", "who", and "window" ids.
+    ## Экран bubble используется для отображения диалогов игроку при использовании
+    ## речевых бабблов. Экран bubble принимает те же параметры, что и экран say,
+    ## обязан создавать отображаемый объект с id "what", и может создавать
+    ## отображаемые объекты с id "namebox", "who" и "window".
     ##
     ## https://www.renpy.org/doc/html/bubble.html#bubble-screen
 

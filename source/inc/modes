@@ -2,5 +2,4 @@
 
 .. function:: renpy.get_mode()
     
-    Returns the current mode, or None if it is not defined.
-
+    Возвращает текущий режим взаимодействия или None, если он не определён.

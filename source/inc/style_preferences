@@ -2,51 +2,51 @@
 
 .. function:: StylePreference(preference, alternative)
     
-    An action that causes `alternative` to become the selected alternative for the given style preference.
+    Действие, которое устанавливает `alternative` в качестве выбранного варианта
+    для указанной настройки стиля.
     
-    The `update` event is triggered when this action is called.
+    При вызове этого действия генерируется событие `update`.
     
     `preference`
-        A string giving the name of the style preference.
+        Строка с именем настройки стиля.
     
     `alternative`
-        A string giving the name of the alternative.
+        Строка с именем варианта настройки.
 
 .. function:: renpy.get_style_preference(preference)
     
-    Returns a string giving the name of the selected alternative for the named style preference.
+    Возвращает строку с именем выбранного варианта для указанной настройки стиля.
     
     `preference`
-        A string giving the name of the style preference.
+        Строка с именем настройки стиля.
 
 .. function:: renpy.register_style_preference(preference, alternative, style, property, value)
     
-    Registers information about an alternative for a style preference.
+    Регистрирует информацию о варианте для настройки стиля.
     
     `preference`
-        A string, the name of the style preference.
+        Строка, имя настройки стиля.
     
     `alternative`
-        A string, the name of the alternative.
+        Строка, имя варианта.
     
     `style`
-        The style that will be updated. This may be a style object or a string giving the style name.
+        Стиль, который будет обновляться. Может быть объектом стиля или строкой с его именем.
     
     `property`
-        A string giving the name of the style property that will be update.
+        Строка с именем обновляемого свойства стиля.
     
     `value`
-        The value that will be assigned to the style property.
+        Значение, которое будет присвоено свойству стиля.
 
 .. function:: renpy.set_style_preference(preference, alternative)
     
-    Sets the selected alternative for the style preference.
+    Устанавливает выбранный вариант для настройки стиля.
     
-    The `update` event is triggered when this function is called.
+    При вызове этой функции генерируется событие `update`.
     
     `preference`
-        A string giving the name of the style preference.
+        Строка с именем настройки стиля.
     
     `alternative`
-        A string giving the name of the alternative.
-
+        Строка с именем варианта.

@@ -2,66 +2,62 @@
 
 .. function:: renpy.get_clipboard_data(mime_type: str) -> bytes
     
-    Returns the clipboard data for `mime_type`, or raises an exception
-    if no data is available for that MIME type.
+    Возвращает данные буфера обмена для указанного `mime_type` или вызывает исключение,
+    если данные для этого MIME-типа отсутствуют.
     
     `mime_type`
-        The MIME type to retrieve, for example "image/png".
+        Извлекаемый MIME-тип, например "image/png".
     
-    Returns bytes.
+    Возвращает байты (bytes).
 
 .. function:: renpy.get_clipboard_mime_types() -> list[str]
     
-    Returns a list of MIME type strings currently available on the clipboard.
+    Возвращает список строк MIME-типов, доступных в данный момент в буфере обмена.
 
 .. function:: renpy.get_clipboard_text() -> str
     
-    Returns the text currently on the clipboard, or raises an exception
-    if no text is available.
+    Возвращает текст, находящийся в буфере обмена, или вызывает исключение,
+    если текстовые данные отсутствуют.
     
-    Returns a string.
+    Возвращает строку (str).
 
 .. function:: renpy.put_clipboard_data(data_dict: dict[str | bytes, str | bytes]) -> None
     
-    Sets up clipboard data for multiple MIME types.
+    Записывает данные в буфер обмена сразу для нескольких MIME-типов.
     
     `data_dict`
-        A dictionary mapping MIME type strings or bytes to data strings
-        or bytes. String values are encoded as UTF-8.
+        Словарь, сопоставляющий строки или байты MIME-типов со строками или байтами данных.
+        Строковые значения кодируются в UTF-8.
 
 .. function:: renpy.put_clipboard_image_file(filename: str, absolute_path: bool = False) -> None
     
-    Copies an image file to the system clipboard. The image is placed
-    on the clipboard in its original format, and also as a PNG if the
-    original is not already a PNG.
+    Копирует файл изображения в системный буфер обмена. Изображение помещается в буфер обмена
+    в исходном формате, а также как PNG (если исходный файл не в формате PNG).
     
-    Using this function tends to improve compatibility with other applications, as some applications are only
-    able to handle image/png image data.
+    Использование этой функции повышает совместимость со сторонними приложениями, многие из которых
+    принимают изображения только в формате image/png.
     
     `filename`
-        The name of the image file to copy to the clipboard.
+        Имя файла изображения для копирования.
     
     `absolute_path`
-        If True, `filename` is treated as an absolute filesystem path.
-        If False (the default), the file is opened using Ren'Py's
-        file loading mechanism.
+        Если True, `filename` считается абсолютным путём в файловой системе. Если False (по умолчанию),
+        файл открывается через стандартный механизм загрузки файлов Ren'Py.
 
 .. function:: renpy.put_clipboard_text(text: str) -> None
     
-    Places `text` onto the clipboard.
+    Помещает строку `text` в буфер обмена.
     
     `text`
-        The string to place on the clipboard.
+        Строка текста для копирования в буфер обмена.
 
 .. function:: renpy.put_clipboard_text_file(filename: str, absolute_path: bool = False) -> None
     
-    Copies a text file to the system clipboard as a text/plain attachment.
+    Копирует текстовый файл в системный буфер обмена в виде вложения text/plain.
     
     `filename`
-        The name of the text file to copy to the clipboard.
+        Имя текстового файла для копирования в буфер обмена.
     
     `absolute_path`
-        If True, `filename` is treated as an absolute filesystem path.
-        If False (the default), the file is opened using Ren'Py's
-        file loading mechanism.
-
+        Если True, `filename` считается абсолютным путём в файловой системе. Если False (по умолчанию),
+        файл открывается через стандартный механизм загрузки Ren'Py.

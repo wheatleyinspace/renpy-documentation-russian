@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Downloader for Large Games on Mobile &mdash; Ren&#39;Py Documentation</title>
+  <title>Загрузчик больших игр на мобильных платформах &mdash; Ren&#39;Py Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=6eda34c5" />
@@ -14,7 +14,7 @@
       <link rel="stylesheet" type="text/css" href="_static/dark_mode_css/dark.css?v=70edf1c7" />
 
   
-    <link rel="canonical" href="https://www.renpy.org/doc/html/downloader.html" />
+    <link rel="canonical" href="https://wheatleyinspace.github.io/renpy-documentation-russian/downloader.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=00c7e44b"></script>
@@ -26,8 +26,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="Gestures" href="gesture.html" />
-    <link rel="prev" title="HTTPS/HTTP Updater" href="updater.html" /> 
+    <link rel="next" title="Жесты" href="gesture.html" />
+    <link rel="prev" title="Обновление по HTTPS/HTTP" href="updater.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,7 +52,7 @@
               <p class="caption" role="heading"><span class="caption-text">Начало работы</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Краткое руководство</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI Customization Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">Руководство по настройке GUI</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Язык Ren'Py</span></p>
 <ul>
@@ -73,128 +73,135 @@
 <li class="toctree-l1"><a class="reference internal" href="menus.html">Игровые меню</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Инструкции Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conditional.html">Условные инструкции</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">Аудио</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_filters.html">Аудиофильтры</a></li>
+<li class="toctree-l1"><a class="reference internal" href="movie.html">Видео</a></li>
 <li class="toctree-l1"><a class="reference internal" href="voice.html">Озвучка</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Текст, отображаемые объекты, трансформации и переходы</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Текст</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translation.html">Перевод</a></li>
 <li class="toctree-l1"><a class="reference internal" href="displayables.html">Отображаемые объекты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms.html">Трансформации</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transform_properties.html">Свойства трансформаций</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transitions.html">Переходы (Transitions)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixcolor.html">Matrixcolor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Layered Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D Stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layeredimage.html">Многослойные картинки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3dstage.html">3D-сцена</a></li>
 <li class="toctree-l1"><a class="reference internal" href="live2d.html">Live2D Cubism</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Настройка Ren'Py</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Style Properties</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screens.html">Screens and Screen Language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Screen Actions, Values, and Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Special Screen Names</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Screen Language Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="preferences.html">Preference Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Store Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mouse.html">Custom Mouse Cursors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Text Shaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Стили</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_properties.html">Свойства стилей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens.html">Экраны и язык экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_actions.html">Действия, значения и функции экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_special.html">Специальные имена экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_optimization.html">Оптимизация языка экранов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Конфигурационные переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preferences.html">Переменные настроек</a></li>
+<li class="toctree-l1"><a class="reference internal" href="store_variables.html">Переменные хранилища</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mouse.html">Пользовательские курсоры мыши</a></li>
+<li class="toctree-l1"><a class="reference internal" href="textshaders.html">Текстовые шейдеры</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Инструменты</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="launcher.html">Launcher</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Developer Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="director.html">Interactive Director</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testcases.html">Automated Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="launcher.html">Лаунчер</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer_tools.html">Инструменты разработчика</a></li>
+<li class="toctree-l1"><a class="reference internal" href="director.html">Интерактивный режиссёр (Interactive Director)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testcases.html">Автоматизированное тестирование</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Другие возможности</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">NVL-Mode Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bubble.html">Speech Bubbles</a></li>
-<li class="toctree-l1"><a class="reference internal" href="input.html">Text Input</a></li>
-<li class="toctree-l1"><a class="reference internal" href="side_image.html">Side Images</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rooms.html">Image Gallery, Music Room, and Replay Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvl_mode.html">Руководство по режиму NVL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bubble.html">Текстовые облачка (Speech Bubbles)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="input.html">Ввод текста</a></li>
+<li class="toctree-l1"><a class="reference internal" href="side_image.html">Боковые изображения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rooms.html">Галерея изображений, музыкальная комната и повтор сцен (Replay)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="drag_drop.html">Drag and Drop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sprites.html">Sprites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keymap.html">Customizing the Keymap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="achievement.html">Achievements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">Dialogue History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="multiple.html">Multiple Character Dialogue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Splashscreen and Presplash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Lifecycle of a Running Ren'Py Game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sprites.html">Спрайты</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keymap.html">Настройка привязок клавиш</a></li>
+<li class="toctree-l1"><a class="reference internal" href="achievement.html">Достижения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">История диалогов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple.html">Диалог нескольких персонажей</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splashscreen_presplash.html">Заставка (Splashscreen) и предзаставка (Presplash)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lifecycle.html">Жизненный цикл запущенной игры Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Python и Ren'Py</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Statement Equivalents</a></li>
-<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Saving, Loading, and Rollback</a></li>
-<li class="toctree-l1"><a class="reference internal" href="persistent.html">Persistent Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statement_equivalents.html">Эквиваленты инструкций на Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="save_load_rollback.html">Сохранение, загрузка и откат</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent.html">Постоянные данные</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gui_advanced.html">Продвинутый GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Screens and Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cdd.html">Creator-Defined Displayables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cds.html">Creator-Defined Statements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Custom Text Tags</a></li>
-<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Character Callbacks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_python.html">File Access</a></li>
-<li class="toctree-l1"><a class="reference internal" href="color_class.html">Color Class</a></li>
-<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Model-Based Rendering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="other.html">Other Functions and Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ren_py.html">_ren.py Files - Ren'Py in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen_python.html">Экраны и Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdd.html">Пользовательские отображаемые объекты (CDD)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cds.html">Пользовательские инструкции (CDS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_text_tags.html">Пользовательские текстовые теги</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character_callbacks.html">Коллбэки персонажей (Character Callbacks)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_python.html">Доступ к файлам</a></li>
+<li class="toctree-l1"><a class="reference internal" href="color_class.html">Класс Color</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Матрицы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Модельный рендеринг</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other.html">Прочие функции и переменные</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ren_py.html">Файлы _ren.py — Ren'Py внутри Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pygame.html">pygame</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fetch.html">HTTPS/HTTP Fetch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Screenshots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Clipboard</a></li>
-<li class="toctree-l1"><a class="reference internal" href="age.html">User Age</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fetch.html">Сетевые запросы HTTPS/HTTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screenshot.html">Снимки экрана</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clipboard.html">Буфер обмена</a></li>
+<li class="toctree-l1"><a class="reference internal" href="age.html">Возраст пользователя</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Сборка, обновление и другие платформы</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="build.html">Building Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build.html">Сборка дистрибутивов</a></li>
 <li class="toctree-l1"><a class="reference internal" href="android.html">Android</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ios.html">iOS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="web.html">Web / HTML5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS/Chromebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Веб / HTML5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chromeos.html">Chrome OS / Chromebook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="raspi.html">Raspberry Pi</a></li>
-<li class="toctree-l1"><a class="reference internal" href="iap.html">In-App Purchasing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="updater.html">HTTPS/HTTP Updater</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Downloader for Large Games on Mobile</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#how-it-works">How it Works</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#building-and-uploading-the-main-game">Building and Uploading the Main Game</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#making-a-downloader-game">Making a Downloader Game</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#downloader-screen">Downloader Screen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#downloader-functions">Downloader Functions</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="iap.html">Внутриигровые покупки (In-App Purchasing)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="updater.html">Обновление по HTTPS/HTTP</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Загрузчик больших игр на мобильных платформах</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Требования</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Принцип работы</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Сборка и выгрузка основной игры</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Создание игры-загрузчика</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Экран загрузчика</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">Функции загрузчика</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#updater.continue_game_download"><code class="docutils literal notranslate"><span class="pre">updater.continue_game_download()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#updater.start_game_download"><code class="docutils literal notranslate"><span class="pre">updater.start_game_download()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="gesture.html">Gestures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gesture.html">Жесты</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для пользователя</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="problems.html">Dealing with Problems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Environment Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Self-Voicing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Безопасность</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problems.html">Устранение неполадок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_variables.html">Переменные окружения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="self_voicing.html">Голосовое сопровождение интерфейса (Self-Voicing)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков библиотек и инструментов</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Template Projects</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template_projects.html">Шаблоны проектов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Интерфейс командной строки (CLI)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Документация для разработчиков движка</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="editor.html">Text Editor Integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="skins.html">Skins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editor.html">Интеграция с текстовым редактором</a></li>
+<li class="toctree-l1"><a class="reference internal" href="skins.html">Скины</a></li>
 <li class="toctree-l1"><a class="reference internal" href="translating_renpy.html">Перевод Ren'Py</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">История изменений, лицензия и авторы</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog (Ren'Py 7.x-)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog6.html">Changelog (Ren'Py 6.11 - 6.99)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Incompatible Changes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Ren'Py Development Sponsors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">История изменений (Changelog Ren'Py 7+)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog6.html">История изменений (Ren'Py 6.11 - 6.99)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="incompatible.html">Несовместимые изменения</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Лицензия</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Авторы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sponsors.html">Спонсоры разработки Ren'Py</a></li>
 </ul>
 
         </div>
@@ -211,9 +218,9 @@
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Downloader for Large Games on Mobile</li>
+      <li class="breadcrumb-item active">Загрузчик больших игр на мобильных платформах</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/renpy/renpy/blob/master/sphinx/source/downloader.rst" class="fa fa-github"> Редактировать на GitHub</a>
+              <a href="https://github.com/wheatleyinspace/renpy-documentation-russian/blob/.downloader.rst" class="fa fa-github"> Редактировать на GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -221,75 +228,75 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="downloader-for-large-games-on-mobile">
-<h1>Downloader for Large Games on Mobile<a class="headerlink" href="#downloader-for-large-games-on-mobile" title="Ссылка на этот заголовок"></a></h1>
-<p>Platforms like Android and iOS have a limit on the size of an app that can
-be downloaded from their app stores. To support larger games, Ren'Py supports
-a downloader, which is a small game that downloads the main game.</p>
-<section id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Ссылка на этот заголовок"></a></h2>
-<p>To make this work, you'll need a web hosting service that is reasonably
-capable. Uploader services like mega or game hosting sites like itch.io won't work.
-The downloader has been tested with a Digital Ocean droplet that
-runs Nginx, and also with Cloudflare's R2, which is free to host 10GB on.</p>
-<p>Specifically, the web server needs to support downloading files, and it will
-work better if it supports many HTTP Range requests at once.</p>
+  <section id="downloader">
+<span id="id1"></span><h1>Загрузчик больших игр на мобильных платформах<a class="headerlink" href="#downloader" title="Ссылка на этот заголовок"></a></h1>
+<p>На мобильных платформах, таких как Android и iOS, действуют строгие ограничения на максимальный
+размер приложения, загружаемого непосредственно из магазинов приложений (App Store и Google Play).
+Для поддержки крупномасштабных игр Ren'Py предоставляет механизм загрузчика: компактную игру-загрузчик,
+которая скачивает и развёртывает основную игру на устройстве пользователя.</p>
+<section id="id2">
+<h2>Требования<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p>Для работы этого механизма потребуется надёжный веб-хостинг. Простые файлообменники вроде Mega
+или страницы игр на itch.io для этой цели не подойдут. Работа загрузчика протестирована
+на виртуальных серверах (VPS) с веб-сервером Nginx, а также с хранилищем Cloudflare R2,
+предоставляющим бесплатный тариф до 10 ГБ.</p>
+<p>В частности, веб-сервер должен поддерживать прямое скачивание файлов по HTTP/HTTPS, а также
+параллельные запросы с диапазонами байтов (HTTP Range requests).</p>
 </section>
-<section id="how-it-works">
-<h2>How it Works<a class="headerlink" href="#how-it-works" title="Ссылка на этот заголовок"></a></h2>
-<p>To use the downloader, you'll need to build two games. The first is the
-downloader game, which contains the Ren'Py engine and the downloader,
-and is what the user will get delivered to their phone.</p>
-<p>The second is the main game, the visual novel they want to play. This
-will be downloaded by the downloader game, and will be installed onto
-the device, if present.</p>
-<p>Both need to be built with the same version of Ren'Py - if there is a
-mismatch, the downloader will update the main game. Other than that,
-it's up to the main game to update itself, which is possible now that
-the Ren'Py updater works on mobile platforms.</p>
-<p>When the downloader game starts, it checks to see if the main game is
-installed. If it is, and the versions are right, the main game will
-start. Otherwise the downloader will run and prompt the player to
-download the main game.</p>
+<section id="id3">
+<h2>Принцип работы<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p>Для использования загрузчика необходимо собрать две отдельные игры:</p>
+<ol class="arabic simple">
+<li><p><strong>Игра-загрузчик (downloader game)</strong> — компактное приложение, содержащее движок Ren'Py
+и логику загрузчика. Именно этот файл упаковывается и публикуется в магазине приложений.</p></li>
+<li><p><strong>Основная игра (main game)</strong> — полноценная визуальная новелла, в которую будет играть
+пользователь. Она скачивается игрой-загрузчиком и устанавливается во внутреннюю память устройства.</p></li>
+</ol>
+<p>Обе игры должны быть собраны на одной и той же версии Ren'Py. При несовпадении версий
+загрузчик автоматически обновит основную игру. В дальнейшем основная игра может обновлять
+себя самостоятельно, поскольку система обновления Ren'Py Updater теперь поддерживает мобильные устройства.</p>
+<p>При запуске игры-загрузчика она проверяет наличие установленной основной игры. Если игра найдена
+и версии совпадают, немедленно запускается основная игра. В противном случае запускается
+процесс загрузки с предложением скачать необходимые файлы.</p>
 </section>
-<section id="building-and-uploading-the-main-game">
-<h2>Building and Uploading the Main Game<a class="headerlink" href="#building-and-uploading-the-main-game" title="Ссылка на этот заголовок"></a></h2>
-<p>The main change you need to make to your main game is to add the line:</p>
+<section id="id4">
+<h2>Сборка и выгрузка основной игры<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p>Главное изменение, которое необходимо внести в проект основной игры — добавить строку:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">define</span> <span class="n">build</span><span class="o">.</span><span class="n">game_only_update</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
-<p>to the top of your options.rpy file. That will add a new option that shows
-up to the launcher's Build Distributions screen, &quot;Game-Only Update for Mobile&quot;.</p>
-<p>In &quot;Build Distributions&quot;, check &quot;Game-Only Update for Mobile&quot;. Uncheck all other
-build packages. Under &quot;Options&quot;, make sure &quot;Build Updates&quot; is set, and that
-the other options are set as you like. The defaults are fine.</p>
-<p>Then run the build process.</p>
-<p>When the game is finished building, you'll have everything you need. You'll
-want to upload the <code class="docutils literal notranslate"><span class="pre">updates.json</span></code>, <code class="docutils literal notranslate"><span class="pre">updates.ecdsa</span></code>, and everything in the
-<code class="docutils literal notranslate"><span class="pre">rpu</span></code> directory to your web server. (Make sure that the rpu directory is next to
-the two update files, and the .rpu files are inside the <code class="docutils literal notranslate"><span class="pre">rpu</span></code> directory.)</p>
+<p>в начало файла <code class="file docutils literal notranslate"><span class="pre">options.rpy</span></code>. Это активирует новый пункт меню в разделе лаунчера
+«Сборка дистрибутивов» (Build Distributions) — «Game-Only Update for Mobile»
+(Обновление только файлов игры для мобильных платформ).</p>
+<p>В окне «Сборка дистрибутивов» отметьте пункт «Game-Only Update for Mobile» и снимите флажки
+со всех остальных пакетов сборки. В блоке параметров убедитесь, что включён пункт
+«Собрать обновления» (Build Updates), а остальные параметры выставлены по вашему усмотрению
+(значений по умолчанию обычно достаточно).</p>
+<p>Затем запустите сборку.</p>
+<p>По завершении сборки в каталоге проекта появятся файлы обновления. Вам необходимо загрузить
+на свой веб-сервер файлы <code class="file docutils literal notranslate"><span class="pre">updates.json</span></code>, <code class="file docutils literal notranslate"><span class="pre">updates.ecdsa</span></code> и всю папку <code class="file docutils literal notranslate"><span class="pre">rpu/</span></code>
+с её содержимым (убедитесь, что каталог <code class="file docutils literal notranslate"><span class="pre">rpu/</span></code> расположен на сервере рядом с файлами
+<code class="file docutils literal notranslate"><span class="pre">updates.json</span></code> и <code class="file docutils literal notranslate"><span class="pre">updates.ecdsa</span></code>, а файлы <code class="file docutils literal notranslate"><span class="pre">.rpu</span></code> находятся внутри папки <code class="file docutils literal notranslate"><span class="pre">rpu/</span></code>).</p>
 </section>
-<section id="making-a-downloader-game">
-<h2>Making a Downloader Game<a class="headerlink" href="#making-a-downloader-game" title="Ссылка на этот заголовок"></a></h2>
-<p>The downloader game is a Ren'Py game, but it should stay well under 100MB
-in size. You can do anything you can in a small game - have an opening
-scene, play music, etc. You will need to make it separately, and build
-it for Android or iOS using the usual techniques.</p>
-<p>At the same time, it should ask the player if they want to download, mention
-that this can cost money if they're not on WiFi, and then download the
-game.</p>
-<p>For the highest security, the <code class="docutils literal notranslate"><span class="pre">public_key.pem</span></code> file produced by building
-the main game should be copied to the base directory of the downloader game.
-This is the public key that will be used to verify the download.</p>
-<p>Here's an example script for a downloader game, using assets from the
-tutorial game:</p>
-<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># The url to updates.json, on your web server.</span>
+<section id="id5">
+<h2>Создание игры-загрузчика<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<p>Игра-загрузчик представляет собой стандартный проект Ren'Py, размер которого должен быть
+значительно меньше 100 МБ. В ней можно реализовать любую логику небольшой игры: показать
+начальную заставку, проиграть фоновую музыку и т. д. Её проект создаётся отдельно и собирается
+для Android или iOS по стандартной схеме.</p>
+<p>При этом игра должна запросить подтверждение пользователя на загрузку, предупредить о возможном
+расходе мобильного трафика и начать скачивание.</p>
+<p>Для максимальной безопасности скопируйте открытый ключ <code class="file docutils literal notranslate"><span class="pre">public_key.pem</span></code>, созданный при
+сборке основной игры, в базовый каталог проекта игры-загрузчика. Этот публичный ключ будет
+использоваться для криптографической проверки подлинности скачиваемых пакетов.</p>
+<p>Пример сценария игры-загрузчика (с использованием графики из демонстрационного проекта):</p>
+<div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="c1"># URL-адрес к updates.json на вашем веб-сервере.</span>
 <span class="k">define</span> <span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://www.domain.com/game-updates/updates.json&quot;</span>
 
-<span class="c1"># Disable saving in the downloader game.</span>
+<span class="c1"># Отключаем сохранения в игре-загрузчике.</span>
 <span class="k">define</span> <span class="n">config</span><span class="o">.</span><span class="n">save</span> <span class="o">=</span> <span class="kc">False</span>
 
-<span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Eileen&quot;</span><span class="p">,</span> <span class="k">image</span><span class="o">=</span><span class="s2">&quot;eileen&quot;</span><span class="p">)</span>
+<span class="k">define</span> <span class="n">e</span> <span class="o">=</span> <span class="n">Character</span><span class="p">(</span><span class="s2">&quot;Эйлин&quot;</span><span class="p">,</span> <span class="k">image</span><span class="o">=</span><span class="s2">&quot;eileen&quot;</span><span class="p">)</span>
 
 <span class="k">label</span> <span class="n">splashscreen</span><span class="p">:</span>
 
@@ -298,48 +305,46 @@ tutorial game:</p>
 
     <span class="k">$</span> <span class="n">downloader</span> <span class="o">=</span> <span class="n">updater</span><span class="o">.</span><span class="n">start_game_download</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
 
-    <span class="n">e</span> <span class="s2">&quot;Welcome to the downloader game.&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;Добро пожаловать в загрузчик игры.&quot;</span>
 
-    <span class="n">e</span> <span class="s2">&quot;This will download the main game onto your phone, so you can play it.&quot;</span>
+    <span class="n">e</span> <span class="s2">&quot;Сейчас на ваш телефон будут загружены файлы основной игры.&quot;</span>
 
     <span class="k">if</span> <span class="n">downloader</span><span class="o">.</span><span class="n">download_total</span><span class="p">:</span>
         <span class="k">$</span> <span class="n">download_mb</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">downloader</span><span class="o">.</span><span class="n">download_total</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 
-        <span class="n">e</span> <span class="s2">&quot;To play this game, you&#39;ll need to download [download_mb] megabytes of data. If you&#39;re not on WiFi, you could be charged for it. Tap the screen to proceed.&quot;</span>
+        <span class="n">e</span> <span class="s2">&quot;Для запуска игры необходимо скачать [download_mb] МБ данных. Если вы не подключены к Wi-Fi, мобильный оператор может списать плату за трафик. Коснитесь экрана для продолжения.&quot;</span>
 
     <span class="k">else</span><span class="p">:</span>
 
-        <span class="n">e</span> <span class="s2">&quot;To play this game, you&#39;ll need to download some data. If you&#39;re not on WiFi, you could be charged for it. Tap the screen to proceed.&quot;</span>
+        <span class="n">e</span> <span class="s2">&quot;Для запуска игры необходимо скачать файлы данных. Если вы не подключены к Wi-Fi, мобильный оператор может списать плату за трафик. Коснитесь экрана для продолжения.&quot;</span>
 
     <span class="k">$</span> <span class="n">updater</span><span class="o">.</span><span class="n">continue_game_download</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>This is pretty simple, but there are a few things. The first is that it sets
-<a class="reference internal" href="config.html#var-config.save"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.save</span></code></a> to False. This is important, as it disables saving and
-loading, including preferences, so the downloader's saves don't influence
-the main game.</p>
-<p>It's also all happening in the splashscreen, to start immediately and to
-disable entering the game menu.</p>
-<p>Early on, the game calls <a class="reference internal" href="#updater.start_game_download" title="updater.start_game_download"><code class="xref py py-func docutils literal notranslate"><span class="pre">updater.start_game_download()</span></code></a>, to gather information
-about the download. After this, the game kills some time, having Eileen
-say some things as the game checks to find out the size of the download.</p>
-<p>After the player makes multiple clicks, the game may know the size of the
-download, or it may not, so we use a conditional to check the download
-size. If the real number is known, it's converted to megabytes and displayed.
-If not, more general text is displayed. (It would also hard-code an estimate
-of the download size into the game.)</p>
-<p>Finally, <a class="reference internal" href="#updater.continue_game_download" title="updater.continue_game_download"><code class="xref py py-func docutils literal notranslate"><span class="pre">updater.continue_game_download()</span></code></a> is called, which starts the download
-process. A screen will show up, and you can't do much - but music will play,
-and ATL will keep running.</p>
-<p>When the download is complete, the main game will automatically start. If it
-fails, the downloader will restart, and the player will be able to try again</p>
+<p>Этот сценарий достаточно прост, но в нём есть важные детали. Во-первых, переменная
+<a class="reference internal" href="config.html#var-config.save"><code class="xref std std-var docutils literal notranslate"><span class="pre">config.save</span></code></a> устанавливается в False. Это критически важно: так отключается
+система сохранений и настроек загрузчика, чтобы они не конфликтовали с основной игрой.</p>
+<p>Весь код размещается в метке <a class="reference internal" href="splashscreen_presplash.html#splashscreen"><span class="std std-ref">splashscreen</span></a>, благодаря чему он начинает
+выполняться сразу при запуске без входа в главное меню игры.</p>
+<p>В начале вызывается <a class="reference internal" href="#updater.start_game_download" title="updater.start_game_download"><code class="xref py py-func docutils literal notranslate"><span class="pre">updater.start_game_download()</span></code></a> для запроса метаданных о размере
+загрузки. Пока движок опрашивает сервер, игра отображает диалог с Эйлин, с пользой занимая
+время ожидания ответа.</p>
+<p>После нескольких кликов игрока размер загрузки либо уже определён, либо ещё неизвестен,
+поэтому используется условие проверки <cite>downloader.download_total</cite>. Если размер известен,
+он переводится в мегабайты и сообщается игроку, иначе выводится обобщённый текст
+(также можно указать примерный размер игры вручную).</p>
+<p>Наконец, вызывается <a class="reference internal" href="#updater.continue_game_download" title="updater.continue_game_download"><code class="xref py py-func docutils literal notranslate"><span class="pre">updater.continue_game_download()</span></code></a>, запускающая непосредственное
+скачивание. На экране появляется интерфейс загрузки — в этот момент управление ограничено,
+однако музыка продолжает играть, а анимации ATL продолжают работать.</p>
+<p>После успешного скачивания основная игра запустится автоматически. В случае сетевого сбоя
+загрузчик перезапустится, позволяя игроку повторить попытку.</p>
 </section>
-<section id="downloader-screen">
-<h2>Downloader Screen<a class="headerlink" href="#downloader-screen" title="Ссылка на этот заголовок"></a></h2>
-<p>The downloader is a screen that shows the progress of the download. A default
-screen is in <code class="file docutils literal notranslate"><span class="pre">renpy/common/00updater.rpy</span></code>, and can be customized by
-creating a copy in your game directory.</p>
-<p>Here's the default:</p>
+<section id="id6">
+<h2>Экран загрузчика<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<p>Интерфейс процесса скачивания отображается с помощью экрана <code class="docutils literal notranslate"><span class="pre">downloader</span></code>. Стандартный экран
+определён в файле <code class="file docutils literal notranslate"><span class="pre">renpy/common/00updater.rpy</span></code>, и его можно переопределить, скопировав
+в каталог <code class="file docutils literal notranslate"><span class="pre">game/</span></code> вашего проекта.</p>
+<p>Исходный код стандартного экрана:</p>
 <div class="highlight-renpy notranslate"><div class="highlight"><pre><span></span><span class="k">screen</span> <span class="n">downloader</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
 
     <span class="na">style_prefix</span> <span class="s2">&quot;downloader&quot;</span>
@@ -349,25 +354,25 @@ creating a copy in your game directory.</p>
         <span class="k">has</span> <span class="k">vbox</span>
 
         <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">CHECKING</span> <span class="k">or</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">PREPARING</span><span class="p">:</span>
-            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Preparing to download the game data.&quot;</span><span class="p">)</span>
+            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Подготовка к загрузке данных игры.&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">DOWNLOADING</span> <span class="k">or</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">UNPACKING</span><span class="p">:</span>
-            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Downloading the game data.&quot;</span><span class="p">)</span>
+            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Загрузка данных игры.&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">FINISHING</span> <span class="k">or</span> <span class="n">u</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">u</span><span class="o">.</span><span class="n">DONE</span><span class="p">:</span>
-            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;The game data has been downloaded.&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span> <span class="c1"># An error or unknown state.</span>
-            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;An error occurred when trying to download game data:&quot;</span><span class="p">)</span>
+            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Данные игры успешно загружены.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># Ошибка или неизвестное состояние.</span>
+            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Произошла ошибка при загрузке данных игры:&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">message</span> <span class="k">is</span> <span class="k">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">text</span> <span class="s2">&quot;[u.message!q]&quot;</span>
 
-            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;This game cannot be run until the game data has been downloaded.&quot;</span><span class="p">)</span>
+            <span class="k">text</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Игра не может быть запущена без загрузки необходимых файлов.&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">progress</span> <span class="k">is</span> <span class="k">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">null</span> <span class="na">height</span> <span class="n">gui</span><span class="o">.</span><span class="n">_scale</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
             <span class="k">bar</span> <span class="na">value</span> <span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">progress</span> <span class="k">or</span> <span class="mf">0.0</span><span class="p">)</span> <span class="nb">range</span> <span class="mf">1.0</span>
 
         <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">can_proceed</span><span class="p">:</span>
-            <span class="k">textbutton</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Retry&quot;</span><span class="p">)</span> <span class="na">action</span> <span class="n">u</span><span class="o">.</span><span class="n">proceed</span>
+            <span class="k">textbutton</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;Повторить&quot;</span><span class="p">)</span> <span class="na">action</span> <span class="n">u</span><span class="o">.</span><span class="n">proceed</span>
 
 <span class="k">style</span> <span class="n">downloader_frame</span><span class="p">:</span>
     <span class="na">xalign</span> <span class="mf">0.5</span>
@@ -394,20 +399,20 @@ creating a copy in your game directory.</p>
 </pre></div>
 </div>
 </section>
-<section id="downloader-functions">
-<h2>Downloader Functions<a class="headerlink" href="#downloader-functions" title="Ссылка на этот заголовок"></a></h2>
+<section id="id7">
+<h2>Функции загрузчика<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="updater.continue_game_download">
 <span class="sig-prename descclassname"><span class="pre">updater.</span></span><span class="sig-name descname"><span class="pre">continue_game_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">screen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'downloader'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#updater.continue_game_download" title="Ссылка на это определение"></a></dt>
-<dd><p>Continues downloading the game data. This will loop until the
-download is complete, or the user exits the game.</p>
+<dd><p>Продолжает процесс скачивания игровых данных. Цикл выполняется до тех пор,
+пока загрузка не завершится или пользователь не выйдет из игры.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="updater.start_game_download">
 <span class="sig-prename descclassname"><span class="pre">updater.</span></span><span class="sig-name descname"><span class="pre">start_game_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#updater.start_game_download" title="Ссылка на это определение"></a></dt>
-<dd><p>Starts downloading the game data from <cite>url</cite>. This begins the process
-of determining what needs to be downloaded, and returns an Update object.</p>
+<dd><p>Начинает процесс скачивания игровых данных по указанному <cite>url</cite>. Запускает
+процедуру проверки необходимых для загрузки пакетов и возвращает объект Update.</p>
 </dd></dl>
 
 </section>
@@ -417,8 +422,8 @@ of determining what needs to be downloaded, and returns an Update object.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
-        <a href="updater.html" class="btn btn-neutral float-left" title="HTTPS/HTTP Updater" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
-        <a href="gesture.html" class="btn btn-neutral float-right" title="Gestures" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="updater.html" class="btn btn-neutral float-left" title="Обновление по HTTPS/HTTP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="gesture.html" class="btn btn-neutral float-right" title="Жесты" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

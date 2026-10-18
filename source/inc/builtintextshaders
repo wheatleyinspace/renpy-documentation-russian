@@ -1,134 +1,104 @@
 .. textshader:: dissolve
 
-    
-    The dissolve text shader handles text by dissolving it in slowly, with the start dissolving in first, and the
-    end dissolving in last.
+    Текстовый шейдер dissolve плавно растворяет текст при медленном выводе: начало строки появляется первым,
+    а конец — последним.
     
     `u__duration` = 10.0
-        The number of characters that will be changing alpha at a time.  If set to
-        0, the wave will move across the text one pixel at a time.
-    
+        Количество символов, одновременно изменяющих свою прозрачность. Если равно 0, волна растворения
+        проходит по тексту попиксельно.
 
-    Using this shader will prevent the default text shader from being used.
+    Использование этого шейдера отключает действие шейдера по умолчанию.
 
 .. textshader:: flip
 
-    
-    The flip shader flips slow text by flipping the text horizontally, with the start flipping in first,
-    and the end flipping in last.
+    Текстовый шейдер flip переворачивает символы по горизонтали при медленном выводе: начало строки
+    переворачивается первым, а конец — последним.
     
     `u__duration` = 10.0
-        The number of characters that will be changing alpha at a time.  If set to
-        0, the characters will instantly flip.
-    
+        Количество одновременно переворачивающихся символов. Если равно 0, символы переворачиваются мгновенно.
 
-    Using this shader will prevent the default text shader from being used.
+    Использование этого шейдера отключает действие шейдера по умолчанию.
 
 .. textshader:: jitter
 
-    
-    The jitter text shader moves the text to random positions
-    relative to where it would be normally drawn. The position changes
-    once per frame.
+    Текстовый шейдер jitter хаотично смещает символы текста в случайные позиции относительно исходного
+    положения. Позиция обновляется каждый кадр.
     
     `u__jitter` = (3.0, 3.0)
-        The amount of jitter to apply to the text, in pixels.
+        Величина дрожания текста в пикселях.
     
     `u__duration` = 0.0
-        The duration of the jitter effect, in seconds from when the text is
-        first shown. After this duration, the text returns to its normal
-        position. A value of 0 (the default) or a negative value makes the
-        effect continue indefinitely. This is independent of slow text.
+        Длительность эффекта дрожания в секундах с момента появления текста. После истечения этого времени
+        текст возвращается в нормальное состояние. Значение 0 (по умолчанию) или отрицательное число
+        означает непрерывную анимацию. Не зависит от скорости медленного вывода текста.
     
     `u__individual` = 0.0
-        If 0 (the default), all glyphs move together. If 1, each glyph moves
-        independently.
-    
+        Если 0 (по умолчанию), все символы двигаются синхронно. Если 1, каждый символ дрожит независимо.
 
 .. textshader:: linetexture
 
-    
-    Multiplies the text with a texture, one line at a time. The texture is aligned with
-    the left side of the text. The vertical center of the texture is aligned with
-    the baseline of the text - this means that most of the lower half of the texture
-    will not be visible.
+    Умножает цвет текста на текстуру построчно. Текстура выравнивается по левому краю строки.
+    Вертикальный центр текстуры выравнивается по базовой линии текста (нижняя половина текстуры
+    обычно остаётся невидимой).
     
     `u__texture` = ...
-        The texture to multiply the text by.
+        Текстура для наложения на текст.
     
     `u__scale` = (1.0, 1.0)
-        A factor to scale the texture by. For example (1.0, 0.5) will make the
-        texture half as tall as it otherwise would be.
-    
+        Масштаб текстуры. Например, (1.0, 0.5) сделает текстуру вдвое ниже.
 
 .. textshader:: offset
 
-    
-    The offset text shader moves the text by a fixed amount.
+    Текстовый шейдер offset смещает весь текст на фиксированную величину.
     
     `u__offset` = (0.0, 0.0)
-        The amount to move the text by, in virtual pixels.
-    
+        Величина смещения текста в виртуальных пикселях.
 
 .. textshader:: slowalpha
 
-    
-    The slowalpha shader is intended to be used with another slow text shader, like typewriter or dissolve.
-    It causes the text that has yet to be revealed to be drawn with an alpha value of `u__alpha` = 0.2, rather than
-    being invisible.
+    Шейдер slowalpha предназначен для совместного использования с другими шейдерами медленного текста
+    (такими как typewriter или dissolve). Он заставляет ещё не появившийся текст отображаться с лёгкой
+    полупрозрачностью `u__alpha` = 0.2 вместо полной невидимости.
     
     `u__alpha` = 0.2
-        The alpha value of the text that has not been revealed yet.
-    
+        Значение непрозрачности ещё не раскрытого текста.
 
 .. textshader:: texture
 
-    
-    The texture text shader multiplies the text with the colors from a texture. This is not
-    done to outlines or offset text. The texture is aligned with the top
-    left of the text.
+    Текстовый шейдер texture умножает цвета текста на изображение текстуры (не затрагивая контуры
+    и тени). Текстура выравнивается по левому верхнему углу текстового блока.
     
     `u__texture` = ...
-        The texture to multiply the text by.
-    
+        Текстура для наложения на текст.
 
 .. textshader:: typewriter
 
-    
-    The typewriter text shader handles slow text by making the text appear one character at a time, as if it were being
-    typed out by a typewriter.
-    
+    Текстовый шейдер typewriter выводит текст по одному символу за раз, как при печати на печатной машинке.
 
-    Using this shader will prevent the default text shader from being used.
+    Использование этого шейдера отключает действие шейдера по умолчанию.
 
 .. textshader:: wave
 
-    
-    The wave text shader makes the text bounce up and down in a wave.
+    Текстовый шейдер wave заставляет текст волнообразно раскачиваться вверх и вниз.
     
     `u__amplitude` = 5.0
-        The number of pixels up and down the text will move.
+        Амплитуда колебаний текста в пикселях.
     
     `u__frequency` = 2.0
-        The number of waves per second.
+        Количество волн в секунду.
     
     `u__wavelength` = 20.0
-        The number of characters between peaks in the wave.
-    
+        Длина волны (количество символов между пиками).
 
 .. textshader:: zoom
 
-    
-    The zoom text shader handles slow text to cause it to zoom in from an initial size of `u__zoom` = 0.0 to full size.
+    Текстовый шейдер zoom масштабирует символы при медленном выводе от начального размера `u__zoom` = 0.0
+    до полного размера.
     
     `u__zoom` = 0.0
-        The initial amount of zoom to apply to a character when it first starts
-        showing.
+        Начальный масштаб символа при старте показа.
     
     `u__duration` = 10.0
-        The number of characters that will be changing alpha at a time.  If set to
-        0, the characters will instantly flip.
-    
+        Количество одновременно масштабирующихся символов.
 
-    Using this shader will prevent the default text shader from being used.
-
+    Использование этого шейдера отключает действие шейдера по умолчанию.

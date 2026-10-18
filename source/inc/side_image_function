@@ -2,14 +2,13 @@
 
 .. function:: HasSideImage()
     
-    Returns True if a side image will be displayed for the current interaction, and
-    false otherwise. This becomes available earlier than SideImage does (which is only valid
-    as the start of an interaction), and so can be used in the say screen to make layut conditional
-    on the presence of a side image.
+    Возвращает True, если для текущего взаимодействия отображается боковое изображение
+    (side image), и False в противном случае. Доступна раньше, чем функция SideImage
+    (действительная только в начале взаимодействия), поэтому может использоваться
+    в экране say для условного позиционирования в зависимости от наличия бокового изображения.
 
 .. function:: SideImage()
     
-    Returns the side image associated with the currently speaking character,
-    or a Null displayable if no such side image exists. This may be a transform
-    between two side images if one is set.
-
+    Возвращает боковое изображение (side image), связанное с говорящим в данный момент
+    персонажем, или отображаемый объект Null, если такое изображение отсутствует.
+    Если настроена смена боковых изображений, может возвращать трансформацию между ними.

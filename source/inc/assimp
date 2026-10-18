@@ -2,57 +2,30 @@
 
 .. class:: GLTFModel(filename: 'str', shader: 'str | tuple[str]' = (), tangents: 'bool' = False, zoom: 'float' = 1.0, report: 'bool' = False, **kwargs)
     
-    A displayable that loads a 3D Model in the GLTF format. This format is supported by many 3D tools. Ren'Py
-    uses the `Open Asset Importer (assimp) library <https://github.com/assimp/assimp>`_ to load GLTF models.
+    Отображаемый объект, загружающий 3D-модель в формате GLTF. Этот формат поддерживается большинством
+    программ для 3D-моделирования. Ren'Py использует библиотеку
+    `Open Asset Importer (assimp) <https://github.com/assimp/assimp>`_ для загрузки моделей GLTF.
     
-    For the purposes of Ren'Py's 2D layout system, a GLTFModel has zero width and height. By default, the model
-    is loaded at the size found in the file that contains it. If required, the `zoom` may be used to scale it.
+    Для двухмерной системы разметки Ren'Py объект GLTFModel имеет нулевую ширину и высоту. По умолчанию
+    модель загружается с размерами, указанными в исходном файле. При необходимости масштабирования
+    используйте параметр `zoom`.
     
-    When multiple models are in use, the ``gl_depth True`` property should be supplied to the camera, so that
-    depth testing is enabled. Ren'Py does not currently perform any culling of the model, so it's
-    important to use models simple enough to be completely rendered.
-    
-    `filename`
-        The filename of the model to display.
-    
-    `shader`
-        Either a string or tuple of strings, giving the name of the shader to use.
-    
-    `tangents`
-        If True, tangents will be included in the mesh.
-    
-    `zoom`
-        A zoom factor that will be applied to the model. Many models naturally use the range -1 to 1, and so this
-        may need to be quite large to make the model visible.
-    
-    `report`
-        If true, a report of the model will be printed to the log. This includes the uniforms that are used by
-        the model.
-    
-    A displayable that loads a 3D Model in the GLTF format. This format is supported by many 3D tools. Ren'Py
-    uses the `Open Asset Importer (assimp) library <https://github.com/assimp/assimp>`_ to load GLTF models.
-    
-    For the purposes of Ren'Py's 2D layout system, a GLTFModel has zero width and height. By default, the model
-    is loaded at the size found in the file that contains it. If required, the `zoom` may be used to scale it.
-    
-    When multiple models are in use, the ``gl_depth True`` property should be supplied to the camera, so that
-    depth testing is enabled. Ren'Py does not currently perform any culling of the model, so it's
-    important to use models simple enough to be completely rendered.
+    При использовании нескольких моделей к камере следует применить свойство ``gl_depth True`` для
+    включения буфера глубины. В настоящее время Ren'Py не выполняет отсечение невидимой геометрии (culling),
+    поэтому важно использовать модели, достаточно оптимизированные для полной отрисовки.
     
     `filename`
-        The filename of the model to display.
+        Имя файла модели для отображения.
     
     `shader`
-        Either a string or tuple of strings, giving the name of the shader to use.
+        Строка или кортеж строк с именами используемых шейдеров.
     
     `tangents`
-        If True, tangents will be included in the mesh.
+        Если True, в полигональную сетку включаются касательные векторы (tangents).
     
     `zoom`
-        A zoom factor that will be applied to the model. Many models naturally use the range -1 to 1, and so this
-        may need to be quite large to make the model visible.
+        Коэффициент масштабирования, применяемый к модели. Многие модели создаются в диапазоне от -1 до 1,
+        поэтому этот коэффициент может быть достаточно большим, чтобы сделать модель видимой.
     
     `report`
-        If true, a report of the model will be printed to the log. This includes the uniforms that are used by
-        the model.
-
+        Если True, подробный отчёт о модели и используемых ею uniform-переменных выводится в файл log.txt.

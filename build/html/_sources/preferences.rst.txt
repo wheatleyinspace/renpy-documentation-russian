@@ -1,277 +1,282 @@
-====================
-Preference Variables
-====================
+===================
+Переменные настроек
+===================
 
-Preference variables store the values of Ren'Py preferences. While the value
-of a preference should be set at runtime using the :func:`Preference` action,
-preference variables should be used in conjunction with the default statement
-to set the default value of a preference.
+Переменные настроек хранят значения параметров конфигурации Ren'Py. В то время
+как значение настройки обычно изменяется во время выполнения игры с помощью действия
+:func:`Preference`, переменные настроек следует использовать вместе с оператором
+``default`` для задания значения настройки по умолчанию.
 
-For example::
+Например::
 
     default preferences.text_cps = 40
 
-sets the default text speed to 40 characters per second. The default statement
-only sets the value of the preference if the default has changed since the
-preference was set. For example, if the player changes the speed to 50,
-it will remain at 50 over future runs of the game. If, in an upgrade, the
-default is set to 42, the player's setting will be changed to 42. (The player
-can then change it again.)
+устанавливает скорость текста по умолчанию на 40 знаков в секунду. Оператор
+``default`` устанавливает значение настройки только в том случае, если значение
+по умолчанию изменилось с момента первоначальной установки настройки. Например, если
+игрок изменит скорость на 50, она останется равной 50 при последующих запусках игры.
+Если в обновлении значение по умолчанию будет изменено на 42, настройка игрока
+будет сброшена на 42 (после чего игрок сможет изменить её снова).
 
 .. var:: preferences.afm_after_click = False
 
-    If True, the auto-forward mode will be continued after a click. If False,
-    a click will end auto-forward mode. The equivalent of the "auto-forward
-    after click" preference.
+    Если True, режим авточтения продолжится после клика мыши. Если False,
+    клик завершит режим авточтения. Эквивалент настройки «авточтение после клика»
+    («auto-forward after click»).
 
 .. var:: preferences.afm_enable = False
 
-    If True, auto-forward move is enabled, otherwise False. The equivalent
-    of the "auto-forward time" preference.
+    Если True, режим авточтения включён, в противном случае — False.
+    Эквивалент настройки «время авточтения» («auto-forward time»).
 
 .. var:: preferences.afm_time = 15
 
-    The amount of time to wait for auto-forward mode. Bigger numbers are
-    slower, though the conversion to wall time is complicated, as the
-    speed takes into account line length. The equivalent of the
-    "auto-forward" preference.
+    Время ожидания в режиме авточтения. Чем больше число, тем медленнее
+    переход, хотя перевод в реальное время является комплексным, так как
+    скорость учитывает длину строки текста. Эквивалент настройки «авточтение»
+    («auto-forward»).
 
 .. var:: preferences.desktop_rollback_side = "disable"
 
-    When on a desktop platform, touches or clicks to this side of the window
-    cause rollback to occur. One of "left", "right", or "disable". This is
-    the equivalent of the "rollback side" preference when on a desktop
-    platform.
+    На десктопных платформах: нажатия или клики по этой стороне окна вызывают
+    откат назад. Одно из значений: ``"left"``, ``"right"`` или ``"disable"``. Это
+    эквивалент настройки «сторона отката» («rollback side») на десктопных
+    платформах.
 
 .. var:: preferences.mobile_rollback_side = "disable"
 
-    When on a mobile platform, touches or clicks to this side of the window
-    cause rollback to occur. One of "left", "right", or "disable". This is
-    the equivalent of the "rollback side" preference when on a mobile
-    platform.
+    На мобильных платформах: касания или клики по этой стороне экрана вызывают
+    откат назад. Одно из значений: ``"left"``, ``"right"`` или ``"disable"``. Это
+    эквивалент настройки «сторона отката» («rollback side») на мобильных
+    платформах.
 
 .. var:: preferences.language = None
 
-    The language that the player has selected to use when running the game.
-    This is None for the default language or a string containing a language
-    the game is translated to.
+    Язык, выбранный игроком для запуска игры. Имеет значение ``None`` для
+    языка по умолчанию или строку с именем языка, на который переведена игра.
 
-    This can be used to set the default language, and can be read to determine
-    the current language. The :func:`Language` action can be used to change
-    the language.
+    Может использоваться для задания языка по умолчанию, а также читаться для
+    определения текущего языка. Для смены языка можно использовать действие
+    :func:`Language`.
 
-    See :doc:`translation` for more information.
+    Подробнее см. :doc:`translation`.
 
 .. var:: preferences.emphasize_audio = False
 
-    If True, Ren'Py will emphasize the audio channels found in :var:`config.emphasize_audio_channels`
-    by reducing the volume of other channels. (For example, reducing the music volume when voice
-    is playing.) If False, this doesn't happen.
+    Если True, Ren'Py будет выделять аудиоканалы, указанные в
+    :var:`config.emphasize_audio_channels`, снижая громкость других каналов
+    (например, снижая громкость музыки во время звучания голоса).
+    Если False, выделение не применяется.
 
 .. var:: preferences.fullscreen = False
 
-    This is True when Ren'Py is in fullscreen mode, and False when it
-    is running in a window. The equivalent of the "display" preference.
+    Имеет значение True, когда Ren'Py находится в полноэкранном режиме, и False,
+    когда он работает в окне. Эквивалент настройки «режим экрана» («display»).
 
 .. var:: preferences.gl_framerate = None
 
-    This is either an integer, or None. If not None, it's a target framerate
-    that Ren'Py will attempt to achieve. If this is set low (for example, to
-    30), on a monitor with a high framerate (say, 60 frames per second),
-    Ren'Py will only draw on every other frame.
+    Либо целое число, либо ``None``. Если не ``None``, то задаёт целевую частоту
+    кадров, которую Ren'Py пытается поддерживать. Если задано низкое значение
+    (например, 30) на мониторе с высокой частотой обновления (скажем, 60 кадров
+    в секунду), Ren'Py будет отрисовывать только каждый второй кадр.
 
-    If None, Ren'Py will attempt to draw at the monitor's full framerate.
+    Если ``None``, Ren'Py попытается выполнять отрисовку с максимальной
+    частотой монитора.
 
 .. var:: preferences.gl_powersave = True
 
-    This determines how often Ren'Py will redraw an unchanging screen. If True,
-    Ren'Py will only draw the screen 5 times a second. If False, it will always
-    draw at the full framerate possible.
+    Определяет, как часто Ren'Py будет перерисовывать статичный экран.
+    Если True, Ren'Py будет перерисовывать экран всего 5 раз в секунду.
+    Если False, он всегда будет рисовать с максимально возможной частотой кадров.
 
 .. var:: preferences.gl_tearing = False
 
-    This determines if tearing (True) or frameskip (False) is the preferred
-    behavior when the game can't keep up with its intended framerate.
+    Определяет, является ли разрыв кадра (True, tearing) или пропуск кадров
+    (False, frameskip) предпочтительным поведением, когда игра не успевает за
+    целевой частотой кадров.
 
 .. var:: preferences.mouse_move = True
 
-    If True, the mouse will automatically move to a selected button. If False,
-    it will not. The equivalent of the "automatic move" preference.
+    Если True, курсор мыши автоматически перемещается к выбранной кнопке.
+    Если False, перемещение не происходит. Эквивалент настройки «автоматическое
+    перемещение» («automatic move»).
 
 .. var:: preferences.show_empty_window = True
 
-    If True, the window show and window auto statements will function. If
-    False, those statements are disabled. The equivalent of the "show empty window"
-    preference.
+    Если True, операторы ``window show`` и ``window auto`` функционируют.
+    Если False, эти операторы отключены. Эквивалент настройки «показывать пустое
+    окно» («show empty window»).
 
 .. var:: preferences.skip_after_choices = False
 
-    If True, skipping will resume after a choice. If False, a choice will
-    prevent Ren'Py from skipping. The equivalent of the "after choices"
-    preference.
+    Если True, пропуск текста возобновляется после совершения выбора.
+    Если False, выбор остановит пропуск. Эквивалент настройки «после выборов»
+    («after choices»).
 
 .. var:: preferences.skip_unseen = False
 
-    When True, Ren'Py will skip all text. When False, Ren'Py will
-    only skip text that has been read by the player in any session.
-    The equivalent of the "skip" preference.
+    Если True, Ren'Py будет пропускать любой текст. Если False, Ren'Py будет
+    пропускать только текст, уже прочитанный игроком в любых предыдущих сессиях.
+    Эквивалент настройки «пропуск» («skip»).
 
 .. var:: preferences.text_cps = 0
 
-    The speed of text display. 0 is infinite, otherwise this is the number
-    of characters per second to show. The equivalent of the "text speed"
-    preference.
+    Скорость отображения текста. 0 означает мгновенное появление, иначе это
+    количество символов в секунду. Эквивалент настройки «скорость текста»
+    («text speed»).
 
 .. var:: preferences.transitions = 2
 
-    Determines which transitions should be shown. 2 shows all transitions,
-    0 shows no transitions. (1 is reserved.) The equivalent of the
-    "transitions" preference.
+    Определяет, какие переходы должны отображаться. Значение 2 показывает все
+    переходы, 0 — отключает показ переходов (значение 1 зарезервировано).
+    Эквивалент настройки «переходы» («transitions»).
 
 .. var:: preferences.video_image_fallback = False
 
-    If True, images are displayed instead of videosprites. If False,
-    video sprites are displayed normally. The equivalent (inverted) of the
-    "video sprites" preference.
+    Если True, вместо видеоспрайтов отображаются статические изображения.
+    Если False, видеоспрайты отображаются в обычном режиме. Эквивалент
+    (инвертированный) настройки «видеоспрайты» («video sprites»).
 
 .. var:: preferences.voice_sustain = False
 
-    If True, voice keeps playing until finished, or another voice line
-    replaces it. If False, the voice line ends when the line of dialogue
-    advances. The equivalent of the "voice sustain" preference.
+    Если True, голос продолжает воспроизводиться до конца реплики или пока не
+    начнётся следующая реплика с озвучкой. Если False, воспроизведение голоса
+    прекращается при переходе к следующей реплике диалога. Эквивалент настройки
+    «сохранять голос» («voice sustain»).
 
 .. var:: preferences.wait_voice = True
 
-    If True, auto-forward mode will wait for voice files and self-voicing to
-    finish before advancing. If False, it will not. The equivalent of the
-    "wait for voice" preference.
+    Если True, режим авточтения будет ожидать окончания воспроизведения голосовых
+    файлов и синтеза речи (self-voicing) перед переходом дальше. Если False,
+    ожидание не производится. Эквивалент настройки «ждать голос» («wait for voice»).
 
 .. var:: preferences.system_cursor = False
 
-    If True, the system cursor is forced to be used, ignoring the value of
-    :var:`config.mouse` and :var:`config.mouse_displayable`. If False, it
-    will not. The equivalent of the "system cursor" preference.
+    Если True, принудительно используется системный курсор мыши, игнорируя значения
+    :var:`config.mouse` и :var:`config.mouse_displayable`. Если False — нет.
+    Эквивалент настройки «системный курсор» («system cursor»).
 
 .. var:: preferences.audio_when_minimized = True
 
-    If False, audio channels are stopped when the window is minimized,
-    and resumed when the window is restored. If True, window state will
-    have no effect on audio.
-    The equivalent of the "audio when minimized" preference.
+    Если False, аудиоканалы приостанавливаются при сворачивании окна и
+    возобновляются при его восстановлении. Если True, состояние окна не влияет
+    на звук. Эквивалент настройки «звук при сворачивании» («audio when minimized»).
 
 .. var:: preferences.audio_when_unfocused = True
 
-    If False, audio channels are stopped when the window loses keyboard focus,
-    and resumed when the window regains keyboard focus. If True, keyboard focus
-    will have no effect on audio.
-    The equivalent of the "audio when unfocused" preference.
+    Если False, аудиоканалы приостанавливаются при потере клавиатурного фокуса
+    окном и возобновляются при возвращении фокуса. Если True, потеря фокуса
+    не влияет на звук. Эквивалент настройки «звук без фокуса» («audio when unfocused»).
 
 .. var:: preferences.web_cache_preload = False
 
-    If True the game files will be loaded into the web browser's cache,
-    allowing the game to be played offline. If False, the game files will
-    not be loaded into the web browser's cache, and the game will require
-    internet access to play.
-    The equivalent of the "web cache preload" preference.
+    Если True, файлы игры предварительно загружаются в кэш веб-браузера,
+    позволяя играть в игру офлайн. Если False, файлы не кэшируются заранее, и
+    для игры требуется постоянное интернет-подключение. Эквивалент настройки
+    «предзагрузка веб-кэша» («web cache preload»).
 
 .. var:: preferences.voice_after_game_menu = False
 
-    If True, voice will continue playing after the game menu is shown. If False,
-    voice will be stopped when the game menu is shown. The equivalent of the
-    "voice after menu" preference.
+    Если True, голос продолжит звучать после открытия игрового меню. Если False,
+    воспроизведение голоса остановится при показе игрового меню. Эквивалент
+    настройки «голос после меню» («voice after menu»).
 
 .. var:: preferences.restore_window_position = True
 
-    If True, Ren'Py will attempt to restore the window position when the game
-    is restarted. If False, Ren'Py will not attempt to restore the window
-    position. The equivalent of the "restore window position" preference.
+    Если True, Ren'Py попытается восстановить положение окна при перезапуске
+    игры. Если False, положение окна восстанавливаться не будет. Эквивалент
+    настройки «восстанавливать положение окна» («restore window position»).
 
 .. var:: preferences.force_mono = False
 
-    If True, Ren'Py will mix stereo audio to mono before playing it. If False,
-    stereo audio will be played normally.
+    Если True, Ren'Py будет микшировать стереозвук в моно перед воспроизведением.
+    Если False, стереозвук воспроизводится стандартно.
 
 .. var:: preferences.tts_voice = None
 
-    The name of the self-voicing voice to use. If None, the default voice is used. The equivalent of the "self voicing voice"
-    preference. The precise set of voices available varies by platform, and computer within the platform.
-    For any given computer, :func:`renpy.get_tts_voices` returns possible values this can be set to.
+    Имя голоса для автоозвучивания (self-voicing). Если ``None``, используется
+    голос по умолчанию. Эквивалент настройки «голос озвучивания» («self voicing voice»).
+    Точный набор доступных голосов зависит от операционной системы и компьютера.
+    Для текущего компьютера список возможных вариантов возвращает функция
+    :func:`renpy.get_tts_voices`.
 
 .. var:: preferences.tts_speed = 1.0
 
-    The speed of self-voicing. This is a number between 1.0 and 3.0, with 1.0 being the slowest and 3.0 being the fastest.
-    The equivalent of the "self voicing speed" preference.
+    Скорость автоозвучивания (self-voicing). Число от 1.0 до 3.0, где 1.0 —
+    самая медленная скорость, а 3.0 — самая быстрая. Эквивалент настройки
+    «скорость озвучивания» («self voicing speed»).
 
 
 .. _mixer-defaults:
 
-Mixer Defaults
---------------
+Значения микшеров по умолчанию
+------------------------------
 
-These variables may only be set with the ``default`` statement.
+Эти переменные могут быть заданы только с помощью оператора ``default``.
 
 .. var:: preferences.volume.main = 1.0
 
-    The default volume of the main mixer, which is applied to all channels in
-    addition to the per-channel mixer.This should be a number between 0.0 and 1.0, with 1.0 being full volume.
+    Громкость по умолчанию для главного микшера, которая применяется ко всем
+    каналам в дополнение к индивидуальному микшеру канала. Должна быть числом
+    от 0.0 до 1.0, где 1.0 означает полную громкость.
 
 .. var:: preferences.volume.music = 1.0
 
-    The default volume of the music mixer, which is used for the music and
-    movie channels. This should be a number between 0.0 and 1.0,
-    with 1.0 being full volume.
+    Громкость по умолчанию для музыкального микшера, который используется для
+    каналов ``music`` и ``movie``. Должна быть числом от 0.0 до 1.0, где 1.0
+    означает полную громкость.
 
 .. var:: preferences.volume.sfx = 1.0
 
-    The default volume of the sfx mixer, which is used for the sound and
-    audio channels. This should be a number between 0.0 and 1.0,
-    with 1.0 being full volume.
+    Громкость по умолчанию для микшера звуковых эффектов, который используется для
+    каналов ``sound`` и ``audio``. Должна быть числом от 0.0 до 1.0, где 1.0
+    означает полную громкость.
 
 .. var:: preferences.volume.voice = 1.0
 
-    The default volume of the voice mixer, which is used for the voice
-    channel (and hence the voice statement, auto-voice, etc.).
-    This should be a number between 0.0 and 1.0, with 1.0 being full volume.
+    Громкость по умолчанию для микшера голоса, который используется для канала
+    ``voice`` (и, соответственно, оператора ``voice``, автоозвучки и т. д.).
+    Должна быть числом от 0.0 до 1.0, где 1.0 означает полную громкость.
 
-If channels defined using :func:`renpy.music.register_channel` are used, the
-default volume of those channels can be set using the preferences.volume.`mixer`
-syntax, where `mixer` is the name of the mixer.
+Если используются каналы, зарегистрированные с помощью :func:`renpy.music.register_channel`,
+их громкость по умолчанию можно настроить с помощью синтаксиса
+``preferences.volume.микшер``, где ``микшер`` — имя зарегистрированного микшера.
 
-As an example, this will set the music mixer to 75% and the sfx mixer to 50%::
+Пример установки громкости музыкального микшера на 75% и звуковых эффектов на 50%::
 
     default preferences.volume.music = 0.75
     default preferences.volume.sfx = 0.5
 
 
-Mixer Functions
----------------
+Функции микшеров
+----------------
 
-See :ref:`volume` for more details about mixers.
+Подробнее о микшерах см. раздел :ref:`volume`.
 
 .. function:: preferences.set_mixer(mixer, volume)
 
-    Sets `mixer` to `volume`.
+    Устанавливает громкость `volume` для микшера `mixer`.
 
     `mixer`
-        A string giving the name of the mixer. By default, the mixers
-        are "main", "music", "sfx", and "voice" ("main" being a special mixer).
+        Строка с именем микшера. По умолчанию доступны микшеры "main", "music",
+        "sfx" и "voice" ("main" является специальным мастер-микшером).
 
     `volume`
-        A number between 0.0 and 1.0, where 0.0 is -40 dB (power), and 1.0 is 0 dB
-        (power).
+        Число от 0.0 до 1.0, где 0.0 соответствует -40 дБ (по мощности),
+        а 1.0 — 0 дБ (по мощности).
 
 .. function:: preferences.get_mixer(mixer)
 
-    Gets the volume for `mixer`. If the mixer is muted, this returns
-    0.0. The is returns a number between 0.0 and 1.0, where 0.0 is -40 dB
-    (power) and 1.0 is 0 dB (power).
+    Возвращает текущую громкость для микшера `mixer`. Если звук микшера
+    заглушён, возвращает 0.0. Возвращает число от 0.0 до 1.0, где 0.0
+    соответствует -40 дБ (по мощности), а 1.0 — 0 дБ (по мощности).
 
 .. function:: preferences.set_mute(mixer, mute)
 
-    Sets the mute setting for `mixer`. If `mute` is true, the mixer is muted.
-    If `mute` is false, the mixer's volume is reverted to its value before
-    it was muted.
+    Устанавливает заглушение звука для `mixer`. Если `mute` равно True, звук
+    микшера отключается. Если `mute` равно False, громкость микшера
+    восстанавливается до значения, предшествовавшего заглушению.
 
 .. function:: preferences.get_mute(mixer)
 
-    Gets the mute setting for `mixer`.
+    Возвращает состояние заглушения звука для микшера `mixer`.

@@ -2,176 +2,175 @@
 
 .. function:: Preference(name, value=None, range=None)
     
-    This constructs the appropriate action or value from a preference.
-    The preference name should be the name given in the standard
-    menus, while the value should be either the name of a choice,
-    "toggle" to cycle through choices, a specific value, or left off
-    in the case of buttons.
+    Создает соответствующее действие (Action) или значение (Value) для настройки.
+    Имя настройки должно соответствовать имени в стандартных меню, а значение
+    может быть именем варианта, "toggle" для переключения между вариантами,
+    конкретным значением или опущено (для кнопок-команд).
     
-    Actions that can be used with buttons and hotspots are:
+    Действия, которые можно использовать с кнопками и активными зонами (hotspot):
     
-    * Preference("display", "fullscreen") - displays in fullscreen mode.
-    * Preference("display", "window") - displays in windowed mode at 1x normal size.
-    * Preference("display", 2.0) - displays in windowed mode at 2.0x normal size.
-    * Preference("display", "any window") - displays in windowed mode at the previous size.
-    * Preference("display", "toggle") - toggle display mode.
+    * Preference("display", "fullscreen") — полноэкранный режим.
+    * Preference("display", "window") — оконный режим (масштаб 1.0x).
+    * Preference("display", 2.0) — оконный режим в масштабе 2.0x.
+    * Preference("display", "any window") — оконный режим в предыдущем размере.
+    * Preference("display", "toggle") — переключение режима отображения.
     
-    * Preference("transitions", "all") - show all transitions.
-    * Preference("transitions", "none") - do not show transitions.
-    * Preference("transitions", "toggle") - toggle transitions.
+    * Preference("transitions", "all") — показывать все переходы.
+    * Preference("transitions", "none") — не показывать переходы.
+    * Preference("transitions", "toggle") — переключить отображение переходов.
     
-    * Preference("video sprites", "show") - show all video sprites.
-    * Preference("video sprites", "hide") - fall back to images where possible.
-    * Preference("video sprites", "toggle") - toggle image fallback behavior.
+    * Preference("video sprites", "show") — воспроизводить все видеоспрайты.
+    * Preference("video sprites", "hide") — заменять их статичными изображениями при возможности.
+    * Preference("video sprites", "toggle") — переключить поведение видеоспрайтов.
     
-    * Preference("show empty window", "show") - Allow the "window show" and "window auto" statement to show an empty window outside of the say statement.
-    * Preference("show empty window", "hide") - Prevent the above.
-    * Preference("show empty window", "toggle") - Toggle the above.
+    * Preference("show empty window", "show") — разрешить операторам "window show" и "window auto" отображать пустое окно вне оператора say.
+    * Preference("show empty window", "hide") — запретить отображение пустого окна.
+    * Preference("show empty window", "toggle") — переключить отображение пустого окна.
     
-    * Preference("text speed", 0) - make text appear instantaneously.
-    * Preference("text speed", 142) - set text speed to 142 characters per second.
+    * Preference("text speed", 0) — мгновенный вывод текста.
+    * Preference("text speed", 142) — скорость текста 142 символа в секунду.
     
-    * Preference("joystick") - Show the joystick preferences.
+    * Preference("joystick") — открыть меню настройки джойстика.
     
-    * Preference("skip", "seen") - Only skip seen messages.
-    * Preference("skip", "all") - Skip unseen messages.
-    * Preference("skip", "toggle") - Toggle between skip seen and skip all.
+    * Preference("skip", "seen") — пропускать только прочитанные сообщения.
+    * Preference("skip", "all") — пропускать все сообщения (включая непрочитанные).
+    * Preference("skip", "toggle") — переключить режим пропуска.
     
-    * Preference("begin skipping") - Starts skipping.
+    * Preference("begin skipping") — начать пропуск.
     
-    * Preference("after choices", "skip") - Skip after choices.
-    * Preference("after choices", "stop") - Stop skipping after choices.
-    * Preference("after choices", "toggle") - Toggle skipping after choices.
+    * Preference("after choices", "skip") — продолжать пропуск после выборов.
+    * Preference("after choices", "stop") — останавливать пропуск после выборов.
+    * Preference("after choices", "toggle") — переключить пропуск после выборов.
     
-    * Preference("auto-forward time", 0) - Set the auto-forward time to infinite.
-    * Preference("auto-forward time", 10) - Set the auto-forward time (unit is seconds per 250 characters).
+    * Preference("auto-forward time", 0) — бесконечное время ожидания авточтения.
+    * Preference("auto-forward time", 10) — время ожидания авточтения (в секундах на каждые 250 символов).
     
-    * Preference("auto-forward", "enable") - Enable auto-forward mode.
-    * Preference("auto-forward", "disable") - Disable auto-forward mode.
-    * Preference("auto-forward", "toggle") - Toggle auto-forward mode.
+    * Preference("auto-forward", "enable") — включить режим авточтения.
+    * Preference("auto-forward", "disable") — отключить режим авточтения.
+    * Preference("auto-forward", "toggle") — переключить режим авточтения.
     
-    * Preference("auto-forward after click", "enable") - Remain in auto-forward mode after a click.
-    * Preference("auto-forward after click", "disable") - Disable auto-forward mode after a click.
-    * Preference("auto-forward after click", "toggle") - Toggle auto-forward after click.
+    * Preference("auto-forward after click", "enable") — оставаться в режиме авточтения после клика.
+    * Preference("auto-forward after click", "disable") — выключать авточтение после клика.
+    * Preference("auto-forward after click", "toggle") — переключить авточтение после клика.
     
-    * Preference("automatic move", "enable") - Allow Ren'Py to move the mouse automatically using the :func:`MouseMove` action.
-    * Preference("automatic move", "disable") - Disable the :func:`MouseMove` action.
-    * Preference("automatic move", "toggle") - Toggle automatic mouse mode.
+    * Preference("automatic move", "enable") — разрешить Ren'Py автоматически перемещать курсор мыши действием :func:`MouseMove`.
+    * Preference("automatic move", "disable") — отключить действие :func:`MouseMove`.
+    * Preference("automatic move", "toggle") — переключить автоперемещение мыши.
     
-    * Preference("wait for voice", "enable")  - Wait for the currently playing voice to complete before auto-forwarding.
-    * Preference("wait for voice", "disable") - Do not wait for the currently playing voice to complete before auto-forwarding.
-    * Preference("wait for voice", "toggle")  - Toggle wait voice.
+    * Preference("wait for voice", "enable") — ждать окончания голосовой реплики перед переходом к следующей строке авточтения.
+    * Preference("wait for voice", "disable") — не ждать окончания голосовой реплики.
+    * Preference("wait for voice", "toggle") — переключить ожидание голоса.
     
-    * Preference("voice sustain", "enable")  - Sustain voice past the current interaction.
-    * Preference("voice sustain", "disable") - Don't sustain voice past the current interaction.
-    * Preference("voice sustain", "toggle")  - Toggle voice sustain.
+    * Preference("voice sustain", "enable") — продолжать воспроизведение голоса после текущего взаимодействия.
+    * Preference("voice sustain", "disable") — не продолжать воспроизведение голоса.
+    * Preference("voice sustain", "toggle") — переключить удержание голоса.
     
-    * Preference("music mute", "enable") - Mute the music mixer.
-    * Preference("music mute", "disable") - Un-mute the music mixer.
-    * Preference("music mute", "toggle") - Toggle music mute.
+    * Preference("music mute", "enable") — заглушить музыку (микшер music).
+    * Preference("music mute", "disable") — включить музыку.
+    * Preference("music mute", "toggle") — переключить заглушение музыки.
     
-    * Preference("sound mute", "enable") - Mute the sound mixer.
-    * Preference("sound mute", "disable") - Un-mute the sound mixer.
-    * Preference("sound mute", "toggle") - Toggle sound mute.
+    * Preference("sound mute", "enable") — заглушить звуковые эффекты (микшер sound).
+    * Preference("sound mute", "disable") — включить звуковые эффекты.
+    * Preference("sound mute", "toggle") — переключить заглушение звуков.
     
-    * Preference("voice mute", "enable") - Mute the voice mixer.
-    * Preference("voice mute", "disable") - Un-mute the voice mixer.
-    * Preference("voice mute", "toggle") - Toggle voice mute.
+    * Preference("voice mute", "enable") — заглушить голос (микшер voice).
+    * Preference("voice mute", "disable") — включить голос.
+    * Preference("voice mute", "toggle") — переключить заглушение голоса.
     
-    * Preference("mixer <mixer> mute", "enable") - Mute the specified mixer.
-    * Preference("mixer <mixer> mute", "disable") - Unmute the specified mixer.
-    * Preference("mixer <mixer> mute", "toggle") - Toggle mute of the specified mixer.
+    * Preference("mixer <mixer> mute", "enable") — заглушить указанный микшер.
+    * Preference("mixer <mixer> mute", "disable") — включить указанный микшер.
+    * Preference("mixer <mixer> mute", "toggle") — переключить заглушение указанного микшера.
     
-    * Preference("all mute", "enable") - Mute each individual mixer.
-    * Preference("all mute", "disable") - Unmute each individual mixer.
-    * Preference("all mute", "toggle") - Toggle mute of each individual mixer.
+    * Preference("all mute", "enable") — заглушить все микшеры.
+    * Preference("all mute", "disable") — включить все микшеры.
+    * Preference("all mute", "toggle") — переключить заглушение всех микшеров.
     
-    * Preference("main volume", 0.5) - Set the adjustment applied to all channels.
-    * Preference("music volume", 0.5) - Set the music volume.
-    * Preference("sound volume", 0.5) - Set the sound volume.
-    * Preference("voice volume", 0.5) - Set the voice volume.
-    * Preference("mixer <mixer> volume", 0.5) - Set the specified mixer volume.
+    * Preference("main volume", 0.5) — общая громкость для всех каналов.
+    * Preference("music volume", 0.5) — громкость музыки.
+    * Preference("sound volume", 0.5) — громкость звуков.
+    * Preference("voice volume", 0.5) — громкость голоса.
+    * Preference("mixer <mixer> volume", 0.5) — громкость указанного микшера.
     
-    * Preference("emphasize audio", "enable") - Emphasize the audio channels found in :var:`config.emphasize_audio_channels`.
-    * Preference("emphasize audio", "disable") - Do not emphasize audio channels.
-    * Preference("emphasize audio", "toggle") - Toggle emphasize audio.
+    * Preference("emphasize audio", "enable") — приглушать другие звуки в пользу каналов из :var:`config.emphasize_audio_channels`.
+    * Preference("emphasize audio", "disable") — отключить акцентирование аудио.
+    * Preference("emphasize audio", "toggle") — переключить акцентирование аудио.
     
-    * Preference("self voicing", "enable") - Enables self-voicing.
-    * Preference("self voicing", "disable") - Disable self-voicing.
-    * Preference("self voicing", "toggle") - Toggles self-voicing.
+    * Preference("self voicing", "enable") — включить самоозвучивание.
+    * Preference("self voicing", "disable") — отключить самоозвучивание.
+    * Preference("self voicing", "toggle") — переключить самоозвучивание.
     
-    * Preference("self voicing volume drop", 0.5) - Drops the volume of non-voice mixers when self voicing is active.
+    * Preference("self voicing volume drop", 0.5) — снижение громкости других микшеров при активном самоозвучивании.
     
-    * Preference("clipboard voicing", "enable") - Enables clipboard-voicing.
-    * Preference("clipboard voicing", "disable") - Disable clipboard-voicing.
-    * Preference("clipboard voicing", "toggle") - Toggles clipboard-voicing.
+    * Preference("clipboard voicing", "enable") — включить озвучивание буфера обмена.
+    * Preference("clipboard voicing", "disable") — отключить озвучивание буфера обмена.
+    * Preference("clipboard voicing", "toggle") — переключить озвучивание буфера обмена.
     
-    * Preference("screenreader voicing", "enable") - Enables screen reader voicing.
-    * Preference("screenreader voicing", "disable") - Disable screen reader voicing.
-    * Preference("screenreader voicing", "toggle") - Toggles screen reader voicing.
+    * Preference("screenreader voicing", "enable") — включить озвучивание экранным диктором.
+    * Preference("screenreader voicing", "disable") — отключить озвучивание экранным диктором.
+    * Preference("screenreader voicing", "toggle") — переключить экранного диктора.
     
-    * Preference("debug voicing", "enable") - Enables self-voicing debug
-    * Preference("debug voicing", "disable") - Disable self-voicing debug.
-    * Preference("debug voicing", "toggle") - Toggles self-voicing debug.
+    * Preference("debug voicing", "enable") — включить отладку самоозвучивания.
+    * Preference("debug voicing", "disable") — отключить отладку самоозвучивания.
+    * Preference("debug voicing", "toggle") — переключить отладку самоозвучивания.
     
-    * Preference("rollback side", "left") - Touching the left side of the screen causes rollback.
-    * Preference("rollback side", "right") - Touching the right side of the screen causes rollback.
-    * Preference("rollback side", "disable") - Touching the screen will not cause rollback.
+    * Preference("rollback side", "left") — касание левого края экрана вызывает откат назад.
+    * Preference("rollback side", "right") — касание правого края экрана вызывает откат назад.
+    * Preference("rollback side", "disable") — касание экрана не вызывает откат.
     
-    * Preference("gl powersave", True) - Drop framerate to allow for power savings.
-    * Preference("gl powersave", False) - Do not drop framerate to allow for power savings.
+    * Preference("gl powersave", True) — снижение частоты кадров для экономии энергии.
+    * Preference("gl powersave", False) — не снижать частоту кадров.
     
-    * Preference("gl framerate", None) - Runs at the display framerate.
-    * Preference("gl framerate", 60) - Runs at the given framerate.
+    * Preference("gl framerate", None) — частота обновления экрана дисплея.
+    * Preference("gl framerate", 60) — фиксированная частота кадров (например, 60 FPS).
     
-    * Preference("gl tearing", True) - Tears rather than skipping frames.
-    * Preference("gl tearing", False) - Skips frames rather than tearing.
+    * Preference("gl tearing", True) — допускать разрывы кадров (tearing) вместо пропуска.
+    * Preference("gl tearing", False) — пропускать кадры вместо разрывов.
     
-    * Preference("font transform", "opendyslexic") - Sets the accessibility font transform to opendyslexic.
-    * Preference("font transform", "dejavusans") - Sets the accessibility font transform to deja vu sans.
-    * Preference("font transform", None) - Disables the accessibility font transform.
+    * Preference("font transform", "opendyslexic") — применить шрифт OpenDyslexic для доступности.
+    * Preference("font transform", "dejavusans") — применить шрифт DejaVu Sans для доступности.
+    * Preference("font transform", None) — отключить шрифт доступности.
     
-    See :var:`config.font_transforms` for how to add font transforms.
+    О добавлении пользовательских шрифтов см. :var:`config.font_transforms`.
     
-    * Preference("font size", 1.0) - Sets the accessibility font size scaling factor.
-    * Preference("font line spacing", 1.0) - Sets the accessibility font vertical spacing scaling factor.
+    * Preference("font size", 1.0) — коэффициент масштабирования размера шрифта доступности.
+    * Preference("font line spacing", 1.0) — коэффициент межстрочного интервала шрифта доступности.
     
-    * Preference("system cursor", "disable") - Use the cursor defined in :var:`config.mouse` or :var:`config.mouse_displayable`.
-    * Preference("system cursor", "enable") - Use the system cursor, ignoring :var:`config.mouse`.
-    * Preference("system cursor", "toggle") - Toggle system cursor.
+    * Preference("system cursor", "disable") — использовать курсор из :var:`config.mouse` или :var:`config.mouse_displayable`.
+    * Preference("system cursor", "enable") — использовать системный курсор ОС.
+    * Preference("system cursor", "toggle") — переключить системный курсор.
     
-    * Preference("high contrast text", "enable") - Enables white text on a black background.
-    * Preference("high contrast text", "disable") - Disables high contrast text.
-    * Preference("high contrast text", "toggle") - Toggles high contrast text.
+    * Preference("high contrast text", "enable") — включить высококонтрастный текст (белый на черном фоне).
+    * Preference("high contrast text", "disable") — отключить высококонтрастный текст.
+    * Preference("high contrast text", "toggle") — переключить высококонтрастный текст.
     
-    * Preference("audio when minimized", "enable") - Enable sounds playing when the window has been minimized.
-    * Preference("audio when minimized", "disable") - Disable sounds playing when the window has been minimized.
-    * Preference("audio when minimized", "toggle") - Toggle sounds playing when the window has been minimized.
+    * Preference("audio when minimized", "enable") — продолжать воспроизведение звука при свернутом окне.
+    * Preference("audio when minimized", "disable") — глушить звук при свертывании окна.
+    * Preference("audio when minimized", "toggle") — переключить звук при свернутом окне.
     
-    * Preference("audio when unfocused", "enable") - Enable sounds playing when the window is not in focus.
-    * Preference("audio when unfocused", "disable") - Disable sounds playing when the window is not in focus.
-    * Preference("audio when unfocused", "toggle") - Toggle sounds playing when the window is not in focus.
+    * Preference("audio when unfocused", "enable") — воспроизводить звук, когда окно не в фокусе.
+    * Preference("audio when unfocused", "disable") — глушить звук при потере окном фокуса.
+    * Preference("audio when unfocused", "toggle") — переключить звук при потере фокуса.
     
-    * Preference("web cache preload", "enable") - Will cause the web cache to be preloaded.
-    * Preference("web cache preload", "disable") - Will cause the web cache to not be preloaded, and preloaded data to be deleted.
-    * Preference("web cache preload", "toggle") - Will toggle the web cache preload state.
+    * Preference("web cache preload", "enable") — включить предварительную загрузку веб-кэша.
+    * Preference("web cache preload", "disable") — отключить предварительную загрузку и удалить кэшированные данные.
+    * Preference("web cache preload", "toggle") — переключить предзагрузку веб-кэша.
     
-    * Preference("voice after game menu", "enable") - Will cause the voice to continue being played when entering the game  menu.
-    * Preference("voice after game menu", "disable") - Will cause the voice to stop being played when entering the game menu.
-    * Preference("voice after game menu", "toggle") - Will toggle the voice after game menu state.
+    * Preference("voice after game menu", "enable") — продолжать воспроизведение голоса при входе в игровое меню.
+    * Preference("voice after game menu", "disable") — останавливать воспроизведение голоса при открытии меню.
+    * Preference("voice after game menu", "toggle") — переключить голос при входе в меню.
     
-    * Preference("restore window position", "enable") - Will cause the window position to be restored when the game is started.
-    * Preference("restore window position", "disable") - Will cause the window position to not be restored when the game is started.
-    * Preference("restore window position", "toggle") - Will toggle the restore window position state.
+    * Preference("restore window position", "enable") — восстанавливать позицию окна при запуске игры.
+    * Preference("restore window position", "disable") — не восстанавливать позицию окна.
+    * Preference("restore window position", "toggle") — переключить восстановление позиции окна.
     
-    * Preference("mono audio", "enable") - Forces audio to be downmixed to mono.
-    * Preference("mono audio", "disable") - Disables forcing audio to be downmixed to mono.
-    * Preference("mono audio", "toggles") - Toggles mono audio.
+    * Preference("mono audio", "enable") — принудительное микширование звука в моно.
+    * Preference("mono audio", "disable") — обычный стереозвук.
+    * Preference("mono audio", "toggles") — переключить моно-аудио.
     
-    * Preference("self voicing voice", "<voice>") - Sets the voice to use for text-to-speech. The voice must be one of the voices found in renpy.get_tts_voices, or it will not be used.
-    * Preference("self voicing speed", 2.0) - Sets the speed of the text-to-speech voice. This should be between 1.0 and 3.0, and roughly represents how fast the speaking is.
+    * Preference("self voicing voice", "<voice>") — голос синтезатора речи для озвучивания (из renpy.get_tts_voices).
+    * Preference("self voicing speed", 2.0) — скорость речи синтезатора (от 1.0 до 3.0).
     
-    Values that can be used with bars are:
+    Значения, которые можно использовать с полосами (bar):
     
     * Preference("text speed")
     * Preference("auto-forward time")
@@ -186,16 +185,14 @@
     * Preference("font kerning")
     * Preference("self voicing speed")
     
-    The `range` parameter can be given to give the range of certain bars.
-    For "text speed", it defaults to 200 cps. For "auto-forward time", it
-    defaults to 30.0 seconds per chunk of text. (These are maximums, not
-    defaults.)
+    Параметр `range` позволяет задать диапазон для определенных полос.
+    Для "text speed" по умолчанию используется 200 симв./сек. Для "auto-forward time"
+    по умолчанию 30.0 секунд на блок текста. (Это максимальные значения, а не значения по умолчанию.)
     
-    Actions that can be used with buttons are:
+    Действия для кнопок:
     
-    * Preference("renderer menu") - Show the renderer menu.
-    * Preference("accessibility menu") - Show the accessibility menu.
-    * Preference("reset") - Reset preferences to defaults.
+    * Preference("renderer menu") — открыть меню выбора графического рендерера.
+    * Preference("accessibility menu") — открыть меню специальных возможностей.
+    * Preference("reset") — сбросить настройки до значений по умолчанию.
     
-    These screens are intended for internal use, and are not customizable.
-
+    Эти экраны предназначены для внутреннего использования и не подлежат кастомизации.

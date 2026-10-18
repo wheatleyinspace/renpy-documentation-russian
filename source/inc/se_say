@@ -2,27 +2,25 @@
 
 .. function:: renpy.say(who, what, *args, **kwargs)
     
-    The equivalent of the say statement.
+    Эквивалент инструкции say.
     
     `who`
-        Either the character that will say something, None for the narrator,
-        or a string giving the character name. In the latter case, the
-        :var:`say` store function is called.
+        Персонаж, произносящий реплику, None для рассказчика (narrator)
+        или строка с именем персонажа. В последнем случае вызывается
+        функция хранилища :var:`say`.
     
     `what`
-        A string giving the line to say. Percent-substitutions are performed
-        in this string.
+        Строка с репликой. В этой строке выполняются подстановки процентов.
     
     `interact`
-        If true, Ren'Py waits for player input when displaying the dialogue. If
-        false, Ren'Py shows the dialogue, but does not perform an interaction.
-        (This is passed in as a keyword argument.)
+        Если True, Ren'Py ожидает ввода игрока при отображении диалога. Если
+        False, Ren'Py отображает диалог, но не выполняет взаимодействие.
+        (Передаётся в виде именованного аргумента.)
     
-    This function is rarely necessary, as the following three lines are
-    equivalent. ::
+    Эта функция требуется редко, поскольку следующие три строки
+    эквивалентны. ::
     
         e "Hello, world."
         $ renpy.say(e, "Hello, world.")
-        $ e("Hello, world.") # when e is not a string
-        $ say(e, "Hello, world.") # when e is a string
-
+        $ e("Hello, world.") # когда e не является строкой
+        $ say(e, "Hello, world.") # когда e — строка

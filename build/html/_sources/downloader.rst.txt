@@ -1,92 +1,92 @@
-Downloader for Large Games on Mobile
-====================================
+.. _downloader:
 
-Platforms like Android and iOS have a limit on the size of an app that can
-be downloaded from their app stores. To support larger games, Ren'Py supports
-a downloader, which is a small game that downloads the main game.
+==============================================
+Загрузчик больших игр на мобильных платформах
+==============================================
 
-Requirements
-------------
+На мобильных платформах, таких как Android и iOS, действуют строгие ограничения на максимальный
+размер приложения, загружаемого непосредственно из магазинов приложений (App Store и Google Play).
+Для поддержки крупномасштабных игр Ren'Py предоставляет механизм загрузчика: компактную игру-загрузчик,
+которая скачивает и развёртывает основную игру на устройстве пользователя.
 
-To make this work, you'll need a web hosting service that is reasonably
-capable. Uploader services like mega or game hosting sites like itch.io won't work.
-The downloader has been tested with a Digital Ocean droplet that
-runs Nginx, and also with Cloudflare's R2, which is free to host 10GB on.
+Требования
+----------
 
-Specifically, the web server needs to support downloading files, and it will
-work better if it supports many HTTP Range requests at once.
+Для работы этого механизма потребуется надёжный веб-хостинг. Простые файлообменники вроде Mega
+или страницы игр на itch.io для этой цели не подойдут. Работа загрузчика протестирована
+на виртуальных серверах (VPS) с веб-сервером Nginx, а также с хранилищем Cloudflare R2,
+предоставляющим бесплатный тариф до 10 ГБ.
 
-How it Works
-------------
+В частности, веб-сервер должен поддерживать прямое скачивание файлов по HTTP/HTTPS, а также
+параллельные запросы с диапазонами байтов (HTTP Range requests).
 
-To use the downloader, you'll need to build two games. The first is the
-downloader game, which contains the Ren'Py engine and the downloader,
-and is what the user will get delivered to their phone.
+Принцип работы
+--------------
 
-The second is the main game, the visual novel they want to play. This
-will be downloaded by the downloader game, and will be installed onto
-the device, if present.
+Для использования загрузчика необходимо собрать две отдельные игры:
 
-Both need to be built with the same version of Ren'Py - if there is a
-mismatch, the downloader will update the main game. Other than that,
-it's up to the main game to update itself, which is possible now that
-the Ren'Py updater works on mobile platforms.
+1. **Игра-загрузчик (downloader game)** — компактное приложение, содержащее движок Ren'Py
+   и логику загрузчика. Именно этот файл упаковывается и публикуется в магазине приложений.
+2. **Основная игра (main game)** — полноценная визуальная новелла, в которую будет играть
+   пользователь. Она скачивается игрой-загрузчиком и устанавливается во внутреннюю память устройства.
 
-When the downloader game starts, it checks to see if the main game is
-installed. If it is, and the versions are right, the main game will
-start. Otherwise the downloader will run and prompt the player to
-download the main game.
+Обе игры должны быть собраны на одной и той же версии Ren'Py. При несовпадении версий
+загрузчик автоматически обновит основную игру. В дальнейшем основная игра может обновлять
+себя самостоятельно, поскольку система обновления Ren'Py Updater теперь поддерживает мобильные устройства.
+
+При запуске игры-загрузчика она проверяет наличие установленной основной игры. Если игра найдена
+и версии совпадают, немедленно запускается основная игра. В противном случае запускается
+процесс загрузки с предложением скачать необходимые файлы.
 
 
-Building and Uploading the Main Game
-------------------------------------
+Сборка и выгрузка основной игры
+-------------------------------
 
-The main change you need to make to your main game is to add the line::
+Главное изменение, которое необходимо внести в проект основной игры — добавить строку::
 
     define build.game_only_update = True
 
-to the top of your options.rpy file. That will add a new option that shows
-up to the launcher's Build Distributions screen, "Game-Only Update for Mobile".
+в начало файла :file:`options.rpy`. Это активирует новый пункт меню в разделе лаунчера
+«Сборка дистрибутивов» (Build Distributions) — «Game-Only Update for Mobile»
+(Обновление только файлов игры для мобильных платформ).
+
+В окне «Сборка дистрибутивов» отметьте пункт «Game-Only Update for Mobile» и снимите флажки
+со всех остальных пакетов сборки. В блоке параметров убедитесь, что включён пункт
+«Собрать обновления» (Build Updates), а остальные параметры выставлены по вашему усмотрению
+(значений по умолчанию обычно достаточно).
+
+Затем запустите сборку.
+
+По завершении сборки в каталоге проекта появятся файлы обновления. Вам необходимо загрузить
+на свой веб-сервер файлы :file:`updates.json`, :file:`updates.ecdsa` и всю папку :file:`rpu/`
+с её содержимым (убедитесь, что каталог :file:`rpu/` расположен на сервере рядом с файлами
+:file:`updates.json` и :file:`updates.ecdsa`, а файлы :file:`.rpu` находятся внутри папки :file:`rpu/`).
 
 
-In "Build Distributions", check "Game-Only Update for Mobile". Uncheck all other
-build packages. Under "Options", make sure "Build Updates" is set, and that
-the other options are set as you like. The defaults are fine.
-
-Then run the build process.
-
-When the game is finished building, you'll have everything you need. You'll
-want to upload the ``updates.json``, ``updates.ecdsa``, and everything in the
-``rpu`` directory to your web server. (Make sure that the rpu directory is next to
-the two update files, and the .rpu files are inside the ``rpu`` directory.)
-
-
-Making a Downloader Game
+Создание игры-загрузчика
 ------------------------
 
-The downloader game is a Ren'Py game, but it should stay well under 100MB
-in size. You can do anything you can in a small game - have an opening
-scene, play music, etc. You will need to make it separately, and build
-it for Android or iOS using the usual techniques.
+Игра-загрузчик представляет собой стандартный проект Ren'Py, размер которого должен быть
+значительно меньше 100 МБ. В ней можно реализовать любую логику небольшой игры: показать
+начальную заставку, проиграть фоновую музыку и т. д. Её проект создаётся отдельно и собирается
+для Android или iOS по стандартной схеме.
 
-At the same time, it should ask the player if they want to download, mention
-that this can cost money if they're not on WiFi, and then download the
-game.
+При этом игра должна запросить подтверждение пользователя на загрузку, предупредить о возможном
+расходе мобильного трафика и начать скачивание.
 
-For the highest security, the ``public_key.pem`` file produced by building
-the main game should be copied to the base directory of the downloader game.
-This is the public key that will be used to verify the download.
+Для максимальной безопасности скопируйте открытый ключ :file:`public_key.pem`, созданный при
+сборке основной игры, в базовый каталог проекта игры-загрузчика. Этот публичный ключ будет
+использоваться для криптографической проверки подлинности скачиваемых пакетов.
 
-Here's an example script for a downloader game, using assets from the
-tutorial game::
+Пример сценария игры-загрузчика (с использованием графики из демонстрационного проекта)::
 
-    # The url to updates.json, on your web server.
+    # URL-адрес к updates.json на вашем веб-сервере.
     define URL = "https://www.domain.com/game-updates/updates.json"
 
-    # Disable saving in the downloader game.
+    # Отключаем сохранения в игре-загрузчике.
     define config.save = False
 
-    define e = Character("Eileen", image="eileen")
+    define e = Character("Эйлин", image="eileen")
 
     label splashscreen:
 
@@ -95,54 +95,53 @@ tutorial game::
 
         $ downloader = updater.start_game_download(URL)
 
-        e "Welcome to the downloader game."
+        e "Добро пожаловать в загрузчик игры."
 
-        e "This will download the main game onto your phone, so you can play it."
+        e "Сейчас на ваш телефон будут загружены файлы основной игры."
 
         if downloader.download_total:
             $ download_mb = int(round(downloader.download_total / 1024 / 1024, 0))
 
-            e "To play this game, you'll need to download [download_mb] megabytes of data. If you're not on WiFi, you could be charged for it. Tap the screen to proceed."
+            e "Для запуска игры необходимо скачать [download_mb] МБ данных. Если вы не подключены к Wi-Fi, мобильный оператор может списать плату за трафик. Коснитесь экрана для продолжения."
 
         else:
 
-            e "To play this game, you'll need to download some data. If you're not on WiFi, you could be charged for it. Tap the screen to proceed."
+            e "Для запуска игры необходимо скачать файлы данных. Если вы не подключены к Wi-Fi, мобильный оператор может списать плату за трафик. Коснитесь экрана для продолжения."
 
         $ updater.continue_game_download()
 
-This is pretty simple, but there are a few things. The first is that it sets
-:var:`config.save` to False. This is important, as it disables saving and
-loading, including preferences, so the downloader's saves don't influence
-the main game.
+Этот сценарий достаточно прост, но в нём есть важные детали. Во-первых, переменная
+:var:`config.save` устанавливается в False. Это критически важно: так отключается
+система сохранений и настроек загрузчика, чтобы они не конфликтовали с основной игрой.
 
-It's also all happening in the splashscreen, to start immediately and to
-disable entering the game menu.
+Весь код размещается в метке :ref:`splashscreen <splashscreen>`, благодаря чему он начинает
+выполняться сразу при запуске без входа в главное меню игры.
 
-Early on, the game calls :func:`updater.start_game_download`, to gather information
-about the download. After this, the game kills some time, having Eileen
-say some things as the game checks to find out the size of the download.
+В начале вызывается :func:`updater.start_game_download` для запроса метаданных о размере
+загрузки. Пока движок опрашивает сервер, игра отображает диалог с Эйлин, с пользой занимая
+время ожидания ответа.
 
-After the player makes multiple clicks, the game may know the size of the
-download, or it may not, so we use a conditional to check the download
-size. If the real number is known, it's converted to megabytes and displayed.
-If not, more general text is displayed. (It would also hard-code an estimate
-of the download size into the game.)
+После нескольких кликов игрока размер загрузки либо уже определён, либо ещё неизвестен,
+поэтому используется условие проверки `downloader.download_total`. Если размер известен,
+он переводится в мегабайты и сообщается игроку, иначе выводится обобщённый текст
+(также можно указать примерный размер игры вручную).
 
-Finally, :func:`updater.continue_game_download` is called, which starts the download
-process. A screen will show up, and you can't do much - but music will play,
-and ATL will keep running.
+Наконец, вызывается :func:`updater.continue_game_download`, запускающая непосредственное
+скачивание. На экране появляется интерфейс загрузки — в этот момент управление ограничено,
+однако музыка продолжает играть, а анимации ATL продолжают работать.
 
-When the download is complete, the main game will automatically start. If it
-fails, the downloader will restart, and the player will be able to try again
+После успешного скачивания основная игра запустится автоматически. В случае сетевого сбоя
+загрузчик перезапустится, позволяя игроку повторить попытку.
 
-Downloader Screen
------------------
 
-The downloader is a screen that shows the progress of the download. A default
-screen is in :file:`renpy/common/00updater.rpy`, and can be customized by
-creating a copy in your game directory.
+Экран загрузчика
+----------------
 
-Here's the default::
+Интерфейс процесса скачивания отображается с помощью экрана ``downloader``. Стандартный экран
+определён в файле :file:`renpy/common/00updater.rpy`, и его можно переопределить, скопировав
+в каталог :file:`game/` вашего проекта.
+
+Исходный код стандартного экрана::
 
     screen downloader(u):
 
@@ -153,25 +152,25 @@ Here's the default::
             has vbox
 
             if u.state == u.CHECKING or u.state == u.PREPARING:
-                text _("Preparing to download the game data.")
+                text _("Подготовка к загрузке данных игры.")
             elif u.state == u.DOWNLOADING or u.state == u.UNPACKING:
-                text _("Downloading the game data.")
+                text _("Загрузка данных игры.")
             elif u.state == u.FINISHING or u.state == u.DONE:
-                text _("The game data has been downloaded.")
-            else: # An error or unknown state.
-                text _("An error occurred when trying to download game data:")
+                text _("Данные игры успешно загружены.")
+            else: # Ошибка или неизвестное состояние.
+                text _("Произошла ошибка при загрузке данных игры:")
 
                 if u.message is not None:
                     text "[u.message!q]"
 
-                text _("This game cannot be run until the game data has been downloaded.")
+                text _("Игра не может быть запущена без загрузки необходимых файлов.")
 
             if u.progress is not None:
                 null height gui._scale(10)
                 bar value (u.progress or 0.0) range 1.0
 
             if u.can_proceed:
-                textbutton _("Retry") action u.proceed
+                textbutton _("Повторить") action u.proceed
 
     style downloader_frame:
         xalign 0.5
@@ -197,7 +196,7 @@ Here's the default::
         xalign 0.5
 
 
-Downloader Functions
---------------------
+Функции загрузчика
+------------------
 
 .. include:: inc/downloader

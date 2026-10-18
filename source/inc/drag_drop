@@ -2,297 +2,183 @@
 
 .. class:: Drag(d=None, drag_name=None, draggable=True, droppable=True, drag_raise=True, dragging=None, dragged=None, dropped=None, drag_handle=(0.0, 0.0, 1.0, 1.0), drag_joined=..., clicked=None, hovered=None, unhovered=None, mouse_drop=False, **properties)
     
-    A displayable that represents an object that can be dragged around
-    its enclosing area. A Drag can also represent an area that
-    other Drags can be dropped on.
+    Отображаемый объект, представляющий элемент, который можно свободно перетаскивать
+    по окружающей его области. Также может представлять область (droppable), на которую можно сбрасывать
+    другие объекты Drag.
     
-    A Drag can be moved around inside is parent. Generally, its parent
-    should be either a :func:`Fixed` or :class:`DragGroup`.
+    Объект Drag перемещается внутри своего родительского контейнера (обычно :func:`Fixed`
+    или :class:`DragGroup`).
     
-    A Drag has one child. The child's state reflects the status
-    of the drag and drop operation:
+    У Drag есть один дочерний элемент. Состояние дочернего элемента отражает текущий статус операции:
     
-    * ``selected_hover`` - when it is being dragged.
-    * ``selected_idle`` - when it can be dropped on.
-    * ``hover`` - when the draggable will be dragged when the mouse is
-      clicked.
-    * ``idle`` - otherwise.
+    * ``selected_hover`` — объект перетаскивается в данный момент.
+    * ``selected_idle`` — на этот объект может быть сброшен перетаскиваемый элемент.
+    * ``hover`` — объект находится под курсором и будет захвачен при клике.
+    * ``idle`` — обычное состояние покоя.
     
-    The drag handle is a rectangle inside the child. The mouse must be over
-    a pixel inside the drag handle for dragging or clicking to occur. If the
-    :propref:`focus_mask` property is True, that pixel must not be transparent.
+    Область захвата (drag handle) — прямоугольник внутри дочернего элемента. Курсор мыши должен находиться
+    внутри области захвата для начала перетаскивания. Если свойство :propref:`focus_mask` равно True,
+    пиксель под курсором не должен быть прозрачным.
     
-    A newly-created draggable is added to the default DragGroup. A draggable
-    can only be in a single DragGroup - if it's added to a second group,
-    it's removed from the first.
+    Каждый вновь созданный перетаскиваемый объект добавляется в DragGroup по умолчанию. Объект может
+    находиться только в одной DragGroup — при добавлении во вторую он удаляется из первой.
     
-    When a Drag is first rendered, if it's position cannot be determined
-    from the DragGroup it is in, the position of its upper-left corner
-    is computed using the standard layout algorithm. Once that position
-    has been computed, the layout properties are ignored in favor of the
-    position stored inside the Drag.
+    При первом рендеринге Drag, если его позиция не определена внутри DragGroup, координаты левого
+    верхнего угла вычисляются по стандартному алгоритму компоновки. После вычисления свойства
+    компоновки игнорируются, а позиция сохраняется внутри Drag.
     
-    Transforms should not be applied to a Drag directly. Instead, apply
-    the transform to the child of the Drag.
+    Трансформации не следует применять к Drag напрямую — применяйте их к дочернему отображаемому объекту Drag.
     
     `d`
-        If present, the child of this Drag. Drags use the child style
-        in preference to this, if it's not None.
+        Дочерний отображаемый объект данного Drag.
     
     `drag_name`
-        If not None, the name of this draggable. This is available
-        as the `drag_name` property of draggable objects. If a Drag
-        with the same name is or was in the DragGroup, the starting
-        position of this Drag is taken from that Draggable.
+        Имя перетаскиваемого объекта. Доступно через свойство `drag_name`. Если в DragGroup уже был
+        объект с таким именем, начальная позиция нового Drag берётся из него.
     
     `draggable`
-        If true, the Drag can be dragged around the screen with
-        the mouse.
+        Если True, объект можно перетаскивать по экрану с помощью мыши.
     
     `droppable`
-        If true, other Drags can be dropped on this Drag.
+        Если True, на этот объект можно сбрасывать другие объекты Drag.
     
     `drag_raise`
-        If true, this Drag is raised to the top when it is dragged. If
-        it is joined to other Drags, all joined drags are raised.
+        Если True, объект поднимается на передний план (поверх остальных) при начале перетаскивания.
+        Если к нему привязаны другие объекты, они также поднимаются на передний план.
     
     `activated`
-        A callback (or list of callbacks) that is called when the mouse
-        is pressed down on the drag. It is called with one argument, a
-        list of Drags that are being dragged. The return value of this
-        callback is ignored.
+        Функция обратного вызова (или список функций), вызываемая при нажатии кнопки мыши на объекте Drag.
+        Принимает один аргумент — список перемещаемых объектов Drag. Возвращаемое значение игнорируется.
     
     `dragging`
-        A callback (or list of callbacks) that is called when the Drag is being
-        dragged. It is called with one argument, a list of Drags that are
-        being dragged. If the callback returns a value other than None, that
-        value is returned as the result of the interaction.
+        Функция, вызываемая в процессе перемещения Drag. Принимает список перемещаемых объектов.
+        Если функция возвращает значение, отличное от None, взаимодействие завершается, а это значение возвращается.
     
     `dragged`
-        A callback (or list of callbacks) that is called when the Drag
-        has been dragged. It is called with two arguments. The first is
-        a list of Drags that are being dragged. The second is either
-        a Drag that is being dropped onto, or None of a drop did not
-        occur. If the callback returns a value other than None, that
-        value is returned as the result of the interaction.
+        Функция, вызываемая по окончании перетаскивания Drag. Принимает два аргумента: список перемещаемых
+        объектов и объект Drag, на который произошёл сброс (или None, если сброс не состоялся).
+        Если возвращает значение, отличное от None, взаимодействие завершается.
     
     `dropped`
-        A callback (or list of callbacks) that is called when this Drag
-        is dropped onto. It is called with two arguments. The first
-        is the Drag being dropped onto. The second is a list of Drags that
-        are being dragged.  If the callback returns a value other than None,
-        that value is returned as the result of the interaction.
-    
-        When a dragged and dropped callback are triggered for the same
-        event, the dropped callback is only called if dragged returns
-        None.
+        Функция, вызываемая у объекта-приёмника, на который был сброшен Drag. Принимает два аргумента:
+        сам объект-приёмник и список перемещаемых Drag. Если функция `dragged` вернула не None,
+        `dropped` не вызывается.
     
     `clicked`
-        A callback that is called when the Drag is clicked without being moved.
-        It is called with one argument, the Drag being clicked on. A droppable
-        can also be focused and clicked. If the callback returns a value other
-        than None, that value is returned as the result of the interaction.
+        Функция обратного вызова при клике на Drag без его перемещения. Принимает сам объект Drag.
     
     `alternate`
-        An action that is run when the Drag is right-clicked (on the
-        desktop) or long-pressed without moving (on mobile). It may
-        be necessary to increase :var:`config.longpress_duration` if
-        this triggers to early on mobile platforms.
+        Действие при клике правой кнопкой мыши или долгом нажатии без смещения на сенсорных экранах.
     
     `hovered`
-        An action to run when the drag gains focus.
+        Действие при получении фокуса.
     
     `unhovered`
-        An action to run when the drag loses focus.
+        Действие при потере фокуса.
     
     `tooltip`
-        A tooltip to display when the drag is hovered over.
+        Всплывающая подсказка при наведении на Drag.
     
     `drag_handle`
-        A (x, y, width, height) tuple, giving the position of the drag
-        handle within the child. This tuple takes :term:`positions <position>`.
+        Кортеж (x, y, width, height), задающий область захвата внутри дочернего элемента.
     
     `drag_joined`
-        This is called with the current Drag as an argument. It's
-        expected to return a list of [ (drag, x, y) ] tuples, giving
-        the draggables to drag as a unit. `x` and `y` are the offsets
-        of the drags relative to each other, they are not relative
-        to the corner of this drag. `drag` is either the Drag object
-        to be joined or the drag_name of such a Drag.
+        Функция, принимающая текущий Drag и возвращающая список кортежей [ (drag, x, y) ],
+        задающих объекты, перемещаемые совместно как единое целое.
     
     `drag_offscreen`
-        Determines the conditions under which the drag is allowed
-        to be dragged offscreen. Allowing offscreen dragging can be
-        dangerous to use with drag_joined or drags that can change
-        size, as the drags can leave the screen entirely, with no
-        way to get them back on the screen.
-    
-        This should be one of:
+        Условия, при которых объект разрешено перетаскивать за границы экрана:
     
         False
-            To disallow dragging the drag offscreen. (The default)
+            Запрещает выносить объект за границы экрана (по умолчанию).
     
         True
-            To allow dragging offscreen, in any direction.
+            Разрешает свободное перемещение за границы экрана в любых направлениях.
     
         "horizontal"
-            To allow dragging offscreen in the horizontal direction only.
+            Разрешает выход за экран только по горизонтали.
     
         "vertical"
-            To allow dragging offscreen in the vertical direction only.
+            Разрешает выход за экран только по вертикали.
     
         (width, height)
-            Both width and height must be integers. The drag can be
-            dragged offscreen as long as a (width, height)-sized part
-            of it remains on-screen. So, (100, 100) will ensure that
-            at least a 100x100 pixel area of the displayable will
-            remain on-screen even while the rest of the displayable
-            can be dragged offscreen. Setting this to the width and
-            height of the displayable being dragged is equivalent to
-            not allowing the drag to go offscreen at all.
+            Объект можно выносить за экран при условии, что на экране остаётся прямоугольная область
+            размером не менее width x height пикселей.
     
         (min_x, max_x, min_y, max_y)
-            Where each of min_x, max_x, min_y, and max_y are integers.
-            min_x is the number of pixels away from the left border,
-            and max_x is the number of pixels away from the right
-            border. The same goes for min_y and max_y on the top and
-            bottom borders respectively. The drag can be moved until
-            one of its edges hit the specified border. (0, 0, 0, 0)
-            is equivalent to not allowing dragging offscreen at all.
+            Числа, задающие допустимые отступы от краёв экрана в пикселях.
     
-            For example, (-100, 200, 0, 0) would allow the drag to be
-            dragged 100 pixels off the left edge of the screen and 200
-            pixels off the right edge of the screen, but does not
-            allow it to be dragged offscreen at the top nor bottom.
-    
-            This can also be used to constrain the drag within the
-            screen bounds. (200, -200, 200, -200) would only allow
-            the drag within 200 pixels of the edges of the screen.
-    
-            You can envision this as an additional "border" around
-            the drag, which may go outside the bounds of the screen,
-            that constrains the drag to remain within it.
-    
-        callable
-            A callable can be provided to drag_offscreen. It must
-            take two arguments: an x and a y position which
-            represents the dragged position of the top left corner of
-            the drag, and it must return an (x, y) tuple which is the
-            new (x, y) position the drag should be in. This callable
-            is called frequently, whenever the drag is moved. For
-            example, the following function snaps the drag into place
-            every 300 pixels::
-    
-                def drag_snap(x, y):
-    
-                    if y < 300:
-                        y = 0
-                    elif y < 600:
-                        y = 300
-                    else:
-                        y = 600
-    
-                    return 200, y
+        вызываемый объект (callable)
+            Функция `fn(x, y)`, принимающая текущие координаты левого верхнего угла и возвращающая
+            скорректированный кортеж `(new_x, new_y)`.
     
     `mouse_drop`
-        If true, the drag is dropped on the first droppable under the cursor.
-        If false, the default, the drag is dropped onto the droppable with
-        the largest degree of overlap.
+        Если True, объект сбрасывается на элемент непосредственно под курсором мыши.
+        Если False, сброс происходит на элемент с наибольшей площадью перекрытия.
     
     `drop_allowable`
-        A callback that is called to determine whether this drop will allow
-        the current drags to be dropped onto it. It is called with two arguments.
-        The first is the Drag which determines its sensitivity.
-        The second is a list of Drags that are being dragged.
+        Функция, определяющая, разрешён ли сброс текущих перетаскиваемых объектов на данный приёмник.
     
     `snapped`
-        A callback (or list of callbacks) that is called when the Drag completes
-        a snap animation. It is called with four arguments. The first is the
-        Drag which was undergoing the snap animation. The second and third are
-        the x and y coordinates where the Drag was set to snap to. The fourth
-        is a boolean which is True if the snap animation was successfully
-        completed, and False if it was interrupted (e.g. from being grabbed in
-        the middle of snapping). For example, the following function sets
-        the drag's start_x and start_y position to its intended end position
-        if the snap animation was interrupted::
+        Функция обратного вызова, вызываемая по завершении анимации привязки (snap). Принимает аргументы
+        `(drag, x, y, completed)`.
     
-            def snapped_callback(drag, x, y, completed):
-                if not completed:
-                    drag.start_x = x
-                    drag.start_y = y
-    
-    
-    Except for `d`, all of the parameters are available as fields (with
-    the same name) on the Drag object. In addition, after the drag has
-    been rendered, the following fields become available:
+    Все параметры (кроме `d`) доступны как поля объекта Drag. Кроме того, после первого рендеринга
+    становятся доступны поля:
     
     `x`, `y`
-        The position of the Drag relative to its parent, in pixels.
+        Позиция Drag относительно родительского контейнера в пикселях.
     
     `start_x`, `start_y`
-        The drag start position of the Drag relative to its parent, in pixels.
+        Координаты точки начала перетаскивания.
     
     `grab_x`, `grab_y`
-        The x and y positions, relative to its parent, where the drag was
-        picked up, in pixels.
+        Координаты точки захвата мыши при начале перетаскивания.
     
     `last_drop`
-        The last Drag that the current Drag can be dropped on if released,
-        or None if no valid Drag currently exists.
+        Последний допустимый объект Drag для сброса или None.
     
     `snapping`
-        True if this Drag is in the middle of a snapping animation.
+        True, если в данный момент воспроизводится анимация привязки snap.
     
     `w`, `h`
-        The width and height of the Drag's child, in pixels.
+        Ширина и высота дочернего элемента в пикселях.
 
     .. method:: bottom()
         
-        Lowers this displayable to the bottom of its drag_group.
+        Опускает данный объект в самый низ стопки отображения своей DragGroup.
     
     .. method:: set_child(d)
         
-        Changes the child of this drag to `d`.
+        Заменяет дочерний отображаемый объект на `d`.
     
     .. method:: snap(x, y, delay=0, warper=None)
         
-        Changes the position of the drag. If the drag is not showing,
-        then the position change is instantaneous. Otherwise, the
-        position change takes `delay` seconds and an optional warper. If no
-        warper is provided, the transition is linear.
+        Плавно или мгновенно перемещает Drag в координаты (x, y). Если `delay` > 0, перемещение
+        занимает указанное количество секунд с использованием функции сглаживания `warper` (по умолчанию линейно).
     
     .. method:: top()
         
-        Raises this displayable to the top of its drag_group.
-    
+        Поднимает данный объект на самый верх стопки отображения своей DragGroup.
+
 .. class:: DragGroup(*children, **properties)
     
-    Represents a group of Drags. A Drag is limited to the boundary of
-    its DragGroup. Dropping only works between Drags that are in the
-    same DragGroup. Drags may only be raised when they are inside a
-    DragGroup.
+    Группа перетаскиваемых объектов Drag. Перемещение объектов ограничено границами их DragGroup.
+    Сброс возможен только между объектами одной группы.
     
-    A DragGroup is laid out like a :func:`Fixed`.
-    
-    All positional parameters to the DragGroup constructor should be
-    Drags, that are added to the DragGroup.
-    
+    Компоновка элементов в DragGroup аналогична контейнеру :func:`Fixed`.
     
     `min_overlap`
-        An integer which means the minimum number of pixels at the
-        overlap for the drop to be allowed.
+        Минимальное количество перекрывающихся пикселей, необходимое для фиксации сброса.
 
     .. method:: add(child)
         
-        Adds `child`, which must be a Drag, to this DragGroup. This child
-        will be added above all other children of this DragGroup.
+        Добавляет дочерний объект Drag в данную группу поверх остальных элементов.
     
     .. method:: get_child_by_name(name)
         
-        Returns the first child of this DragGroup that has a drag_name
-        of `name`.
+        Возвращает первый дочерний элемент с указанным `drag_name`.
     
     .. method:: remove(child)
         
-        Removes `child` from this DragGroup.
-    
+        Удаляет дочерний объект Drag из данной группы.

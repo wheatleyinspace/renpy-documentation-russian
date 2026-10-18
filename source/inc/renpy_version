@@ -2,9 +2,8 @@
 
 .. function:: renpy.version(tuple=False)
     
-    If `tuple` is false, returns a string containing "Ren'Py ", followed by
-    the current version of Ren'Py.
+    Если `tuple` равно False, возвращает строку, содержащую «Ren'Py », за которым
+    следует текущая версия Ren'Py.
     
-    If `tuple` is true, returns a tuple giving each component of the
-    version as an integer.
-
+    Если `tuple` равно True, возвращает кортеж, содержащий каждый компонент
+    версии в виде целого числа.

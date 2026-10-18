@@ -2,41 +2,37 @@
 
 .. function:: CaptureFocus(name='default')
     
-    If a displayable is focused when this action is run, the rectangle
-    containing that displayable is stored with the name `name`. This
-    rectangle can then be retrieved with the :func:`GetFocusRect` action,
-    or the `focus` property of the :ref:`sl-nearrect` displayable.
+    Если при выполнении этого действия отображаемый объект находится в фокусе,
+    прямоугольник, содержащий этот объект, сохраняется под именем `name`.
+    Затем этот прямоугольник можно получить с помощью действия :func:`GetFocusRect`
+    или свойства `focus` отображаемого объекта :ref:`sl-nearrect`.
     
-    If no displayable is focused, the previous capture with that name
-    is removed.
+    Если ни один отображаемый объект не сфокусирован, ранее сохраненный прямоугольник
+    с этим именем удаляется.
     
     `name`
-        The name of the focus rectangle to store. This should be a string.
-        The name "tooltip" is special, as it is automatically captured
-        when the tooltip is changed.
+        Имя сохраняемого прямоугольника фокуса (строка). Имя "tooltip" является
+        специальным, так как оно автоматически сохраняется при изменении подсказки.
 
 .. function:: ClearFocus(name='default')
     
-    Clears a stored focus rectangle captured with :func:`CaptureFocus`.
-    If `name` is None, all focus rectangles are cleared.
+    Очищает сохраненный прямоугольник фокуса, зафиксированный действием :func:`CaptureFocus`.
+    Если `name` равно None, очищаются все прямоугольники фокуса.
 
 .. function:: GetFocusRect(name='default')
     
-    If a focus rectangle with the given name has been stored (either with
-    :func:`CaptureFocus`, or automatically by a tooltip, returns the
-    a (x, y, h, w) rectangle. Otherwise, returns None.
+    Если прямоугольник фокуса с указанным именем был сохранен (либо с помощью
+    :func:`CaptureFocus`, либо автоматически подсказкой), возвращает прямоугольник
+    (x, y, h, w). В противном случае возвращает None.
     
     `name`
-        The name of the focus rectangle to retrieve. The name "tooltip"
-        is special, as it is automatically captured when the tooltip is
-        changed.
+        Имя извлекаемого прямоугольника фокуса. Имя "tooltip" является специальным,
+        так как оно фиксируется автоматически при изменении подсказки.
 
 .. function:: ToggleFocus(name='default')
     
-    If the focus rectangle exists, clears it, otherwise captures it.
+    Если прямоугольник фокуса существует, очищает его, иначе захватывает.
     
     `name`
-        The name of the focus rectangle to store. This should be a string.
-        The name "tooltip" is special, as it is automatically captured
-        when the tooltip is changed.
-
+        Имя сохраняемого прямоугольника фокуса. Должно быть строкой. Имя "tooltip"
+        является специальным, так как фиксируется автоматически при смене подсказки.

@@ -2,27 +2,24 @@
 
 .. class:: OffsetMatrix(x, y, z)
     
-    A TransformMatrix that returns a matrix that offsets the vertex by a fixed amount.
+    Матрица TransformMatrix, смещающая вершины на фиксированную величину.
 
 .. class:: RotateMatrix(x, y, z)
     
-    A TransformMatrix that returns a matrix that rotates the displayable around the
-    origin.
+    Матрица TransformMatrix, поворачивающая отображаемый объект вокруг начала координат.
     
     `x`, `y`, `z`
-        The amount to rotate around the origin, in degrees.
+        Угол поворота вокруг начала координат в градусах.
     
+    Вращения применяются по порядку:
     
-    The rotations are applied in order:
-    
-    * A clockwise rotation by `x` degrees in the Y/Z plane.
-    * A clockwise rotation by `y` degrees in the Z/X plane.
-    * A clockwise rotation by `z` degrees in the X/Y plane.
+    * Поворот по часовой стрелке на `x` градусов в плоскости Y/Z.
+    * Поворот по часовой стрелке на `y` градусов в плоскости Z/X.
+    * Поворот по часовой стрелке на `z` градусов в плоскости X/Y.
 
 .. class:: ScaleMatrix(x, y, z)
     
-    A TransformMatrix that returns a matrix that scales the displayable.
+    Матрица TransformMatrix, масштабирующая отображаемый объект.
     
     `x`, `y`, `z`
-        The factor to scale each axis by.
-
+        Коэффициенты масштабирования по каждой оси.

@@ -1,29 +1,28 @@
-Side Images
-===========
+Боковые изображения
+===================
 
-Many visual novels include a picture of the character that is speaking as
-part of their interface. Ren'Py calls this image a side image, and has
-support for automatically selecting and displaying a side image as part
-of the dialogue.
+Во многих визуальных новеллах портрет говорящего персонажа отображается как часть интерфейса.
+В Ren'Py такое изображение называется боковым изображением (side image). Движок поддерживает
+автоматический выбор и отображение бокового изображения во время диалога.
 
-The side image support assumes that a :func:`Character` is declared with
-a linked image tag::
+Поддержка боковых изображений предполагает, что персонаж :func:`Character` объявлен со связанным
+тегом изображения::
 
-    define e = Character("Eileen", image="eileen")
+    define e = Character("Эйлин", image="eileen")
 
-When a character speaks, Ren'Py will search for a side image to show. The
-side image must have:
+Когда персонаж говорит, Ren'Py ищет подходящее боковое изображение. Боковое изображение должно иметь:
 
-* The "side" tag.
-* An attribute corresponding to the linked image tag of the speaking character (in this case, "eileen").
-* As many attributes as possible that are currently associated with the linked image tag of the speaking character.
+* Тег "side".
+* Атрибут, соответствующий связанному тегу изображения говорящего персонажа (в данном случае "eileen").
+* Как можно больше атрибутов, которые в данный момент связаны с тегом изображения говорящего персонажа.
 
-Ren'Py will then search for a unique image matching these criteria. If one is found, it will be used as the side
-image. If no image or more than one image is found, then no side image will be shown.
+Затем Ren'Py ищет единственное изображение, удовлетворяющее этим критериям. Если такое изображение
+найдено, оно используется в качестве бокового изображения. Если изображение не найдено или найдено
+более одного подходящего изображения, боковое изображение показано не будет.
 
-For example, say we have the following script::
+Например, пусть у нас есть следующий сценарий::
 
-    define e = Character("Eileen", image="eileen")
+    define e = Character("Эйлин", image="eileen")
 
     image eileen happy = "eileen_happy.png"
     image eileen concerned = "eileen_concerned.png"
@@ -39,116 +38,111 @@ For example, say we have the following script::
 
         show eileen happy
 
-        e "Let's call this line Point A."
+        e "Обозначим эту реплику как точку A."
 
-        e concerned "And this one is point B."
+        e concerned "А эту реплику как точку B."
 
-        e space suit "And this one is point C."
+        e space suit "И эту реплику как точку C."
 
-At point A, the character ``e`` is speaking, which is linked to the image
-tag "eileen". The "eileen happy" image is showing, so "eileen" must be included,
-and "happy" may be. We look for an image with the "side" tag, and as
-many of those attributes as possible – and we match "side eileen happy",
-which is the side image Ren'Py will display.
+В точке A говорит персонаж ``e``, связанный с тегом изображения "eileen". На экране отображается
+изображение "eileen happy", поэтому атрибут "eileen" должен присутствовать обязательно, а "happy" —
+по возможности. Мы ищем изображение с тегом "side" и как можно большим количеством этих атрибутов —
+и находим "side eileen happy", которое Ren'Py и выведет на экран.
 
-At point B, the "eileen concerned" image is showing. The "eileen" attribute must be included, and "concerned" may be.
-We look for an image with the "side" tag, and as many of those attributes as possible, and we match "side eileen",
-as the "side eileen concerned" image doesn't exist.
+В точке B отображается изображение "eileen concerned". Атрибут "eileen" должен присутствовать обязательно,
+а "concerned" — по возможности. Мы ищем изображение с тегом "side" и максимальным совпадением атрибутов
+и находим "side eileen", так как изображение "side eileen concerned" не существует.
 
-Finally, at point C, the "eileen space suit" image is showing, the "eileen" attribute must be included, and "space" and
-"suit" may be. We look for an image with the "side" tag, and as many of those attributes as possible, and we match
-"side eileen space" and "side eileen suit". Since both of these have the same number of attributes, Ren'Py refuses
-to choose between them, and no side image is shown.
+Наконец, в точке C отображается изображение "eileen space suit". Атрибут "eileen" обязателен, а "space"
+и "suit" желательны. Мы ищем изображение с тегом "side" и максимальным числом совпадений, и получаем
+сразу два варианта: "side eileen space" и "side eileen suit". Поскольку оба имеют одинаковое количество
+совпадающих атрибутов, Ren'Py не может сделать однозначный выбор между ними, и боковое изображение
+не отображается.
 
 
-Invisible Characters
---------------------
+Невидимые персонажи
+-------------------
 
-Another use of the side image is to show an image of the player character,
-when that character has dialogue. The way to do this is to link an image to
-the character, and then use the say with attributes construct to select
-the side image to show.
+Другое применение бокового изображения — отображение портрета персонажа игрока, когда этот персонаж
+произносит реплику. Для этого свяжите тег изображения с персонажем, а затем используйте конструкцию
+реплики с атрибутами (say with attributes) для выбора отображаемого бокового изображения.
 
-For example::
+Например::
 
-    define p = Character("Player", image="player")
+    define p = Character("Игрок", image="player")
 
     image side player happy = "side_player_happy.png"
     image side player concerned = "side_player_concerned.png"
 
     label start:
 
-        p happy "This is shown with the 'side player happy' image."
+        p happy "Эта реплика отображается с изображением 'side player happy'."
 
-        p "This is also shown with 'side player happy'."
+        p "Эта реплика также отображается с 'side player happy'."
 
-        p concerned "This is shown with 'side player concerned'."
+        p concerned "А эта реплика отображается с 'side player concerned'."
 
-Config and Store Variables
---------------------------
+Переменные конфигурации и хранилища
+-----------------------------------
 
-There are a number of attributes of side images that can be controlled
-using config variables.
+Существует ряд параметров боковых изображений, которыми можно управлять с помощью переменных конфигурации.
 
 .. var:: _side_image_tag = None
 .. var:: config.side_image_tag = None
 
-    If _side_image_tag is not None, it takes precedence over config.side_image_tag.
+    Если значение _side_image_tag не равно None, оно имеет приоритет над config.side_image_tag.
 
-    If this is given, then the side image will track the given image tag,
-    rather than the image associated with the currently speaking character. For example,
+    Если эта переменная задана, боковое изображение отслеживает указанный тег изображения,
+    а не изображение, связанное с говорящим в данный момент персонажем. Например:
 
     ::
 
-        define e = Character("Eileen", image="eileen")
+        define e = Character("Эйлин", image="eileen")
         define config.side_image_tag = "eileen"
 
-    Will make the side image track the "eileen" image tag, which is associated
-    with the ``e`` character.
+    Указывает боковому изображению отслеживать тег изображения "eileen", связанный с персонажем ``e``.
 
 .. var:: config.side_image_only_not_showing = False
 
-    When set to true, the side image will only show if an image with that tag
-    is not already being shown on the screen.
+    Если установлено значение True, боковое изображение отображается только в том случае, если
+    изображение с этим тегом ещё не выведено на экран.
 
 .. var:: _side_image_prefix_tag = None
 .. var:: config.side_image_prefix_tag = 'side'
 
-    If _side_image_prefix_tag is not None, it takes preference over
+    Если значение _side_image_prefix_tag не равно None, оно имеет приоритет над
     config.side_image_prefix_tag.
 
-    The prefix that is used when searching for a side image.
+    Префикс тега, используемый при поиске бокового изображения.
 
 .. var:: config.side_image_null = Null()
 
-    The Null displayable to use when not displaying a side image. This can
-    be changed, but only to other Null objects. One reason for doing so
-    would be to set the side of the Null (eg. ``Null(width=200, height=150)``)
-    to prevent dissolves from being cut off.
+    Отображаемый объект Null, используемый, когда боковое изображение не отображается. Значение
+    можно изменять, но только на другие объекты Null. Одной из причин изменения может быть
+    необходимость задать размер Null (например, ``Null(width=200, height=150)``), чтобы растворения
+    (dissolve) не обрезались.
 
 .. var:: config.side_image_same_transform = None
 
-    If not None, a transform that is used when the new side image shares the
-    same image tag as the previous side image.
+    Если не None, трансформация, которая применяется, когда новое боковое изображение имеет
+    тот же тег изображения, что и предыдущее боковое изображение.
 
 .. var:: config.side_image_change_transform = None
 
-    If not None, a transform that is used when the new side image does not
-    share the name image tag (or one of the new or old side images does not
-    exist).
+    Если не None, трансформация, которая применяется, когда новое боковое изображение не имеет
+    того же тега изображения (или если одно из изображений — старое или новое — отсутствует).
 
 
-Transforms and Transitions
---------------------------
+Трансформации и переходы
+------------------------
 
-The :var:`config.side_image_same_transform` and
-:var:`config.side_image_change_transform` transforms are called with two
-arguments – old and new side image displayables – each time the side
-image is displayed. These can be used to move around side images, or
-use a transition to go between side images.
+Трансформации :var:`config.side_image_same_transform` и
+:var:`config.side_image_change_transform` вызываются с двумя аргументами — старым и новым
+отображаемыми объектами бокового изображения — при каждом отображении бокового изображения.
+Их можно использовать для перемещения боковых изображений или применения переходов между ними.
 
-This causes the side image to slide in and out when the character
-associated with that image changes::
+Следующий код заставляет боковое изображение плавно выезжать и заезжать при смене связанного
+с изображением персонажа::
 
     transform change_transform(old, new):
         contains:
@@ -164,10 +158,9 @@ associated with that image changes::
 
     define config.side_image_change_transform = change_transform
 
-This is used to dissolve between old and new side images when the
-character remains the same. (For example, when the character changes
-emotion.) For the :class:`Dissolve` to work correctly, both side images must
-be the same size. ::
+Следующий пример используется для растворения между старым и новым боковыми изображениями,
+когда персонаж остаётся прежним (например, при смене эмоции персонажа). Для правильной работы
+:class:`Dissolve` оба боковых изображения должны иметь одинаковый размер::
 
     transform same_transform(old, new):
         old
@@ -176,8 +169,8 @@ be the same size. ::
     define config.side_image_same_transform = same_transform
 
 
-When the :func:`SideImage` is scaled down, it might make sense to enable
-mipmapping in the :func:`Dissolve`::
+Если отображаемый объект :func:`SideImage` уменьшается в масштабе, имеет смысл включить
+мипмаппинг в :func:`Dissolve`::
 
     transform same_transform(old, new):
         old
@@ -185,7 +178,7 @@ mipmapping in the :func:`Dissolve`::
 
     define config.side_image_same_transform = same_transform
 
-Functions
----------
+Функции
+-------
 
 .. include:: inc/side

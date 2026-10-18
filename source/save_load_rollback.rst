@@ -1,44 +1,43 @@
-=============================
-Saving, Loading, and Rollback
-=============================
+============================
+Сохранение, загрузка и откат
+============================
 
-Ren'Py has support for saving game state, loading game state, and rolling
-back to a previous game state. Although implemented in a slightly different
-fashion, rollback can be thought of as saving the game at the start of each
-statement that interacts with the user, and loading saves when the user
-rolls back.
+В Ren'Py есть поддержка сохранения состояния игры, загрузки состояния игры
+и отката назад к предыдущему состоянию игры. Хотя откат реализован
+несколько иначе, его можно рассматривать как сохранение игры в начале каждой
+взаимодействующей с пользователем инструкции и загрузку сохранений при откате
+пользователя назад.
 
 
 .. note::
-    While we usually attempt to keep save compatibility between releases, this
-    compatibility is not guaranteed. We may decide to break save-compatibility
-    if doing so provides a sufficiently large benefit.
+    Хотя обычно разработчики стремятся сохранять совместимость сохранений между выпусками,
+    эта совместимость не гарантируется. Мы можем нарушить совместимость сохранений,
+    если это даёт достаточно весомые преимущества.
 
-What is Saved
-=============
+Что сохраняется
+===============
 
-Ren'Py attempts to save the game state. This includes both internal state
-and Python state.
+Ren'Py пытается сохранить состояние игры. Оно включает как внутреннее состояние,
+так и состояние Python.
 
-The internal state consists of all aspects of Ren'Py that are intended to
-change once the game has started, and includes:
+Внутреннее состояние состоит из всех аспектов Ren'Py, которые предназначены для изменения
+после запуска игры, и включает в себя:
 
-* The current statement, and all statements that can be returned to.
-* The images and displayables that are being shown.
-* The screens being shown, and the values of variables within those
-  screens.
-* The music that Ren'Py is playing.
-* The list of nvl-mode text blocks.
+* Текущую инструкцию и все инструкции, к которым можно вернуться.
+* Изображения и отображаемые объекты, которые в данный момент показываются.
+* Отображаемые экраны и значения переменных внутри этих экранов.
+* Музыку, которую воспроизводит Ren'Py.
+* Список текстовых блоков режима NVL.
 
-The Python state consists of the variables in the store that have changed since
-the game began, and all objects reachable from those variables. Note that it's
-the change to the variables that matters – changes to fields in objects will
-not cause those objects to be saved.
+Состояние Python состоит из переменных в хранилище (store), которые изменились с момента
+начала игры, и всех объектов, доступных из этих переменных. Обратите внимание, что значение
+имеет именно изменение самих переменных — изменение полей внутри объектов не приведёт к тому,
+что эти объекты будут сохранены.
 
-Variables set using the :ref:`default statement <default-statement>` will
-always be saved.
+Переменные, заданные с помощью :ref:`инструкции default <default-statement>`,
+всегда сохраняются.
 
-In this example::
+В этом примере::
 
     define a = 1
     define o = object()
@@ -48,16 +47,16 @@ In this example::
         $ b = 1
         $ o.value = 42
 
-only `b` and `c` will be saved. `A` will not be saved because it does not change once
-the game begins. `O` is not saved because it does not change – the object it
-refers to changes, but the variable itself does not.
+сохранены будут только `b` и `c`. Переменная `a` не будет сохранена, так как она не изменялась
+после запуска игры. `o` не сохраняется, потому что она не изменялась: объект, на который она
+ссылается, изменился, но сама переменная — нет.
 
-What isn't Saved
-================
+Что не сохраняется
+==================
 
-Python variables that are not changed after the game begins will not be
-saved. This can be a major problem if a variable that is not saved and one that is
-refer to the same object. (Alias the object.) In this example::
+Переменные Python, не изменившиеся после начала игры, сохранены не будут.
+Это может стать серьёзной проблемой, если не сохраняемая переменная и сохраняемая переменная
+ссылаются на один и тот же объект (являются псевдонимами/алиасами объекта). В этом примере::
 
     init python:
         a = object()
@@ -69,42 +68,40 @@ refer to the same object. (Alias the object.) In this example::
 
         "a.f=[a.f] b.f=[b.f]"
 
-`a` and `b` are aliased. Saving and loading may break this aliasing, causing
-`a` and `b` to refer to different objects. Since this can be very confusing,
-it's best to avoid aliasing saved and unsaved variables. (This is rare to
-encounter directly, but might come up when an unsaved variable and saved field
-alias.)
+`a` и `b` являются псевдонимами одного объекта. Сохранение и загрузка могут нарушить эту связь,
+из-за чего `a` и `b` начнут ссылаться на разные объекты. Поскольку это может приводить к трудноуловимым
+ошибкам, лучше избегать связывания псевдонимами сохраняемых и несохраняемых переменных.
+(Напрямую такое встречается редко, но может возникнуть при совместном использовании несохраняемой
+переменной и сохраняемого поля.)
 
-There are several other kinds of state that isn't saved:
+Есть ещё несколько категорий состояния, которые не сохраняются:
 
-control flow path
-    Ren'Py only saves the current statement, and the statement it needs
-    to return to. It doesn't remember how it got there. Importantly, statements
-    (including variable assignments) that are added to the game won't run.
+путь управления (control flow path)
+    Ren'Py сохраняет только текущую инструкцию и инструкцию, к которой необходимо
+    вернуться. Он не запоминает, как управление туда попало. Что немаловажно, инструкции
+    (включая присвоения переменных), добавленные в игру позднее, выполняться не будут.
 
-mappings of image names to displayables
-    Since this mapping is not saved, the image may change to a new image
-    when the game loads again. This allows an image to change to a new
-    file as the game evolves.
+сопоставления имён изображений с отображаемыми объектами
+    Поскольку это сопоставление не сохраняется, изображение может замениться новым
+    при следующей загрузке игры. Это позволяет обновлять графические файлы по мере
+    разработки и обновления игры.
 
-configuration variables, styles, and style properties
-    Configuration variables and styles aren't saved as part of the game.
-    Therefore, they should only be changed in ``init`` blocks, and left alone
-    once the game has started.
+переменные конфигурации, стили и свойства стилей
+    Переменные конфигурации и стили не сохраняются как часть игры.
+    Следовательно, их следует изменять только в блоках ``init`` и не трогать
+    после запуска игры.
 
 
-Where Ren'Py Saves
-==================
+Где Ren'Py сохраняет игру
+=========================
 
-Saves occur at the start of a Ren'Py statement in the outermost interaction
-context.
+Сохранения происходят в начале инструкции Ren'Py в самом внешнем контексте взаимодействия.
 
-What's important here is to note that saving occurs at the **start** of a
-statement. If a load or rollback occurs in the middle of a statement that
-interacts multiple times, the state will be the state that was active
-when the statement began.
+Здесь важно отметить, что сохранение происходит в **начале** инструкции. Если загрузка
+или откат происходят посреди инструкции с многократным взаимодействием, состоянием игры будет
+то, которое было активно на момент начала инструкции.
 
-This can be a problem in Python-defined statements. In::
+Это может быть проблемой для инструкций, определённых на Python. Например, в коде::
 
     python:
 
@@ -116,8 +113,8 @@ This can be a problem in Python-defined statements. In::
 
             narrator("The count is now [i].")
 
-if the user saves and loads in the middle, the loop will begin anew. Using
-Ren'Py script – rather than Python – to loop avoids this problem.::
+если пользователь сохранится и загрузится в середине цикла, цикл начнётся заново. Использование
+скрипта Ren'Py — вместо чистого Python — для организации цикла позволяет избежать этой проблемы.::
 
     $ i = 0
 
@@ -128,64 +125,70 @@ Ren'Py script – rather than Python – to loop avoids this problem.::
         "The count is now [i]."
 
 
-What Ren'Py Can Save
-====================
+Что Ren'Py может сохранить
+==========================
 
-Ren'Py uses the Python pickle system to save game state. This module can
-save:
+Ren'Py использует систему pickle языка Python для сохранения состояния игры. Этот модуль
+может сохранять:
 
-* Basic types, such as True, False, None, int, str, float, complex, str, and Unicode objects.
-* Compound types, like lists, tuples, sets, and dicts.
-* Creator-defined objects, classes, functions, methods, and bound methods. For
-  pickling these functions to succeed, they must remain available under their
-  original names.
-* Character, Displayable, Transform, and Transition objects.
+* Базовые типы данных, такие как True, False, None, int, str, float, complex, bytes и Unicode-строки.
+* Составные типы, такие как списки (list), кортежи (tuple), множества (set) и словари (dict).
+* Определённые разработчиком объекты, классы, функции, методы и связанные методы (bound methods). Чтобы
+  сериализация (pickling) этих функций прошла успешно, они должны оставаться доступными под своими
+  исходными именами.
+* Объекты Character, Displayable, Transform и Transition.
 
 .. _cant-save:
 
-What Ren'Py Can't Save
-======================
+Что Ren'Py не может сохранить
+=============================
 
-There are certain types that cannot be pickled:
+Существуют определённые типы данных, которые невозможно сериализовать через pickle:
 
-* Render objects.
-* Iterator objects.
-* Generator objects.
-* Coroutine tasks and futures, like those created with ``async`` and ``await``.
-* File-like objects.
-* Network sockets, and objects that enclose them.
-* Inner functions and lambdas.
+* Объекты Render.
+* Объекты-итераторы.
+* Объекты-генераторы.
+* Задачи корутин и объекты future, например, созданные с помощью ``async`` и ``await``.
+* Файлоподобные объекты.
+* Сетевые сокеты и объекты, содержащие их внутри себя.
+* Внутренние функции (inner functions) и лямбда-выражения (lambdas).
 
-This may not be an exhaustive list.
+Этот список может быть не исчерпывающим.
 
-Objects that can't be pickled can still be used, provided that their use
-is combined to namespaces that aren't saved by Ren'Py (like init variables,
-namespaces inside functions, or ``python hide`` blocks.)
+Объекты, которые нельзя сериализовать, всё же можно использовать, при условии, что их использование
+ограничено пространствами имён, которые не сохраняются Ren'Py (такими как переменные init,
+пространства имён внутри функций или блоки ``python hide``).
 
-For example, using a file object like::
+Например, использование файлового объекта в таком виде::
 
     $ monika_file = open(config.gamedir + "/monika.chr", "w")
-    $ monika_file.write("Do not delete.\r\n")
+    $ monika_file.write("Do not delete.
+
+")
     $ monika_file.close()
 
-Won't work, as ``f`` could be saved between any of the three Python statements.
-Putting this in a ``python hide`` block will work::
+не сработает, так как переменная может быть сохранена между любыми из этих трёх инструкций Python.
+Помещение этого кода в блок ``python hide`` будет работать корректно::
 
     python hide:
 
         monika_file = open(config.gamedir + "/monika.chr", "w")
-        monika_file.write("Do not delete.\r\n")
+        monika_file.write("Do not delete.
+
+")
         monika_file.close()
 
-(Of course, using the python ``with`` statement would be cleaner.) ::
+(Разумеется, использование инструкции Python ``with`` будет ещё более аккуратным)::
 
     python hide:
 
         with open(config.gamedir + "/monika.chr", "w") as monika_file:
-            monika_file.write("Do not delete.\r\n")
+            monika_file.write("Do not delete.
 
-Coroutines, like those made with ``async``, ``await``, or the ``asyncio``
-are similar. If you have::
+")
+
+Корутины, созданные с использованием ``async``, ``await`` или модуля ``asyncio``, ведут себя аналогично.
+Если у вас есть::
 
     init python:
 
@@ -195,103 +198,101 @@ are similar. If you have::
             await asyncio.sleep(1)
             await asyncio.sleep(1)
 
-then::
+то код::
 
     $ sleep_task = sleep_func()
     $ asyncio.run(sleep_task)
 
-will have problems, since `sleep_task` can't be saved. But if it's not assigned
-to a variable::
+вызовет ошибки, поскольку `sleep_task` не может быть сохранена. Но если она не присваивается
+переменной::
 
     $ asyncio.run(sleep_func())
 
-will run fine.
+то всё выполнится без проблем.
 
 .. _save-file-structure:
 
-Save File Structure
--------------------
+Структура файла сохранения
+--------------------------
 
-Ren'Py save files (e.g., ``1-1.save``) are compressed archives containing:
+Файлы сохранений Ren'Py (например, ``1-1.save``) представляют собой сжатые архивы, содержащие:
 
-- **Game State**: Serialized Python objects representing the game’s state.
-- **Metadata**: A dictionary with fields describing the save. The fields available depend on the access method:
+- **Состояние игры**: Сериализованные объекты Python, представляющие состояние игры.
+- **Метаданные**: Словарь с полями, описывающими сохранение. Доступные поля зависят от способа доступа:
 
-  - :func:`renpy.slot_json`: Returns a dictionary with ``_save_name``, ``_renpy_version``, ``_version``, ``_game_runtime``, ``_ctime``, and any custom fields added via :var:`config.save_json_callbacks`.
-  - :func:`FileJson`: Returns the same metadata dictionary as :func:`renpy.slot_json` when the ``key`` parameter is ``None`` (default), including custom fields. When a ``key`` is specified (e.g., ``"_save_name"``), it returns the value of that field.
-  - :func:`renpy.list_saved_games`: Returns ``_save_name`` (as ``extra_info``), ``mtime`` (as ``time``), and ``_screenshot`` (as ``screenshot``) in a tuple, but no other metadata fields.
+  - :func:`renpy.slot_json`: Возвращает словарь с полями ``_save_name``, ``_renpy_version``, ``_version``, ``_game_runtime``, ``_ctime`` и любыми пользовательскими полями, добавленными через :var:`config.save_json_callbacks`.
+  - :func:`FileJson`: Возвращает тот же словарь метаданных, что и :func:`renpy.slot_json`, когда параметр ``key`` равен ``None`` (по умолчанию), включая пользовательские поля. Когда указан ``key`` (например, ``"_save_name"``), возвращается значение этого поля.
+  - :func:`renpy.list_saved_games`: Возвращает кортеж, содержащий ``_save_name`` (как ``extra_info``), ``mtime`` (как ``time``) и ``_screenshot`` (как ``screenshot``), но без других полей метаданных.
 
-  Standard metadata fields include:
+  Стандартные поля метаданных включают:
 
-  - ``_save_name``: The string set by the ``extra_info`` argument in :func:`renpy.save`, typically the global :var:`save_name` variable (e.g., "Chapter 1"). If empty, an empty string.
-  - ``_renpy_version``: The version of Ren'Py used to create the save, as a list of integers (e.g., ``[8, 3, 7, 25031702]`` for Ren'Py 8.3.7.25031702).
-  - ``_version``: The game version set by :var:`config.version` at the time of saving (e.g., "1.0").
-  - ``_game_runtime``: The number of seconds the game has been waiting on user input, as returned by :func:`renpy.get_game_runtime` at the time of saving.
-  - ``_ctime``: The UNIX timestamp (seconds since the epoch) when the save was created.
-  - ``_screenshot``: A displayable for the save’s screenshot, accessible via :func:`renpy.list_saved_games` or :func:`FileScreenshot`.
+  - ``_save_name``: Строка, задаваемая аргументом ``extra_info`` в :func:`renpy.save`, обычно глобальная переменная :var:`save_name` (например, «Глава 1»). Если не задано — пустая строка.
+  - ``_renpy_version``: Версия Ren'Py, использованная для создания сохранения, в виде списка целых чисел (например, ``[8, 3, 7, 25031702]`` для Ren'Py 8.3.7.25031702).
+  - ``_version``: Версия игры, заданная :var:`config.version` на момент сохранения (например, «1.0»).
+  - ``_game_runtime``: Количество секунд, в течение которых игра ожидала ввода пользователя, возвращаемое :func:`renpy.get_game_runtime` на момент сохранения.
+  - ``_ctime``: Временная метка UNIX (секунды с начала эпохи), когда сохранение было создано.
+  - ``_screenshot``: Отображаемый объект для снимка экрана сохранения, доступный через :func:`renpy.list_saved_games` или :func:`FileScreenshot`.
 
-The metadata is stored in JSON, and so is limited to values JSON can represent, like strings, numbers, lists, and dicts.
-When using ``_save_name`` (via :var:`save_name` or ``extra_info``), special characters like
-``[]`` or ``{}``, may cause issues if they're interpreted directly by Ren'Py’s text parser in the save/load UI,
-causing errors or unexpected rendering. Use :var:`config.save_json_callbacks` to store complex metadata safely,
-or use ``substitute False`` when displaying it as :class:`Text`.
+Метаданные хранятся в формате JSON и поэтому ограничены значениями, которые могут быть представлены в JSON: строками, числами, списками и словарями.
+При использовании ``_save_name`` (через :var:`save_name` или ``extra_info``) специальные символы, такие как
+``[]`` или ``{}``, могут вызвать проблемы, если они будут напрямую интерпретированы парсером текста Ren'Py в интерфейсе сохранения/загрузки,
+приводя к ошибкам или неожиданному отображению. Используйте :var:`config.save_json_callbacks` для безопасного хранения сложных метаданных
+или используйте ``substitute False`` при их выводе в виде :class:`Text`.
 
-Traceback Saves
----------------
+Сохранения при ошибках (Traceback Saves)
+----------------------------------------
 
-If possible, Ren'Py creates saves when an uncaught exception occurs, containing both the game
-state and the traceback. These saves are stored in slots with the name :file:`_tracesave-1` to
-:file:`_tracesave-10`. In these files, the traceback is stored in the file metadata, and can be retrieved
-with::
+По возможности Ren'Py создаёт сохранения при возникновении необработанного исключения, сохраняя как состояние
+игры, так и трассировку стека (traceback). Эти сохранения размещаются в слотах с именами от :file:`_tracesave-1` до
+:file:`_tracesave-10`. В этих файлах трассировка сохраняется в метаданных файла и может быть извлечена
+следующим образом::
 
     traceback = renpy.slot_json("_tracesave-1")["_traceback"]
 
-It's also possible to use :func:`renpy.get_save_data` to retrieve the variables the game used when the
-traceback save was created.
+Также можно использовать :func:`renpy.get_save_data`, чтобы получить переменные, которые игра использовала в момент
+создания сохранения при ошибке.
 
-The new :func:`renpy.get_save_data` function allows you to retrieve the data for a particular save slot,
-without loading the save. This can be used with a traceback save to retrieve the game data without loading
-into an error state.
+Функция :func:`renpy.get_save_data` позволяет извлечь данные для определённого слота сохранения
+без непосредственной загрузки сохранения. Это можно использовать вместе с сохранением при ошибке, чтобы получить данные игры,
+не загружаясь в состояние с ошибкой.
 
 .. _save-functions:
 
-Save Functions and Variables
-============================
+Функции и переменные сохранения
+===============================
 
-There is one variable that is used by the high-level save system:
+Существует одна переменная, используемая высокоуровневой системой сохранения:
 :var:`save_name`.
 
-This is a string that is stored with each save. It can be used to give
-a name to the save, to help users tell them apart.
+Это строка, которая сохраняется вместе с каждым файлом сохранения. Её можно использовать для задания
+имени сохранению, помогая пользователям различать их.
 
-More per-save data customization can be done with the Json supplementary
-data system, see :var:`config.save_json_callbacks`.
+Более детальную настройку данных для каждого сохранения можно выполнить с помощью системы дополнительных
+данных JSON, см. :var:`config.save_json_callbacks`.
 
-There are a number of high-level save actions and functions defined in the
-:doc:`screen actions <screen_actions>`. In addition, there are the following
-low-level save and load actions.
+В :doc:`экранных действиях <screen_actions>` определён ряд высокоуровневых действий и функций сохранения.
+Кроме того, доступны следующие низкоуровневые действия и функции сохранения и загрузки.
 
 
 .. include:: inc/loadsave
 
-Retaining Data After Load
-=========================
+Сохранение данных после загрузки
+================================
 
-When a game is loaded, the state of the game is reset (using the rollback
-system described below) to the state of the game when the current statement
-began executing.
+При загрузке игры состояние сбрасывается (с использованием системы отката,
+описанной ниже) до состояния, в котором игра находилась в момент начала
+выполнения текущей инструкции.
 
-In some cases, this may not be desirable. For example, when a screen allows
-editing of a value, we may want to retain that value when the game is
-loaded. When renpy.retain_after_load is called, data will not be reverted
-when a game is saved and loaded before the end of the next checkpointed
-interaction.
+В некоторых случаях это может быть нежелательно. Например, когда экран позволяет
+редактировать значение, мы можем захотеть сохранить это значение при загрузке
+игры. При вызове renpy.retain_after_load данные не будут сбрасываться,
+если игра сохранена и загружена до окончания следующего взаимодействия с контрольной точкой.
 
-Note that while data is not changed, control is reset to the start of the
-current statement. That statement will execute again, with the new data
-in place at the start of the statement.
+Обратите внимание, что хотя данные не изменяются, управление возвращается в начало
+текущей инструкции. Эта инструкция выполнится снова, уже с новыми данными,
+находящимися на месте в начале инструкции.
 
-For example::
+Например::
 
     screen edit_value:
         hbox:
@@ -310,112 +311,107 @@ For example::
 
 .. _rollback:
 
-Rollback
-========
+Откат (Rollback)
+================
 
-Rollback allows the user to revert the game to an earlier state in
-much the same way as undo/redo systems that are available in most
-modern applications. While the system takes care of maintaining the
-visuals and game variables during rollback events, there are several
-things that should be considered while creating a game.
+Откат позволяет пользователю вернуть игру в более раннее состояние
+точно так же, как системы отмены/повтора (undo/redo), доступные в большинстве
+современных приложений. Хотя система сама заботится о сохранении визуальных
+элементов и игровых переменных во время событий отката, есть ряд аспектов,
+которые следует учитывать при создании игры.
 
 
-What Data is Rolled Back?
+Какие данные откатываются?
 ==========================
 
-Rollback affects variables that have been changed after the init phase, and
-objects of revertable types reachable from those variables. The short version
-is that lists, dicts, and sets created in Ren'Py script are revertable as are
-instances of classes defined in Ren'Py scripts. Data created inside Python
-or inside Ren'Py usually isn't revertable.
+Откат затрагивает переменные, которые были изменены после фазы инициализации (init), и
+объекты откатываемых типов, доступные из этих переменных. Вкратце: списки, словари и
+множества, созданные в скриптах Ren'Py, являются откатываемыми, так же как и экземпляры
+классов, определённых в скриптах Ren'Py. Данные, созданные внутри чистого Python
+или внутри самого ядра Ren'Py, обычно не откатываются.
 
-In more detail, inside the stores
-that Python embedded inside Ren'Py scripts run in, the object, list, dict, and
-set types have been replaced with equivalent types that are revertable. Objects
-that inherit from these types are also revertable. The :class:`renpy.Displayable`
-type inherits from the revertable object type.
+Более подробно: внутри хранилищ (stores), в которых выполняется Python, встроенный
+в скрипты Ren'Py, типы object, list, dict и set были заменены эквивалентными типами,
+поддерживающими откат. Объекты, наследующие от этих типов, также поддерживают откат.
+Тип :class:`renpy.Displayable` наследует от откатываемого типа object.
 
-To make the use of revertable objects more convenient, Ren'Py modifies Python
-found inside Ren'Py script files in the following way.
+Чтобы сделать использование откатываемых объектов более удобным, Ren'Py модифицирует
+код Python внутри файлов скрипта Ren'Py следующим образом:
 
-* Literal lists, dicts, and sets are automatically converted to the
-  revertable equivalent.
-* List, dict, and set comprehensions are also automatically converted to
-  the revertable equivalent.
-* Other python syntax, such as extended unpacking, that can create lists,
-  dicts, or sets converts the result to the revertable equivalent. However,
-  for performance reasons, double-starred parameters to functions and methods
-  (that create dictionaries of extra keyword arguments) are not converted
-  to revertable objects.
-* Classes that do not inherit from any other types automatically inherit
-  from the revertable object.
+* Литералы списков, словарей и множеств автоматически преобразуются в откатываемые эквиваленты.
+* Генераторы списков, словарей и множеств (comprehensions) также автоматически преобразуются в
+  откатываемый эквивалент.
+* Другие синтаксические конструкции Python, такие как расширенная распаковка, способные создавать
+  списки, словари или множества, преобразуют результат в откатываемый эквивалент. Однако из соображений
+  производительности параметры функций и методов со звёздочками ``**kwargs`` (создающие словари
+  дополнительных именованных аргументов) не преобразуются в откатываемые объекты.
+* Классы, которые не наследуются ни от каких других типов, автоматически наследуются от
+  откатываемого object.
 
-In addition:
+Кроме того:
 
-* The methods and operators of revertable types have been modified to return
-  revertable objects when a list, dict, or set is produced.
-* Built in functions that return lists, dicts, and sets return a revertable
-  equivalent.
+* Методы и операторы откатываемых типов были изменены так, чтобы возвращать откатываемые объекты,
+  когда результатом операции является список, словарь или множество.
+* Встроенные функции, возвращающие списки, словари и множества, возвращают откатываемый
+  эквивалент.
 
-Calling into Python code will not generally produce a revertable object. Some
-cases where you'll get an object that may not participate in rollback are:
+Вызов внешнего кода Python обычно не приводит к созданию откатываемого объекта. Вот некоторые
+случаи, когда вы получите объект, который может не участвовать в откате:
 
-* Calling methods on built-in types, like the str.split method.
-* When the object is created in a Python module that's been imported, and
-  then return to Ren'Py. (For example, an instance of collections.defaultdict
-  won't participate in rollback.)
-* Objects returned from Ren'Py's API, unless documented otherwise.
+* Вызов методов встроенных типов, таких как метод str.split.
+* Когда объект создаётся в импортированном модуле Python, а затем возвращается в Ren'Py.
+  (Например, экземпляр collections.defaultdict не будет участвовать в откате.)
+* Объекты, возвращаемые из API Ren'Py, если в документации не указано иное.
 
-If such data needs to participate in rollback, it may make sense to convert
-it to a type that does partipate. For example::
+Если такие данные должны участвовать в откате, имеет смысл преобразовать их к типу,
+который его поддерживает. Например::
 
-    # Calling list inside Python-in-Ren'Py converts a non-revertable list
-    # into a revertable one.
+    # Вызов list внутри Python-в-Ren'Py преобразует неоткатываемый список
+    # в откатываемый.
     $ attrs = list(renpy.get_attributes("eileen"))
 
 
-Supporting Rollback and Roll Forward
-====================================
+Поддержка отката назад и отката вперёд
+======================================
 
-Most Ren'Py statements automatically support rollback and roll forward. If
-you call :func:`ui.interact` directly, you'll need to add support for rollback
-and roll-forward yourself. This can be done using the following structure::
+Большинство инструкций Ren'Py автоматически поддерживают откат назад и откат вперёд. Если
+вы вызываете :func:`ui.interact` напрямую, вам потребуется добавить поддержку отката назад
+и отката вперёд самостоятельно. Это можно сделать с помощью следующей структуры::
 
 
-    # This is None if we're not rolling back, or else the value that was
-    # passed to checkpoint last time if we're rolling forward.
+    # Это None, если мы не откатываемся назад, или значение, переданное
+    # в checkpoint в прошлый раз, если выполняется откат вперёд.
     roll_forward = renpy.roll_forward_info()
 
-    # Set up the screen here...
+    # Здесь настраивается экран...
 
-    # Interact with the user.
+    # Взаимодействие с пользователем.
     rv = ui.interact(roll_forward=roll_forward)
 
-    # Store the result of the interaction.
+    # Сохранение результата взаимодействия.
     renpy.checkpoint(rv)
 
-It's important that your game does not interact with the user after renpy.checkpoint
-has been called. (If you do, the user may not be able to rollback.)
+Важно, чтобы ваша игра не взаимодействовала с пользователем после вызова renpy.checkpoint.
+(Иначе пользователь может оказаться не в состоянии выполнить откат назад.)
 
 .. include:: inc/rollback
 
-Blocking Rollback
+Блокировка отката
 =================
 
 .. warning::
 
-    Blocking rollback is a user-unfriendly thing to do. If a user mistakenly
-    clicks on an unintended choice, he or she will be unable to correct their
-    mistake. Since rollback is equivalent to saving and loading, your users
-    will be forced to save more often, breaking game engagement.
+    Блокировка отката недружелюбна по отношению к пользователю. Если пользователь по ошибке
+    кликнет на нежелательный вариант ответа, он или она не сможет исправить свою
+    ошибку. Поскольку откат эквивалентен сохранению и загрузке, ваши пользователи
+    будут вынуждены сохраняться гораздо чаще, что разрушает погружение в игру.
 
-It is possible to disable rollback in part or in full. If rollback is
-not wanted at all, it can simply be turned off through the
-:var:`config.rollback_enabled` option.
+Откат можно отключить частично или полностью. Если откат не нужен вовсе,
+его можно просто выключить через опцию :var:`config.rollback_enabled`.
 
-More common is a partial block of rollback. This can be achieved by the
-:func:`renpy.block_rollback` function. When called, it will instruct
-Ren'Py not to roll back before that point. For example::
+Более распространена частичная блокировка отката. Этого можно достичь с помощью
+функции :func:`renpy.block_rollback`. При её вызове Ren'Py получит команду
+не откатываться назад дальше этой точки. Например::
 
     label final_answer:
         "Is that your final answer?"
@@ -434,18 +430,17 @@ Ren'Py not to roll back before that point. For example::
 
         "So be it. There's no turning back now."
 
-When the label no_return is reached, Ren'Py won't allow a rollback
-back to the menu.
+При достижении метки no_return Ren'Py не позволит выполнить откат назад к меню.
 
 
-Fixing Rollback
-===============
+Фиксация отката (Fixing Rollback)
+=================================
 
-Fixing rollback provides for an intermediate choice between
-unconstrained rollback and blocking rollback entirely. Rollback is
-allowed, but the user is not allowed to make changes to their
-decisions. Fixing rollback is done with the :func:`renpy.fix_rollback`
-function, as shown in the following example::
+Фиксация отката представляет собой промежуточный вариант между
+свободным откатом и полной его блокировкой. Откат разрешён,
+но пользователь не может изменить свои решения. Фиксация
+отката осуществляется с помощью функции :func:`renpy.fix_rollback`,
+как показано в следующем примере::
 
     label final_answer:
         "Is that your final answer?"
@@ -463,53 +458,47 @@ function, as shown in the following example::
 
         "So be it. There's no turning back now."
 
-Now, after the fix_rollback function is called, it will still be
-possible for the user to roll back to the menu. However, it will not be
-possible to make a different choice.
+Теперь после вызова функции fix_rollback пользователь по-прежнему сможет
+откатиться назад к меню. Однако выбрать другой вариант ответа будет невозможно.
 
-There are some caveats to consider when designing a game for
-fix_rollback. Ren'Py will automatically take care of locking any data
-that is given to :func:`checkpoint`. However, due to the generic nature
-of Ren'Py, it is possible to write scripts that bypass this and
-change things in ways that may have unpredictable results.  Most notably,
-``call screen`` doesn't work well with fixed rollback. It is up
-to the creator to block rollback at problematic locations.
+При проектировании игры с использованием fix_rollback следует учитывать некоторые нюансы.
+Ren'Py автоматически позаботится о блокировке любых данных, переданных в :func:`checkpoint`.
+Однако из-за гибкой природы Ren'Py можно написать скрипты в обход этого механизма,
+изменяющие состояние так, что это приведёт к непредсказуемым результатам. В частности,
+``call screen`` плохо работает с фиксированным откатом. Разработчик сам должен позаботиться
+о блокировке отката в проблемных местах.
 
-The internal user interaction options for menus, :func:`renpy.input`
-and :func:`renpy.imagemap` are designed to fully work with fix_rollback.
+Встроенные средства взаимодействия с пользователем для меню, :func:`renpy.input`
+и :func:`renpy.imagemap`, спроектированы так, чтобы полноценно работать с fix_rollback.
 
-Styling Fixed Rollback
-======================
+Стилизация фиксированного отката
+================================
 
-Because fix_rollback changes the functionality of menus and imagemaps,
-it is advisable to reflect this in the appearance. To do this, it is
-important to understand how the widget states of the menu buttons are
-changed. There are two modes that can be selected through the
-:var:`config.fix_rollback_without_choice` option.
+Поскольку fix_rollback изменяет поведение меню и imagemap, рекомендуется отражать
+это в их внешнем виде. Для этого важно понимать, как изменяются состояния виджетов кнопок меню.
+Существует два режима, которые можно выбрать с помощью параметра
+:var:`config.fix_rollback_without_choice`.
 
-The default option will set the chosen option to "selected", thereby
-activating the style properties with the "selected\_" prefix. All other
-buttons will be made insensitive and show using the properties with the
-"insensitive\_" prefix. Effectively this leaves the menu with a single
-selectable choice.
+По умолчанию выбранный вариант получает состояние «selected», тем самым активируя свойства
+стиля с префиксом «selected\_». Все остальные кнопки становятся нечувствительными и отображаются
+свойствами с префиксом «insensitive\_». Фактически в меню остаётся только один вариант.
 
-When the :var:`config.fix_rollback_without_choice` option is set to
-False, all buttons are made insensitive. This means that the chosen
-option will use the "selected_insensitive\_" prefix for the style
-properties while the other buttons use properties with the
-"insensitive\_" prefix.
+Когда параметру :var:`config.fix_rollback_without_choice` присвоено значение False, все кнопки
+становятся нечувствительными. Это означает, что выбранный вариант будет использовать префикс
+«selected_insensitive\_» для свойств стиля, тогда как другие кнопки будут использовать свойства
+с префиксом «insensitive\_».
 
-Fixed Rollback and Custom Screens
-=================================
+Фиксированный откат и пользовательские экраны
+=============================================
 
-To simplify the creation of custom screens, two actions are
-provided to help with the most common uses. The :func:`ui.ChoiceReturn` action
-returns the value when the button it is attached to is clicked. The
-:func:`ui.ChoiceJump` action can be used to jump to a script label. However, this
-action only works properly when the screen is called trough a
-``call screen`` statement.
+Для упрощения создания пользовательских экранов предусмотрены два экранных действия,
+помогающие в наиболее распространённых сценариях. Действие :func:`ui.ChoiceReturn`
+возвращает значение при нажатии на кнопку, к которой оно привязано. Действие
+:func:`ui.ChoiceJump` можно использовать для перехода на метку скрипта. Однако это
+действие работает должным образом только тогда, когда экран вызван с помощью
+инструкции ``call screen``.
 
-Examples::
+Примеры::
 
     screen demo_imagemap():
         roll_forward True
@@ -550,7 +539,7 @@ Examples::
             if renpy.in_fixed_rollback():
                 textbutton "Advance":
                     action Return(renpy.roll_forward_info())
-                    # required because of the block_all=True in all the other buttons
+                    # требуется из-за block_all=True во всех остальных кнопках
 
     label dough:
         call screen rps
@@ -558,18 +547,17 @@ Examples::
         $ renpy.fix_rollback()
         m "[chosen]!"
 
-When writing custom Python routines that must play nice with the
-fix_rollback system there are a few simple things to know. First of all
-the :func:`renpy.in_fixed_rollback` function can be used to determine whether
-the game is currently in fixed rollback state. Second, when in
-fixed rollback state, :func:`ui.interact` will always return the
-supplied roll_forward data regardless of what action was performed. This
-effectively means that when the :func:`ui.interact`/:func:`renpy.checkpoint`
-functions are used, most of the work is done.
+При написании пользовательских функций на Python, которые должны корректно взаимодействовать
+с системой fix_rollback, полезно знать несколько простых правил. Во-первых,
+функцию :func:`renpy.in_fixed_rollback` можно использовать для проверки того, находится ли игра
+в данный момент в состоянии фиксированного отката. Во-вторых, в состоянии фиксированного
+отката функция :func:`ui.interact` всегда будет возвращать переданные данные roll_forward, независимо
+от того, какое действие было совершено. Это фактически означает, что при использовании функций
+:func:`ui.interact` и :func:`renpy.checkpoint` большая часть работы уже сделана.
 
 
-Rollback-blocking and -fixing Functions
-=======================================
+Функции блокировки и фиксации отката
+====================================
 
 .. include:: inc/blockrollback
 
@@ -578,7 +566,7 @@ NoRollback
 
 .. include:: inc/norollback
 
-For example::
+Например::
 
     init python:
 
@@ -595,10 +583,10 @@ For example::
 
         "o.value is [o.value]. It will increase each time you rollback and then click ahead."
 
-Rollback-Supporting Classes
-===========================
+Классы, поддерживающие откат
+============================
 
-The following classes exist to help support the use of rollback in your
-game. They may be useful in some circumstances.
+Следующие классы предназначены для облегчения использования отката в вашей игре.
+Они могут оказаться полезными в ряде ситуаций.
 
 .. include:: inc/rollbackclasses

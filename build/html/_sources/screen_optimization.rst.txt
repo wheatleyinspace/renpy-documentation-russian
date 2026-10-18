@@ -1,93 +1,85 @@
-============================
-Screen Language Optimization
-============================
+=========================
+Оптимизация языка экранов
+=========================
 
-Ren'Py uses a number of techniques to optimize screen language speed. When
-using Ren'Py to create complex interfaces, such as those used by simulation
-games, it may help to understand how screen language works so you can
-achieve maximal performance.
+Ren'Py использует ряд методов для оптимизации скорости работы языка экранов.
+При использовании Ren'Py для создания сложных интерфейсов, например в играх-симуляторах,
+понимание принципов работы языка экранов поможет достичь максимальной производительности.
 
-This guide is applicable to the second implementation of screen language,
-which was added to Ren'Py 6.18. If your game was created in Ren'Py 6.17
-or earlier, it may be necessary to choose the "Force Recompile" option
-in the launcher to ensure its screens are upgraded to the latest version.
+Это руководство применимо ко второй реализации языка экранов, добавленной в Ren'Py 6.18.
+Если ваша игра была создана в Ren'Py 6.17 или более ранней версии, может потребоваться
+выбрать опцию «Принудительная перекомпиляция» (Force Recompile) в лаунчере, чтобы обновить
+экраны до актуальной версии.
 
-This guide isn't a substitute for good programming practice. If a screen
-uses nested loops to do a lot of unproductive work, it will be slower than
-a screen that avoids such looping. While understanding the techniques in
-this guide is important, avoiding work entirely is always better than
-letting Ren'Py optimize the work for you.
+Это руководство не заменяет грамотные практики программирования. Если экран использует
+вложенные циклы для выполнения неэффективной работы, он будет работать медленнее, чем экран,
+избегающий таких циклов. Хотя понимание методов из этого руководства важно, полное
+исключение лишней работы всегда лучше, чем оптимизация этой работы силами Ren'Py.
 
-Parameter List
-==============
+Список параметров
+=================
 
-For best performance, all screens should be defined with a parameter list.
-When a screen doesn't take parameters, it should be defined with an empty
-parameter list. The screen::
+Для достижения наилучшей производительности все экраны должны определяться со списком
+параметров. Когда экран не принимает параметров, его следует определять с пустым
+списком параметров (круглыми скобками). Экран::
 
     screen test():
         vbox:
             for i in range(10):
                 text "[i]"
 
-is faster than::
+работает быстрее, чем::
 
     screen test:
         vbox:
             for i in range(10):
                 text "[i]"
 
-When a screen is defined without a parameter list, any name used in that
-screen can be redefined when the screen is shown. This requires Ren'Py to be
-more conservative when analyzing the screen, which can limit the optimization
-it performs.
+Когда экран определен без списка параметров, любое имя, используемое в этом экране,
+может быть переопределено в момент отображения экрана. Это вынуждает Ren'Py вести себя
+более осторожно при анализе экрана, что ограничивает возможные оптимизации.
 
-Prediction
-==========
+Предсказание
+============
 
-Screens perform better when they're predicted in advance. That's because
-Ren'Py will execute the screen during prediction time, and load in images
-that are used by the screen.
+Экраны работают быстрее, когда они предсказываются заранее. Это связано с тем, что
+Ren'Py выполняет экран на этапе предсказания и предварительно загружает используемые
+им изображения.
 
-There are two ways Ren'Py automatically predicts screens:
+Ren'Py автоматически предсказывает экраны двумя способами:
 
-* Ren'Py will predict screens shown by the ``show screen`` and ``call screen``
-  statements.
-* Ren'Py will predict screens that will be shown by the :func:`Show` and :func:`ShowMenu`
-  actions.
+* Ren'Py предсказывает экраны, отображаемые операторами ``show screen`` и ``call screen``.
+* Ren'Py предсказывает экраны, отображаемые действиями :func:`Show` и :func:`ShowMenu`.
 
-If screens are shown from Python, it's a good idea to start predicting
-the screen before it is shown. To start predicting a screen, use the
-:func:`renpy.start_predict_screen` function. To stop predicting a screen,
-use the :func:`renpy.stop_predict_screen` function.
+Если экраны отображаются из кода Python, имеет смысл начать предсказание экрана
+до его отображения. Для запуска предсказания экрана используйте функцию
+:func:`renpy.start_predict_screen`. Для остановки предсказания экрана используйте
+функцию :func:`renpy.stop_predict_screen`.
 
 
-Displayable Reuse
-=================
+Повторное использование отображаемых объектов
+=============================================
 
-When evaluating a screen language statement that creates a displayable, Ren'Py
-will check to see if the positional arguments and properties given to that
-displayable are equal to the positional arguments and properties given the
-last time that statement was evaluated. If they are, instead of making a new
-displayable, Ren'Py will reuse the existing displayable.
+При вычислении оператора языка экранов, создающего отображаемый объект, Ren'Py проверяет,
+равны ли позиционные аргументы и свойства этого объекта тем позиционным аргументам
+и свойствам, которые были переданы при предыдущем вычислении этого оператора. Если они
+равны, вместо создания нового объекта Ren'Py повторно использует уже существующий.
 
-Displayable reuse has a number of performance implications. It saves the cost
-of creating a new displayable, which may be significant for displayables that
-contain a lot of internal states. More importantly, reusing a displayable means
-that in many cases, Ren'Py will not need to re-render the displayable before
-showing it to the user, which can lead to another significant speedup.
+Повторное использование отображаемых объектов дает ряд преимуществ для производительности.
+Оно экономит ресурсы на создание нового объекта, что особенно заметно для объектов с
+большим объемом внутреннего состояния. Что еще важнее, повторное использование означает,
+что во многих случаях Ren'Py не потребуется повторно отрисовывать (рендерить) объект перед
+его показом пользователю, что обеспечивает существенное ускорение.
 
-To compare positional arguments and properties, Ren'Py uses the notion of
-equality embodied by Python's == operator. We've extended this notion of
-equality to actions by deciding two actions should be equal when they are
-indistinguishable from each other – when it doesn't matter which action
-is invoked, or which action is queried to determine sensitivity or
-selectedness.
+Для сравнения позиционных аргументов и свойств Ren'Py использует понятие равенства,
+воплощенное оператором == в Python. Мы расширили это понятие равенства на действия (actions),
+постановив, что два действия считаются равными, если они неотличимы друг от друга —
+когда не имеет значения, какое действие вызывается или какое опрашивается для определения
+чувствительности или выбранного состояния.
 
-All actions provided with Ren'Py conform to this definition. When defining
-your own actions, it makes sense to provide them with this notion of
-equality. This can be done by supplying an appropriate ``__eq__`` method.
-For example::
+Все действия, поставляемые с Ren'Py, соответствуют этому определению. При создании
+собственных действий имеет смысл наделить их этим свойством равенства. Это можно сделать,
+реализовав соответствующий метод ``__eq__``. Например::
 
     class TargetShip(Action):
         def __init__(self, ship):
@@ -103,158 +95,150 @@ For example::
             global target
             target = self.ship
 
-It's important to define the ``__eq__`` function carefully, making sure it
-compares all fields, and uses equality (==) and identity (is) comparison
-as appropriate.
+Важно тщательно определять метод ``__eq__``, убеждаясь, что он сравнивает все поля
+и использует сравнение по значению (==) и по идентичности (is) там, где это уместно.
 
-Const Expressions and Pure Functions
-====================================
+Константные выражения и чистые функции
+======================================
 
-Ren'Py can exploit the properties of const variables and pure functions
-to improve the speed of screen evaluation, and to entirely avoid the
-evaluation of some parts of screens.
+Ren'Py может использовать свойства константных переменных (const) и чистых функций (pure)
+для ускорения вычисления экранов и полного пропуска вычисления некоторых частей экранов.
 
-Definitions
+Определения
 -----------
 
-An expression is **const** (short for constant) if it always represents the
-same value when it is evaluated. For Ren'Py's purposes, an expression is
-const if and only if the following expressions always evaluate to the same
-const value or are undefined:
+Выражение является **константным** (**const**), если оно всегда представляет одно и то
+же значение при вычислении. В терминах Ren'Py выражение является константным тогда и
+только тогда, когда следующие выражения всегда вычисляются в одно и то же константное
+значение или не определены:
 
-* Applying any unary, binary, or ternary operator to the expression, provided
-  the other operands are also const.
-* Accessing a field on the expression.
-* Indexing the expression, either using a number or an object.
+* Применение любого унарного, бинарного или тернарного оператора к выражению при условии,
+  что остальные операнды также являются константными.
+* Доступ к полю (атрибуту) выражения.
+* Индексирование выражения с помощью числа или объекта.
 
-Python numbers and strings are const, as are list, tuple, set, and dict
-literals for which all components are const. Ren'Py marks
-variables defined using the ``define`` statement as const.
-The :func:`renpy.const` and :func:`renpy.not_const` functions
-can be used to further control what Ren'Py considers to be const. The
-default list of const names is given in the :ref:`Const Names <const-names>`
-section below.
+Числа и строки Python являются константами, как и литералы list, tuple, set и dict,
+все элементы которых являются константами. Ren'Py помечает переменные, определенные с
+помощью оператора ``define``, как константные.
+Функции :func:`renpy.const` и :func:`renpy.not_const` можно использовать для дальнейшего
+управления тем, что Ren'Py считает константой. Список константных имен по умолчанию
+приведен в разделе :ref:`Константные имена <const-names>` ниже.
 
-If you have a variable that will never change, it makes sense to use ``define``
-to both define it and declare it const. For example::
+Если у вас есть переменная, которая никогда не изменится, имеет смысл использовать ``define``,
+чтобы одновременно определить ее и объявить константой. Например::
 
     define GRID_WIDTH = 20
     define GRID_HEIGHT = 10
 
-A callable function, class, or action is **pure** if, when all of its arguments
-are const values, it always gives the same const value. Alternatively, an
-expression that invokes a pure function with const expression is also a
-const expression.
+Вызываемая функция, класс или действие является **чистым** (**pure**), если при передаче
+константных аргументов всегда возвращается одно и то же константное значение. Соответственно,
+выражение, вызывающее чистую функцию с константными аргументами, также является константным
+выражением.
 
-A large number of default functions, classes, and actions are marked as
-pure. These functions are listed in the :ref:`Pure Names <pure-names>`
-section below.
+Большое количество стандартных функций, классов и действий помечены как чистые. Эти функции
+перечислены в разделе :ref:`Чистые имена <pure-names>` ниже.
 
-Functions are declared pure using the :func:`renpy.pure` function, which
-can be used as a decorator for functions declared in the default store.
+Функции объявляются чистыми с помощью функции :func:`renpy.pure`, которую можно использовать
+в качестве декоратора для функций, объявленных в стандартном хранилище.
 
-Const expressions and pure functions do not need to retain the same value
-across the following events:
+Константные выражения и чистые функции не обязаны сохранять одно и то же значение при
+следующих событиях:
 
-* The end of the init phase.
-* A change of the language.
-* A style rebuild.
+* Окончание фазы инициализации (init).
+* Смена языка перевода.
+* Пересборка стилей.
 
-How Const Optimizes Screen Language
+Как const оптимизирует язык экранов
 -----------------------------------
 
-There are three advantages to ensuring that screen language arguments and
-properties are const.
+Обеспечение константности аргументов и свойств языка экранов дает три преимущества:
 
-The first is that const arguments and properties are evaluated when
-screens are prepared, which is at the end of the init phase, when the
-language is changed, or when styles are rebuilt. After that, it is no
-longer necessary to spend time evaluating const arguments and properties.
+Во-первых, константные аргументы и свойства вычисляются при подготовке экранов: в конце
+фазы init, при смене языка или при пересборке стилей. После этого больше не требуется
+тратить время на вычисление константных аргументов и свойств.
 
-The second is that const works well with displayable reuse. When all of
-the arguments and properties of a displayable are const, the displayable
-can always be reused, which gains all the benefits of displayable reuse.
+Во-вторых, const отлично сочетается с повторным использованием отображаемых объектов.
+Когда все аргументы и свойства объекта константны, объект всегда может быть переиспользован,
+получая все преимущества повторного использования.
 
-Lastly, when Ren'Py encounters a tree of displayables such that all
-arguments, properties, and expressions affecting control flow are
-also const, Ren'Py will reuse the entire tree without evaluating
-expressions or creating displayables. This can yield a significant
-performance boost.
+Наконец, когда Ren'Py встречает дерево отображаемых объектов, в котором все аргументы,
+свойства и выражения, влияющие на поток управления, также константны, Ren'Py переиспользует
+все дерево целиком без вычисления выражений и создания объектов. Это может дать
+колоссальный прирост производительности.
 
-For example, the following screen does not execute any Python or create
-any displayables after the first time it is predicted or shown::
+Например, следующий экран не выполняет код Python и не создает отображаемых объектов после
+первого предсказания или показа::
 
     screen mood_picker():
         hbox:
             xalign 1.0
             yalign 0.0
 
-            textbutton "Happy" action SetVariable("mood", "happy")
-            textbutton "Sad" action SetVariable("mood", "sad")
-            textbutton "Angry" action SetVariable("mood", "angry")
+            textbutton "Радость" action SetVariable("mood", "happy")
+            textbutton "Грусть" action SetVariable("mood", "sad")
+            textbutton "Гнев" action SetVariable("mood", "angry")
 
 .. _const-text:
 
-Const Text
-----------
+Константный текст
+-----------------
 
-When defining text, please note that strings containing new-style text
-substitutions are const::
+При определении текста обратите внимание, что строки, содержащие текстовые подстановки
+нового образца, являются константными::
 
-    $ t = "Hello, world."
+    $ t = "Привет, мир."
     text "[t]"
 
-Supplying a variable containing the text directly is generally not const::
+Прямая передача переменной, содержащей текст, обычно не является константной::
 
-    $ t = "Hello, world."
+    $ t = "Привет, мир."
     text t
 
-Neither is using percent-substitution::
+Как и форматирование через процент::
 
-    $ t = "Hello, world."
+    $ t = "Привет, мир."
     text "%s" % t
 
-Lastly, note that the _ text translation function is pure, so if it contains
-a string, the entire expression is const::
+Наконец, обратите внимание, что функция перевода текста _ является чистой, поэтому
+если она содержит строку, все выражение целиком является константным::
 
-    text _("Your score is: [score]")
+    text _("Ваш счет: [score]")
 
-If a variable containing the text contains substitution, it's necessary to use
-the ``!i`` conversion flag::
+Если переменная, содержащая текст, содержит подстановку, необходимо использовать флаг
+преобразования ``!i``::
 
-    $ who = "Jane"
-    $ t = "Hello, [who]!"
-    text 'Then I told her, "[t!i]"'
+    $ who = "Джейн"
+    $ t = "Привет, [who]!"
+    text 'Затем я сказал ей: "[t!i]"'
 
-Const Functions
-----------------
+Константные функции
+-------------------
 
 .. include:: inc/const
 
-Profiling
-=========
+Профилирование
+==============
 
-Ren'Py supports profiling screen execution through the ``renpy.profile_screen``
-function:
+Ren'Py поддерживает профилирование выполнения экранов с помощью функции ``renpy.profile_screen``:
 
 .. include:: inc/profile_screen
 
 
 .. _const-names:
 
-Const Names
-===========
+Константные имена
+=================
 
-The following names are const by default.
+Следующие имена являются константными по умолчанию.
 
 .. include:: inc/const_vars
 
 
 .. _pure-names:
 
-Pure Names
-==========
+Чистые имена
+============
 
-The following names are both pure and const by default.
+Следующие имена являются одновременно чистыми и константными по умолчанию.
 
 .. include:: inc/pure_vars

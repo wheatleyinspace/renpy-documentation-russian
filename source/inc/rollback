@@ -2,75 +2,57 @@
 
 .. function:: renpy.can_rollback()
     
-    Returns true if we can rollback.
+    Возвращает True, если возможен откат назад.
 
 .. function:: renpy.checkpoint(data=None, *, hard=True)
     
-    Makes the current statement a checkpoint that the user can rollback to. Once
-    this function has been called, there should be no more interaction with the
-    user in the current statement.
+    Делает текущую инструкцию контрольной точкой (чекпоинтом), к которой пользователь может откатиться. После вызова этой функции в текущей инструкции больше не должно происходить взаимодействия с пользователем.
     
-    This will also clear the current screenshot used by saved games.
+    Это также очищает текущий снимок экрана, используемый для сохранений игры.
     
     `data`
-        This data is returned by :func:`renpy.roll_forward_info` when the
-        game is being rolled back.
+        Эти данные возвращаются функцией :func:`renpy.roll_forward_info`, когда в игре выполняется откат вперёд.
     
     `hard`
-        If true, this is a hard checkpoint that rollback will stop at. If false,
-        this is a soft checkpoint that will not stop rollback.
+        Если True, это жесткая контрольная точка, на которой откат остановится. Если False, это мягкая контрольная точка, которая не останавливает откат.
 
 .. function:: renpy.get_identifier_checkpoints(identifier)
     
-    Given a rollback_identifier from a HistoryEntry object, returns the number
-    of checkpoints that need to be passed to :func:`renpy.rollback` to reach
-    that identifier. Returns None of the identifier is not in the rollback
-    history.
+    Принимая `identifier` (идентификатор отката) из объекта HistoryEntry, возвращает количество контрольных точек, которое необходимо передать в :func:`renpy.rollback`, чтобы достичь этого идентификатора. Возвращает None, если идентификатор не найден в истории отката.
 
 .. function:: renpy.in_rollback()
     
-    Returns true if the game has been rolled back.
+    Возвращает True, если игра сейчас находится в состоянии отката.
 
 .. function:: renpy.roll_forward_info()
     
-    When in rollback, returns the data that was supplied to :func:`renpy.checkpoint`
-    the last time this statement executed. Outside of rollback, returns None.
+    В состоянии отката возвращает данные, переданные в :func:`renpy.checkpoint` при последнем выполнении этой инструкции. Вне отката возвращает None.
 
 .. function:: renpy.rollback(force=False, checkpoints=1, defer=False, greedy=True, label=None, abnormal=True)
     
-    Rolls the state of the game back to the last checkpoint.
+    Откатывает состояние игры назад к последней контрольной точке.
     
     `force`
-        If true, the rollback will occur in all circumstances. Otherwise,
-        the rollback will only occur if rollback is enabled in the store,
-        context, and config.
+        Если True, откат будет выполнен при любых обстоятельствах. В противном случае откат произойдёт только в том случае, если откат включён в хранилище, контексте и конфигурации.
     
     `checkpoints`
-        Ren'Py will roll back through this many calls to renpy.checkpoint. It
-        will roll back as far as it can, subject to this condition.
+        Ren'Py выполнит откат назад через указанное число вызовов renpy.checkpoint. Игра откатится назад настолько далеко, насколько это возможно с учётом данного условия.
     
     `defer`
-        If true, the call will be deferred until control returns to the main
-        context.
+        Если True, вызов будет отложен до тех пор, пока управление не вернётся в главный контекст.
     
     `greedy`
-        If true, rollback will finish just after the previous checkpoint.
-        If false, rollback finish just before the current checkpoint.
+        Если True, откат завершится сразу после предыдущей контрольной точки. Если False, откат завершится непосредственно перед текущей контрольной точкой.
     
     `label`
-        If not None, a label that is called when rollback completes.
+        Если не None, метка, которая будет вызвана по завершении отката.
     
     `abnormal`
-        If true, the default, script executed after the transition is run in
-        an abnormal mode that skips transitions that would have otherwise
-        occurred. Abnormal mode ends when an interaction begins.
+        Если True (по умолчанию), скрипт, выполняемый после перехода, запускается в особом режиме, пропускающем переходы, которые иначе бы произошли. Этот режим завершается при начале взаимодействия.
 
 .. function:: renpy.suspend_rollback(flag)
     
-    Rollback will skip sections of the game where rollback has been
-    suspended.
+    Откат будет пропускать участки игры, в которых откат был приостановлен.
     
-    `flag`:
-        When `flag` is true, rollback is suspended. When false,
-        rollback is resumed.
-
+    `flag`
+        Когда `flag` равен True, откат приостанавливается. Когда False — откат возобновляется.

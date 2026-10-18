@@ -1,190 +1,181 @@
 .. _self-voicing:
 
-============
-Self-Voicing
-============
+=================================================
+Голосовое сопровождение интерфейса (Self-Voicing)
+=================================================
 
-Ren'Py supports a self-voicing mode in which a speech synthesizer is used
-to read out text and other interface elements. This is intended to make
-Ren'Py games accessible to the vision impaired.
+Ren'Py поддерживает режим голосового сопровождения (self-voicing), в котором синтезатор
+речи используется для чтения текста и элементов интерфейса вслух. Этот режим предназначен
+для того, чтобы сделать игры на Ren'Py доступными для слабовидящих и незрячих пользователей.
 
-The Self-voicing mode can be toggled by pressing the ``v`` key. Self-voicing
-modes can be selected through the accessibility menu, which can be accessed
-by pressing ``Shift+A``.
+Режим голосового сопровождения можно переключать нажатием клавиши ``v``. Различные режимы
+и параметры доступности можно выбрать через меню специальных возможностей, вызываемое
+комбинацией клавиш ``Shift+A``.
 
-When in the ``Shift+A`` accessibility menu, the ``R`` key resets the self-voicing settings
-to the default values, then enables self-voicing. This can be used to reset the self-voicing
-settings if the user has changed them to a state that makes self-voicing unusable.
+В меню доступности (``Shift+A``) нажатие клавиши ``R`` сбрасывает настройки голосового
+сопровождения к значениям по умолчанию и включает его. Это можно использовать для сброса
+настроек, если пользователь изменил их до состояния, при котором озвучивание перестало работать.
 
-When in self-voicing mode, keyboard navigation is changed so that the
-up and down arrow keys with iterate through all focusable displayables
-on the screen.
+В режиме голосового сопровождения клавиатурная навигация изменяется так, что клавиши
+со стрелками вверх и вниз последовательно перемещают фокус по всем интерактивным
+отображаемым объектам на экране.
 
-When a displayable is focused, Ren'Py will read the text associated with that
-displayable out loud. If no displayable is focused, Ren'Py will read on-screen
-text that cannot be focused. This will generally include dialogue and other
-text that comprises the game.
+Когда отображаемый объект получает фокус, Ren'Py зачитывает вслух связанный с ним текст.
+Если ни один интерактивный объект не сфокусирован, Ren'Py читает отображаемый на экране текст,
+не принимающий фокус. Обычно это диалоги и текст повествования игры.
 
-Speech Synthesis
-----------------
-
-Ren'Py generally uses speech synthesizers provided by the operating system and web browser.
-Linux is the exception - the ``espeak-ng`` command must be installed for self-voicing
-to work on Linux.
-
-The voice may be selected through the accessibility menu, which uses the :func:`renpy.get_tts_voices` function to
-list available voices and :func:`Preference` to set the voice. The precise list of available voices is platform
-and computer dependent.
-
-On most platforms, Ren'Py relies on the operating system to provide speech synthesis
-services. To adjust the speed of speech synthesis and the voice used,
-adjust your platform's speech settings.
-
-Other Modes
+Синтез речи
 -----------
 
-There are several other modes related to self-voicing.
+Обычно Ren'Py использует синтезаторы речи, предоставляемые операционной системой и веб-браузером.
+Исключением является Linux: для работы голосового сопровождения на Linux должна быть
+установлена команда ``espeak-ng``.
 
-Screen Reader
-    Screen Reader mode can be toggled by pressing Shift+V. In screen reader
-    mode, Ren'Py communicates directly with active screen readers (such as
-    NVDA, JAWS, VoiceOver, or Orca) via the Prism library. Announcements are
-    sent simultaneously to speech and refreshable braille displays without
-    clipboard workarounds or audio collisions. If no screen reader is active,
-    it gracefully falls back to modern system speech synthesis.
+Голос можно выбрать через меню специальных возможностей, которое использует функцию
+:func:`renpy.get_tts_voices` для получения списка доступных голосов и действие :func:`Preference`
+для выбора голоса. Точный список доступных голосов зависит от платформы и настроек компьютера.
 
-    If an active screen reader is running when Ren'Py launches, screen reader
-    mode is automatically enabled by default. This behavior can be controlled
-    using :var:`config.auto_screenreader_voicing`.
+На большинстве платформ Ren'Py полагается на службы синтеза речи операционной системы.
+Для настройки скорости речи и используемого голоса измените речевые настройки вашей платформы.
 
-Clipboard
-    Clipboard mode can be toggled by pressing Shift+C. In clipboard
-    mode, the text is copied to the clipboard instead of being played
-    through TTS. This can be with screen readers or other assistive
-    technologies that will present the clipboard contents to the user.
+Другие режимы
+-------------
 
-    It may also be useful for translation software that can read from the
-    clipboard.
+Существует несколько других режимов, связанных с озвучиванием интерфейса:
 
-Debug
-    Debug mode can be toggled by pressing Shift+Alt+V. In debug mode,
-    the text that would be spoken is displayed on the screen, to help
-    with development.
+Программа чтения с экрана (Screen Reader)
+    Режим чтения с экрана можно переключать нажатием Shift+V. В этом режиме Ren'Py
+    напрямую взаимодействует с активными программами экранного доступа (такими как
+    NVDA, JAWS, VoiceOver или Orca) через библиотеку Prism. Речевые уведомления
+    одновременно отправляются в синтезатор речи и на дисплеи Брайля без использования
+    буфера обмена и без конфликтов со звуком игры. Если ни одна программа экранного
+    доступа не активна, движок корректно переключается на стандартный синтез речи ОС.
+
+    Если при запуске игры активна программа экранного доступа, этот режим включается
+    автоматически по умолчанию. Этим поведением можно управлять через
+    :var:`config.auto_screenreader_voicing`.
+
+Буфер обмена (Clipboard)
+    Режим буфера обмена переключается нажатием Shift+C. В этом режиме текст копируется
+    в буфер обмена вместо воспроизведения через TTS. Это можно использовать со сторонними
+    скринридерами или другими ассистивными технологиями.
+
+    Это также полезно для программ машинного перевода «на лету», умеющих считывать текст
+    из буфера обмена.
+
+Отладка (Debug)
+    Режим отладки переключается нажатием Shift+Alt+V. В режиме отладки текст, который
+    был бы озвучен, отображается визуально на экране поверх интерфейса.
 
 
-Creator Concerns
-----------------
+Рекомендации для разработчиков
+------------------------------
 
-Ren'Py's self-voicing works by extracting text from displayables and
-reading it to the player. Ren'Py extracts this text from multiple places.
+Голосовое сопровождение Ren'Py работает путём извлечения текста из отображаемых объектов
+и озвучивания его игроку. Ren'Py извлекает этот текст из нескольких источников:
 
-Text displayables
-    Ren'Py will extract text from a Text displayable, and make it
-    available to be read to the player.
+Текстовые отображаемые объекты
+    Ren'Py извлекает текст из объектов Text и делает его доступным для зачитывания игроку.
 
-Alternative text
-    Alternative text is supplied by a displayable's :propref:`alt` style
-    property. It can also be supplied by instances of the :class:`Action`
-    and :class:`BarValue` classes.
-    Explicitly supplied alternative text takes precedence over text
-    supplied by Actions or BarValues, and both take precedence over
-    text extracted from Text displayables.
+Альтернативный текст
+    Альтернативный текст задаётся свойством стиля :propref:`alt` отображаемого объекта.
+    Он также может предоставляться экземплярами классов :class:`Action` и :class:`BarValue`.
+    Явно заданный альтернативный текст имеет приоритет над текстом, предоставляемым действиями
+    или BarValue, а они оба имеют приоритет над текстом, извлечённым из объектов Text.
 
-    Alternative text is translated using Ren'Py's string translation
-    mechanism. Alternative text takes precedence over text extracted
-    from a displayable and its children, but such child text is made
-    available as the "[text]" string substitution. No other string
-    substitutions are allowed.
+    Альтернативный текст переводится с помощью стандартного механизма строкового перевода Ren'Py.
+    Альтернативный текст имеет приоритет над текстом, извлечённым из отображаемого объекта
+    и его дочерних элементов, однако текст дочерних элементов остаётся доступным через
+    подстановку вида "[text]". Никакие другие строковые подстановки в этом поле не допускаются.
 
-    For example::
+    Например::
 
         screen information(message, planet, badness):
             text message:
                 color color_from_badness(badness)
-                alt "Information for you : [text]. Badness is " + str(badness)
+                alt "Информация для вас : [text]. Уровень опасности " + str(badness)
 
             text "ORIGIN_OF_MESSAGE_{color=#f00}[planet!u]{/color}":
-                alt "Origin of message is " + planet
+                alt "Источник сообщения — " + planet
 
-    In the above example, the ``badness`` and ``planet`` variables
-    cannot be substituted directly using "[badness]". Concatenating
-    it manually is a solution.
+    В приведённом примере переменные ``badness`` и ``planet`` нельзя подставить напрямую
+    через "[badness]". Конкатенация строк в Python является решением.
 
-    Supplying the `who_alt` and `what_alt` parameters to Character
-    sets the alt style property for the character name and body text,
-    respectively. As an example, we define a Character that uses italics
-    to indicate thoughts normally, but explicitly indicates thoughts
-    via self voicing::
+    Передача параметров `who_alt` и `what_alt` функции Character устанавливает свойство стиля
+    alt для имени персонажа и текста реплики соответственно. Например, можно определить
+    персонажа, который в визуальном отображении использует курсив для мыслей, но явно озвучивает
+    их при голосовом сопровождении::
 
-        define thought = Character(None, what_italic=True, what_alt="I think, [text]")
+        define thought = Character(None, what_italic=True, what_alt="Я думаю, [text]")
 
-    In screens, displayables may be given the :scpref:`group_alt` property,
-    which is used to give a group prefix that is spoken the first time a displayable
-    with the same group prefix is focused, but will not be spoken again until a
-    displayable with a different group prefix is focused.
+    В экранах отображаемым объектам можно присвоить свойство :scpref:`group_alt`,
+    задающее префикс группы, который озвучивается при первой фокусировке элемента
+    этой группы, но не повторяется, пока не будет сфокусирован элемент с другим префиксом.
 
-    Displayables may also be given the :scpref:`extra_alt` property, which is spoken
-    when the '?' key is pressed while the displayable is focused. This is intended
-    for more detail information about how a group of controls works.
+    Отображаемым объектам также можно задать свойство :scpref:`extra_alt`, которое озвучивается
+    при нажатии клавиши «?» в момент нахождения объекта в фокусе. Оно предназначено для вывода
+    более подробной справки о том, как работает данный элемент управления.
 
     .. var:: config.auto_image_alt = False
+        :noindex:
 
-        If True, images displayed without an explicit :propref:`alt` style
-        property will be voiced using their image name and attributes.
+        Если True, изображения, показанные без явного свойства стиля :propref:`alt`,
+        будут озвучиваться с использованием их имени и атрибутов.
 
-Descriptive Text
-    Descriptive text is text that is displayed (and spoken) by the narrator if
-    self-voicing is enabled. The text is not displayed if self-voicing is
-    disabled. Self-voicing text uses the :var:`alt` variable, which is defined to
-    be similar to a character.
+Описательный текст
+    Описательный текст — это текст, который отображается (и озвучивается) рассказчиком
+    только в том случае, если голосовое сопровождение включено. Если оно отключено,
+    этот текст не отображается. Описательный текст использует переменную :var:`alt`,
+    которая определена аналогично персонажу.
 
     .. var:: alt = ...
 
-        A character-like object that uses the narrator to speak text if
-        self-voicing is enabled.
+        Объект, подобный Character, который использует рассказчика для произнесения текста,
+        если включено голосовое сопровождение.
 
-    For example::
+    Например::
 
-        e "Hang on, this is gonna be a bumpy ride!"
+        e "Держитесь, поездка будет не из лёгких!"
 
-        alt "And then the sun exploded..."
+        alt "И тут взорвалось солнце..."
 
-        # A complex and exciting cut scene.
+        # Сложная и захватывающая катсцена.
         show event sun_exploding
         pause 10
 
-    There is a variable that controls descriptive text:
+    Переменная, управляющая описательным текстом:
 
     .. var:: config.descriptive_text_character = None
 
-        If not None, this should be a character object that is used to
-        display the descriptive text, instead of the narrator.
+        Если не None, объект персонажа, используемый для отображения описательного текста
+        вместо рассказчика.
 
-Text Tags
-    There are two text tags that are useful for self-voicing. The :tt:`alt` tag is to provide alternative text that is heard
-    but not seen, and the :tt:`noalt` tag lets you provide text that is seen but not heard. For example::
+Текстовые теги
+    Для голосового сопровождения предусмотрены два текстовых тега. Тег :tt:`alt` позволяет
+    задать альтернативный текст, который озвучивается, но не отображается на экране.
+    Тег :tt:`noalt` позволяет задать текст, который отображается на экране, но не озвучивается.
+    Например::
 
-        p "My name is {noalt}Cholmondeley{/noalt}{alt}Chumley{/alt}."
+        p "Меня зовут {noalt}Шолмондели{/noalt}{alt}Чамли{/alt}."
 
-The :var:`config.tts_substitutions` variable can be used to substitute
-words in the text being spoken, to better control pronunciation. The
-voice can be selected through the accessibility menu (Shift+A), as can its speed. The voice is stored
-in :var:`preferences.tts_voice`. The speed of self-voicing is stored in :var:`preferences.tts_speed`.
+Переменная :var:`config.tts_substitutions` может использоваться для автоматической подстановки
+слов в озвучиваемом тексте, помогая скорректировать правильное произношение. Голос и скорость
+речи настраиваются через меню специальных возможностей (Shift+A). Выбранный голос сохраняется
+в :var:`preferences.tts_voice`, а скорость — в :var:`preferences.tts_speed`.
 
 .. var:: config.auto_screenreader_voicing = True
+    :noindex:
 
-    If True, Ren'Py will automatically enable screen reader voicing on launch
-    if an active screen reader (such as NVDA, JAWS, VoiceOver, or Orca) is
-    detected.
+    Если True, Ren'Py автоматически включит режим чтения с экрана при запуске, если обнаружена
+    активная программа экранного доступа (такая как NVDA, JAWS, VoiceOver или Orca).
 
-A self-voicing debug mode can be enabled by typing Shift+Alt+V. This will
-display the text that would be voiced on the screen for development
-purposes.
+Режим отладки голосового сопровождения можно активировать нажатием Shift+Alt+V. В этом режиме
+на экране будет отображаться текст, который был бы передан синтезатору речи.
 
 
-Python
-------
+Функции Python
+--------------
 
-The following functions are provided by the self-voicing system:
+Следующие функции предоставляются системой голосового сопровождения:
 
 .. include:: inc/self_voicing

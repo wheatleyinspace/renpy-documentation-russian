@@ -2,46 +2,41 @@
 
 .. function:: renpy.check_text_tags(s, check_unclosed=False)
     
-    Checks the text tags in s for correctness. Returns an error string if there is
-    an error, or None if there is no error.
+    Проверяет текстовые теги в `s` на корректность. Возвращает строку ошибки при её наличии
+    или None, если ошибок не обнаружено.
 
 .. function:: renpy.error(msg)
     
-    Reports `msg`, a string, as an error for the user. This is logged as a
-    parse or lint error when approprate, and otherwise it is raised as an
-    exception.
+    Сообщает пользователю об ошибке `msg` (строка). При необходимости регистрируется
+    как ошибка синтаксического анализа (parse) или линтинга (lint), в противном случае
+    возбуждается как исключение.
 
 .. function:: renpy.try_compile(where, expr, additional=None)
     
-    Tries to compile an expression, and writes an error to lint.txt if
-    it fails.
+    Пытается скомпилировать выражение и записывает ошибку в lint.txt в случае неудачи.
     
     `where`
-        A string giving the location the expression is found. Used to
-        generate an error message of the form "Could not evaluate `expr`
-        in `where`."
+        Строка, указывающая местонахождение выражения. Используется для формирования
+        сообщения об ошибке вида «Could not evaluate `expr` in `where`.»
     
     `expr`
-        The expression to try compiling.
+        Выражение для компиляции.
     
     `additional`
-        If given, an additional line of information that is added to the
-        error message.
+        Если указано, дополнительная строка с информацией, которая добавляется
+        к сообщению об ошибке.
 
 .. function:: renpy.try_eval(where, expr, additional=None)
     
-    Tries to evaluate an expression, and writes an error to lint.txt if
-    it fails.
+    Пытается вычислить выражение и записывает ошибку в lint.txt в случае неудачи.
     
     `where`
-        A string giving the location the expression is found. Used to
-        generate an error message of the form "Could not evaluate `expr`
-        in `where`."
+        Строка, указывающая местонахождение выражения. Используется для формирования
+        сообщения об ошибке вида «Could not evaluate `expr` in `where`.»
     
     `expr`
-        The expression to try evaluating.
+        Выражение для вычисления.
     
     `additional`
-        If given, an additional line of information that is added to the
-        error message.
-
+        Если указано, дополнительная строка с информацией, которая добавляется
+        к сообщению об ошибке.

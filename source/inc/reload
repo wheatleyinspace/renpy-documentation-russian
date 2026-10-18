@@ -2,19 +2,18 @@
 
 .. function:: renpy.get_autoreload()
     
-    Gets the autoreload flag.
+    Возвращает значение флага автоматической перезагрузки.
 
 .. function:: renpy.reload_script()
     
-    Causes Ren'Py to save the game, reload the script, and then load the
-    save.
+    Заставляет Ren'Py сохранить текущую игру, перезагрузить сценарий и затем
+    загрузить сохранение.
     
-    This should only be called during development. It works on Windows, macOS,
-    and Linux, but may not work on other platforms.
+    Функцию следует вызывать только в процессе разработки. Она работает на Windows,
+    macOS и Linux, но может не поддерживаться на других платформах.
 
 .. function:: renpy.set_autoreload(autoreload)
     
-    Sets the autoreload flag, which determines if the game will be
-    automatically reloaded after file changes. Autoreload will not be
-    fully enabled until the game is reloaded with :func:`renpy.reload_script`.
-
+    Устанавливает флаг автоперезагрузки, определяющий, будет ли игра автоматически
+    перезагружаться при изменении файлов проекта. Автоперезагрузка не вступит в
+    силу окончательно, пока игра не будет перезагружена с помощью :func:`renpy.reload_script`.

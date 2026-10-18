@@ -1,49 +1,42 @@
-Template Projects
-=================
+Шаблоны проектов
+================
 
-It's possible to create a template project that can be used to create
-new projects. This can be used to make it easy for creators to begin
-making a game with, for example, a gui you develop, rather than the
-default gui that comes with Ren'Py.
+В Ren'Py можно создавать шаблоны проектов, которые затем используются для создания
+новых игр. Это позволяет разработчикам легко начинать создание игры, например,
+с вашей собственной темой интерфейса (GUI) вместо стандартного интерфейса Ren'Py.
 
-If at least one template project is present on a creator's computer,
-when creating a new game they will be given the option to select a
-template project. If they do, the template project will be copied into
-the new project, and the following changes will be made:
+Если на компьютере разработчика присутствует хотя бы один шаблон проекта, при создании
+новой игры лаунчер предложит выбрать шаблон. При выборе шаблона его содержимое копируется
+в новый проект со следующими автоматическими изменениями:
 
-* The :var:`config.name`, :var:`config.save_directory`, and
-  :var:`build.name` variables will be set to the name of
-  the new project.
+* Переменные :var:`config.name`, :var:`config.save_directory` и :var:`build.name`
+  будут установлены в имя нового проекта.
 
-* The tl directory will be removed, and replaced with default translations
-  taken from the launcher.
+* Каталог перевода ``tl`` удаляется и заменяется стандартными переводами из лаунчера.
 
-* If translatable strings or comments are found matching those in the launcher,
-  the translations will be copied into the new project.
+* Если в коде найдены переводимые строки или комментарии, совпадающие со строками лаунчера,
+  их переводы копируются в новый проект.
 
-This usually makes an acceptable starting point for new projects.
+Это формирует готовую отправную точку для новых проектов.
 
 
-Creating a Template Project
----------------------------
+Создание шаблона проекта
+------------------------
 
-To create a template project, you need to create a Ren'Py project, then
-add a project.json file to it. This file should contain the following
-text::
+Чтобы создать шаблон проекта, создайте обычный проект Ren'Py, а затем добавьте в него
+файл :file:`project.json`. Этот файл должен содержать следующий текст::
 
     { "type" : "template" }
 
-Save it, then refresh the launcher, and you should be able to use
-your template.
+Сохраните файл и нажмите «Обновить» в лаунчере — после этого шаблон станет доступен для выбора.
 
 
-Distributing a Template Project
+Распространение шаблона проекта
 -------------------------------
 
-You can distribute a template project by zipping it up manually. (You
-should not use the Distribute command.) It might make sense to delete
-the ``game/saves`` and ``game/cache`` directories before zipping it
-up, though this is not required.
+Распространять шаблон проекта можно путём обычной ручной упаковки в ZIP-архив (команду
+«Построить дистрибутивы» использовать не следует). Перед архивацией рекомендуется удалить
+каталоги ``game/saves`` и ``game/cache``, хотя это и не обязательно.
 
-The end user can unzip the template project into their projects
-directory, then refresh the launcher to make it available.
+Конечный пользователь может распаковать архив с шаблоном в свой каталог проектов,
+после чего нажать «Обновить» в лаунчере, чтобы шаблон стал доступен.

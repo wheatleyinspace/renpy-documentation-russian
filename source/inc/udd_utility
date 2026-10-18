@@ -2,69 +2,65 @@
 
 .. function:: renpy.displayable(d: DisplayableLike, scope: dict[str, typing.Any] | None = None) -> Displayable
     
-    This takes `d`, which may be a displayable object or a string. If it's
-    a string, it converts that string into a displayable using the usual
-    rules.
+    Принимает `d`, который может быть отображаемым объектом или строкой. Если это
+    строка, она преобразуется в отображаемый объект по обычным правилам.
 
 .. function:: renpy.end_interaction(value)
     
-    If `value` is not None, immediately ends the current interaction, causing
-    the interaction to return `value`. If `value` is None, does nothing.
+    Если `value` не None, немедленно завершает текущее взаимодействие, в результате чего
+    взаимодействие возвращает `value`. Если `value` равно None, ничего не делает.
     
-    This can be called from inside the render and event methods of a
-    creator-defined displayable.
+    Может вызываться изнутри методов render и event пользовательских отображаемых объектов.
 
 .. function:: renpy.is_pixel_opaque(d, width, height, st, at, x, y)
     
-    Returns whether the pixel at (x, y) is opaque when this displayable
-    is rendered by ``renpy.render(d, width, height, st, at)``.
+    Возвращает, является ли пиксель в позиции (x, y) непрозрачным, когда этот отображаемый объект
+    отрисован с помощью ``renpy.render(d, width, height, st, at)``.
 
 .. function:: renpy.load_image(im) -> 'renpy.display.render.Render'
     
-    Loads the image manipulator `im` using the image cache, and returns a render.
+    Загружает манипулятор изображения `im` с использованием кэша изображений и возвращает объект render.
 
 .. function:: renpy.load_rgba(data: bytes, size: tuple[int, int]) -> Any
     
-    Loads the image data `bytes` into a texture of size `size`, and return it.
+    Загружает графические данные `data` в текстуру размера `size` и возвращает её.
     
     `data`
-        Should be a bytes object containing the image data in RGBA8888 order.
+        Объект bytes, содержащий данные изображения в формате RGBA8888.
 
 .. function:: renpy.load_surface(im) -> Surface
     
-    Loads the image manipulator `im` using the image cache, and returns a pygame Surface.
+    Загружает манипулятор изображения `im` с использованием кэша изображений и возвращает pygame Surface.
 
 .. function:: renpy.map_event(ev, keysym)
     
-    Returns true if the pygame event `ev` matches `keysym`
+    Возвращает True, если событие pygame `ev` соответствует `keysym`.
     
     `keysym`
-        One of:
+        Одно из следующих значений:
     
-        * The name of a keybinding in :var:`config.keymap`.
-        * A keysym, as documented in the :ref:`keymap` section.
-        * A list containing one or more keysyms.
+        * Имя привязки клавиши в :var:`config.keymap`.
+        * Символ клавиши (keysym), как описано в разделе :ref:`keymap`.
+        * Список, содержащий один или несколько символов клавиш (keysyms).
 
 .. function:: renpy.render(d, width, height, /, st, at)
     
-    Causes a displayable to be rendered, and a renpy.Render object to
-    be returned.
+    Вызывает отрисовку отображаемого объекта и возвращает объект renpy.Render.
     
     `d`
-        The displayable to render.
+        Отображаемый объект для отрисовки.
     
     `width`, `height`
-        The width and height available for the displayable to render into.
+        Ширина и высота, доступные отображаемому объекту для отрисовки.
     
     `st`, `at`
-        The shown and animation timebases.
+        Временные шкалы показа (shown) и анимации (animation).
     
-    Renders returned by this object may be cached, and should not be modified
-    once they have been retrieved.
+    Объекты Render, возвращаемые этой функцией, могут кэшироваться, и их не следует изменять
+    после получения.
 
 .. function:: renpy.timeout(seconds)
     
-    Causes an event to be generated before `seconds` seconds have elapsed.
-    This ensures that the event method of a user-defined displayable will be
-    called.
-
+    Вызывает генерацию события до истечения `seconds` секунд.
+    Это гарантирует, что метод event пользовательского отображаемого объекта
+    будет вызван.

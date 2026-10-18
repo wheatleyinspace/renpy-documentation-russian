@@ -2,72 +2,63 @@
 
 .. function:: achievement.Sync()
     
-    An action that calls achievement.sync(). This is only sensitive if
-    achievements are out of sync.
+    Экранное действие, вызывающее achievement.sync(). Кнопка с этим действием активна,
+    только если достижения рассинхронизированы.
 
 .. function:: achievement.clear(name)
     
-    Clears the achievement with `name`.
+    Сбрасывает достижение с именем `name`.
 
 .. function:: achievement.clear_all()
     
-    Clears all achievements.
+    Сбрасывает все достижения.
 
 .. function:: achievement.get_progress(name)
     
-    Returns the current progress towards the achievement identified
-    with `name`, or 0 if no progress has been registered for it or if
-    the achievement is not known.
+    Возвращает текущий прогресс достижения `name` или 0, если прогресс
+    не был зарегистрирован либо если достижение неизвестно.
 
 .. function:: achievement.grant(name)
     
-    Grants the achievement with `name`, if it has not already been
-    granted.
+    Выдаёт игроку достижение с именем `name`, если оно ещё не было получено.
 
 .. function:: achievement.has(name)
     
-    Returns true if the player has been granted the achievement with
-    `name`.
+    Возвращает True, если игрок уже получил достижение `name`.
 
 .. function:: achievement.progress(name, complete)
     
-    Reports progress towards the achievement with `name`, if that
-    achievement has not been granted. The achievement must be defined
-    with a completion amount.
+    Сообщает о прогрессе в получении достижения `name`, если оно ещё не было получено.
+    Достижение должно быть зарегистрировано со значением завершения (stat_max).
     
     `name`
-        The name of the achievement. This should be the name of the
-        achievement, and not the stat.
+        Имя достижения. Это должно быть имя достижения, а не название характеристики (stat).
     
     `complete`
-        An integer giving the number of units completed towards the
-        achievement.
+        Целое число, указывающее количество единиц прогресса по отношению к достижению.
 
 .. function:: achievement.register(name, **kwargs)
     
-    Registers an achievement. Achievements are not required to be
-    registered, but doing so allows one to pass information to the
-    backends.
+    Регистрирует достижение. Регистрация достижений не является строго обязательной,
+    но позволяет передавать информацию бэкендам (например, Steam).
     
     `name`
-        The name of the achievement to register.
+        Имя регистрируемого достижения.
     
-    The following keyword parameters are optional.
+    Следующие именованные параметры являются необязательными:
     
     `steam`
-        The name to use on steam. If not given, defaults to `name`.
+        Имя достижения для использования в Steam. Если не указано, по умолчанию равно `name`.
     
     `stat_max`
-        The integer value of the stat at which the achievement unlocks.
+        Целочисленное значение характеристики, при достижении которого разблокируется достижение.
     
     `stat_modulo`
-        If the progress modulo `stat_max` is 0, progress is displayed
-        to the user. For example, if stat_modulo is 10, progress will
-        be displayed to the user when it reaches 10, 20, 30, etc. If
-        not given, this defaults to 0.
+        Если значение прогресса по модулю `stat_max` равно 0, прогресс отображается
+        пользователю. Например, если stat_modulo равен 10, прогресс будет отображаться
+        пользователю при достижении 10, 20, 30 и т. д. По умолчанию 0.
 
 .. function:: achievement.sync()
     
-    Synchronizes registered achievements between local storage and
-    other backends. (For example, Steam.)
-
+    Синхронизирует зарегистрированные достижения между локальным хранилищем и
+    другими бэкендами (например, Steam).

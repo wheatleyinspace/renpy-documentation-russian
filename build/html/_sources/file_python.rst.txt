@@ -1,14 +1,17 @@
-File Access
-===========
+.. _file-python:
 
-These Python functions allow you to access asset files, which may be found
-in the game directory, RPA archives, or as Android assets.
+================
+Доступ к файлам
+================
+
+Эти функции Python предоставляют доступ к файлам ресурсов игры, которые могут
+находиться в каталоге game, в архивах RPA или в ресурсах Android (assets).
 
 .. include:: inc/file
 
-Rarely Used
------------
+Редко используемые функции
+--------------------------
 
-These functions are used more rarely.
+Эти функции используются реже.
 
 .. include:: inc/file_rare

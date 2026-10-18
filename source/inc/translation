@@ -2,21 +2,22 @@
 
 .. function:: renpy.mark_translation_seen(tlid: str) -> None
     
-    Marks the translation with the given tlid as seen.
+    Помечает перевод с указанным идентификатором `tlid` как просмотренный.
+    
     `tlid`
-        A string giving the translation id.
+        Строка с идентификатором перевода.
 
 .. function:: renpy.mark_translation_unseen(tlid: str) -> None
     
-    Marks the translation with the given tlid as not seen.
+    Помечает перевод с указанным идентификатором `tlid` как непросмотренный.
     
     `tlid`
-        A string giving the translation id.
+        Строка с идентификатором перевода.
 
 .. function:: renpy.seen_translation(tlid: str) -> bool
     
-    Returns True if the translation with the given tlid has been seen at least once.
+    Возвращает True, если перевод с указанным идентификатором `tlid` был просмотрен
+    хотя бы один раз.
     
     `tlid`
-        A string giving the translation id.
-
+        Строка с идентификатором перевода.

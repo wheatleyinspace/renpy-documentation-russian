@@ -1,18 +1,19 @@
-Splashscreen and Presplash
-==========================
+Заставка (Splashscreen) и предзаставка (Presplash)
+==================================================
 
+.. _splashscreen:
 .. _adding-a-splashscreen:
 
-Adding a Splashscreen
----------------------
-A splash screen is an image or movie that appears when the game is starting up
-and before it goes to the menu. Usually these are logos or intro videos. The
-"splashscreen" label automatically plays before the main menu. However, the same
-code applies to a splashscreen located anywhere in your game under a different
-label.
+Добавление заставки (Splashscreen)
+----------------------------------
 
-To add a textual splashscreen to your game, insert code like the below anywhere in
-your script files (as long as it is not itself in a block)::
+Заставка (splashscreen) — это изображение или видеоролик, который отображается при запуске
+игры перед переходом в главное меню. Обычно это логотипы студии или вступительные ролики.
+Метка «splashscreen» автоматически выполняется перед показом главного меню. Однако тот же
+код применим и к заставкам, расположенным в любом месте вашей игры под другой меткой.
+
+Чтобы добавить текстовую заставку в игру, вставьте приведённый ниже код в любое место ваших
+файлов скрипта (при условии, что он не находится внутри другого блока)::
 
     label splashscreen:
         scene black
@@ -26,8 +27,7 @@ your script files (as long as it is not itself in a block)::
 
         return
 
-Here's another example of a splashscreen, this time using an image and
-sound::
+Вот ещё один пример заставки, на этот раз с использованием изображения и звука::
 
     image splash = "splash.png"
 
@@ -45,7 +45,7 @@ sound::
 
         return
 
-And finally, with a movie file::
+И, наконец, пример с видеофайлом::
 
     label splashscreen:
 
@@ -55,92 +55,84 @@ And finally, with a movie file::
 
 .. _presplash:
 
-Adding a Presplash
-------------------
+Добавление предзаставки (Presplash)
+-----------------------------------
 
-A presplash is an image shown while Ren'py is reading the scripts and
-launching the game. To show such and image while the engine is starting up,
-create an image file named :file:`presplash.png`, :file:`presplash.jpg`,
-:file:`presplash.webp`, or :file:`presplash.avif` and save it into the game directory.
+Предзаставка (presplash) — это изображение, показываемое в то время, пока Ren'Py считывает
+скрипты и инициализирует игру. Чтобы отобразить такое изображение во время запуска движка,
+создайте файл изображения с именем :file:`presplash.png`, :file:`presplash.jpg`,
+:file:`presplash.webp` или :file:`presplash.avif` и сохраните его в каталоге игры (директории game).
 
-presplash.png (or .jpg, .webp, .avif)
-    The image that's used when the game is loading.
+presplash.png (или .jpg, .webp, .avif)
+    Изображение, отображаемое при загрузке игры.
 
-This will only work on computer platforms, not on android, ios or web.
-For the android platform, see :ref:`android-presplash`, and for the web,
-see :ref:`Web Presplash <web-presplash>`.
+Это работает только на компьютерных платформах (настольных ОС), но не на Android, iOS или Web.
+Инструкции для платформы Android см. в разделе :ref:`android-presplash`, а для Web —
+в разделе :ref:`Web Presplash <web-presplash>`.
 
-The :var:`config.minimum_presplash_time` variable sets a minimum time the
-presplash is shown for.
+Переменная :var:`config.minimum_presplash_time` задаёт минимальное время отображения предзаставки.
 
-Adding a Progress Bar
----------------------
+Добавление индикатора прогресса загрузки
+----------------------------------------
 
-Instead of a static image, it is also possible to show a progress bar indicating
-the progress until the engine has loaded. This replaces the regular presplash image
-and will automatically take precedence if both are supplied.
+Вместо статичного изображения также можно отобразить индикатор выполнения (progress bar),
+показывающий прогресс загрузки движка. Он заменяет обычное изображение presplash
+и автоматически получает приоритет, если предоставлены оба варианта.
 
-The progress bar is themeable and requires you to supply two files in either
-PNG, JPG, or WEBP format:
+Индикатор выполнения поддерживает стилизацию и требует наличия двух файлов в формате
+PNG, JPG, WEBP или AVIF:
 
-presplash_background.png (or .jpg, .webp, .avif)
-    The background image of the progress bar. This is shown in its entirety during
-    startup, so it can be used to provide any kind of background for the progress
-    bar, i.e. by adding a border or any other solid background.
-    This should always be completely opaque.
+presplash_background.png (или .jpg, .webp, .avif)
+    Фоновое изображение индикатора прогресса. Оно отображается целиком во время запуска,
+    поэтому его можно использовать для создания любого фона (например, рамки или сплошной подложки).
+    Оно всегда должно быть полностью непрозрачным.
 
-presplash_foreground.png (or .jpg, .webp, .avif)
-    The foreground image of the progress bar. This is revealed from left to right
-    during the loading sequence. This should be used to provide the look of the
-    actual progress bar.
-    This may contain transparency.
+presplash_foreground.png (или .jpg, .webp, .avif)
+    Передний план (заполняющаяся часть) индикатора прогресса. Оно проявляется слева направо
+    по мере загрузки. Оно определяет внешний вид самой полосы прогресса.
+    Может содержать прозрачность.
 
-The way this works is that Ren'Py will first show :file:`presplash_background.png` and
-subsequently will render :file:`presplash_foreground.png` on top, revealing it from
-left to right as the loading progresses.
+Ren'Py сначала отображает :file:`presplash_background.png`, а затем поверх него отрисовывает
+:file:`presplash_foreground.png`, раскрывая его слева направо по мере процесса загрузки.
 
-The theming of the bar is completely up to you, but you can find two examples of
-how things could look below:
+Оформление полосы загрузки остаётся полностью на ваше усмотрение. Ниже приведены два примера:
 
 .. ifconfig:: renpy_figures
 
     .. figure:: presplash/presplash_background_1.png
         :width: 100%
 
-        An example of how the progress bar background could look.
+        Пример фона полосы прогресса.
 
     .. figure:: presplash/presplash_foreground_1.png
         :width: 100%
 
-        An example of how the progress bar foreground could look.
+        Пример переднего плана полосы прогресса.
 
     .. figure:: presplash/presplash_background_2.png
         :width: 100%
 
-        A slightly more elaborate example of how the progress bar background
-        could look.
+        Более сложный пример фона полосы прогресса.
 
     .. figure:: presplash/presplash_foreground_2.png
         :width: 100%
 
-        A slightly more elaborate example of how the progress bar foreground
-        could look.
+        Более сложный пример переднего плана полосы прогресса.
 
-Transparent Presplash
----------------------
+Прозрачная предзаставка (Transparent Presplash)
+-----------------------------------------------
 
-If the top-left pixel of the presplash background image is transparent, the
-presplash window will be transparent as well. 1-bit transparency is used,
-with pixels with 0 alpha being transparent, and all other pixels being
-opaque.
+Если верхний левый пиксель фонового изображения предзаставки прозрачен, само окно предзаставки
+также будет прозрачным. Используется 1-битная прозрачность: пиксели со значением альфа 0 считаются
+прозрачными, а все остальные — непрозрачными.
 
 
-Mobile and Web Presplash Screens
---------------------------------
+Экраны предзаставки для мобильных платформ и Web
+------------------------------------------------
 
-The Android, iOS, and Web platforms have their own presplash screens. These
-are documented elsewhere:
+Платформы Android, iOS и Web используют собственные экраны предзаставки. Они описаны
+в соответствующих разделах документации:
 
-* Android :ref:`android-presplash`
-* iOS :ref:`ios-storyboard`
-* Web :ref:`web-presplash`
+* Android: :ref:`android-presplash`
+* iOS: :ref:`ios-storyboard`
+* Web: :ref:`web-presplash`

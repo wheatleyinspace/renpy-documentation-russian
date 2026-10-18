@@ -2,6 +2,4 @@
 
 .. function:: renpy.jump(label)
     
-    Causes the current statement to end, and control to jump to the given
-    label.
-
+    Завершает выполнение текущей инструкции и передаёт управление на указанную метку `label`.

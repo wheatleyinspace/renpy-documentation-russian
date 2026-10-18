@@ -1,166 +1,157 @@
-Environment Variables
-=====================
+.. _environment-variables:
 
-Ren'Py accepts a number of environment variables that influence its behavior.
-These environment variables may disappear or change between Ren'Py releases.
+====================
+Переменные окружения
+====================
 
-The following environment variables control the behavior of Ren'Py:
+Ren'Py поддерживает ряд переменных окружения, влияющих на его поведение и работу подсистем.
+Набор этих переменных и их специфика могут изменяться между релизами Ren'Py.
+
+Поведение движка настраивается с помощью следующих переменных окружения:
 
 
 .. envvar:: RENPY_DEBUG_SOUND
 
-    If set, Ren'Py will generate exceptions when audio errors occur.
+    Если переменная задана, Ren'Py будет возбуждать исключения при возникновении любых ошибок воспроизведения звука.
 
 .. envvar:: RENPY_DISABLE_JOYSTICK
 
-    If set, joystick detection is disabled. Use this if a faulty joystick is
-    causing Ren'Py to advance when not desired.
+    Если переменная задана, автоопределение джойстиков и игровых контроллеров отключается. Используйте этот параметр,
+    если неисправный геймпад самопроизвольно перелистывает реплики диалога.
 
 .. envvar:: RENPY_DISABLE_FULLSCREEN
 
-    If set, Ren'Py will refuse to go into fullscreen mode.
+    Если переменная задана, Ren'Py блокирует возможность переключения в полноэкранный режим.
 
 .. envvar:: RENPY_DISABLE_SOUND
 
-    This prevents sound playback from occurring. If this variable contains
-    "pss", sound playback will be disabled.
+    Отключает вывод звука. Если значение переменной содержит подстроку «pss», воспроизведение звука полностью блокируется.
 
 .. envvar:: RENPY_DRAWABLE_RESOLUTION_TEXT
 
-    If set to 0, Ren'Py will not use draw text at the screen's resolution.
+    Если установлено значение 0, Ren'Py не будет отрисовывать текст в физическом разрешении экрана (текст будет рендериться в виртуальном разрешении игры).
 
 .. envvar:: RENPY_EDIT_PY
 
-    The path to an .edit.py file telling Ren'Py how to invoke a text editor.
-    See :doc:`editor` for more information.
+    Путь к файлу :file:`.edit.py`, определяющему класс интеграции с текстовым редактором.
+    Подробнее см. раздел :doc:`editor`.
 
 .. envvar:: RENPY_GLSL_VERSION
 
-    Forces the GLSL dialect Ren'Py emits shaders in. 300 and 330 select the
-    modern dialect and 100 and 120 the legacy one, emitted as the version the
-    platform uses. When not set, Ren'Py will choose the dialect from what the
-    OpenGL context reports supporting.
+    Принудительно задаёт диалект GLSL, на котором Ren'Py генерирует шейдеры. Значения 300 и 330 активируют современный
+    диалект, а 100 и 120 — устаревший (с выводом в синтаксисе версии, принятой на целевой платформе). Если переменная не задана,
+    Ren'Py выбирает диалект автоматически на основе отчёта контекста OpenGL.
 
 .. envvar:: RENPY_GL_ENVIRON
 
-    Sets the OpenGL texture environment.
+    Задаёт текстурное окружение OpenGL.
 
 .. envvar:: RENPY_GL_RTT
 
-    Sets the OpenGL render-to-texture method.
+    Задаёт используемый метод рендеринга в текстуру (render-to-texture) в OpenGL.
 
 .. envvar:: RENPY_GL_VSYNC
 
-    This determines if Ren'Py will attempt to synchronize with the display's
-    vertical refresh. (This prevents tearing, at the cost of potentially
-    lowering framerate.) Set this to "0" to disable synchronization, or
-    "1" to sync to every vertical refresh.
+    Определяет, пытается ли Ren'Py синхронизировать частоту отрисовки кадров с вертикальной развёрткой монитора (VSync).
+    Синхронизация устраняет разрывы кадров ценой возможного снижения FPS. Установите значение «0» для отключения
+    синхронизации или «1» для синхронизации с каждым обновлением экрана.
 
 .. envvar:: RENPY_LANGUAGE
 
-    If set, gives the translation language Ren'Py will use.
+    Задаёт язык перевода, который Ren'Py должен активировать при запуске.
 
 .. envvar:: RENPY_LESS_MEMORY
 
-    This causes Ren'Py to reduce its memory usage, in exchange for reductions
-    in speed.
+    Заставляет Ren'Py минимизировать объём используемой оперативной памяти ценой снижения общей производительности.
 
 .. envvar:: RENPY_LESS_MOUSE
 
-    This causes Ren'Py to disable the mouse at all times.
+    Полностью отключает курсор и обработку событий мыши.
 
 .. envvar:: RENPY_LESS_PAUSES
 
-    This causes Ren'Py to disable the pauses created by the {p} and {w}
-    text tags.
+    Отключает принудительные задержки, создаваемые текстовыми тегами диалога ``{p}`` и ``{w}``.
 
 .. envvar:: RENPY_LESS_UPDATES
 
-    This causes Ren'Py to reduce the number of screen updates that occur.
+    Снижает частоту обновления и перерисовки экранов.
 
 .. envvar:: RENPY_LOG_EVENTS
 
-    If set, Ren'Py will log pygame-style events to the log.txt file. This will hurt performance, but might be
-    useful for debugging certain problems.
+    Если переменная задана, Ren'Py протоколирует события в стиле pygame в файл журнала :file:`log.txt`.
+    Это замедляет игру, однако крайне полезно при отладке проблем со считыванием ввода.
 
 .. envvar:: RENPY_MULTIPERSISTENT
 
-    The path to a directory where Ren'Py stores multipersistent data.
+    Путь к каталогу файловой системы, в котором Ren'Py хранит мультипостоянные данные (multipersistent).
 
 .. envvar:: RENPY_NO_STEAM
 
-    If present in the environment, Ren'Py will not initialize Steamworks.
+    Если переменная присутствует в среде, Ren'Py пропускает инициализацию библиотеки Steamworks.
 
 .. envvar:: RENPY_OPEN_FILE_ENCODING
 
-    Sets the default encoding for :func:`renpy.open_file`. This is mostly
-    used to help Python 2 games run on Python 3 based versions of Ren'Py
-    try "utf-8" and "latin-1" to see if it helps a those games run. (But
-    remember to set this back for newer games.)
+    Задаёт кодировку по умолчанию для функции :func:`renpy.open_file`. В основном используется при портировании
+    и запуске старых игр с Python 2 на современных версиях Ren'Py с Python 3: попробуйте значения «utf-8» или «latin-1»,
+    если игра падает при чтении текстовых ресурсов (не забудьте вернуть исходное значение для новых проектов).
 
 .. envvar:: RENPY_PATH_TO_SAVES
 
-    The path to a directory where Ren'Py stores it's saves. The actual saves
-    for a game are stored in a game-specific path underneath this directory.
+    Путь к базовому каталогу, в котором Ren'Py сохраняет файлы игрового процесса. Файлы конкретной игры сохраняются
+    в подкаталоге с именем проекта внутри этого пути.
 
 .. envvar:: RENPY_SCREENSHOT_PATTERN
 
-    A pattern used to create screenshot filenames. It should contain a single
-    %d substitution in it. For example, setting this to "screenshot%04d.jpg" will
-    cause Ren'Py to write out jpeg screenshots rather than the usual pngs.
-
-    By default, this is relative to the game's base directory. An absolute path can
-    be used to place screenshots elsewhere on the filesystem.
+    Шаблон формата имени для создаваемых снимков экрана. Должен содержать ровно одну подстановку ``%d``. Например,
+    значение "screenshot%04d.jpg" заставит Ren'Py сохранять снимки экрана в формате JPEG вместо стандартного PNG.
+    
+    По умолчанию путь рассчитывается относительно базового каталога игры. Для сохранения скриншотов в произвольную
+    папку на диске можно указать абсолютный путь.
 
 .. envvar:: RENPY_SEARCHPATH
 
-    If set, a double-colon (\:\:) separated list of additional paths that
-    are added to :var:`config.searchpath`.
+    Список дополнительных путей поиска ресурсов, разделённых двойным двоеточием (``::``), добавляемых
+    к переменной :var:`config.searchpath`.
 
 .. envvar:: RENPY_SIMPLE_EXCEPTIONS
 
-    When set, this disables Ren'Py's graphical exception handling.
+    Если переменная задана, графическое окно отчёта об ошибках Ren'Py отключается, заменяясь простым выводом.
 
 .. envvar:: RENPY_SKIP_MAIN_MENU
 
-    When set, skips the main menu.
+    Если переменная задана, игра пропускает отображение главного меню и сразу переходит к сценарию.
 
 .. envvar:: RENPY_SKIP_SPLASHSCREEN
 
-    When set, skips the splashscreen.
+    Если переменная задана, игра пропускает выполнение вступительной заставки (splashscreen).
 
 .. envvar:: RENPY_SOUND_BUFSIZE
 
-    This controls the sound buffer size. Values larger than the default (2048)
-    can prevent sound from skipping, at the cost of a larger delay from when a
-    sound is invoked to when it is played.
+    Управляет размером аудиочипа/буфера звука. Значения больше стандартного (2048) помогают устранить заикание
+    и прерывания звука на проблемных звуковых картах ценой некоторого увеличения задержки между запуском звука
+    и моментом его фактического воспроизведения.
 
 .. envvar:: RENPY_TEST_VC_REVISION
 
-    This is used as the default value of :var:`_test.vc_revision`, part of the
-    automated testing framework.
+    Используется как значение по умолчанию для переменной :var:`_test.vc_revision` во фреймворке автоматизированного тестирования.
 
 .. envvar:: RENPY_TIMEWARP
 
-    This can be set to make time run faster or slower. For example, setting
-    a timewarp of 0.5 makes things run at half-speed, while a timewarp of
-    2.0 makes everything run at twice normal speed.
+    Позволяет замедлить или ускорить течение игрового времени. Например, значение 0.5 запускает всё на половинной скорости,
+    а 2.0 — в два раза быстрее обычной скорости.
 
 .. envvar:: RENPY_USE_DRAWABLE_RESOLUTION
 
-    If set to 0, Ren'Py will perform certain operations (including dissolve
-    transforms and text rendering) at the game's virtual resolution rather
-    than the screen's native resolution.
+    Если установлено значение 0, Ren'Py будет выполнять определённые графические операции (включая переходы dissolve
+    и отрисовку текста) в виртуальном разрешении игры, а не в физическом разрешении экрана дисплея.
 
 .. envvar:: RENPY_VARIANT
 
-    This should be set to a space-separated list of screen variants that
-    Ren'Py is expected to use.
+    Список вариантов экранов (screen variants), разделённых пробелами, которые Ren'Py должен принудительно использовать.
 
-As Ren'Py uses SDL, its behavior can also be controlled by the SDL environment
-variables.
+Поскольку в качестве низкоуровневого движка Ren'Py использует библиотеку SDL, на его поведение также распространяются
+все стандартные переменные окружения SDL.
 
-At startup, Ren'Py will look in the Ren'Py directory (the one containing
-renpy.exe or renpy.py) for the file :file:`environment.txt`. If it exists, it will be
-evaluated as a Python file, and the values defined in that file will be used as
-the default values of environment variables.
+При запуске Ren'Py проверяет корневой каталог движка (содержащий файлы :file:`renpy.exe` или :file:`renpy.py`) на наличие файла
+:file:`environment.txt`. Если этот файл существует, он исполняется как код Python, а определённые в нём значения служат
+значениями по умолчанию для переменных окружения.

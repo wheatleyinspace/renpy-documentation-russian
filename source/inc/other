@@ -2,679 +2,670 @@
 
 .. class:: renpy.StatementInfo()
     
-    Information about a statement that is executing or being predicted.
+    Информация о выполняемой или предсказываемой инструкции.
     
-    This is returned by :func:`renpy.get_statement_info`.
+    Возвращается функцией :func:`renpy.get_statement_info`.
     
     .. attribute:: filename
     
-        The filename containing the statement.
+        Имя файла, содержащего инструкцию.
     
     .. attribute:: linenumber
     
-        The line number of the statement.
+        Номер строки инструкции.
     
     .. attribute:: tlid
     
-        The translation identifier associated with the statement, or None if
-        there is no translation identifier.
+        Идентификатор перевода, связанный с инструкцией, или None,
+        если идентификатор перевода отсутствует.
 
 .. function:: renpy.add_python_directory(path: str)
     
-    Adds `path` to the list of paths searched for Python modules and packages.
-    The path should be a string relative to the game directory. This must be
-    called before an import statement.
+    Добавляет `path` в список путей поиска модулей и пакетов Python.
+    Путь должен быть строкой, относительной относительно каталога game.
+    Эту функцию необходимо вызывать до вызова инструкции import.
 
 .. function:: renpy.add_to_all_stores(name, value)
     
-    Adds the `value` by the `name` to all creator defined namespaces. If the name
-    already exist in that namespace - do nothing for it.
+    Добавляет значение `value` по имени `name` во все созданные разработчиком
+    пространства имён (хранилища). Если имя уже существует в данном
+    пространстве имён — ничего не делает для него.
     
-    This function may only be run from inside an init block. It is an
-    error to run this function once the game has started.
+    Эту функцию можно вызывать только из блока init. Вызов этой функции
+    после запуска игры приведёт к ошибке.
 
 .. function:: renpy.callback(f: Union[str, Callable, NoneType] = None, name: str | None = None, *, late: bool = False) -> Callable
     
-    Registers a callback with Ren'Py.
+    Регистрирует функцию обратного вызова в Ren'Py.
     
     `f`
-        The callback function to register. If None, this function returns a decorator
-        that can be used to register a callback, with name initialized to this value
-        (which should be a string), and late given the same value.
+        Регистрируемая функция обратного вызова. Если None, функция возвращает
+        декоратор, который можно использовать для регистрации колбэка с именем,
+        инициализированным этим значением (которое должно быть строкой),
+        и параметром `late`, принимающим то же значение.
     
     `name`
-        The name of the callback to register. If None, the name of the function is used. If
-        the function name ends with 'callback' or '_callback', that suffix is removed.
-        this then searches config for a variable with that name suffixed with '_callbacks'
-        or '_callback', in that order.
+        Имя регистрируемого колбэка. Если None, используется имя функции.
+        Если имя функции заканчивается на «callback» или «_callback», этот
+        суффикс удаляется. Затем движок ищет в config переменную с этим именем,
+        снабжённым суффиксом «_callbacks» или «_callback», именно в таком порядке.
     
     `late`
-        Registers the callback when :var:`config.after_init_callbacks` is run.
+        Регистрирует обратный вызов на момент срабатывания :var:`config.after_init_callbacks`.
     
-    This function is intended to be use as a decorator. For example::
+    Эта функция предназначена для использования в качестве декоратора. Например::
     
         init python:
     
             @renpy.callback
             def start_callback():
-                # Registers with config.start_callbacks.
+                # Регистрируется в config.start_callbacks.
                 pass
     
             @renpy.callback("label")
             def handle_label(label, abnormal):
-                # Registers with config.label_callbacks.
+                # Регистрируется в config.label_callbacks.
                 pass
 
 .. function:: renpy.can_fullscreen()
     
-    Returns True if the current platform supports fullscreen mode, False
-    otherwise.
+    Возвращает True, если текущая платформа поддерживает полноэкранный режим,
+    и False в противном случае.
 
 .. function:: renpy.capture_focus(name='default')
     
-    If a displayable is currently focused, captured the rectangular bounding
-    box of that displayable, and stores it with `name`. If not, removes any
-    focus stored with `name`.
+    Если отображаемый объект в данный момент находится в фокусе, захватывает
+    прямоугольную ограничивающую рамку (bounding box) этого объекта и сохраняет
+    её под именем `name`. Если нет, удаляет фокус, сохранённый под именем `name`.
     
-    Captured focuses are not saved when the game is saved.
+    Захваченные фокусы не сохраняются при сохранении игры.
     
     `name`
-        Should be a string. The name "tooltip" is special, as it's
-        automatically captured when a displayable with a tooltip gains focus.
+        Должно быть строкой. Имя "tooltip" является специальным, так как оно
+        автоматически захватывается, когда отображаемый объект со всплывающей
+        подсказкой получает фокус.
 
 .. function:: renpy.choice_for_skipping()
     
-    Tells Ren'Py that a choice is coming up soon. This currently has
-    two effects:
+    Сообщает Ren'Py, что в ближайшее время появится выбор. В настоящее время
+    это приводит к двум эффектам:
     
-    * If Ren'Py is skipping, and the Skip After Choices preferences is set
-      to stop skipping, skipping is terminated.
+    * Если включён пропуск (skipping) и в настройках задана остановка пропуска
+      после выборов (Skip After Choices), пропуск прекращается.
     
-    * An auto-save is triggered.
+    * Запускается автосохранение.
 
 .. function:: renpy.clear_capture_focus(name='default')
     
-    Clear the captured focus with `name`.
-    If `name` is None, clear all captured focuses.
+    Очищает захваченный фокус с именем `name`.
+    Если `name` равно None, очищает все захваченные фокусы.
 
 .. function:: renpy.clear_game_runtime()
     
-    Resets the game runtime counter.
+    Сбрасывает счётчик игрового времени (game runtime).
 
 .. function:: renpy.clear_retain(layer='screens', prefix='_retain')
     
-    Clears all retained screens
+    Очищает все сохранённые (retained) экраны.
 
 .. function:: renpy.confirm(message, **kwargs)
     
-    This causes the a yes/no prompt screen with the given message
-    to be displayed, and dismissed when the player hits yes or no.
+    Вызывает отображение экрана запроса подтверждения да/нет с переданным
+    сообщением, который закрывается, когда игрок нажимает «да» или «нет».
     
-    Returns True if the player hits yes, and False if the player hits no.
+    Возвращает True, если игрок выбрал «да», и False, если игрок выбрал «нет».
     
     `message`
-        The message that will be displayed.
+        Сообщение, которое будет отображено.
     
     `screen`
-        If provided, this screen will be used instead of the default screen.
+        Если указан, этот экран будет использован вместо экрана по умолчанию.
     
-    Additional keyword arguments not beginning with _ are passed to the screen.
+    Дополнительные именованные аргументы, не начинающиеся с символа «_»,
+    передаются экрану.
     
-    See :func:`Confirm` for a similar Action.
+    Аналогичное экранное действие см. в :func:`Confirm`.
 
 .. function:: renpy.count_dialogue_blocks()
     
-    Returns the number of dialogue blocks in the game's original language.
+    Возвращает количество диалоговых блоков на оригинальном языке игры.
 
 .. function:: renpy.count_newly_seen_dialogue_blocks()
     
-    Returns the number of dialogue blocks the user has seen for the first time
-    during this session.
+    Возвращает количество диалоговых блоков, которые пользователь впервые увидел
+    во время текущей игровой сессии.
 
 .. function:: renpy.count_seen_dialogue_blocks()
     
-    Returns the number of dialogue blocks the user has seen in any play-through
-    of the current game.
+    Возвращает количество диалоговых блоков, просмотренных пользователем за все
+    сеансы прохождения текущей игры.
 
 .. function:: renpy.display_notify(message)
     
-    The default implementation of :func:`renpy.notify`.
+    Реализация :func:`renpy.notify` по умолчанию.
 
 .. function:: renpy.focus_coordinates()
     
-    This attempts to find the coordinates of the currently-focused
-    displayable. If it can, it will return them as a (x, y, w, h)
-    tuple. If not, it will return a (None, None, None, None) tuple.
+    Пытается найти координаты сфокусированного в данный момент отображаемого
+    объекта. Если это удаётся, возвращает их в виде кортежа (x, y, w, h).
+    В противном случае возвращает кортеж (None, None, None, None).
 
 .. function:: renpy.force_autosave(take_screenshot=False, block=False)
     
-    Forces a background autosave to occur.
+    Принудительно выполняет фоновое автосохранение.
     
     `take_screenshot`
-        If True, a new screenshot will be taken. If False, the existing
-        screenshot will be used.
+        Если True, создаётся новый скриншот. Если False, используется
+        существующий скриншот.
     
     `block`
-        If True, blocks until the autosave completes.
+        Если True, выполнение блокируется до завершения автосохранения.
 
 .. function:: renpy.free_memory()
     
-    Attempts to free some memory. Useful before running a renpygame-based
-    minigame.
+    Пытается освободить часть памяти. Полезно перед запуском мини-игр
+    на базе renpygame.
 
 .. function:: renpy.full_restart(transition=False, *, save=False)
     
-    Causes Ren'Py to restart, returning the user to the main menu.
+    Приводит к перезапуску Ren'Py с возвратом пользователя в главное меню.
     
     `transition`
-        If given, the transition to run, or None to not run a transition.
-        False uses :var:`config.end_game_transition`.
+        Если указан, запускаемый переход, либо None, если переход не требуется.
+        Значение False использует переход из :var:`config.end_game_transition`.
     
     `save`
-        If true, the game is saved in :var:`_quit_slot` before Ren'Py
-        restarts and returns the user to the main menu.
+        Если True, игра сохраняется в слот :var:`_quit_slot` перед тем,
+        как Ren'Py перезапустится и вернёт пользователя в главное меню.
 
 .. function:: renpy.get_game_runtime()
     
-    Returns the game runtime counter.
+    Возвращает счётчик времени выполнения игры.
     
-    The game runtime counter counts the number of seconds that have
-    elapsed while waiting for user input in the top-level context.
-    (It does not count time spent in the main or game menus.)
+    Счётчик подсчитывает количество секунд, прошедших в ожидании ввода
+    пользователя в контексте верхнего уровня (время, проведённое в главном
+    или игровом меню, не учитывается).
 
 .. function:: renpy.get_image_load_log(age=None)
     
-    A generator that yields a log of image loading activity. For the last 100
-    image loads, this returns:
+    Генератор, возвращающий журнал загрузки изображений. Для последних 100
+    загруженных изображений возвращает:
     
-    * The time the image was loaded (in seconds since the epoch).
-    * The filename of the image that was loaded.
-    * A boolean that is true if the image was preloaded, and false if the
-      game stalled to load it.
+    * Время загрузки изображения (в секундах с начала эпохи Unix).
+    * Имя файла загруженного изображения.
+    * Логическое значение: True, если изображение было предзагружено заранее,
+      и False, если игра приостанавливалась для его загрузки.
     
-    The entries are ordered from newest to oldest.
+    Записи упорядочены от самых новых к более старым.
     
     `age`
-        If not None, only images that have been loaded in the past `age`
-        seconds are included.
+        Если не None, возвращаются только изображения, загруженные за последние
+        `age` секунд.
     
-    The image load log is only kept if config.developer = True.
+    Журнал загрузки изображений ведётся только при условии ``config.developer = True``.
 
 .. function:: renpy.get_menu_args()
     
-    Returns a tuple giving the arguments (as a tuple) and the keyword arguments
-    (as a dict) passed to the current menu statement.
+    Возвращает кортеж, содержащий позиционные аргументы (в виде кортежа) и
+    именованные аргументы (в виде словаря), переданные текущей инструкции menu.
 
 .. function:: renpy.get_mouse_name(interaction=False)
     
-    Returns the name of the mouse that should be shown.
-    
+    Возвращает имя курсора мыши, который должен отображаться.
     
     `interaction`
-        If true, get a mouse name that is based on the type of interaction
-        occurring.
+        Если True, возвращает имя курсора мыши на основе типа происходящего
+        взаимодействия.
 
 .. function:: renpy.get_mouse_names()
     
-    Return a list of mouse names that may be displayed, in priority order.
+    Возвращает список имён курсоров мыши, которые могут отображаться,
+    в порядке приоритета.
 
 .. function:: renpy.get_mouse_pos()
     
-    Returns an (x, y) tuple giving the location of the mouse pointer or the
-    current touch location. If the device does not support a mouse and is not
-    currently being touched, x and y are numbers, but not meaningful.
+    Возвращает кортеж (x, y), указывающий положение указателя мыши или текущую
+    точку касания сенсорного экрана. Если устройство не поддерживает мышь
+    и касание в данный момент не происходит, x и y являются числами,
+    но не несут полезного значения.
 
 .. function:: renpy.get_on_battery()
     
-    Returns True if Ren'Py is running on a device that is powered by an internal
-    battery, or False if the device is being charged by some external source.
+    Возвращает True, если Ren'Py выполняется на устройстве, работающем от
+    встроенного аккумулятора, или False, если устройство заряжается от
+    внешнего источника питания.
 
 .. function:: renpy.get_ongoing_transition(layer=None)
     
-    Returns the transition that is currently ongoing.
+    Возвращает переход, выполняющийся в данный момент.
     
     `layer`
-        If None, the top-level transition is returned. Otherwise, this should be a string giving a layer name,
-        in which case the transition for that layer is returned.
+        Если None, возвращается переход верхнего уровня. В противном случае
+        должна быть передана строка с именем слоя — тогда возвращается
+        переход для этого слоя.
 
 .. function:: renpy.get_physical_size()
     
-    Returns the size of the physical window.
+    Возвращает размер физического окна игры.
 
 .. function:: renpy.get_refresh_rate(precision=5)
     
-    Returns the refresh rate of the current screen, as a floating-point
-    number of frames per second.
+    Возвращает частоту обновления текущего экрана в виде числа с плавающей
+    точкой (количество кадров в секунду).
     
     `precision`
-        The raw data Ren'Py gets is the number of frames per second rounded down
-        to the nearest integer. This means that a monitor that runs at 59.95
-        frames per second will be reported at 59 fps. The precision argument
-        then further reduces the precision of this reading, such that the only valid
-        readings are multiples of the precision.
+        Исходные данные, получаемые Ren'Py — это количество кадров в секунду,
+        округлённое в меньшую сторону до ближайшего целого числа. Это означает,
+        что для монитора с частотой 59.95 кадров/сек будет возвращено значение 59 fps.
+        Аргумент precision уменьшает точность показаний так, чтобы допустимыми
+        значениями были только кратные указанному шагу.
     
-        Since all monitor framerates tend to be multiples of 5 (25, 30, 60,
-        75, and 120), this likely will improve accuracy. Setting precision
-        to 1 disables this.
+        Поскольку частота большинства мониторов кратна 5 (25, 30, 60, 75 и 120),
+        это обычно повышает точность. Установка precision равным 1 отключает
+        это поведение.
 
 .. function:: renpy.get_renderer_info() -> renpy.display.core.RendererInfo
     
-    Returns a dictionary, giving information about the renderer Ren'Py is
-    currently using. Defined keys are:
+    Возвращает словарь с информацией о рендерере, который в данный момент
+    использует Ren'Py. Определены следующие ключи:
     
     ``"renderer"``
-        A string giving the name of the renderer that is in use.
+        Строка с именем используемого рендерера.
     
     ``"resizable"``
-        True if and only if the window is resizable.
+        True тогда и только тогда, когда окно поддерживает изменение размера.
     
     ``"additive"``
-        True if and only if the renderer supports additive blending.
+        True тогда и только тогда, когда рендерер поддерживает аддитивное смешивание.
     
     ``"model"``
-        Present and true if model-based rendering is supported.
+        Присутствует и равен True, если поддерживается рендеринг 3D-моделей.
     
-    When using the GL2 renderer, the following keys are also defined:
+    При использовании рендерера GL2 также определены следующие ключи:
     
     ``"gpu_vendor"``
-        A string giving the GPU vendor.
+        Строка с указанием производителя графического процессора (GPU).
     
     ``"gpu_name"``
-        A string giving the GPU name.
+        Строка с наименованием GPU.
     
     ``"gpu_driver_version"``
-        A string giving the driver version.
+        Строка с версией видеодрайвера.
     
-    Other, renderer-specific, keys may also exist.
+    Могут присутствовать и другие ключи, специфичные для конкретного рендерера.
     
-    The dictionary should be treated as immutable.
+    Со словарём следует обращаться как с неизменяемым объектом.
     
-    This should only be called once the display has been started (that is,
-    not sooner than first interaction).
+    Эту функцию следует вызывать только после инициализации графической системы
+    (то есть не ранее первого взаимодействия с пользователем).
 
 .. function:: renpy.get_say_attributes()
     
-    Gets the attributes associated with the current say statement, or
-    None if no attributes are associated with this statement.
+    Возвращает атрибуты, связанные с текущей инструкцией say, или None,
+    если с этой инструкцией атрибуты не связаны.
     
-    This is only valid when executing or predicting a say statement.
+    Вызов корректен только во время выполнения или предсказания инструкции say.
 
 .. function:: renpy.get_skipping()
     
-    Returns "slow" if the Ren'Py is skipping, "fast" if Ren'Py is fast skipping,
-    and None if it is not skipping.
+    Возвращает "slow", если Ren'Py находится в режиме обычного пропуска, "fast",
+    если Ren'Py находится в режиме быстрого пропуска, и None, если пропуск отключён.
 
 .. function:: renpy.get_statement_info()
     
-    Returns a :class:`StatementInfo` object describing the statement that is
-    currently executing or being predicted. This can be called from the
-    predict function of a creator-defined statement.
+    Возвращает объект :class:`StatementInfo`, описывающий инструкцию, которая в
+    данный момент выполняется или предсказывается. Может вызываться из функции
+    predict пользовательских инструкций (creator-defined statements).
     
-    Returns None if there is no current statement.
+    Возвращает None, если текущая инструкция отсутствует.
 
 .. function:: renpy.get_statement_name()
     
-    Returns the name of the current statement being executed. This returns the last
-    value provided to :var:`config.statement_callbacks`.
+    Возвращает имя выполняемой в данный момент инструкции. Возвращает последнее
+    значение, переданное в :var:`config.statement_callbacks`.
 
 .. function:: renpy.get_transition(layer=None)
     
-    Gets the transition for `layer`, or the entire scene if
-    `layer` is None. This returns the transition that is queued up
-    to run during the next interaction, or None if no such
-    transition exists.
+    Возвращает переход для слоя `layer` или всей сцены, если `layer` равен None.
+    Возвращает переход, поставленный в очередь на выполнение во время следующего
+    взаимодействия, или None, если переход не запланирован.
     
-    Use :func:`renpy.get_ongoing_transition` to get the transition that is
-    in progress.
+    Для получения перехода, выполняющегося в данный момент, используйте
+    :func:`renpy.get_ongoing_transition`.
 
 .. function:: renpy.iconify()
     
-    Iconifies the game.
+    Сворачивает окно игры в панель задач.
 
 .. function:: renpy.include_module(name)
     
-    Similar to :func:`renpy.load_module`, but instead of loading the module right away,
-    inserts it into the init queue somewhere after the current AST node.
+    Аналогична функции :func:`renpy.load_module`, однако вместо немедленной загрузки
+    модуля вставляет его в очередь инициализации (init queue) следом за текущим
+    узлом AST.
     
-    The module may not contain init blocks lower than the block that includes the module.
-    For example, if your module contains an init 10 block, the latest you can load it is
-    init 10.
+    Модуль не может содержать блоки init с приоритетом ниже, чем блок, включающий
+    данный модуль. Например, если модуль содержит блок init 10, самое позднее,
+    когда его можно загрузить — это init 10.
     
-    Module loading may only occur from inside an init block.
+    Загрузка модулей может выполняться только из блока init.
 
 .. function:: renpy.invoke_in_main_thread(fn, *args, **kwargs)
     
-    This runs the given function with the given arguments in the main
-    thread. The function runs in an interaction context similar to an
-    event handler. This is meant to be called from a separate thread,
-    whose creation is handled by :func:`renpy.invoke_in_thread`.
+    Выполняет переданную функцию с указанными аргументами в основном потоке.
+    Функция выполняется в контексте взаимодействия, аналогичном обработчику событий.
+    Предназначена для вызова из отдельного потока, создание которого выполняется
+    с помощью :func:`renpy.invoke_in_thread`.
     
-    If a single thread schedules multiple functions to be invoked, it is guaranteed
-    that they will be run in the order in which they have been scheduled::
+    Если из одного потока запланирован вызов нескольких функций, гарантируется,
+    что они будут выполнены в том порядке, в котором были запланированы::
     
         def ran_in_a_thread():
             renpy.invoke_in_main_thread(a)
             renpy.invoke_in_main_thread(b)
     
-    In this example, it is guaranteed that ``a`` will return before
-    ``b`` is called. The order of calls made from different threads is not
-    guaranteed.
+    В этом примере гарантируется, что функция ``a`` завершится до того, как
+    будет вызвана функция ``b``. Порядок вызовов из разных потоков не гарантируется.
     
-    This may not be called during the init phase.
+    Не может вызываться во время фазы инициализации (init).
 
 .. function:: renpy.invoke_in_thread(fn, *args, **kwargs)
     
-    Invokes the function `fn` in a background thread, passing it the
-    provided arguments and keyword arguments. Restarts the interaction
-    once the thread returns.
+    Вызывает функцию `fn` в фоновом потоке, передавая ей указанные позиционные
+    и именованные аргументы. Перезапускает взаимодействие после возврата из потока.
     
-    This function creates a daemon thread, which will be automatically
-    stopped when Ren'Py is shutting down.
+    Эта функция создаёт поток-демон, который будет автоматически остановлен
+    при завершении работы Ren'Py.
     
-    This thread is very limited in what it can do with the Ren'Py API.
-    Changing store variables is allowed, as are calling the following
-    functions:
+    Возможности этого потока по взаимодействию с API Ren'Py строго ограничены.
+    Разрешается изменять переменные хранилища (store), а также вызывать следующие
+    функции:
     
     * :func:`renpy.restart_interaction`
     * :func:`renpy.invoke_in_main_thread`
     * :func:`renpy.queue_event`
     
-    Most other portions of the Ren'Py API are expected to be called from
-    the main thread.
+    Большинство других функций API Ren'Py должны вызываться только из основного потока.
     
-    This does not work on the web platform, except for immediately returning
-    without an error.
+    Не работает на веб-платформе, за исключением немедленного возврата без ошибки.
 
 .. function:: renpy.is_in_test()
     
-    Returns True if Ren'py is currently executing a test.
-    This always returns False at init time.
+    Возвращает True, если Ren'Py в данный момент выполняет тест (testcase).
+    Во время фазы инициализации всегда возвращает False.
 
 .. function:: renpy.is_init_phase()
     
-    Returns True if Ren'Py is currently executing init code, or False otherwise.
+    Возвращает True, если Ren'Py в данный момент выполняет код инициализации,
+    и False в противном случае.
 
 .. function:: renpy.is_mouse_visible()
     
-    Returns True if the mouse cursor is visible, False otherwise.
+    Возвращает True, если курсор мыши видим, и False в противном случае.
 
 .. function:: renpy.is_seen(ever=True)
     
-    Returns true if the current line has been seen by the player.
+    Возвращает True, если текущая строка уже была просмотрена игроком.
     
-    If `ever` is true, we check to see if the line has ever been seen by the
-    player. If false, we check if the line has been seen in the current
-    play-through.
+    Если `ever` равно True, проверяется, просматривалась ли строка когда-либо
+    за всё время. Если False, проверяется, просматривалась ли строка в рамках
+    текущего прохождения.
 
 .. function:: renpy.is_seen_allowed()
     
-    Returns False only if in a replay and no seen events allowed by setting :var:`config.no_replay_seen` to True.
+    Возвращает False только при нахождении в режиме повтора сцены (replay), если
+    учёт просмотренных событий запрещён установкой переменной :var:`config.no_replay_seen` в True.
 
 .. function:: renpy.is_skipping()
     
-    Returns True if Ren'Py is currently skipping (in fast or slow skip mode),
-    or False otherwise.
+    Возвращает True, если Ren'Py в данный момент находится в режиме пропуска
+    (в обычном или быстром), и False в противном случае.
 
 .. function:: renpy.is_start_interact()
     
-    Returns True if restart_interaction has not been called during the current
-    interaction. This can be used to determine if the interaction is just being
-    started, or has been restarted.
+    Возвращает True, если функция restart_interaction ещё не вызывалась в ходе
+    текущего взаимодействия. Это можно использовать для определения того, только
+    ли началось взаимодействие или оно было перезапущено.
 
 .. function:: renpy.language_tailor(chars, cls)
     
-    This can be used to override the line breaking class of a unicode
-    character. For
-    example, the linebreaking class of a character can be set to ID to
-    treat it as an ideograph, which allows breaks before and after that
-    character.
+    Позволяет переопределить класс переноса строк (line breaking class) символа Юникода.
+    Например, класс переноса символа можно установить в ID, чтобы он обрабатывался
+    как идеограмма, что разрешает разрывы строк до и после этого символа.
     
     `chars`
-        A string containing each of the characters to tailor.
+        Строка, содержащая настраиваемые символы.
     
     `cls`
-        A string giving a character class. This should be one of the classes defined in Table
-        1 of `UAX #14: Unicode Line Breaking Algorithm <http://www.unicode.org/reports/tr14/tr14-30.html>`_.
+        Строка, задающая класс символов. Должен быть одним из классов, определённых в Таблице 1
+        спецификации `UAX #14: Unicode Line Breaking Algorithm <http://www.unicode.org/reports/tr14/tr14-30.html>`_.
 
 .. function:: renpy.last_say()
     
-    Returns an object containing information about the last say statement.
+    Возвращает объект, содержащий информацию о последней выполненной инструкции say.
     
-    While this can be called during a say statement, if the say statement is using
-    a normal Character, the information will be about the *current* say statement,
-    instead of the preceding one.
+    Хотя функцию можно вызвать во время выполнения инструкции say, если в ней
+    используется обычный объект Character, информация будет относиться к *текущей*
+    инструкции say, а не к предшествующей.
     
     `who`
-        The speaker. This is usually a :func:`Character` object, but this
-        is not required.
+        Говорящий персонаж. Обычно это объект :func:`Character`, но это не обязательно.
     
     `what`
-        A string with the dialogue spoken. This may be None if dialogue
-        hasn't been shown yet, for example at the start of the game.
+        Строка произнесённого текста диалога. Может быть None, если диалог ещё не
+        отображался, например в самом начале игры.
     
     `args`
-        A tuple of arguments passed to the last say statement.
+        Кортеж аргументов, переданных последней инструкции say.
     
     `kwargs`
-        A dictionary of keyword arguments passed to the last say statement.
+        Словарь именованных аргументов, переданных последней инструкции say.
     
     .. warning::
     
-        Like other similar functions, the object this returns is meant to be used
-        in the short term after the function is called. Including it in save data
-        or making it participate in rollback is not advised.
+        Как и другие аналогичные функции, возвращаемый объект предназначен для
+        кратковременного использования сразу после вызова функции. Включать его в данные
+        сохранения или делать участником отката не рекомендуется.
 
 .. function:: renpy.load_module(name)
     
-    This loads the Ren'Py module named name. A Ren'Py module consists of Ren'Py script
-    that is loaded into the usual (store) namespace, contained in a file named
-    name.rpym or name.rpymc. If a .rpym file exists, and is newer than the
-    corresponding .rpymc file, it is loaded and a new .rpymc file is created.
+    Загружает модуль Ren'Py с именем `name`. Модуль Ren'Py состоит из скрипта Ren'Py,
+    загружаемого в обычное пространство имён (store), содержащегося в файле
+    name.rpym или name.rpymc. Если файл .rpym существует и новее соответствующего
+    файла .rpymc, он загружается и создаётся новый файл .rpymc.
     
-    All of the init blocks (and other init-phase code) in the module are run
-    before this function returns. An error is raised if the module name cannot
-    be found, or is ambiguous.
+    Все блоки init (и другой код фазы инициализации) в модуле выполняются
+    до возврата из этой функции. Если модуль с указанным именем не найден или
+    его имя неоднозначно, вызывается ошибка.
     
-    Module loading may only occur from inside an init block.
+    Загрузка модулей может выполняться только из блока init.
 
 .. function:: renpy.load_string(s, filename='<string>')
     
-    Loads `s` as Ren'Py script that can be called.
+    Загружает строку `s` как скрипт Ren'Py, который может быть вызван.
     
-    Returns the name of the first statement in s.
+    Возвращает имя первой инструкции в `s`.
     
-    `filename` is the name of the filename that statements in the string will
-    appear to be from.
+    `filename` — имя виртуального файла, которому будут приписаны инструкции из строки.
 
 .. function:: renpy.maximum_framerate(t)
     
-    Forces Ren'Py to draw the screen at the maximum framerate for `t` seconds.
-    If `t` is None, cancels the maximum framerate request.
+    Принудительно заставляет Ren'Py перерисовывать экран с максимальной частотой
+    кадров в течение `t` секунд. Если `t` равно None, отменяет запрос максимальной
+    частоты кадров.
 
 .. function:: renpy.munge(name, filename=None)
     
-    Munges `name`, which must begin with __.
+    Преобразует (munge) закрытое имя `name`, которое должно начинаться с двух символов
+    подчёркивания __.
     
     `filename`
-        The filename the name is munged into. If None, the name is munged
-        into the filename containing the call to this function.
+        Имя файла, к которому привязывается имя. Если None, используется имя файла,
+        содержащего вызов данной функции.
 
 .. function:: renpy.not_infinite_loop(delay)
     
-    Resets the infinite loop detection timer to `delay` seconds.
+    Сбрасывает таймер обнаружения бесконечного цикла на `delay` секунд.
 
 .. function:: renpy.notify(message)
     
-    Causes Ren'Py to display the `message` using the notify screen. By
-    default, this will cause the message to be dissolved in, displayed
-    for two seconds, and dissolved out again.
+    Заставляет Ren'Py отобразить `message` с использованием экрана уведомлений (notify).
+    По умолчанию сообщение появляется с растворением (dissolve), отображается в течение
+    двух секунд и исчезает с растворением.
     
-    This is useful for actions that otherwise wouldn't produce feedback,
-    like screenshots or quicksaves.
+    Полезно для действий, которые иначе не дают визуальной обратной связи (например,
+    создание скриншота или быстрое сохранение).
     
-    Only one notification is displayed at a time. If a second notification
-    is displayed, the first notification is replaced.
+    Одновременно отображается только одно уведомление. При появлении второго
+    уведомления первое немедленно заменяется.
     
-    This function just calls :var:`config.notify`, allowing its implementation
-    to be replaced by assigning a new function to that variable.
+    Эта функция вызывает :var:`config.notify`, позволяя переопределить её реализацию
+    присваиванием новой функции этой переменной.
 
 .. function:: renpy.open_url(url)
     
-    Opens a URL in the system's web browser, if possible.
+    Открывает URL-адрес в системном веб-браузере, если это возможно.
 
 .. function:: renpy.predicting()
     
-    Returns True if Ren'Py is currently in a predicting phase.
+    Возвращает True, если Ren'Py в данный момент находится в фазе предсказания.
 
 .. function:: renpy.queue_event(name, up=False, **kwargs)
     
-    Queues an event with the given name. `Name` should be one of the event
-    names in :var:`config.keymap`, or a list of such names.
+    Помещает событие с указанным именем в очередь событий. `name` должно быть
+    одним из имён событий в :var:`config.keymap` или списком таких имён.
     
     `up`
-        This should be False when the event begins (for example, when a keyboard
-        button is pressed.) It should be True when the event ends (when the
-        button is released.)
+        Должно быть False в момент начала события (например, при нажатии клавиши)
+        и True в момент окончания события (при отпускании клавиши).
     
-    The event is queued at the time this function is called. This function will
-    not work to replace an event with another - doing so will change event order.
-    (Use :var:`config.keymap` instead.)
+    Событие ставится в очередь в момент вызова этой функции. Функция не может заменить
+    одно событие другим — это приведёт к изменению порядка событий (вместо этого
+    используйте :var:`config.keymap`).
     
-    This method is threadsafe.
+    Метод является потокобезопасным (threadsafe).
 
 .. function:: renpy.quit(relaunch=False, status=0, save=False)
     
-    This causes Ren'Py to exit entirely.
+    Приводит к полному выходу из Ren'Py.
     
     `relaunch`
-        If True, Ren'Py will run a second copy of itself before quitting.
+        Если True, Ren'Py запустит вторую копию самого себя перед завершением.
     
     `status`
-        The status code Ren'Py will return to the operating system.
-        Generally, 0 is success, and positive integers are failure.
+        Код состояния, который Ren'Py вернёт операционной системе. Как правило, 0
+        означает успешное завершение, а положительные целые числа — ошибку.
     
     `save`
-        If True, the game is saved in :var:`_quit_slot` before Ren'Py
-        terminates.
+        Если True, игра сохраняется в слот :var:`_quit_slot` перед завершением работы Ren'Py.
 
 .. function:: renpy.quit_event()
     
-    Triggers a quit event, as if the player clicked the quit button in the
-    window chrome.
+    Вызывает событие выхода из игры, как если бы игрок нажал кнопку закрытия окна.
 
 .. function:: renpy.reset_physical_size()
     
-    Attempts to set the size of the physical window to the size specified
-    using :var:`renpy.config.physical_height` and :var:`renpy.config.physical_width`,
-    or, if those are not set, the size set using :var:`renpy.config.screen_width`
-    and :var:`renpy.config.screen_height`.
+    Пытается установить размер физического окна равным размеру, заданному с помощью
+    :var:`renpy.config.physical_height` и :var:`renpy.config.physical_width`, либо,
+    если они не заданы, размеру, заданному :var:`renpy.config.screen_width` и
+    :var:`renpy.config.screen_height`.
 
 .. function:: renpy.restart_interaction()
     
-    Restarts the current interaction. Among other things, this displays
-    images added to the scene, re-evaluates screens, and starts any
-    queued transitions.
+    Перезапускает текущее взаимодействие. В частности, отображает изображения,
+    добавленные в сцену, повторно вычисляет экраны и запускает отложенные переходы.
     
-    This only does anything when called from within an interaction (for
-    example, from an action). Outside an interaction, this function has
-    no effect.
+    Действует только при вызове изнутри взаимодействия (например, из действия action).
+    Вне взаимодействия эта функция не оказывает никакого эффекта.
 
 .. function:: renpy.scry()
     
-    Returns the scry object for the current statement. Returns None if
-    there are no statements executing.
+    Возвращает объект scry для текущей инструкции. Возвращает None, если в данный
+    момент инструкции не выполняются.
     
-    The scry object tells Ren'Py about things that must be true in the
-    future of the current statement. Right now, the scry object has the
-    following fields:
+    Объект scry сообщает Ren'Py о фактах, которые обязательно наступят в будущем
+    относительно текущей инструкции. В настоящее время объект scry имеет следующие поля:
     
     `nvl_clear`
-        Is True if an ``nvl clear`` statement will execute before the
-        next interaction.
+        Равно True, если инструкция ``nvl clear`` выполнится до следующего взаимодействия.
     
     `say`
-        Is True if an ``say`` statement will execute before the
-        next interaction.
+        Равно True, если инструкция ``say`` выполнится до следующего взаимодействия.
     
     `menu_with_caption`
-        Is True if a ``menu`` statement with a caption will execute
-        before the next interaction.
+        Равно True, если инструкция ``menu`` с заголовком выполнится до следующего взаимодействия.
     
     `who`
-        If a ``say`` or ``menu-with-caption`` statement will execute
-        before the next interaction, this is the character object it will use.
+        Если инструкция ``say`` или ``menu`` с заголовком выполнится до следующего
+        взаимодействия, это объект персонажа, который будет использован.
     
-    The scry object has a next() method, which returns the scry object of
-    the statement after the current one, if only one statement will execute
-    after the this one. Otherwise, it returns None.
+    У объекта scry есть метод next(), возвращающий объект scry для инструкции, следующей
+    за текущей, если за ней гарантированно выполняется только одна инструкция. В противном
+    случае возвращает None.
     
     .. warning::
     
-        Like other similar functions, the object this returns is meant to be used
-        in the short term after the function is called. Including it in save data
-        or making it participate in rollback is not advised.
+        Как и другие аналогичные функции, возвращаемый объект предназначен для
+        кратковременного использования сразу после вызова функции. Включать его в данные
+        сохранения или делать участником отката не рекомендуется.
 
 .. function:: renpy.set_mouse_pos(x, y, duration=0)
     
-    Jump the mouse pointer to the location given by arguments x and y.
-    If the device does not have a mouse pointer, or if it is not possible for
-    Ren'Py to move that pointer, this does nothing.
+    Перемещает указатель мыши в точку с координатами x и y.
+    Если устройство не имеет указателя мыши или если перемещение указателя
+    не поддерживается Ren'Py на данной платформе, функция ничего не делает.
     
-    This is unlikely to work on the Linux with Wayland, Android, iOS, or Web
-    platforms.
+    Маловероятно, что функция будет работать в Linux с Wayland, а также на платформах
+    Android, iOS или Web.
     
     `duration`
-        The time it will take to perform the move, in seconds.
-        During this time, the mouse may be unresponsive.
+        Время перемещения указателя в секундах. В течение этого времени мышь может
+        не реагировать на действия пользователя.
 
 .. function:: renpy.set_physical_size(size)
     
-    Attempts to set the size of the physical window to `size`. This has the
-    side effect of taking the screen out of fullscreen mode.
+    Пытается установить размер физического окна равным `size`. В качестве побочного
+    эффекта окно переводится из полноэкранного режима в оконный.
 
 .. function:: renpy.shown_window()
     
-    Call this to indicate that the window has been shown. This interacts
-    with the "window show" statement, which shows an empty window whenever
-    this functions has not been called during an interaction.
+    Вызывайте эту функцию, чтобы отметить, что диалоговое окно было показано. Она
+    взаимодействует с инструкцией «window show», которая отображает пустое окно,
+    если эта функция не была вызвана во время взаимодействия.
 
 .. function:: renpy.split_properties(properties: dict[str, typing.Any], *prefixes: str) -> list[dict[str, typing.Any]]
     
-    Splits up `properties` into multiple dictionaries, one per `prefix`. This
-    function checks each key in properties against each prefix, in turn.
-    When a prefix matches, the prefix is stripped from the key, and the
-    resulting key is mapped to the value in the corresponding dictionary.
+    Разделяет словарь `properties` на несколько словарей, по одному для каждого
+    префикса `prefix`. Функция последовательно проверяет каждый ключ из properties
+    на совпадение с каждым префиксом. При совпадении префикс отсекается от ключа,
+    а полученный ключ сопоставляется со значением в соответствующем словаре.
     
-    If no prefix matches, an exception is thrown. (The empty string, "",
-    can be used as the last prefix to create a catch-all dictionary.)
+    Если ни один префикс не подошёл, возбуждается исключение. (Пустую строку "" можно
+    использовать в качестве последнего префикса для перехвата всех оставшихся свойств.)
     
-    For example, this splits properties beginning with text from
-    those that do not::
+    Например, следующий вызов отделяет свойства, начинающиеся с text, от всех остальных::
     
         text_properties, button_properties = renpy.split_properties(properties, "text_", "")
 
 .. function:: renpy.stop_skipping()
     
-    Stops skipping, if Ren'Py is currently skipping.
+    Останавливает пропуск, если Ren'Py в данный момент находится в режиме пропуска.
 
 .. function:: renpy.transition(trans, layer=None, always=False, priority=0)
     
-    Sets the transition that will be used during the next interaction.
+    Задаёт переход, который будет использован во время следующего взаимодействия.
     
     `layer`
-        The layer the transition applies to. If None, the transition
-        applies to the entire scene.
+        Слой, к которому применяется переход. Если None, переход применяется ко всей сцене.
     
     `always`
-        If false, this respects the transition preference. If true, the
-        transition is always run.
+        Если False, учитывается пользовательская настройка показа переходов.
+        Если True, переход выполняется всегда.
     
     `priority`
-        The priority of this transition.  Lower-priority transitions will not replace higher-priority transitions
-        for the same layer.
+        Приоритет этого перехода. Переходы с более низким приоритетом не заменят
+        переходы с более высоким приоритетом для того же слоя.
 
 .. function:: renpy.vibrate(duration)
     
-    Causes the device to vibrate for `duration` seconds. Currently, this
-    is only supported on Android.
-
+    Вызывает вибрацию устройства продолжительностью `duration` секунд. В настоящее время
+    поддерживается только на Android.

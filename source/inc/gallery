@@ -2,219 +2,202 @@
 
 .. class:: Gallery()
     
-    This class supports the creation of an image gallery by handling the
-    locking of images, providing an action that can show one or more images,
-    and a providing method that creates buttons that use that action.
+    Этот класс обеспечивает создание галереи изображений, управляя блокировкой изображений,
+    предоставляя экранное действие для показа одного или нескольких изображений и метод
+    для создания кнопок, использующих это действие.
     
     .. attribute:: enter_transition
     
-        The transition that is used when displaying the first image associated
-        with a gallery button.
+        Переход, используемый при показе первого изображения, связанного с кнопкой галереи.
     
     .. attribute:: intra_transition
     
-        The transition that is used when displaying images associated with
-        gallery buttons, apart from the first.
+        Переход, используемый при переключении между изображениями одной кнопки галереи
+        (всеми, кроме первого).
     
     .. attribute:: exit_transition
     
-        The transition that is used when returning from the last image associated
-        with a gallery button to the gallery screen.
+        Переход, используемый при возврате от последнего изображения кнопки галереи
+        обратно к экрану галереи.
     
     .. attribute:: transition
     
-        This is used in place of enter_transition, intra_transition, or exit_transition
-        if one or more of them has not been set.
+        Используется вместо enter_transition, intra_transition или exit_transition,
+        если один или несколько из них не были явно заданы.
     
     .. attribute:: locked_button
     
-        The default displayable used by make_button for a locked button.
+        Отображаемый объект по умолчанию, используемый make_button для заблокированной кнопки.
     
     .. attribute:: hover_border
     
-        The default hover border used by make_button.
+        Рамка при наведении по умолчанию, используемая make_button.
     
     .. attribute:: idle_border
     
-        The default idle border used by make_button.
+        Рамка в состоянии покоя по умолчанию, используемая make_button.
     
     .. attribute:: unlocked_advance
     
-        If true, the gallery will only advance through unlocked images.
+        Если True, галерея будет переключаться только между разблокированными изображениями.
     
     .. attribute:: navigation
     
-        If true, the gallery will display navigation and slideshow
-        buttons on top of the images.
-    
-        To customize the look of the navigation, you may override the
-        gallery_navigation screen. The default screen is defined in
-        renpy/common/00gallery.rpy
+        Если True, галерея будет отображать кнопки навигации и слайд-шоу поверх изображений.
+        
+        Для настройки внешнего вида навигации можно переопределить экран gallery_navigation.
+        Экран по умолчанию определён в renpy/common/00gallery.rpy.
     
     .. attribute:: span_buttons
     
-        If true, the gallery will advance between buttons.
+        Если True, при достижении конца изображений текущей кнопки галерея перейдёт к следующей кнопке.
     
     .. attribute:: slideshow_delay
     
-        The time it will take for the gallery to advance between images
-        in slideshow mode.
+        Время задержки между сменой изображений в режиме слайд-шоу в секундах.
     
     .. attribute:: image_screen = "_gallery"
     
-        The screen that is used to show individual images in this gallery.
-        This screen is supplied the following keyword arguments:
-    
+        Экран, используемый для отображения отдельных изображений в этой галерее.
+        Этому экрану передаются следующие именованные аргументы:
+        
         `locked`
-            True if the image is locked.
+            True, если изображение заблокировано.
         `displayables`
-            A list of transformed displayables that should be shown to the user.
+            Список трансформированных отображаемых объектов, которые должны быть показаны пользователю.
         `index`
-            A 1-based index of the image being shown.
+            Индекс отображаемого изображения, начиная с 1.
         `count`
-            The number of images attached to the current button.
+            Общее количество изображений, привязанных к текущей кнопке.
         `gallery`
-            The image gallery object.
-    
-        Additional arguments may be supplied by prefixing them with
-        `show_` in calls to Gallery.image and Gallery.unlock image.
-    
-        The default screen is defined at the bottom of renpy/common/00gallery.rpy.
+            Объект галереи изображений.
+        
+        Дополнительные аргументы могут быть переданы с префиксом `show_` в вызовах
+        Gallery.image и Gallery.unlock_image.
+        
+        Экран по умолчанию определён в нижней части renpy/common/00gallery.rpy.
 
     .. method:: Action(name)
         
-        An action that displays the images associated with the given button
-        name.
+        Экранное действие, отображающее изображения, связанные с указанным именем кнопки `name`.
     
     .. method:: Next(unlocked=False)
         
-        Advances to the next image in the gallery.
+        Переходит к следующему изображению в галерее.
         
         `unlocked`
-            If true, only considers unlocked images.
+            Если True, учитывает только разблокированные изображения.
     
     .. method:: Previous(unlocked=False)
         
-        Goes to the previous image in the gallery.
+        Переходит к предыдущему изображению в галерее.
         
         `unlocked`
-            If true, only considers unlocked images.
+            Если True, учитывает только разблокированные изображения.
     
     .. method:: Return()
         
-        Stops displaying gallery images.
+        Останавливает отображение изображений галереи и возвращает к экрану выбора.
     
     .. method:: ToggleSlideshow()
         
-        Toggles slideshow mode.
+        Переключает режим слайд-шоу.
     
     .. method:: allprior()
         
-        A condition that is true if all prior images associated with the
-        current button have been unlocked.
+        Условие, которое истинно, если все предшествующие изображения, связанные
+        с текущей кнопкой, были разблокированы.
     
     .. method:: button(name)
         
-        Creates a new button, named `name`.
+        Создаёт новую кнопку с именем `name`.
         
         `name`
-            The name of the button being created.
+            Имя создаваемой кнопки.
     
     .. method:: condition(expression)
         
-        A condition that is satisfied when an expression evaluates to true.
+        Условие, которое выполняется, когда выражение Python `expression` возвращает True.
         
         `expression`
-            A string giving a Python expression.
+            Строка, содержащая выражение Python.
     
     .. method:: get_fraction(name, format='{seen}/{total}')
         
-        Returns a text string giving the number of unlocked images and total number of images in the button
-        named `name`. If `name` is None, returns the same information for all buttons.
+        Возвращает текстовую строку с количеством разблокированных изображений и общим числом
+        изображений для кнопки с именем `name`. Если `name` равно None, возвращает аналогичную
+        информацию суммарно для всех кнопок.
         
         `format`
-            A Python format string that's used to format the numbers. This has three values that
-            can be substituted in:
-        
+            Строка форматирования Python, используемая для вывода чисел. Поддерживает три подставляемых значения:
+            
             {seen}
-                The number of images that have been seen.
+                Количество просмотренных изображений.
             {total}
-                The total number of images in the button.
+                Общее количество изображений в кнопке.
             {locked}
-                The number of images that are still locked.
+                Количество изображений, которые всё ещё заблокированы.
     
     .. method:: image(*displayables, **properties)
         
-        Adds a new image to the current button, where an image consists
-        of one or more displayables.
+        Добавляет новое изображение к текущей кнопке, где изображение состоит
+        из одного или нескольких отображаемых объектов.
         
-        Properties beginning with `show_` have that prefix stripped off,
-        and are passed to the gallery.image_screen screen as additional
-        keyword arguments.
+        Свойства, начинающиеся с `show_`, очищаются от этого префикса и передаются
+        в экран gallery.image_screen в качестве дополнительных именованных аргументов.
         
-        This takes one keword argument:
+        Принимает один именованный аргумент:
         
         `movie`
-            This should be set to true if one of the displayables is a
-            movie with sound. This will cause the movie to be hidden
-            during a transition.
+            Должен быть установлен в True, если один из отображаемых объектов является
+            видеороликом со звуком. Это приведёт к скрытию видео во время перехода.
     
     .. method:: make_button(name, unlocked, locked=None, hover_border=None, idle_border=None, style=None, **properties)
         
-        This creates a button that displays the images associated with the given
-        button name.
+        Создаёт кнопку, отображающую изображения, связанные с указанным именем кнопки.
         
         `name`
-            The name of the button that will be created.
+            Имя создаваемой кнопки.
         
         `unlocked`
-            A displayable that is displayed for this button when it is
-            unlocked.
+            Отображаемый объект, показываемый для этой кнопки, когда она разблокирована.
         
         `locked`
-            A displayable that is displayed for this button when it is
-            locked. If None, the locked_button field of the gallery
-            object is used instead.
+            Отображаемый объект, показываемый для этой кнопки, когда она заблокирована.
+            Если None, используется значение поля locked_button объекта галереи.
         
         `hover_border`
-            A displayable that is used to overlay this button when
-            it is unlocked and has focus. If None, the hover_border
-            field of the gallery object is used.
+            Отображаемый объект рамки при наведении, когда кнопка разблокирована и находится
+            в фокусе. Если None, используется поле hover_border объекта галереи.
         
         `idle_border`
-            A displayable that is used to overlay this button when
-            it is unlocked but unfocused. If None, the idle_border
-            field of the gallery object is used.
+            Отображаемый объект рамки в состоянии покоя, когда кнопка разблокирована, но не в фокусе.
+            Если None, используется поле idle_border объекта галереи.
         
         `style`
-            The style the button inherits from. When None, defaults
-            to the "empty" style, so as not to inherit borders and
-            so on.
+            Стиль, от которого наследуется кнопка. Если None, по умолчанию используется стиль "empty",
+            чтобы не наследовать лишние границы и отступы.
         
-        Additional keyword arguments become style properties of the
-        created button object.
+        Дополнительные именованные аргументы становятся свойствами стиля создаваемого объекта кнопки.
     
     .. method:: transform(*transforms)
         
-        Applies transforms to the last image registered. This should be
-        called with the same number of transforms as the image has
-        displayables. The transforms are applied to the corresponding
-        displayables.
+        Применяет трансформации к последнему зарегистрированному изображению. Метод должен
+        вызываться с тем же количеством трансформаций, сколько отображаемых объектов содержит
+        изображение. Трансформации применяются к соответствующим отображаемым объектам.
         
-        If a transform is None, the default transform is used.
+        Если трансформация равна None, используется трансформация по умолчанию.
     
     .. method:: unlock(*images)
         
-        A condition that takes one or more image names as argument, and
-        is satisfied when all the named images have been seen by the
-        player. The image names should be given as strings.
+        Условие, принимающее одно или несколько имён изображений в качестве аргументов
+        и выполняющееся, когда все указанные изображения были просмотрены игроком. Имена
+        изображений должны быть строками.
     
     .. method:: unlock_image(*images, **properties)
         
-        A convenience method that is equivalent to calling image and unlock
-        with the same parameters. (Keyword arguments beginning with ``show_`` are
-        only passed to image.) This will cause an image to be displayed
-        if it has been seen before.
+        Удобный метод, эквивалентный вызову image и unlock с теми же параметрами.
+        (Именованные аргументы, начинающиеся с ``show_``, передаются только в image.)
+        Это приведёт к отображению изображения, если оно уже встречалось игроку ранее.
         
-        The images should be specified as strings giving image names.
-    
+        Изображения должны быть строками, задающими имена изображений.

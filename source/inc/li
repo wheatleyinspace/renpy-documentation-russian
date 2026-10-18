@@ -2,161 +2,125 @@
 
 .. class:: Attribute(group, attribute, image=None, default=False, *, prefix=None, variant=None, **kwargs)
     
-    This is used to represent a layer of an LayeredImage that is
-    controlled by an attribute. A single attribute can control
-    multiple layers, in which case all layers corresponding to
-    that attribute will be displayed.
+    Используется для представления слоя многослойного изображения (LayeredImage),
+    управляемого атрибутом. Один атрибут может управлять несколькими слоями;
+    в этом случае все слои, соответствующие этому атрибуту, будут отображены.
     
     `group`
-        A string giving the group the attribute is part of. This
-        may be None, in which case a group with the same name as
-        the attribute is created.
+        Строка, задающая имя группы, в которую входит атрибут. Может быть None,
+        в этом случае создаётся группа с тем же именем, что и атрибут.
     
     `attribute`
-        A string giving the name of the attribute.
+        Строка, задающая имя атрибута.
     
     `image`
-        If not None, this should be a displayable that is displayed when
-        this attribute is shown.
+        Если не None, отображаемый объект, который выводится при вызове этого атрибута.
     
     `default`
-        If True, and no other attribute for the group is selected,
-        this attribute is.
+        Если True и никакой другой атрибут для группы не выбран, будет выбран данный атрибут.
     
-    The following keyword arguments are also known:
+    Также распознаются следующие именованные аргументы:
     
     `at`
-        A transform or list of transforms that are applied to the
-        image.
+        Трансформация или список трансформаций, применяемых к изображению.
     
     `when`
-        A string containing a ``when`` expression, described in the :ref:`when` section.
-        The displayable is only shown when the expression is satisfied by
-        the pool of attributes currently applied to the layeredimage.
+        Строка, содержащая выражение ``when``, описанное в разделе :ref:`when`.
+        Отображаемый объект показывается только тогда, когда выражение удовлетворяется
+        набором атрибутов, применённых в данный момент к layeredimage.
     
     `variant`
-        A string giving the variant of the attribute. This is used
-        as part of finding the displayable when `image` is None.
+        Строка, задающая вариант атрибута. Используется при поиске отображаемого объекта,
+        если `image` равно None.
     
-    Other keyword arguments are interpreted as transform properties. If
-    any are present, a transform is created that wraps the image. (For
-    example, pos=(100, 200) can be used to offset the image by 100 pixels
-    horizontally and 200 vertically.)
+    Другие именованные аргументы интерпретируются как свойства трансформации. Если они указаны,
+    создаётся трансформация, оборачивающая изображение (например, pos=(100, 200) смещает
+    изображение на 100 пикселей по горизонтали и 200 по вертикали).
     
-    If the `image` parameter is omitted or None, and the LayeredImage
-    has been given the `image_format` parameter, the image_format is used
-    to generate an image filename.
+    Если параметр `image` опущен или равен None, а объекту LayeredImage был передан параметр
+    `image_format`, этот формат используется для генерации имени файла изображения.
 
 .. class:: Condition(condition, image=None, *, nested=None, **kwargs)
     
-    When the condition is true, the layer is displayed. Otherwise, nothing
-    is displayed.
+    Когда условие истинно, слой отображается. В противном случае ничего не отображается.
     
-    This is used to implement a single ``if``, ``elif`` **or** ``else``
-    layeredimage statement (for ``else``, `condition` should be "True").
-    Several Conditions can then be passed to a :class:`ConditionGroup` to
-    emulate a full if/elif/else statement.
+    Используется для реализации одиночного оператора layeredimage ``if``, ``elif`` **или**
+    ``else`` (для ``else`` параметр `condition` должен быть равен "True"). Несколько Condition
+    можно передать в :class:`ConditionGroup` для эмуляции полной конструкции if/elif/else.
     
     `condition`
-        This should be a string giving a Python condition that determines
-        if the layer is displayed.
+        Строка, задающая условие Python, определяющее отображение слоя.
     
     `image`
-        If not None, this should be a displayable that is displayed when
-        the condition is true.
+        Если не None, отображаемый объект, выводимый при истинности условия.
     
     `nested`
-        If not None, this should be a :class:`ConditionGroup`, giving a
-        nested if/elif/else statement that is displayed, in place of `image`,
-        when the condition is true.
+        Если не None, объект :class:`ConditionGroup`, задающий вложенную конструкцию if/elif/else,
+        которая выводится вместо `image` при истинности условия.
     
     `when`
-        A string containing a ``when`` expression, described in the :ref:`when` section.
-        The condition is only evaluated when the expression is satisfied by
-        the pool of attributes currently applied to the layeredimage.
+        Строка с выражением ``when``, описанным в разделе :ref:`when`. Условие вычисляется
+        только тогда, когда выражение удовлетворяется набором активных атрибутов.
     
     `at`
-        A transform or list of transforms that are applied to the image.
+        Трансформация или список трансформаций для изображения.
     
-    Other keyword arguments are interpreted as transform properties. If any
-    is present, a transform is created that wraps the image. (For example,
-    pos=(100, 200) can be used to offset the image by 100 pixels
-    horizontally and 200 vertically.)
+    Другие именованные аргументы интерпретируются как свойства трансформации.
 
 .. class:: ConditionGroup(conditions)
     
-    Takes a list of :class:`Condition` to combine them into a single
-    :func:`ConditionSwitch`.
+    Принимает список объектов :class:`Condition` для объединения их в один :func:`ConditionSwitch`.
     
-    Implements the if/elif/else statement.
+    Реализует конструкцию if/elif/else.
 
 .. class:: LayeredImage(attributes, at=[], name=None, image_format=None, format_function=<function format_function at 0x00000000086dafc0>, attribute_function=None, offer_screen=None, **kwargs)
     
-    This is an image-like object that, when shown with the proper set of
-    attributes, shows a displayable created by compositing together the
-    displayables associated with those attribute.
+    Объект, подобный изображению, который при показе с правильным набором атрибутов
+    отображает объект, скомпонованный из отображаемых объектов, связанных с этими атрибутами.
     
     `attributes`
-        This must be a list of Attribute, Condition, ConditionGroup or
-        :doc:`displayable <displayables>` objects. Each one
-        reflects a displayable that may or may not be displayed as part
-        of the image. The items in this list are in back-to-front order,
-        with the first item further from the viewer and the last
-        closest.
-        Passing a displayable directly is the equivalent of the `always`
-        layeredimage statement.
+        Список объектов Attribute, Condition, ConditionGroup или :doc:`отображаемых объектов <displayables>`.
+        Каждый элемент представляет собой слой, который может быть показан в составе изображения.
+        Элементы располагаются в порядке снизу вверх (первый элемент дальше от зрителя, последний — ближе всего).
+        Прямая передача отображаемого объекта эквивалентна оператору `always` в layeredimage.
     
     `at`
-        A transform or list of transforms that are applied to the displayable
-        after it is parameterized.
+        Трансформация или список трансформаций, применяемых к отображаемому объекту после параметризации.
     
     `name`
-        The name of the layeredimage. This is used as part of the names
-        of image components.
+        Имя layeredimage. Используется как часть имён компонентов изображения.
     
     `image_format`
-        When a given image is a string, and this is supplied, the image name
-        is interpolated into `image_format` to make an image file. For example,
-        "sprites/eileen/{image}.png" will look for the image in a subdirectory
-        of sprites. (This is not used by auto groups, which look for images and
-        not image files.)
+        Если задано, имя изображения подставляется в `image_format` для формирования пути к файлу.
+        Например, "sprites/eileen/{image}.png" ищет файл в подкаталоге sprites. (Не используется
+        группами auto).
     
     `format_function`
-        A function that is used instead of `layeredimage.format_function` to format
-        the image information into a displayable.
+        Функция, используемая вместо `layeredimage.format_function` для форматирования информации
+        об изображении в отображаемый объект.
     
     `attribute_function`
-        If not None, a function that's called with a set of attributes supplied to
-        the image, and returns the set of attributes used to select layers. This is
-        called when determining the layers to display, after the attribute themselves
-        have been chosen. It can be used to express complex dependencies between attributes
-        or select attributes at random.
+        Функция, вызываемая с набором атрибутов, переданных изображению, и возвращающая набор атрибутов
+        для выбора слоёв. Вызывается после выбора самих атрибутов.
     
     `offer_screen`
-        Sets whether or not the available area is taken into account as for how children
-        are placed and how they are sized (when they have variable size). If False, the
-        available area is considered, and if True it is not. If None, defaults to
-        :var:`config.layeredimage_offer_screen`.
+        Определяет, учитывается ли доступная область при размещении и масштабировании дочерних элементов.
+        Если False, учитывается доступная область; если True — выделяется область всего экрана.
+        Если None, берётся значение :var:`config.layeredimage_offer_screen`.
     
-    Additional keyword arguments may contain transform properties. If
-    any are present, a transform is created that wraps the result image.
-    Remaining keyword arguments are passed to a Fixed that is created to hold
-    the layer. Unless explicitly overridden, xfit and yfit are set to true on
-    the Fixed, which means it will shrink to the smallest size that fits all
-    of the layer images it is showing.
+    Дополнительные именованные аргументы могут содержать свойства трансформации. Оставшиеся аргументы
+    передаются в контейнер Fixed, создаваемый для хранения слоёв. Если не переопределено явно,
+    параметры xfit и yfit для Fixed установлены в True (он сжимается до минимального размера,
+    вмещающего все слои).
     
-    A LayeredImage is not a displayable, and can't be used in all the
-    places a displayable can be used. This is because it requires an image
-    name (generally including image attributes) to be provided. As such,
-    it should either be displayed through a scene or show statement, or by
-    an image name string used as a displayable.
+    LayeredImage не является отображаемым объектом в строгом смысле и не может использоваться
+    во всех контекстах, где требуются отображаемые объекты. Его следует выводить через операторы
+    scene или show, либо обращаясь по имени изображения.
 
     .. method:: add(a)
         
         `a`
-            An Attribute, Condition, ConditionGroup or :doc:`displayable <displayables>`
-            object.
+            Объект Attribute, Condition, ConditionGroup или :doc:`отображаемый объект <displayables>`.
         
-        This method adds the provided layer to the list of layers of the layeredimage,
-        as if it had been passed in the `attributes` argument to the constructor.
-    
+        Добавляет переданный слой в список слоёв layeredimage, аналогично передаче в аргументе
+        `attributes` конструктора.

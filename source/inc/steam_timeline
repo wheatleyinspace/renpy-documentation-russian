@@ -2,42 +2,43 @@
 
 .. function:: achievement.steam.add_timeline_event(icon, title, description, priority=0, start_offset=0.0, duration=0.0, possible_clip=None)
     
-    Adds an event to the timeline. Note that the order of arguments here is different than in the Steam API.
+    Добавляет событие на временную шкалу (Timeline) Steam. Обратите внимание, что порядок
+    аргументов здесь отличается от API Steam.
     
     `icon`
-        The icon to display for the event. This should be a string giving one of the standard steam icons,
-        or one you uploaded to Steam.
+        Иконка события. Строка, задающая одну из стандартных иконок Steam либо иконку,
+        загруженную вами в Steam.
     
     `title`
-        The title of the event.
+        Заголовок события.
     
     `description`
-        The description of the event.
+        Описание события.
     
     `priority`
-        The priority of the event, used to resolve conflicts. This should be an interger between 0 and 1000.
+        Приоритет события для разрешения конфликтов. Целое число от 0 до 1000.
     
     `start_offset`
-        The offset of the start of the event from the current time, in seconds.
+        Смещение начала события относительно текущего времени в секундах.
     
     `duration`
-        The duration of the event, in seconds.
+        Продолжительность события в секундах.
     
     `possible_clip`
-        This determines if the event can be clipped. This should be one of the achievement.steam.CLIP_PRIORITY...
-        constants: CLIP_PRIORITY_NONE, CLIP_PRIORITY_STANDARD, or CLIP_PRIORITY_FEATURED.
+        Определяет, может ли событие формировать видеоклип. Должно быть одной из констант
+        achievement.steam.CLIP_PRIORITY...: CLIP_PRIORITY_NONE, CLIP_PRIORITY_STANDARD
+        или CLIP_PRIORITY_FEATURED.
 
 .. function:: achievement.steam.clear_timeline_state_description(time_delta)
     
-    Clears the description of the current state in the timeline.
+    Очищает описание текущего состояния на временной шкале Steam.
 
 .. function:: achievement.steam.set_timeline_state_description(description, time_delta=0.0)
     
-    Sets the description of the current state in the timeline.
+    Устанавливает описание текущего состояния на временной шкале Steam.
     
     `description`
-        A string giving the description of the current state.
+        Строка с описанием текущего состояния.
     
     `time_delta`
-        The time since the last state change.
-
+        Время, прошедшее с момента последнего изменения состояния.

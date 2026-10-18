@@ -2,45 +2,38 @@
 
 .. function:: layeredimage.format_function(what, name, group, variant, attribute, image, image_format, **kwargs)
     
-    This is called to format the information about an attribute
-    or condition into a displayable. This can be replaced by a
-    creator, but the new function should ignore unknown kwargs.
+    Вызывается для форматирования информации об атрибуте или условии в отображаемый объект.
+    Разработчик может переопределить эту функцию, однако новая функция должна игнорировать
+    неизвестные именованные аргументы (kwargs).
     
     `what`
-        A string giving a description of the thing being formatted,
-        which is used to create better error messages.
+        Строка с описанием форматируемого элемента, используемая для формирования понятных сообщений об ошибках.
     
     `name`
-        The name of the layeredimage.
+        Имя layeredimage.
     
     `group`
-        The group of an attribute, None if not supplied or if it's
-        part of a condition.
+        Группа атрибута, или None, если группа не указана или элемент является частью условия.
     
     `variant`
-        The variant argument to the group, or None if it is not
-        supplied.
+        Аргумент варианта группы, или None, если он не указан.
     
     `attribute`
-        The attribute itself.
+        Сам атрибут.
     
     `image`
-        Either a displayable or string.
+        Отображаемый объект или строка.
     
     `image_format`
-        The image_format argument of the LayeredImage.
+        Аргумент image_format объекта LayeredImage.
     
-    If `image` is None, then `name`, `group` (if not None), `variant` (if not None),
-    and `attribute` are combined with underscores to create `image`, which
-    will then be a string.
+    Если `image` равно None, то `name`, `group` (если не None), `variant` (если не None)
+    и `attribute` объединяются знаками подчёркивания для создания строки `image`.
     
-    If `images` is a string, and `image_format` is not None, `image` is formatted
-    into the string to get the final displayable.
+    Если `image` — строка и `image_format` не равен None, `image` форматируется в строку
+    шаблона для получения итогового отображаемого объекта.
     
-    So if `name` is "eileen", `group` is "expression", and
-    `attribute` is "happy", `image` would be set to "eileen_expression_happy".
-    If `image_format` is "images/{image}.png",
-    the final image Ren'Py finds is "images/eileen_expression_happy.png".
-    But note that it would have found the same image without the format
-    argument.
-
+    Например, если `name` равно "eileen", `group` — "expression", а `attribute` — "happy",
+    `image` будет установлено в "eileen_expression_happy". Если `image_format` равен "images/{image}.png",
+    Ren'Py найдёт итоговый файл "images/eileen_expression_happy.png". Однако заметим, что это же
+    изображение было бы найдено и без явного аргумента format.

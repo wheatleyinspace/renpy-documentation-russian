@@ -2,183 +2,159 @@
 
 .. function:: renpy.register_statement(name, parse=None, lint=None, execute=None, predict=None, next=None, scry=None, block=False, init=False, translatable=False, execute_init=None, init_priority=0, label=None, warp=None, translation_strings=None, force_begin_rollback=False, post_execute=None, post_label=None, predict_all=True, predict_next=None, execute_default=None, reachable=None)
     
-    This registers a user-defined statement.
+    Регистрирует пользовательскую инструкцию (Creator-Defined Statement).
     
     `name`
-        This is either a space-separated list of names that begin the statement, or the
-        empty string to define a new default statement (the default statement will
-        replace the say statement).
+        Либо разделённый пробелами список имён, с которых начинается инструкция, либо пустая
+        строка для определения новой инструкции по умолчанию (инструкция по умолчанию
+        заменит инструкцию say).
     
     `block`
-        This may be one of:
+        Может принимать одно из следующих значений:
     
-        * False, to indicate that the satement does not expect a block.
-        * True, to indicate that the statement expects a block and will
-          parse that block.
-        * "possible", to indicate that the statement may or may not take
-          a block.
-        * "script" to indicate that the block should be interpreted as a
-          block of Ren'Py script language statements. See `next` for how
-          to implement control flow using this.
-        * "script-possible" is treated like "script" if a block is present,
-          and False otherwise.
-        * "atl" to indicate that the block should be interpreted as an ATL
-          transsform. This is passed as an additional argument to `execute`.
-        * "atl-possible" is treated like "atl" if a block is present, and
-          and False otherwise.
+        * False, указывая, что инструкция не ожидает блок.
+        * True, указывая, что инструкция ожидает блок и будет выполнять его синтаксический анализ.
+        * "possible", указывая, что инструкция может как принимать, так и не принимать блок.
+        * "script", указывая, что блок должен интерпретироваться как блок инструкций языка
+          скриптов Ren'Py. См. параметр `next` касательно реализации передачи управления с помощью этого.
+        * "script-possible", обрабатывается как "script", если блок присутствует, и False в противном случае.
+        * "atl", указывая, что блок должен интерпретироваться как трансформация ATL.
+          Передаётся в качестве дополнительного аргумента в `execute`.
+        * "atl-possible", обрабатывается как "atl", если блок присутствует, и False в противном случае.
     
     `parse`
-        This is a function that takes a Lexer object. This function should parse the
-        statement, and return an object. This object is passed as an argument to all the
-        other functions.
+        Функция, принимающая объект Lexer. Эта функция должна выполнить синтаксический анализ
+        инструкции и вернуть объект. Этот объект затем передаётся в качестве аргумента во все
+        остальные функции.
     
     `lint`
-        This is called to check the statement. It is passed a single argument, the
-        object returned from parse. It should call renpy.error to report errors.
+        Вызывается для проверки инструкции линтером. Принимает один аргумент — объект,
+        возвращённый из parse. Должна вызывать renpy.error для сообщений об ошибках.
     
     `execute`
-        This is a function that is called when the statement executes. It is passed a
-        single argument, the object returned from parse. If there is an ATL block,
-        the keyword argument `atl` is passed with an ATL transform.
+        Функция, вызываемая при выполнении инструкции. Принимает один аргумент — объект,
+        возвращённый из parse. Если присутствует блок ATL, передаётся именованный аргумент
+        `atl` с трансформацией ATL.
     
     `execute_init`
-        This is a function that is called at init time, at priority 0. It is passed a
-        single argument, the object returned from parse.
+        Функция, вызываемая во время инициализации (init time) с приоритетом 0. Принимает один
+        аргумент — объект, возвращённый из parse.
     
     `predict`
-        This is a function that is called to predict the images used by the statement.
-        It is passed a single argument, the object returned from parse. It should return
-        a list of displayables used by the statement.
+        Функция, вызываемая для предсказания изображений, используемых инструкцией. Принимает
+        один аргумент — объект, возвращённый из parse. Должна возвращать список отображаемых
+        объектов, используемых инструкцией.
     
     `next`
-        This is a function that is called to determine the next statement.
+        Функция, вызываемая для определения следующей инструкции.
     
-        If `block` is not "script", this is passed a single argument, the object
-        returned from the parse function. If `block` is "script", an additional
-        argument is passed, an object that names the first statement in the block.
+        Если `block` не равен "script", принимает один аргумент — объект, возвращённый функцией parse.
+        Если `block` равен "script", передаётся дополнительный аргумент — объект, именующий первую
+        инструкцию в блоке.
     
-        The function should return either a string giving a label to jump to,
-        the second argument to transfer control into the block, or None to
-        continue to the statement after this one. It can also return the result
-        of :meth:`Lexer.renpy_statement` or :meth:`Lexer.renpy_block` when
-        called in the `parse` function.
+        Функция должна возвращать либо строку с меткой для перехода, либо второй аргумент для передачи
+        управления внутрь блока, либо None для продолжения выполнения инструкции, следующей за данной.
+        Она также может возвращать результат вызова :meth:`Lexer.renpy_statement` или :meth:`Lexer.renpy_block`
+        внутри функции `parse`.
     
     `label`
-        This is a function that is called to determine the label of this
-        statement. If it returns a string, that string is used as the statement
-        label, which can be called and jumped to like any other label.
+        Функция, вызываемая для определения метки этой инструкции. Если возвращает строку,
+        эта строка используется в качестве метки инструкции, к которой можно совершать переход (jump)
+        или вызов (call), как к любой другой метке.
     
     `warp`
-        This is a function that is called to determine if this statement
-        should execute during warping. If the function exists and returns
-        true, it's run during warp, otherwise the statement is not run
-        during warp.
+        Функция, вызываемая для определения того, должна ли эта инструкция выполняться во время
+        перемещения (warp). Если функция существует и возвращает True, она выполняется во время
+        warp; в противном случае инструкция не выполняется во время warp.
     
     `scry`
-        Used internally by Ren'Py.
+        Используется внутренними механизмами Ren'Py.
     
     `init`
-        True if this statement should be run at init-time. (If the statement
-        is not already inside an init block, it's automatically placed inside
-        an init block.)
+        True, если эта инструкция должна выполняться во время инициализации. (Если инструкция
+        ещё не находится внутри блока init, она автоматически помещается в блок init.)
     
-        You probably don't want this if you have an `execute_init` function,
-        as wrapping the statement in an init block will cause the `execute_init`
-        and `execute` functions to be called at the same time.
+        Скорее всего, вам это не нужно, если у вас задана функция `execute_init`, поскольку оборачивание
+        инструкции в блок init приведёт к тому, что `execute_init` и `execute` будут вызваны одновременно.
     
     `translatable`
-        If set to true, the statement will be included in a translation
-        block, generally the block containing the succeding say statement.
-        This may only be set to true for one-line statements. It's used
-        for statements like ``nvl clear`` and ``voice``, which may need
-        to be changed with dialogue.
+        Если установлено в True, инструкция будет включена в блок перевода, как правило,
+        в блок, содержащий последующую инструкцию say. Может быть установлено в True только
+        для однострочных инструкций. Используется для инструкций вроде ``nvl clear`` и ``voice``,
+        которые могут требовать изменения синхронно с диалогом.
     
     `init_priority`
-        An integer that determines the priority of initialization of the
-        init block created by `init` and `execute_init` function. This can
-        also be a function that is called with the parsed block, and should
-        return an integer.
+        Целое число, определяющее приоритет инициализации блока init, создаваемого параметрами
+        `init` и `execute_init`. Также может быть функцией, принимающей разобранный блок и возвращающей
+        целое число.
     
     `translation_strings`
-        A function that is called with the parsed block. It's expected to
-        return a list of strings or tuples of (string line number, string),
-        which are then reported as being available to be translated.
+        Функция, вызываемая с разобранным блоком. Ожидается возврат списка строк или кортежей
+        вида (номер строки, строка), которые затем регистрируются как доступные для перевода.
     
     `force_begin_rollback`
-        This should be set to true on statements that are likely to cause the
-        end of a fast skip, similar to ``menu`` or ``call screen``.
+        Следует устанавливать в True для инструкций, которые с большой вероятностью вызывают
+        окончание быстрого пропуска, аналогично ``menu`` или ``call screen``.
     
     `post_execute`
-        A function that is executed as part the next statement after this
-        one. (Adding a post_execute function changes the contents of the RPYC
-        file, meaning a Force Compile is necessary.)
+        Функция, которая выполняется как часть следующей инструкции после данной. (Добавление функции
+        post_execute изменяет содержимое файла RPYC, что требует принудительной перекомпиляции [Force Compile].)
     
     `post_label`
-        This is a function that is called to determine the label of this
-        the post execute statement. If it returns a string, that string is used
-        as the statement label, which can be called and jumped to like any other
-        label. This can be used to create a unique return point.
+        Функция, вызываемая для определения метки инструкции post_execute. Если возвращает строку,
+        эта строка используется в качестве метки инструкции, к которой можно совершать вызов и переход,
+        как к любой другой метке. Это можно использовать для создания уникальной точки возврата.
     
     `predict_all`
-        If True, then this predicts all sub-parses of this statement and
-        the statement after this statement.
+        Если True, предсказывает все подвыражения (sub-parses) данной инструкции и инструкцию,
+        следующую за данной.
     
     `predict_next`
-        This is called with a single argument, the label of the statement
-        that would run after this statement.
+        Вызывается с единственным аргументом — меткой инструкции, которая будет выполняться после данной.
     
-        This should be called to predict the statements that can run after
-        this one. It's expected to return a list of labels or SubParse
-        objects. This is not called if `predict_all` is true.
+        Должна вызываться для предсказания инструкций, которые могут выполняться после текущей. Ожидается
+        возврат списка меток или объектов SubParse. Не вызывается, если `predict_all` равно True.
     
     `execute_default`
-        This is a function that is called at the same time the default
-        statements are run - after the init phase, but before the game starts; when the
-        a save is loaded; after rollback; before lint; and potentially at
-        other times.
+        Функция, вызываемая одновременно с выполнением инструкций default — после фазы init, но до
+        начала игры; при загрузке сохранения; после отката; перед проверкой линтером; и потенциально
+        в других случаях.
     
-        This is called with a single argument, the object returned from parse.
+        Вызывается с единственным аргументом — объектом, возвращённым из parse.
     
     `reachable`
-        This is a function that is called to allow this statement to
-        customize how it participates in lint's reachability analysis.
+        Функция, вызываемая для того, чтобы позволить данной инструкции настроить её участие в анализе
+        достижимости линтером (reachability analysis).
     
-        By default, a statement's custom block, sub-parse blocks created
-        with Lexer.renpy_block(), and the statement after the statement
-        are reachable if the statement itself is reachable. The statement
-        is also reachable if it has a label function.
+        По умолчанию пользовательский блок инструкции, блоки подвыражений, созданные с помощью
+        Lexer.renpy_block(), и инструкция, следующая за данной, считаются достижимыми, если достижима
+        сама данная инструкция. Инструкция также достижима, если у неё есть функция label.
     
-        This can be customized by providing a reachable function. This is
-        a function that takes five arguments (in the following, a "label"
-        may be a string or an opaque object):
+        Это поведение можно настроить, указав функцию reachable. Эта функция принимает пять аргументов
+        (далее «метка» может быть строкой или специальным объектом):
     
-        * The object returned by the parse function.
-        * A boolean that is true if the statement is reachable.
-        * The label of the statement.
-        * The label of the next statement, or None if there is no next statement.
-        * If `block` is set to "script", the label of the first statement in the block,
-          or None if there is no block.
+        * Объект, возвращённый функцией parse.
+        * Логическое значение (bool), равное True, если инструкция достижима.
+        * Метка инструкции.
+        * Метка следующей инструкции или None, если следующей инструкции нет.
+        * Если `block` установлен в "script", метка первой инструкции в блоке или None, если блока нет.
     
-        It's expected to return a set that may contain:
+        Ожидается возврат множества (set), которое может содержать:
     
-        * A label or subparse object of a statement that is reachable.
-        * True, to indicate that this statement should not be reported by lint,
-          but is not intrinsically reachable. (It will become reachable if it
-          is reported reachable by another statement.)
-        * None, which is ignored.
+        * Метку или объект subparse инструкции, которая достижима.
+        * True, указывая, что эта инструкция не должна сообщаться линтером как недостижимая, но не является
+          внутренне достижимой. (Она станет достижимой, если другая инструкция сообщит о её достижимости.)
+        * None, который игнорируется.
     
-        This function may be called multiple times with both value of is_reachable,
-        to allow the statement to customize its behavior based on whether it's
-        reachable or not. (For example, the next statement may only be reachable
-        if this statement is.)
+        Эта функция может вызываться несколько раз с обоими значениями is_reachable, позволяя инструкции
+        настраивать своё поведение в зависимости от того, достижима она или нет. (Например, следующая
+        инструкция может быть достижима только в том случае, если достижима данная.)
     
     .. warning::
     
-        Using the empty string as the name to redefine the say statement is
-        usually a bad idea. That is because when replacing a Ren'Py native
-        statement, its behavior depends on the :doc:`statement_equivalents`. In
-        the case of the say statement, these equivalents do not support the `id`
-        and translation systems. As a result, a game redefining the default
-        statement will not be able to use these features (short of
-        reimplementing them entirely).
-
+        Использование пустой строки в качестве имени для переопределения инструкции say обычно
+        является плохой идеей. Дело в том, что при замене встроенной инструкции Ren'Py её поведение
+        зависит от эквивалентов инструкций (:doc:`statement_equivalents`). В случае инструкции say
+        эти эквиваленты не поддерживают `id` и системы перевода. В результате игра, переопределяющая
+        инструкцию по умолчанию, не сможет использовать эти возможности (без их полной повторной
+        самостоятельной реализации).

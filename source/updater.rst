@@ -1,61 +1,58 @@
-HTTPS/HTTP Updater
-==================
+Обновление по HTTPS/HTTP
+========================
 
-Ren'Py includes an updater that can automatically download and install
-updates to a Ren'Py game from a web host. The updates work on desktop
-platforms, with the exception of macOS apps.
+Ren'Py включает встроенную систему обновлений (updater), которая может автоматически
+загружать и устанавливать обновления для игры Ren'Py с веб-сервера. Обновления работают
+на всех настольных платформах, за исключением приложений macOS.
 
-The Ren'Py updater shows an updater screen during this process,
-prompting the user to proceed and allowing the user to cancel
-when appropriate.
+В процессе работы средство обновления Ren'Py отображает экран обновления (screen updater),
+предлагая пользователю подтвердить действие или позволяя отменить его при необходимости.
 
-There are two update formats supported. The modern format is called rpu,
-and was introduced in Ren'Py 8.2. An older format called zsync is obsolete,
-but can be generated to update from older versions.
+Поддерживаются два формата обновлений. Современный формат называется RPU и был представлен
+в Ren'Py 8.2. Более старый формат zsync считается устаревшим, однако его можно генерировать
+для обеспечения обновления со старых версий игры.
 
-Server Requirements
--------------------
+Требования к серверу
+--------------------
 
-The updater requires that you provide your own hosting. You should be
-able to download the update files by going to the appropriate URL
-directly, and your server must support HTTP range queries.
+Для работы системы обновлений требуется собственный веб-хостинг. Файлы обновлений должны
+быть доступны для прямого скачивания по URL-адресу, а ваш веб-сервер должен поддерживать
+диапазонные HTTP-запросы (HTTP range requests).
 
-Building an Update
-------------------
+Сборка обновления
+-----------------
 
-Updates are built automatically when distributions are built. To build
-an update, set :var:`build.include_update` to True in options.rpy. This will
-unlock the "Build Updates" option in the "Build Distributions" section
-of the launcher. Check this option, and Ren'Py will create the update
-files.
+Пакеты обновлений формируются автоматически при сборке дистрибутивов. Чтобы включить создание
+обновления, установите переменную :var:`build.include_update` в True в файле :file:`options.rpy`.
+Это разблокирует пункт «Создать обновления» («Build Updates») в разделе лаунчера «Построить дистрибутивы».
+Отметьте этот пункт, и Ren'Py создаст файлы обновления.
 
-The update files consist of:
+Файлы обновления состоят из:
 
 updates.json
-   An index of available updates and their versions.
+   Индекс доступных обновлений и номеров их версий.
 
 updates.ecdsa
-   A signature of updates.json, used to verify that it has not been
-   tampered with.
+   Цифровая подпись файла updates.json, используемая для проверки его целостности и подлинности.
 
 rpu/
-   The rpu directory contains the metadata and data used by the updates.
+   Каталог rpu содержит метаданные и фрагменты данных, используемые при обновлении.
 
-You should upload these to the same place on your webserver.
+Все эти файлы и каталог следует загрузить в одно место на вашем веб-сервере.
 
-Functions
----------
+Функции
+-------
 
-To cause an update to occur, invoke either updater.update or the
-updater.Update action.
+Чтобы запустить процесс обновления, вызовите функцию :func:`updater.update` либо экранное
+действие :func:`updater.Update`.
 
 .. include:: inc/updater
 
-Screen
-------
+Экран обновления
+----------------
 
-To customize the look of the updater, you may override the ``updater``
-screen. Here's an example screen::
+Чтобы настроить внешний вид окна обновления, вы можете переопределить экран ``updater``.
+Пример экрана обновления::
 
    screen updater(u=None):
 
@@ -67,120 +64,48 @@ screen. Here's an example screen::
          has side "t c b":
             spacing gui._scale(10)
 
-         label _("Updater")
+         label _("Обновление")
 
          fixed:
 
             vbox:
 
                if u.state == u.ERROR:
-                  text _("An error has occurred:")
+                  text _("Произошла ошибка:")
                elif u.state == u.CHECKING:
-                  text _("Checking for updates.")
+                  text _("Проверка наличия обновлений.")
                elif u.state == u.UPDATE_NOT_AVAILABLE:
-                  text _("This program is up to date.")
+                  text _("Установлена актуальная версия программы.")
                elif u.state == u.UPDATE_AVAILABLE:
-                  text _("[u.version] is available. Do you want to install it?")
+                  text _("Доступна версия [u.version]. Хотите установить её?")
                elif u.state == u.PREPARING:
-                  text _("Preparing to download the updates.")
+                  text _("Подготовка к загрузке обновлений.")
                elif u.state == u.DOWNLOADING:
-                  text _("Downloading the updates.")
+                  text _("Загрузка обновлений.")
                elif u.state == u.UNPACKING:
-                  text _("Unpacking the updates.")
+                  text _("Распаковка обновлений.")
                elif u.state == u.FINISHING:
-                  text _("Finishing up.")
+                  text _("Завершение установки.")
                elif u.state == u.DONE:
-                  text _("The updates have been installed. The program will restart.")
+                  text _("Обновления успешно установлены. Программа будет перезапущена.")
                elif u.state == u.DONE_NO_RESTART:
-                  text _("The updates have been installed.")
+                  text _("Обновления успешно установлены.")
                elif u.state == u.CANCELLED:
-                  text _("The updates were cancelled.")
+                  text _("Обновление было отменено.")
 
                if u.message is not None:
                   null height gui._scale(10)
                   text "[u.message!q]"
 
-               if u.progress is not None:
-                  null height gui._scale(10)
-                  bar value (u.progress or 0.0) range 1.0 style "_bar"
+            bar:
+               adjustment u.progress_adjustment
+               yalign 0.5
 
          hbox:
-
             spacing gui._scale(25)
 
             if u.can_proceed:
-               textbutton _("Proceed") action u.proceed
+               textbutton _("Продолжить") action u.proceed
 
             if u.can_cancel:
-               textbutton _("Cancel") action u.cancel
-
-The updater screen is supplied a single parameter, an Updater object, which
-must be named `u`. The Updater object has the following fields on it, which
-can be used to customize the screen:
-
-.. class:: updater.Updater
-
-   .. attribute:: state
-
-      The current state of the updater. See the example above for possible
-      values and their meanings. The values are all constants on the Updater
-      object.
-
-   .. attribute:: message
-
-      If not None, a message to display to the user.
-
-   .. attribute:: progress
-
-      If not None, the progress of the current operation, as a float between
-      0.0 and 1.0.
-
-   .. attribute:: can_proceed
-
-      If True, the screen is being asked to display a button that will allow
-      the user to proceed with the update.
-
-   .. attribute:: proceed
-
-      If can_proceed is True, this is the action that should be invoked when
-      the user presses the proceed button.
-
-   .. attribute:: can_cancel
-
-      If True, the screen is being asked to display a button that will allow
-      the user to cancel the update.
-
-   .. attribute:: cancel
-
-      If can_cancel is True, this is the action that should be invoked when
-      the user presses the cancel button.
-
-   .. attribute:: old_disk_total
-
-      If not None, an integer giving the total number of bytes on the disk
-      the game consumed at the start of the update.
-
-   .. attribute:: new_disk_total
-
-      If not None, an integer giving the total number of bytes on the disk
-      the game will consume at the end of the update.
-
-   .. attribute:: download_total
-
-      If not None, an integer giving the total number of bytes that will be
-      downloaded during the update.
-
-   .. attribute:: download_done
-
-      If not None, an integer giving the number of bytes that have been
-      downloaded during the update, so far.
-
-   .. attribute:: write_total
-
-      If not None, an integer giving the total number of bytes that will be
-      written to disk during the update.
-
-   .. attribute:: write_done
-
-      If not None, an integer giving the number of bytes that have been
-      written to disk during the update, so far.
+               textbutton _("Отмена") action u.cancel

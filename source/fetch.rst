@@ -1,40 +1,47 @@
-HTTPS/HTTP Fetch
-================
+.. _fetch:
 
-Ren'Py supports fetching information over HTTP and HTTPS using the
-renpy.fetch function. This function:
+==========================
+Сетевые запросы HTTPS/HTTP
+==========================
 
-* Supports GET, POST, and PUT requests.
-* Support POSTing or PUTing data or json to the server.
-* Can return the result as bytes, a string, or a json object.
+Ren'Py поддерживает получение данных по протоколам HTTP и HTTPS с помощью
+функции :func:`renpy.fetch`. Эта функция:
 
-The fetch function is meant to be used in the main thread of Ren'Py, after
-the game has started. It can be used on desktop, mobile, or the web platform.
-When used on the web platform, when not fetching from the same server that
-originally served the game, the server must support `CORS <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_.
+* Поддерживает запросы методов GET, POST и PUT.
+* Поддерживает отправку необработанных данных (data) или структур JSON на сервер.
+* Может возвращать результат в виде байтов (bytes), строки (text) или объекта JSON.
 
-As a very simple example, this gets news from a server::
+Функция :func:`renpy.fetch` предназначена для вызова из основного потока Ren'Py
+после старта игры. Она работает на ПК, мобильных платформах и в браузере (веб).
+При работе в браузере запросы к сторонним серверам (отличным от того, с которого
+загружена сама игра) требуют поддержки сервером политики
+`CORS <https://developer.mozilla.org/ru/docs/Web/HTTP/CORS>`_.
+
+Простой пример получения новостей с сервера::
 
     $ news = renpy.fetch("https://example.com/news.txt", result="text")
-    "Here's the news: [news]"
+    "Свежие новости: [news]"
 
-And this posts JSON to a server, and gets JSON back::
+Пример отправки данных JSON на сервер с получением ответа в формате JSON::
 
     $ result = renpy.fetch("https://example.com/api", json={"name": "Ren'Py"}, result="json")
 
-As with any application that communicates over the network, security needs
-to be considered when using renpy.fetch, especially when displaying media
-returned this way. (Ren'Py is generally not hardened against malicious images,
-movies, and audio files.)
+Как и в любых сетевых приложениях, при использовании :func:`renpy.fetch` необходимо
+учитывать вопросы безопасности, особенно при отображении медиафайлов, полученных
+из сети (Ren'Py не содержит механизмов защиты от вредоносных изображений, видеороликов
+и аудиофайлов).
 
-The progress of ongoing fetch requests can be displayed using the :class:`FetchProgressValue` bar value.
+Прогресс выполнения активных сетевых запросов можно отображать на полосе прогресса
+с помощью значения шкалы :class:`FetchProgressValue`.
 
 .. include:: inc/fetch
 
-Requests
---------
+Библиотека Requests
+-------------------
 
-On desktop and mobile, Ren'Py includes the `Requests <https://requests.readthedocs.io/>`_
-library. This is more powerful, but doesn't integrate as well as renpy.fetch.
-(For example, Ren'Py will call :func:`renpy.pause` to wait for data, while
-requests will block, which could lead to problems like audio stalling.)
+На настольных и мобильных платформах в состав Ren'Py входит библиотека
+`Requests <https://requests.readthedocs.io/>`_. Она предоставляет более широкие
+возможности, однако не так глубоко интегрирована в цикл событий Ren'Py
+(например, :func:`renpy.fetch` во время ожидания данных периодически вызывает
+:func:`renpy.pause`, тогда как функции Requests блокируют поток выполнения,
+что может приводить к прерываниям звука и задержкам анимации).

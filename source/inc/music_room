@@ -2,128 +2,119 @@
 
 .. class:: MusicRoom(channel='music', fadeout=0.0, fadein=0.0, loop=True, single_track=False, shuffle=False, stop_action=None)
     
-    A music room that contains a series of songs that can be unlocked
-    by the user, and actions that can play entries from the list in
-    order.
+    Музыкальная комната, содержащая набор композиций, которые могут разблокироваться
+    пользователем, и действия, позволяющие воспроизводить треки из списка по порядку.
     
     `channel`
-        The channel that this music room will operate on.
+        Канал, на котором работает данная музыкальная комната.
     
     `fadeout`
-        The number of seconds it takes to fade out the old
-        music when changing tracks.
+        Длительность затухания старой музыки при смене трека в секундах.
     
     `fadein`
-        The number of seconds it takes to fade in the new
-        music when changing tracks.
+        Длительность нарастания громкости новой музыки при смене трека в секундах.
     
     `loop`
-        Determines if playback will loop or stop when it reaches
-        the end of the playlist.
+        Определяет, будет ли воспроизведение зацикливаться или останавливаться
+        по достижении конца плейлиста.
     
     `single_track`
-        If true, only a single track will play. If loop is true,
-        that track will loop. Otherwise, playback will stop when the
-        track finishes.
+        Если True, воспроизводится только один трек. Если loop равно True,
+        этот трек зацикливается. В противном случае воспроизведение остановится
+        после окончания трека.
     
     `shuffle`
-        If true, the tracks are shuffled, and played in the shuffled
-        order. If false, the tracks are played in the order they're
-        added to the MusicRoom.
+        Если True, треки перемешиваются и воспроизводятся в случайном порядке.
+        Если False, треки воспроизводятся в порядке добавления в MusicRoom.
     
     `stop_action`
-        An action to run when the music has stopped.
+        Действие, выполняемое при остановке воспроизведения музыки.
     
-    Single_track and shuffle conflict with each other. Only one should
-    be true at a time. (Actions that set single_track and shuffle
-    enforce this.)
+    Параметры single_track и shuffle несовместимы друг с другом: только один из них
+    может быть равен True в любой момент времени (действия, устанавливающие single_track
+    и shuffle, автоматически обеспечивают это правило).
 
     .. method:: Next()
         
-        An action that causes the music room to play the next unlocked file
-        in the playlist.
+        Действие, переключающее музыкальную комнату на следующий разблокированный
+        файл в плейлисте.
     
     .. method:: Play(filename=None)
         
-        This action causes the music room to start playing. If `filename` is given, that
-        file begins playing. Otherwise, the currently playing file starts
-        over (if it's unlocked), or the first file starts playing.
+        Это действие запускает воспроизведение в музыкальной комнате. Если указан параметр
+        `filename`, начинает воспроизводиться данный файл. В противном случае текущий трек
+        начинает воспроизводиться сначала (если он разблокирован) либо запускается первый файл.
         
-        If `filename` is given, buttons with this action will be insensitive
-        while `filename` is locked, and will be selected when `filename`
-        is playing.
+        Если параметр `filename` указан, кнопки с этим действием будут нечувствительными (заблокированными),
+        пока `filename` заблокирован, и будут выбраны (selected), когда `filename` воспроизводится.
     
     .. method:: Previous()
         
-        An action that causes the music room to play the previous unlocked
-        file in the playlist.
+        Действие, переключающее музыкальную комнату на предыдущий разблокированный
+        файл в плейлисте.
     
     .. method:: RandomPlay()
         
-        This action causes the music room to start playing a randomly selected unlocked
-        music track.
+        Это действие запускает воспроизведение случайно выбранного разблокированного
+        музыкального трека.
     
     .. method:: SetLoop(value)
         
-        This action sets the value of the loop property.
+        Это действие устанавливает свойство loop (зацикливание).
     
     .. method:: SetShuffle(value)
         
-        This action sets the value of the shuffle property.
+        Это действие устанавливает свойство shuffle (случайный порядок).
     
     .. method:: SetSingleTrack(value)
         
-        This action sets the value of the single_track property.
+        Это действие устанавливает свойство single_track (один трек).
     
     .. method:: Stop()
         
-        This action stops the music.
+        Это действие останавливает воспроизведение музыки.
     
     .. method:: ToggleLoop()
         
-        This action toggles the value of the loop property.
+        Это действие переключает значение свойства loop.
     
     .. method:: TogglePause()
         
-        If music is playing, pauses or unpauses the music as appropriate.
+        Если музыка воспроизводится, приостанавливает (pause) или возобновляет её воспроизведение.
         
-        This button is selected when the music is paused.
+        Кнопка выбрана (selected), когда воспроизведение приостановлено.
     
     .. method:: TogglePlay()
         
-        If no music is currently playing, this action starts playing the first
-        unlocked track. Otherwise, stops the currently playing music.
+        Если музыка в данный момент не играет, запускает воспроизведение первого
+        разблокированного трека. В противном случае останавливает текущую музыку.
         
-        This button is selected when any music is playing.
+        Кнопка выбрана (selected), когда воспроизводится любая музыка.
     
     .. method:: ToggleShuffle()
         
-        This action toggles the value of the shuffle property.
+        Это действие переключает значение свойства shuffle.
     
     .. method:: ToggleSingleTrack()
         
-        This action toggles the value of the single_track property.
+        Это действие переключает значение свойства single_track.
     
     .. method:: add(filename, always_unlocked=False, action=None)
         
-        Adds the music file `filename` to this music room. The music room
-        will play unlocked files in the order that they are added to the
-        room.
+        Добавляет музыкальный файл `filename` в эту музыкальную комнату. Музыкальная комната
+        будет воспроизводить разблокированные файлы в порядке их добавления в комнату.
         
         `always_unlocked`
-            If true, the music file will be always unlocked. This allows
-            the file to show up in the music room before it has been
-            played in the game.
+            Если True, музыкальный файл всегда будет разблокирован. Это позволяет
+            файлу появиться в музыкальной комнате ещё до того, как он прозвучал в игре.
         
         `action`
-            This is a action or the list of actions. these are called when this
-            file is played.
-        
-            For example, These actions is used to change a screen or background, description
-            by the playing file.
+            Действие или список действий, вызываемых при воспроизведении данного файла.
+            
+            Например, эти действия могут использоваться для изменения экрана, фона
+            или описания в зависимости от играющего файла.
     
     .. method:: is_unlocked(filename)
         
-        Returns true if the filename has been unlocked (or is always
-        unlocked), and false if it is still locked.
-    
+        Возвращает True, если файл разблокирован (или всегда разблокирован),
+        и False, если он всё ещё заблокирован.
